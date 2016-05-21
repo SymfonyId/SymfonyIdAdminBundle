@@ -1,0 +1,49 @@
+{
+    "name": "symfonyid/admin-bundle",
+    "type": "symfony-bundle",
+    "description": "Provide Admin Generator with KISS Principle",
+    "keywords": ["crud", "simple admin", "admin", "admin generator", "symfony admin", "crud generator", "symfony2", "bundle", "ihsanudin"],
+    "homepage": "https://github.com/SymfonyId/AdminBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Komunitas Symfony Indonesia",
+            "homepage": "https://github.com/SymfonyId/AdminBundle"
+        },
+        {
+            "name": "Muhammad Surya Ihsanuddin",
+            "homepage": "https://github.com/ihsanudin"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "symfony/symfony": "3.0.*",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-cache-bundle": "^1.2",
+        "symfony/swiftmailer-bundle": "^2.3",
+        "symfony/monolog-bundle": "^2.8",
+        "sensio/distribution-bundle": "^5.0",
+        "sensio/framework-extra-bundle": "^3.0.2",
+        "sensio/generator-bundle": "^3.0",
+        "knplabs/knp-paginator-bundle": "~2.5@dev",
+        "knplabs/knp-menu-bundle": "~2.1@dev",
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "friendsofsymfony/jsrouting-bundle": "~2.0@dev",
+        "doctrine/mongodb-odm": "~1.0",
+        "doctrine/mongodb-odm-bundle": "~3.0"
+    },
+    "suggest": {
+        "doctrine/mongodb-odm": "Needed when using the odm implementation",
+        "doctrine/mongodb-odm-bundle": "Needed when using the odm implementation"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "SymfonyId\\AdminBundle\\": "",
+            "Tests\\SymfonyId\\AdminBundle\\": "Tests"
+        }
+    }
+}
