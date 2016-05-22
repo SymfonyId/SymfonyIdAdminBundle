@@ -29,7 +29,7 @@ class FilterQueryEvent extends Event
     /**
      * @var string
      */
-    private $entityClass;
+    private $modelClass;
 
     /**
      * @var string
@@ -63,19 +63,19 @@ class FilterQueryEvent extends Event
     }
 
     /**
-     * @param string $entityClass
+     * @param string $modelClass
      */
-    public function setEntityClass($entityClass)
+    public function setModelClass($modelClass)
     {
-        $this->entityClass = $entityClass;
+        $this->modelClass = $modelClass;
     }
 
     /**
      * @return string
      */
-    public function getEntityClass()
+    public function getModelClass()
     {
-        return $this->entityClass;
+        return $this->modelClass;
     }
 
     /**

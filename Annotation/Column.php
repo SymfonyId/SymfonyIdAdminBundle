@@ -13,7 +13,7 @@ namespace SymfonyId\AdminBundle\Annotation;
 
 /**
  * @Annotation
- * @Target({"ANNOTATION"})
+ * @Target({"ANNOTATION", "PROPERTY"})
  * @Attributes({
  *   @Attribute("value", type = "array"),
  * })

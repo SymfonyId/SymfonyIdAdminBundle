@@ -9,17 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\Filter;
+namespace SymfonyId\AdminBundle\Controller;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-interface FieldsSortInterface
+class UserController
 {
-    /**
-     * @param string $entityClass
-     * @param \Doctrine\ORM\QueryBuilder|Doctrine\ODM\MongoDB\Query\Builder
-     * @param string
-     */
-    public function sort($entityClass, $queryBuilder, $sortBy);
 }

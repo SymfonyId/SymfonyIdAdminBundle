@@ -14,16 +14,15 @@ namespace SymfonyId\AdminBundle\Exception;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class ExtractorException extends \InvalidArgumentException
+class MethodNotValidException extends \InvalidArgumentException
 {
     /**
-     * @param string          $expectation
-     * @param object          $expected
+     * @param string          $methodName
      * @param int             $code
      * @param \Exception|null $previous
      */
-    public function __construct($expectation, $expected, $code = 0, \Exception $previous = null)
+    public function __construct($methodName, $code = 0, \Exception $previous = null)
     {
-        parent::__construct(sprintf('extract() method need %s as parameter, got %s', $expectation, get_class($expected)), $code, $previous);
+        parent::__construct(sprintf('Method "%s" is not valid.', $methodName), $code, $previous);
     }
 }

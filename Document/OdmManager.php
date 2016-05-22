@@ -18,41 +18,14 @@ use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Event\EventSubscriber;
 use SymfonyId\AdminBundle\Event\FilterQueryEvent;
 use SymfonyId\AdminBundle\Exception\ModelNotFoundException;
-use SymfonyId\AdminBundle\Manager\ManagerInterface;
-use SymfonyId\AdminBundle\Model\ModelInterface;
-use SymfonyId\AdminBundle\Model\SoftDeletableInterface;
+use SymfonyId\AdminBundle\Manager\AbstractManager;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class OdmManager implements ManagerInterface
+class OdmManager extends AbstractManager
 {
-    /**
-     * @var DocumentManager
-     */
-    private $manager;
-
-    /**
-     * @var PaginatorInterface
-     */
-    private $paginator;
-
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    /**
-     * @var EventSubscriber
-     */
-    private $eventSubscriber;
-
-    /**
-     * @var string
-     */
-    private $modelClass;
-
     /**
      * @param DocumentManager       $manager
      * @param PaginatorInterface    $paginator
@@ -61,18 +34,7 @@ class OdmManager implements ManagerInterface
      */
     public function __construct(DocumentManager $manager, PaginatorInterface $paginator, TokenStorageInterface $tokenStorage, EventSubscriber $eventSubscriber)
     {
-        $this->manager = $manager;
-        $this->paginator = $paginator;
-        $this->tokenStorage = $tokenStorage;
-        $this->eventSubscriber = $eventSubscriber;
-    }
-
-    /**
-     * @param string $modelClass
-     */
-    public function setModelClass($modelClass)
-    {
-        $this->modelClass = $modelClass;
+        parent::__construct($manager, $paginator, $tokenStorage, $eventSubscriber);
     }
 
     /**
@@ -83,59 +45,21 @@ class OdmManager implements ManagerInterface
      */
     public function paginate($page, $limit)
     {
-        if (!$this->modelClass) {
+        if (!$this->getModelClass()) {
             throw new ModelNotFoundException('setModelClass');
         }
 
-        $queryBuilder = $this->manager->createQueryBuilder($this->modelClass);
+        /** @var DocumentManager $manager */
+        $manager = $this->getManager();
+        $queryBuilder = $manager->createQueryBuilder($this->getModelClass());
         $filterList = new FilterQueryEvent();
         $filterList->setQueryBuilder($queryBuilder);
-        $filterList->setEntityClass($this->modelClass);
-        $this->eventSubscriber->subscribe(Constants::FILTER_LIST, $filterList);
+        $filterList->setModelClass($this->getModelClass());
+        $this->getEventSubscriber()->subscribe(Constants::FILTER_LIST, $filterList);
 
         $query = $queryBuilder->getQuery();
 
-        return $this->paginator->paginate($query, $page, $limit);
-    }
-
-    /**
-     * @param ModelInterface $model
-     */
-    public function save(ModelInterface $model)
-    {
-        $this->manager->persist($model);
-        $this->manager->flush();
-    }
-
-    /**
-     * @param ModelInterface $model
-     */
-    public function remove(ModelInterface $model)
-    {
-        if ($model instanceof SoftDeletableInterface) {
-            $model->isDeleted(true);
-            $model->setDeletedAt(new \DateTime());
-            $model->setDeletedBy($this->tokenStorage->getToken()->getUsername());
-
-            $this->save($model);
-        } else {
-            $this->manager->remove($model);
-            $this->manager->flush();
-        }
-    }
-
-    /**
-     * @param mixed $id
-     *
-     * @return ModelInterface
-     */
-    public function find($id)
-    {
-        if (!$this->modelClass) {
-            throw new ModelNotFoundException('setModelClass');
-        }
-
-        return $this->manager->getRepository($this->modelClass)->find($id);
+        return $this->getPaginator()->paginate($query, $page, $limit);
     }
 
     /**

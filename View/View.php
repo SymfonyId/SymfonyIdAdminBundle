@@ -11,6 +11,8 @@
 
 namespace SymfonyId\AdminBundle\View;
 
+use SymfonyId\AdminBundle\Exception\RuntimeException;
+
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
@@ -33,7 +35,9 @@ class View
     /**
      * @param string $key
      *
-     * @return null|string
+     * @return string
+     *
+     * @throws RuntimeException
      */
     public function getParam($key)
     {
@@ -41,7 +45,7 @@ class View
             return $this->params[$key];
         }
 
-        return null;
+        throw new RuntimeException(sprintf('Parameter with key "%s" is not found.', $key));
     }
 
     /**

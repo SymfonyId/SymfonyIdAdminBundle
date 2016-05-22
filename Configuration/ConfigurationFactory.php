@@ -11,6 +11,7 @@
 
 namespace SymfonyId\AdminBundle\Configuration;
 
+use SymfonyId\AdminBundle\Exception\ConfiguratorNotFound;
 use SymfonyId\AdminBundle\Exception\FreezeStateException;
 
 /**
@@ -19,7 +20,7 @@ use SymfonyId\AdminBundle\Exception\FreezeStateException;
 class ConfigurationFactory
 {
     /**
-     * @var ConfiguratorInterface
+     * @var ConfiguratorInterface[]
      */
     private $configurators;
 
@@ -39,7 +40,21 @@ class ConfigurationFactory
 
         $this->configurators[get_class($configurator)] = $configurator;
     }
-    
+
+    /**
+     * @param string $configuratorClass
+     *
+     * @return ConfiguratorInterface
+     */
+    public function getConfigurator($configuratorClass)
+    {
+        if (!array_key_exists($configuratorClass, $this->configurators)) {
+            throw new ConfiguratorNotFound($configuratorClass);
+        }
+
+        return $this->configurators[$configuratorClass];
+    }
+
     public function freeze()
     {
         $this->freeze = true;

@@ -11,6 +11,7 @@
 
 namespace SymfonyId\AdminBundle\Manager;
 
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use SymfonyId\AdminBundle\Model\ModelInterface;
 
 /**
@@ -19,7 +20,7 @@ use SymfonyId\AdminBundle\Model\ModelInterface;
 interface ManagerInterface
 {
     /**
-     * @param string $modelClass\
+     * @param string $modelClass
      */
     public function setModelClass($modelClass);
 
@@ -52,4 +53,9 @@ interface ManagerInterface
      * @return string
      */
     public function getDriver();
+
+    /**
+     * @return ClassMetadata
+     */
+    public function getClassMetadata();
 }
