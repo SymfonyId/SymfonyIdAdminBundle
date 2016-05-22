@@ -35,7 +35,7 @@ class ControllerFinder
     }
 
     /**
-     * Ex: "@AppBundle/Controller"
+     * Ex: "@AppBundle/Controller".
      *
      * @param string $resource
      *
