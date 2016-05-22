@@ -13,6 +13,8 @@ namespace SymfonyId\AdminBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use SymfonyId\AdminBundle\DependencyInjection\Compiler\ConfigurationPass;
+use SymfonyId\AdminBundle\DependencyInjection\Compiler\ExtractorPass;
 use SymfonyId\AdminBundle\DependencyInjection\Compiler\PaginationTemplatePass;
 use SymfonyId\AdminBundle\DependencyInjection\Compiler\QueryFilterPass;
 use SymfonyId\AdminBundle\DependencyInjection\SymfonyIdAdminExtension;

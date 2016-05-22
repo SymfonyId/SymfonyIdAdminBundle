@@ -39,4 +39,9 @@ class ConfigurationFactory
 
         $this->configurators[get_class($configurator)] = $configurator;
     }
+    
+    public function freeze()
+    {
+        $this->freeze = true;
+    }
 }
