@@ -49,7 +49,7 @@ class FieldsFilter extends BsonFilter implements FieldsFilterInterface
         }
 
         /** @var GridConfigurator $grid */
-        $grid = $this->configurationFactory->getConfigurator(GridConfigurator::class);
+        $grid = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
         $fields = !empty($fields) ? $fields : $grid->getFilter();
 
         foreach ($fields as $key => $field) {

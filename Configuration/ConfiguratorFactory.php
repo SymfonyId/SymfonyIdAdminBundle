@@ -17,7 +17,7 @@ use SymfonyId\AdminBundle\Exception\FreezeStateException;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class ConfigurationFactory
+class ConfiguratorFactory
 {
     /**
      * @var ConfiguratorInterface[]

@@ -32,20 +32,20 @@ class QueryFilterPass implements CompilerPassInterface
         }
 
         /*
-         * Add all service with tag name symfonyid.orm_filter
+         * Add all service with tag name symfonyid.orm.filter
          */
         $definition = $container->findDefinition(self::ORM_CONFIGURATION);
-        $taggedServices = $container->findTaggedServiceIds('symfonyid.orm_filter');
+        $taggedServices = $container->findTaggedServiceIds('symfonyid.orm.filter');
         foreach ($taggedServices as $id => $tags) {
             $filter = $container->findDefinition($id);
             $definition->addMethodCall('addFilter', array($id, $filter->getClass()));
         }
 
         /*
-         * Add all service with tag name symfonyid.odm_filter
+         * Add all service with tag name symfonyid.odm.filter
          */
         $definition = $container->findDefinition(self::ODM_CONFIGURATION);
-        $taggedServices = $container->findTaggedServiceIds('symfonyid.odm_filter');
+        $taggedServices = $container->findTaggedServiceIds('symfonyid.odm.filter');
         foreach ($taggedServices as $id => $tags) {
             $filter = $container->findDefinition($id);
             $definition->addMethodCall('addFilter', array($id, $filter->getClass()));

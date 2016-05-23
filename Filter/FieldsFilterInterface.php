@@ -11,7 +11,7 @@
 
 namespace SymfonyId\AdminBundle\Filter;
 
-use SymfonyId\AdminBundle\Configuration\ConfigurationFactory;
+use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 
 /**
@@ -25,9 +25,9 @@ interface FieldsFilterInterface
     public function setExtractor(ExtractorFactory $extractor);
 
     /**
-     * @param ConfigurationFactory $configurationFactory
+     * @param ConfiguratorFactory $configuratorFactory
      */
-    public function setConfigurator(ConfigurationFactory $configurationFactory);
+    public function setConfigurator(ConfiguratorFactory $configuratorFactory);
 
     /**
      * @param string $dateTimeFormat

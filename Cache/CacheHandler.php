@@ -34,21 +34,22 @@ class CacheHandler
     }
 
     /**
-     * @param string $file
+     * @param \ReflectionClass $reflectionClass
      * @param string $content
      *
      * @throws PermissionException
      */
-    public function writeCache($file, $content)
+    public function writeCache(\ReflectionClass $reflectionClass, $content)
     {
-        $tmpFile = tempnam(dirname($file), basename($file));
-        if (false !== @file_put_contents($tmpFile, $content) && @rename($tmpFile, $file)) {
-            @chmod($file, 0666 & ~umask());
+        $cacheFile = $this->getCacheFile($reflectionClass);
+        $tmpFile = tempnam(dirname($cacheFile), basename($cacheFile));
+        if (false !== @file_put_contents($tmpFile, sprintf('<?php return unserialize(\'%s\');', serialize($content))) && @rename($tmpFile, $cacheFile)) {
+            @chmod($cacheFile, 0666 & ~umask());
 
             return;
         }
 
-        throw new PermissionException($file);
+        throw new PermissionException($cacheFile);
     }
 
     /**
@@ -73,6 +74,15 @@ class CacheHandler
      * @return string
      */
     public function loadCache(\ReflectionClass $reflectionClass)
+    {
+        return $this->getCacheFile($reflectionClass);
+    }
+
+    /**
+     * @param \ReflectionClass $reflectionClass
+     * @return string
+     */
+    private function getCacheFile(\ReflectionClass $reflectionClass)
     {
         return sprintf('%s/%s/%s.php.cache', $this->kernel->getCacheDir(), Constants::CACHE_DIR, str_replace('\\', '_', $reflectionClass->getName()));
     }

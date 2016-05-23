@@ -11,7 +11,7 @@
 
 namespace SymfonyId\AdminBundle\Filter;
 
-use SymfonyId\AdminBundle\Configuration\ConfigurationFactory;
+use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 
 /**
@@ -25,9 +25,9 @@ trait FilterableTrait
     private $extractorFactory;
 
     /**
-     * @var ConfigurationFactory
+     * @var ConfiguratorFactory
      */
-    private $configurationFactory;
+    private $configuratorFactory;
 
     /**
      * @var string
@@ -51,34 +51,10 @@ trait FilterableTrait
     }
 
     /**
-     * @param ConfigurationFactory $configurationFactory
+     * @param ConfiguratorFactory $configuratorFactory
      */
-    public function setConfigurator(ConfigurationFactory $configurationFactory)
+    public function setConfigurator(ConfiguratorFactory $configuratorFactory)
     {
-        $this->configurationFactory = $configurationFactory;
-    }
-
-    /**
-     * @return ExtractorFactory
-     */
-    protected function getExtractor()
-    {
-        return $this->extractorFactory;
-    }
-
-    /**
-     * @return ConfigurationFactory
-     */
-    protected function getConfigurator()
-    {
-        return $this->configurationFactory;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getDateTimeFormat()
-    {
-        return $this->dateTimeFormat;
+        $this->configuratorFactory = $configuratorFactory;
     }
 }

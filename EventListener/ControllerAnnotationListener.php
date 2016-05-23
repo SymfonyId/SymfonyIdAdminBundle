@@ -18,7 +18,7 @@ use SymfonyId\AdminBundle\Annotation\Grid;
 use SymfonyId\AdminBundle\Annotation\Page;
 use SymfonyId\AdminBundle\Annotation\Plugin;
 use SymfonyId\AdminBundle\Annotation\Util;
-use SymfonyId\AdminBundle\Configuration\ConfigurationFactory;
+use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
 use SymfonyId\AdminBundle\Configuration\PageConfigurator;
@@ -44,20 +44,20 @@ class ControllerAnnotationListener
     private $extractorFactory;
 
     /**
-     * @var ConfigurationFactory
+     * @var ConfiguratorFactory
      */
-    private $configurationFactory;
+    private $configuratorFactory;
 
     /**
      * @param KernelInterface      $kernel
      * @param ExtractorFactory     $extractorFactory
-     * @param ConfigurationFactory $configurationFactory
+     * @param ConfiguratorFactory $configuratorFactory
      */
-    public function __construct(KernelInterface $kernel, ExtractorFactory $extractorFactory, ConfigurationFactory $configurationFactory)
+    public function __construct(KernelInterface $kernel, ExtractorFactory $extractorFactory, ConfiguratorFactory $configuratorFactory)
     {
         $this->kernel = $kernel;
         $this->extractorFactory = $extractorFactory;
-        $this->configurationFactory = $configurationFactory;
+        $this->configuratorFactory = $configuratorFactory;
     }
 
     /**
@@ -85,15 +85,15 @@ class ControllerAnnotationListener
     private function extractAnnotation(\ReflectionObject $reflectionController)
     {
         /** @var CrudConfigurator $crudConfigurator */
-        $crudConfigurator = $this->configurationFactory->getConfigurator(CrudConfigurator::class);
+        $crudConfigurator = $this->configuratorFactory->getConfigurator(CrudConfigurator::class);
         /** @var PageConfigurator $pageConfigurator */
-        $pageConfigurator = $this->configurationFactory->getConfigurator(PageConfigurator::class);
+        $pageConfigurator = $this->configuratorFactory->getConfigurator(PageConfigurator::class);
         /** @var GridConfigurator $gridConfigurator */
-        $gridConfigurator = $this->configurationFactory->getConfigurator(GridConfigurator::class);
+        $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
         /** @var PluginConfigurator $pluginConfigurator */
-        $pluginConfigurator = $this->configurationFactory->getConfigurator(PluginConfigurator::class);
+        $pluginConfigurator = $this->configuratorFactory->getConfigurator(PluginConfigurator::class);
         /** @var UtilConfigurator $utilConfigurator */
-        $utilConfigurator = $this->configurationFactory->getConfigurator(UtilConfigurator::class);
+        $utilConfigurator = $this->configuratorFactory->getConfigurator(UtilConfigurator::class);
 
         $this->extractorFactory->extract($reflectionController);
         foreach ($this->extractorFactory->getClassAnnotations() as $annotation) {

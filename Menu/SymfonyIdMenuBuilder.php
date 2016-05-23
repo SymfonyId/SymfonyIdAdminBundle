@@ -78,9 +78,10 @@ class SymfonyIdMenuBuilder
 
         $reflectionClass = new \ReflectionClass(self::class);
         if ($this->cacheHandler->hasCache($reflectionClass)) {
-            $menuItems = $this->cacheHandler->loadCache($reflectionClass);
+            $menuItems = require $this->cacheHandler->loadCache($reflectionClass);
         } else {
             $menuItems = $this->menuLoaderFactory->getMenuItems();
+            $this->cacheHandler->writeCache($reflectionClass, $menuItems);
         }
 
         $this->generateMenu($rootMenu, $menuItems);
