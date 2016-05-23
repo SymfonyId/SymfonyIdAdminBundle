@@ -47,11 +47,6 @@ class DeleteActionHandler implements ViewHandlerInterface, ContainerAwareInterfa
     private $model;
 
     /**
-     * @var Request
-     */
-    private $request;
-
-    /**
      * @param CrudOperationHandler $crudOperationHandler
      * @param View                 $view
      * @param TranslatorInterface  $translator
@@ -68,7 +63,6 @@ class DeleteActionHandler implements ViewHandlerInterface, ContainerAwareInterfa
      */
     public function setRequest(Request $request)
     {
-        $this->request = $request;
     }
 
     /**
