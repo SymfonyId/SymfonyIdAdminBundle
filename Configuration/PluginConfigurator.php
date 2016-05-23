@@ -16,7 +16,7 @@ use SymfonyId\AdminBundle\Annotation\Plugin;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class PluginConfigurator
+class PluginConfigurator implements ConfiguratorInterface
 {
     /**
      * @var Plugin

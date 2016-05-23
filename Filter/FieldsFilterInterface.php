@@ -33,4 +33,10 @@ interface FieldsFilterInterface
      * @param string $dateTimeFormat
      */
     public function setDateTimeFormat($dateTimeFormat);
+
+    /**
+     * @param string $key
+     * @param string $param
+     */
+    public function setParameter($key, $param);
 }

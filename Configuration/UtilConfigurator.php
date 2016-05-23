@@ -11,31 +11,20 @@
 
 namespace SymfonyId\AdminBundle\Configuration;
 
-use SymfonyId\AdminBundle\Annotation\Page;
+use SymfonyId\AdminBundle\Annotation\Util;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class PageConfigurator implements ConfiguratorInterface
+class UtilConfigurator implements ConfiguratorInterface
 {
-    /**
-     * @var Page
-     */
-    private $page;
+    private $util;
 
     /**
-     * @return Page
+     * @param Util $util
      */
-    public function getPage()
+    public function setUtil(Util $util)
     {
-        return $this->page;
-    }
-
-    /**
-     * @param Page $page
-     */
-    public function setPage(Page $page)
-    {
-        $this->page = $page;
+        $this->util = $util;
     }
 }

@@ -11,9 +11,111 @@
 
 namespace SymfonyId\AdminBundle\EventListener;
 
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\KernelInterface;
+use SymfonyId\AdminBundle\Annotation\Crud;
+use SymfonyId\AdminBundle\Annotation\Grid;
+use SymfonyId\AdminBundle\Annotation\Page;
+use SymfonyId\AdminBundle\Annotation\Plugin;
+use SymfonyId\AdminBundle\Annotation\Util;
+use SymfonyId\AdminBundle\Configuration\ConfigurationFactory;
+use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
+use SymfonyId\AdminBundle\Configuration\GridConfigurator;
+use SymfonyId\AdminBundle\Configuration\PageConfigurator;
+use SymfonyId\AdminBundle\Configuration\PluginConfigurator;
+use SymfonyId\AdminBundle\Configuration\UtilConfigurator;
+use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
+
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
 class ControllerAnnotationListener
 {
+    use CrudControllerListenerTrait;
+
+    /**
+     * @var KernelInterface
+     */
+    private $kernel;
+
+    /**
+     * @var ExtractorFactory
+     */
+    private $extractorFactory;
+
+    /**
+     * @var ConfigurationFactory
+     */
+    private $configurationFactory;
+
+    /**
+     * @param KernelInterface      $kernel
+     * @param ExtractorFactory     $extractorFactory
+     * @param ConfigurationFactory $configurationFactory
+     */
+    public function __construct(KernelInterface $kernel, ExtractorFactory $extractorFactory, ConfigurationFactory $configurationFactory)
+    {
+        $this->kernel = $kernel;
+        $this->extractorFactory = $extractorFactory;
+        $this->configurationFactory = $configurationFactory;
+    }
+
+    /**
+     * @param FilterControllerEvent $event
+     *
+     * @throws \Exception
+     */
+    public function onKernelController(FilterControllerEvent $event)
+    {
+        if ('prod' === strtolower($this->kernel->getEnvironment())) {
+            return;
+        }
+
+        if (!$this->isValidCrudListener($event)) {
+            return;
+        }
+
+        $reflectionController = new \ReflectionObject($this->controller);
+        $this->extractAnnotation($reflectionController);
+    }
+
+    /**
+     * @param \ReflectionObject $reflectionController
+     */
+    private function extractAnnotation(\ReflectionObject $reflectionController)
+    {
+        /** @var CrudConfigurator $crudConfigurator */
+        $crudConfigurator = $this->configurationFactory->getConfigurator(CrudConfigurator::class);
+        /** @var PageConfigurator $pageConfigurator */
+        $pageConfigurator = $this->configurationFactory->getConfigurator(PageConfigurator::class);
+        /** @var GridConfigurator $gridConfigurator */
+        $gridConfigurator = $this->configurationFactory->getConfigurator(GridConfigurator::class);
+        /** @var PluginConfigurator $pluginConfigurator */
+        $pluginConfigurator = $this->configurationFactory->getConfigurator(PluginConfigurator::class);
+        /** @var UtilConfigurator $utilConfigurator */
+        $utilConfigurator = $this->configurationFactory->getConfigurator(UtilConfigurator::class);
+
+        $this->extractorFactory->extract($reflectionController);
+        foreach ($this->extractorFactory->getClassAnnotations() as $annotation) {
+            if ($annotation instanceof Crud) {
+                $crudConfigurator->setCrud($annotation);
+            }
+
+            if ($annotation instanceof Page) {
+                $pageConfigurator->setPage($annotation);
+            }
+
+            if ($annotation instanceof Grid) {
+                $gridConfigurator->setGrid($annotation);
+            }
+
+            if ($annotation instanceof Plugin) {
+                $pluginConfigurator->setPlugin($annotation);
+            }
+
+            if ($annotation instanceof Util) {
+                $utilConfigurator->setUtil($annotation);
+            }
+        }
+    }
 }

@@ -22,7 +22,7 @@ use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class CrudConfigurator implements ContainerAwareInterface
+class CrudConfigurator implements ContainerAwareInterface, ConfiguratorInterface
 {
     use ContainerAwareTrait;
 

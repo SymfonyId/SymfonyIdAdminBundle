@@ -16,7 +16,7 @@ use SymfonyId\AdminBundle\Annotation\Driver;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class DriverConfigurator
+class DriverConfigurator implements ConfiguratorInterface
 {
     /**
      * @var Driver

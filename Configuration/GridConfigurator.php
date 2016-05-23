@@ -16,7 +16,7 @@ use SymfonyId\AdminBundle\Annotation\Grid;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class GridConfigurator
+class GridConfigurator implements ConfiguratorInterface
 {
     /**
      * @var Grid
