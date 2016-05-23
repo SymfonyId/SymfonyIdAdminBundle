@@ -35,7 +35,7 @@ class CacheHandler
 
     /**
      * @param \ReflectionClass $reflectionClass
-     * @param string $content
+     * @param string           $content
      *
      * @throws PermissionException
      */
@@ -80,6 +80,7 @@ class CacheHandler
 
     /**
      * @param \ReflectionClass $reflectionClass
+     *
      * @return string
      */
     private function getCacheFile(\ReflectionClass $reflectionClass)

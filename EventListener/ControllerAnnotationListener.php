@@ -49,8 +49,8 @@ class ControllerAnnotationListener
     private $configuratorFactory;
 
     /**
-     * @param KernelInterface      $kernel
-     * @param ExtractorFactory     $extractorFactory
+     * @param KernelInterface     $kernel
+     * @param ExtractorFactory    $extractorFactory
      * @param ConfiguratorFactory $configuratorFactory
      */
     public function __construct(KernelInterface $kernel, ExtractorFactory $extractorFactory, ConfiguratorFactory $configuratorFactory)

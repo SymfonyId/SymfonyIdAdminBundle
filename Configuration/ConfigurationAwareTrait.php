@@ -33,6 +33,7 @@ trait ConfigurationAwareTrait
 
     /**
      * @param string $controllerClass
+     *
      * @return ConfiguratorFactory
      */
     private function getConfiguratorFactoryFroClass($controllerClass)
@@ -46,6 +47,7 @@ trait ConfigurationAwareTrait
 
     /**
      * @param string $controllerClass
+     *
      * @return ConfiguratorFactory
      */
     private function fetchFromCache($controllerClass)

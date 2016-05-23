@@ -53,11 +53,11 @@ class EnableFieldsFilterListener
     private $dateTimeFormat;
 
     /**
-     * @param ManagerFactory       $managerFactory
-     * @param ExtractorFactory     $extractorFactory
+     * @param ManagerFactory      $managerFactory
+     * @param ExtractorFactory    $extractorFactory
      * @param ConfiguratorFactory $configuratorFactory
-     * @param DriverFinder         $driverFinder
-     * @param string               $dateTimeFormat
+     * @param DriverFinder        $driverFinder
+     * @param string              $dateTimeFormat
      */
     public function __construct(ManagerFactory $managerFactory, ExtractorFactory $extractorFactory, ConfiguratorFactory $configuratorFactory, DriverFinder $driverFinder, $dateTimeFormat)
     {

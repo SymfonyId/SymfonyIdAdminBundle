@@ -10,6 +10,7 @@
  */
 
 namespace SymfonyId\AdminBundle\EventListener;
+
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 /**
@@ -37,6 +38,5 @@ class EnableFieldSorterListener
         if (!$this->sortBy = $request->query->get('sort_by')) {
             return;
         }
-
     }
 }
