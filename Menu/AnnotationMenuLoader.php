@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\Route;
+namespace SymfonyId\AdminBundle\Menu;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class YamlMenuBuilder
+class AnnotationMenuLoader
 {
 }
