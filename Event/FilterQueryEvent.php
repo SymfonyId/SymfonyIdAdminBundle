@@ -11,8 +11,8 @@
 
 namespace SymfonyId\AdminBundle\Event;
 
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ODM\MongoDB\Query\Builder;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\EventDispatcher\Event;
 use SymfonyId\AdminBundle\Exception\InvalidQueryBuilderObject;
 

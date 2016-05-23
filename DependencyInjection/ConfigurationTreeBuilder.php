@@ -11,8 +11,8 @@
 
 namespace SymfonyId\AdminBundle\DependencyInjection;
 
-use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>

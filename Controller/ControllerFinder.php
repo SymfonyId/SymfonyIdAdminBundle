@@ -12,8 +12,8 @@
 namespace SymfonyId\AdminBundle\Controller;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\HttpKernel\KernelInterface;
 use SymfonyId\AdminBundle\Exception\RuntimeException;
 
 /**

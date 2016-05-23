@@ -14,8 +14,11 @@ namespace SymfonyId\AdminBundle\Crud;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use SymfonyId\AdminBundle\Annotation\Driver;
+use SymfonyId\AdminBundle\Model\ModelInterface;
 use SymfonyId\AdminBundle\View\View;
 
 /**
@@ -24,11 +27,6 @@ use SymfonyId\AdminBundle\View\View;
 class CrudFactory implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
-
-    /**
-     * @var CrudOperationHandler
-     */
-    private $crudOperationHandler;
 
     /**
      * @var EngineInterface
@@ -53,20 +51,13 @@ class CrudFactory implements ContainerAwareInterface
     /**
      * @var string
      */
-    private $modelClass;
-
-    /**
-     * @var string
-     */
     private $template;
 
     /**
-     * @param CrudOperationHandler $crudOperationHandler
-     * @param EngineInterface      $templateEngine
+     * @param EngineInterface $templateEngine
      */
-    public function __construct(CrudOperationHandler $crudOperationHandler, EngineInterface $templateEngine)
+    public function __construct(EngineInterface $templateEngine)
     {
-        $this->crudOperationHandler = $crudOperationHandler;
         $this->templateEngine = $templateEngine;
     }
 
@@ -95,11 +86,11 @@ class CrudFactory implements ContainerAwareInterface
     }
 
     /**
-     * @param string $modelClass
+     * @param string $template
      */
-    public function setModelClass($modelClass)
+    public function setTemplate($template)
     {
-        $this->modelClass = $modelClass;
+        $this->template = $template;
     }
 
     /**
@@ -133,5 +124,61 @@ class CrudFactory implements ContainerAwareInterface
         $viewHandler->isFormatNumber($formatNumber);
 
         return $this->getResponse($viewHandler->getView($this->driver));
+    }
+
+    /**
+     * @param FormInterface $form
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function createOrUpdate(FormInterface $form)
+    {
+        /** @var CreateUpdateActionHandler $viewHandler */
+        $viewHandler = $this->viewHandlers[CreateUpdateActionHandler::class];
+        $viewHandler->setRequest($this->request);
+        $viewHandler->setForm($form);
+
+        return $this->getResponse($viewHandler->getView($this->driver));
+    }
+
+    /**
+     * @param ModelInterface $model
+     * @param array          $showFields
+     * @param bool           $allowDelete
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showDetail(ModelInterface $model, array $showFields, $allowDelete = true)
+    {
+        /** @var DetailActionHandler $viewHandler */
+        $viewHandler = $this->viewHandlers[DetailActionHandler::class];
+        $viewHandler->setRequest($this->request);
+        $viewHandler->setData($model);
+        $viewHandler->setShowFields($showFields);
+        $viewHandler->isDelete($allowDelete);
+
+        return $this->getResponse($viewHandler->getView($this->driver));
+    }
+
+    /**
+     * @param ModelInterface $model
+     *
+     * @return JsonResponse
+     *
+     * @throws \SymfonyId\AdminBundle\Exception\RuntimeException
+     */
+    public function remove(ModelInterface $model)
+    {
+        /** @var DeleteActionHandler $viewHandler */
+        $viewHandler = $this->viewHandlers[DeleteActionHandler::class];
+        $viewHandler->setRequest($this->request);
+        $viewHandler->setData($model);
+
+        $view = $viewHandler->getView($this->driver);
+
+        return new JsonResponse(array(
+            'status' => $view->getParam('errors'),
+            'message' => $view->getParam('message'),
+        ));
     }
 }

@@ -12,8 +12,8 @@
 namespace SymfonyId\AdminBundle\Cache;
 
 use Symfony\Component\HttpKernel\KernelInterface;
-use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 use SymfonyId\AdminBundle\Exception\PermissionException;
+use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>

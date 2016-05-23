@@ -24,7 +24,7 @@ use SymfonyId\AdminBundle\View\View;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class ListActionHandler implements ContainerAwareInterface, ViewHandlerInterface
+class ListActionHandler implements ViewHandlerInterface, ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
@@ -54,11 +54,6 @@ class ListActionHandler implements ContainerAwareInterface, ViewHandlerInterface
     private $request;
 
     /**
-     * @var string
-     */
-    private $translationDomain;
-
-    /**
      * @var array
      */
     private $gridFields = array();
@@ -83,15 +78,13 @@ class ListActionHandler implements ContainerAwareInterface, ViewHandlerInterface
      * @param View                 $view
      * @param DataExporter         $dataExporter
      * @param TranslatorInterface  $translator
-     * @param string               $translationDomain
      */
-    public function __construct(CrudOperationHandler $crudOperationHandler, View $view, DataExporter $dataExporter, TranslatorInterface $translator, $translationDomain)
+    public function __construct(CrudOperationHandler $crudOperationHandler, View $view, DataExporter $dataExporter, TranslatorInterface $translator)
     {
         $this->crudOperationHandler = $crudOperationHandler;
         $this->view = $view;
         $this->dataExporter = $dataExporter;
         $this->translator = $translator;
-        $this->translationDomain = $translationDomain;
     }
 
     /**
@@ -164,11 +157,17 @@ class ListActionHandler implements ContainerAwareInterface, ViewHandlerInterface
      * @param Driver $driver
      *
      * @return View
+     *
+     * @throws RuntimeException
      */
     public function getView(Driver $driver)
     {
+        if (!$this->request) {
+            throw new RuntimeException('Call "setRequest()" before call this method.');
+        }
+
         $this->view->setParam('menu', $this->container->getParameter('symfonyid.admin.menu'));
-        $this->view->setParam('action_method', $this->translator->trans('page.list', array(), $this->translationDomain));
+        $this->view->setParam('action_method', $this->translator->trans('page.list', array(), $this->container->getParameter('symfonyid.admin.translation_domain')));
         $this->view->setParam('allow_create', $this->allowCreate);
         $this->view->setParam('allow_delete', $this->allowBulkDelete);
         $this->view->setParam('allow_download', $this->dataExporter->isAllowExport($driver, $this->container->getParameter('symfonyid.admin.max_records')));
@@ -187,7 +186,7 @@ class ListActionHandler implements ContainerAwareInterface, ViewHandlerInterface
     private function setHeader()
     {
         $translator = $this->translator;
-        $translationDomain = $this->translationDomain;
+        $translationDomain = $this->container->getParameter('symfonyid.admin.translation_domain');
 
         $header = array_map(function ($value) use ($translator, $translationDomain) {
             return array(
@@ -202,17 +201,11 @@ class ListActionHandler implements ContainerAwareInterface, ViewHandlerInterface
 
     /**
      * @param Driver $driver
-     *
-     * @throws RuntimeException
      */
     private function setRecords(Driver $driver)
     {
-        if (!$this->request) {
-            throw new RuntimeException('Call "setRequest()" before call this method.');
-        }
-
         $page = $this->request->query->get('page', 1);
-        $perPage = $this->container->getParameter('symfonian_id.admin.per_page');
+        $perPage = $this->container->getParameter('symfonyid.admin.per_page');
         $this->view->setParam('start', ($page - 1) * $perPage);
 
         $pagination = $this->crudOperationHandler->paginateResult($driver, $page, $perPage);

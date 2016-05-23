@@ -127,4 +127,12 @@ class CrudOperationHandler
 
         return true;
     }
+
+    /**
+     * @return string
+     */
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
+    }
 }
