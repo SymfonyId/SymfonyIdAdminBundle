@@ -17,9 +17,9 @@ namespace SymfonyId\AdminBundle\Filter;
 interface FieldSortInterface
 {
     /**
-     * @param string $entityClass
-     * @param \Doctrine\ORM\QueryBuilder|Doctrine\ODM\MongoDB\Query\Builder
-     * @param string
+     * @param string                                                         $modelClass
+     * @param \Doctrine\ORM\QueryBuilder|\Doctrine\ODM\MongoDB\Query\Builder $queryBuilder
+     * @param string                                                         $sortBy
      */
-    public function sort($entityClass, $queryBuilder, $sortBy);
+    public function sort($modelClass, $queryBuilder, $sortBy);
 }

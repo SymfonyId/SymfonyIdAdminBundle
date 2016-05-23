@@ -60,7 +60,7 @@ class ParameterBuilder
         $this->containerBuilder->setParameter('symfonyid.admin.translation_domain', $config['translation_domain']);
 
         if (!in_array($config['driver'], array(Driver::ORM, Driver::ODM))) {
-            throw new DriverNotFoundException(sprintf('"%s" driver is not valid.', $config['value']));
+            throw new DriverNotFoundException($config['value']);
         }
 
         $this->containerBuilder->setParameter('symfonyid.admin.driver', $config['driver']);

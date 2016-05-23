@@ -34,14 +34,14 @@ trait ModelMetadataTrait
 
     /**
      * @param Driver $driver
-     * @param string $entityClass
+     * @param string $modelClass
      *
      * @return \Doctrine\ORM\Mapping\ClassMetadata
      */
-    public function getClassMetadata(Driver $driver, $entityClass)
+    public function getClassMetadata(Driver $driver, $modelClass)
     {
         $manager = $this->managerFactory->getManager($driver);
-        $manager->setModelClass($entityClass);
+        $manager->setModelClass($modelClass);
 
         return $manager->getClassMetadata();
     }

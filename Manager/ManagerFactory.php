@@ -39,7 +39,7 @@ class ManagerFactory
     public function getManager(Driver $driver)
     {
         if (!in_array($driver->getDriver(), $this->managers)) {
-            throw new DriverNotFoundException(sprintf('"%s" driver not found', $driver->getDriver()));
+            throw new DriverNotFoundException($driver->getDriver());
         }
 
         return $this->managers[$driver->getDriver()];

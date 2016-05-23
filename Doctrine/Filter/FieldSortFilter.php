@@ -32,13 +32,13 @@ class FieldSortFilter implements FieldSortInterface
     }
 
     /**
-     * @param string                     $entityClass
+     * @param string                     $modelClass
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string                     $sortBy
      */
-    public function sort($entityClass, $queryBuilder, $sortBy)
+    public function sort($modelClass, $queryBuilder, $sortBy)
     {
-        $classMetadata = $this->getClassMetadata(new Driver(array('value' => self::DRIVER)), $entityClass);
+        $classMetadata = $this->getClassMetadata(new Driver(array('value' => self::DRIVER)), $modelClass);
         $metadata = $classMetadata->getFieldMapping($classMetadata->getFieldName($sortBy));
         $queryBuilder->addOrderBy(sprintf('%s.%s', Constants::ENTITY_ALIAS, $metadata['fieldName']));
     }

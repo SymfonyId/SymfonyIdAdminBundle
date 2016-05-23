@@ -41,7 +41,7 @@ class Driver
     {
         if (isset($data['value'])) {
             if (!in_array($data['value'], array(self::ORM, self::ODM))) {
-                throw new DriverNotFoundException(sprintf('"%s" driver is not found.', $data['value']));
+                throw new DriverNotFoundException($data['value']);
             }
 
             $this->value = $data['value'];

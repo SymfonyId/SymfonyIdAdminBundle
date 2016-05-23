@@ -65,6 +65,19 @@ class OrmManager extends AbstractManager
     }
 
     /**
+     * @return int
+     */
+    public function count()
+    {
+        /** @var EntityRepository $repository */
+        $repository = $this->getManager()->getRepository($this->getModelClass());
+        $queryBuilder = $repository->createQueryBuilder(Constants::ENTITY_ALIAS);
+        $queryBuilder->select(sprintf('COUNT(%s.id)', Constants::ENTITY_ALIAS));
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
      * @return string
      */
     public function getDriver()

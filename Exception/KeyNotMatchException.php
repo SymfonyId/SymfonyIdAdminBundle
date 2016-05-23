@@ -14,10 +14,10 @@ namespace SymfonyId\AdminBundle\Exception;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class DriverNotFoundException extends \InvalidArgumentException
+class KeyNotMatchException extends \InvalidArgumentException
 {
-    public function __construct($driver, $code = 0, \Exception $previous = null)
+    public function __construct($expectation, $expected, $code = 0, \Exception $previous = null)
     {
-        parent::__construct(sprintf('Driver with name "%s" is not found.', $driver), $code, $previous);
+        parent::__construct(sprintf('Key not match. Expectation "%d" got "%d"', $expectation, $expected), $code, $previous);
     }
 }

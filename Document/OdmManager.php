@@ -63,6 +63,20 @@ class OdmManager extends AbstractManager
     }
 
     /**
+     * @return int
+     */
+    public function count()
+    {
+        /** @var DocumentManager $manager */
+        $manager = $this->getManager();
+        $queryBuilder = $manager->createQueryBuilder($this->getModelClass());
+        $queryBuilder->eagerCursor(true);
+        $queryBuilder->prime(true);
+
+        return $queryBuilder->getQuery()->execute()->count();
+    }
+
+    /**
      * @return string
      */
     public function getDriver()

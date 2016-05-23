@@ -36,6 +36,7 @@ class CacheHandler
     /**
      * @param string $file
      * @param string $content
+     *
      * @throws PermissionException
      */
     public function writeCache($file, $content)
@@ -52,6 +53,7 @@ class CacheHandler
 
     /**
      * @param \ReflectionClass $reflectionClass
+     *
      * @return bool
      */
     public function hasCache(\ReflectionClass $reflectionClass)
@@ -67,6 +69,7 @@ class CacheHandler
 
     /**
      * @param \ReflectionClass $reflectionClass
+     *
      * @return string
      */
     public function loadCache(\ReflectionClass $reflectionClass)

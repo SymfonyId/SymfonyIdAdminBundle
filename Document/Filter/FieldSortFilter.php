@@ -31,13 +31,13 @@ class FieldSortFilter implements FieldSortInterface
     }
 
     /**
-     * @param string                              $entityClass
+     * @param string                              $modelClass
      * @param \Doctrine\ODM\MongoDB\Query\Builder $queryBuilder
      * @param string                              $sortBy
      */
-    public function sort($entityClass, $queryBuilder, $sortBy)
+    public function sort($modelClass, $queryBuilder, $sortBy)
     {
-        $classMetadata = $this->getClassMetadata(new Driver(array('value' => self::DRIVER)), $entityClass);
+        $classMetadata = $this->getClassMetadata(new Driver(array('value' => self::DRIVER)), $modelClass);
         $metadata = $classMetadata->getFieldMapping($sortBy);
         $queryBuilder->sort(array(
             $metadata['fieldName'] => 'asc',

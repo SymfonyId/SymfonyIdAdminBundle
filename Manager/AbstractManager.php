@@ -101,7 +101,7 @@ abstract class AbstractManager implements ManagerInterface
     /**
      * @param mixed $id
      *
-     * @return ModelInterface
+     * @return ModelInterface|null
      */
     public function find($id)
     {
@@ -110,6 +110,18 @@ abstract class AbstractManager implements ManagerInterface
         }
 
         return $this->manager->getRepository($this->modelClass)->find($id);
+    }
+
+    /**
+     * @return ModelInterface[]
+     */
+    public function findAll()
+    {
+        if (!$this->modelClass) {
+            throw new ModelNotFoundException('setModelClass');
+        }
+
+        return $this->manager->getRepository($this->modelClass)->findAll();
     }
 
     /**

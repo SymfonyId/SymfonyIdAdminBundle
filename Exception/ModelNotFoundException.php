@@ -23,6 +23,6 @@ class ModelNotFoundException extends \InvalidArgumentException
      */
     public function __construct($setter, $code = 0, \Exception $previous = null)
     {
-        parent::__construct(sprintf('Entity class can\'t empty. Please call "%s" to set entity class', $setter), $code, $previous);
+        parent::__construct(sprintf('Model class can\'t empty. Please call "%s" to set model class', $setter), $code, $previous);
     }
 }

@@ -45,9 +45,19 @@ interface ManagerInterface
     /**
      * @param mixed $id
      *
-     * @return ModelInterface
+     * @return ModelInterface|null
      */
     public function find($id);
+
+    /**
+     * @return ModelInterface[]
+     */
+    public function findAll();
+
+    /**
+     * @return int
+     */
+    public function count();
 
     /**
      * @return string
