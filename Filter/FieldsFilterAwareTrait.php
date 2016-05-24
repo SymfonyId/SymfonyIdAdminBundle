@@ -17,22 +17,22 @@ use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-trait FilterableTrait
+trait FieldsFilterAwareTrait
 {
     /**
      * @var ExtractorFactory
      */
-    private $extractorFactory;
+    protected $extractorFactory;
 
     /**
      * @var ConfiguratorFactory
      */
-    private $configuratorFactory;
+    protected $configuratorFactory;
 
     /**
      * @var string
      */
-    private $dateTimeFormat;
+    protected $dateTimeFormat;
 
     /**
      * @param ExtractorFactory $extractorFactory

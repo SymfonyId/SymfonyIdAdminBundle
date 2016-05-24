@@ -14,15 +14,16 @@ namespace SymfonyId\AdminBundle\Doctrine\Filter;
 use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Filter\FieldSortInterface;
 use SymfonyId\AdminBundle\Manager\ManagerFactory;
-use SymfonyId\AdminBundle\Model\ModelMetadataTrait;
+use SymfonyId\AdminBundle\Model\ModelMetadataAwareInterface;
+use SymfonyId\AdminBundle\Model\ModelMetadataAwareTrait;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class FieldSortFilter implements FieldSortInterface
+class FieldSortFilter implements FieldSortInterface, ModelMetadataAwareInterface
 {
-    use ModelMetadataTrait;
+    use ModelMetadataAwareTrait;
 
     const DRIVER = Driver::ORM;
 

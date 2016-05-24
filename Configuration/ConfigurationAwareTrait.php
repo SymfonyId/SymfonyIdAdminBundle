@@ -11,38 +11,66 @@
 
 namespace SymfonyId\AdminBundle\Configuration;
 
+use Symfony\Component\HttpKernel\KernelInterface;
+use SymfonyId\AdminBundle\Cache\CacheHandler;
+
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
 trait ConfigurationAwareTrait
 {
     /**
-     * @return \SymfonyId\AdminBundle\Cache\CacheHandler
+     * @var CacheHandler
      */
-    abstract protected function getCacheHandler();
+    protected $cacheHandler;
 
     /**
-     * @return ConfiguratorFactory
+     * @var ConfiguratorFactory
      */
-    abstract protected function getConfiguratorFactory();
+    protected $configuratorFactory;
 
     /**
-     * @return \Symfony\Component\HttpKernel\KernelInterface
+     * @var KernelInterface
      */
-    abstract protected function getKernel();
+    protected $kernel;
+
+    /**
+     * @param CacheHandler $cacheHandler
+     */
+    public function setCacheHandler(CacheHandler $cacheHandler)
+    {
+        $this->cacheHandler = $cacheHandler;
+    }
+
+    /**
+     * @param ConfiguratorFactory $configuratorFactory
+     */
+    public function setConfiguratorFactory(ConfiguratorFactory $configuratorFactory)
+    {
+        $this->configuratorFactory = $configuratorFactory;
+    }
+
+    /**
+     * @param KernelInterface $kernel
+     */
+    public function setKernel(KernelInterface $kernel)
+    {
+        $this->kernel = $kernel;
+    }
 
     /**
      * @param string $controllerClass
      *
      * @return ConfiguratorFactory
      */
-    private function getConfiguratorFactoryFroClass($controllerClass)
+    public function getConfiguratorFactory($controllerClass)
     {
-        if ('prod' !== strtolower($this->getKernel()->getEnvironment())) {
-            return $this->getConfiguratorFactory();
+        if ('prod' !== strtolower($this->kernel->getEnvironment())) {
+            return $this->configuratorFactory;
         }
+        $this->configuratorFactory = $this->fetchFromCache($controllerClass);
 
-        return $this->fetchFromCache($controllerClass);
+        return $this->configuratorFactory;
     }
 
     /**
@@ -53,11 +81,11 @@ trait ConfigurationAwareTrait
     private function fetchFromCache($controllerClass)
     {
         $reflectionController = new \ReflectionClass($controllerClass);
-        if (!$this->getCacheHandler()->hasCache($reflectionController)) {
+        if (!$this->cacheHandler->hasCache($reflectionController)) {
             //It's impossible but we need to prevent and make sure it is not throwing an exception
-            return $this->getConfiguratorFactory();
+            return $this->configuratorFactory;
         }
 
-        return require $this->getCacheHandler()->loadCache($reflectionController);
+        return require $this->cacheHandler->loadCache($reflectionController);
     }
 }

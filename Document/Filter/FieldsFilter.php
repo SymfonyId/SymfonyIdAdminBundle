@@ -16,14 +16,14 @@ use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
 use SymfonyId\AdminBundle\Annotation\Filter;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
 use SymfonyId\AdminBundle\Filter\FieldsFilterInterface;
-use SymfonyId\AdminBundle\Filter\FilterableTrait;
+use SymfonyId\AdminBundle\Filter\FieldsFilterAwareTrait;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
 class FieldsFilter extends BsonFilter implements FieldsFilterInterface
 {
-    use FilterableTrait;
+    use FieldsFilterAwareTrait;
 
     /**
      * Gets the criteria array to add to a query.

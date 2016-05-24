@@ -55,7 +55,7 @@ class FilterQueryEvent extends Event
     }
 
     /**
-     * @return QueryBuilder
+     * @return QueryBuilder|Builder
      */
     public function getQueryBuilder()
     {

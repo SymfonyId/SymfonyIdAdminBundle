@@ -16,14 +16,14 @@ use Doctrine\ORM\Query\Filter\SQLFilter;
 use SymfonyId\AdminBundle\Annotation\Filter;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
 use SymfonyId\AdminBundle\Filter\FieldsFilterInterface;
-use SymfonyId\AdminBundle\Filter\FilterableTrait;
+use SymfonyId\AdminBundle\Filter\FieldsFilterAwareTrait;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
 class FieldsFilter extends SQLFilter implements FieldsFilterInterface
 {
-    use FilterableTrait;
+    use FieldsFilterAwareTrait;
 
     /**
      * Gets the SQL query part to add to a query.

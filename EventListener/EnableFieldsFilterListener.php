@@ -13,6 +13,8 @@ namespace SymfonyId\AdminBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use SymfonyId\AdminBundle\Annotation\Driver;
+use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
+use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
@@ -23,9 +25,10 @@ use SymfonyId\AdminBundle\Manager\ManagerFactory;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class EnableFieldsFilterListener
+class EnableFieldsFilterListener implements ConfigurationAwareInterface
 {
-    use CrudControllerListenerTrait;
+    use CrudControllerListenerAwareTrait;
+    use ConfigurationAwareTrait;
 
     /**
      * @var ManagerFactory
@@ -36,11 +39,6 @@ class EnableFieldsFilterListener
      * @var ExtractorFactory
      */
     private $extractorFactory;
-
-    /**
-     * @var ConfiguratorFactory
-     */
-    private $configuratorFactory;
 
     /**
      * @var DriverFinder
@@ -55,15 +53,13 @@ class EnableFieldsFilterListener
     /**
      * @param ManagerFactory      $managerFactory
      * @param ExtractorFactory    $extractorFactory
-     * @param ConfiguratorFactory $configuratorFactory
      * @param DriverFinder        $driverFinder
      * @param string              $dateTimeFormat
      */
-    public function __construct(ManagerFactory $managerFactory, ExtractorFactory $extractorFactory, ConfiguratorFactory $configuratorFactory, DriverFinder $driverFinder, $dateTimeFormat)
+    public function __construct(ManagerFactory $managerFactory, ExtractorFactory $extractorFactory, DriverFinder $driverFinder, $dateTimeFormat)
     {
         $this->managerFactory = $managerFactory;
         $this->extractorFactory = $extractorFactory;
-        $this->configuratorFactory = $configuratorFactory;
         $this->driverFinder = $driverFinder;
         $this->dateTimeFormat = $dateTimeFormat;
     }
@@ -82,8 +78,9 @@ class EnableFieldsFilterListener
             return;
         }
 
+        $configurator = $this->getConfiguratorFactory(new \ReflectionObject($this->controller));
         /** @var CrudConfigurator $crudConfigurator */
-        $crudConfigurator = $this->configuratorFactory->getConfigurator(CrudConfigurator::class);
+        $crudConfigurator = $configurator->getConfigurator(CrudConfigurator::class);
 
         $driver = $this->driverFinder->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
         $manager = $this->managerFactory->getManager($driver);
@@ -92,25 +89,26 @@ class EnableFieldsFilterListener
             /* @var \Doctrine\ORM\EntityManager $manager */
             /* @var FieldsFilterInterface $filter */
             $filter = $manager->getFilters()->enable('symfonyid.admin.filter.orm.fields');
-            $this->applyFilter($filter, $keyword);
+            $this->applyFilter($configurator, $filter, $keyword);
         }
 
         if (Driver::ODM === $driver->getDriver()) {
             /* @var \Doctrine\ODM\MongoDB\DocumentManager $manager */
             /* @var FieldsFilterInterface $filter */
             $filter = $manager->getFilterCollection()->enable('symfonyid.admin.filter.odm.fields');
-            $this->applyFilter($filter, $keyword);
+            $this->applyFilter($configurator, $filter, $keyword);
         }
     }
 
     /**
+     * @param ConfiguratorFactory   $configuratorFactory
      * @param FieldsFilterInterface $filter
      * @param string                $keyword
      */
-    private function applyFilter(FieldsFilterInterface $filter, $keyword)
+    private function applyFilter(ConfiguratorFactory $configuratorFactory, FieldsFilterInterface $filter, $keyword)
     {
         $filter->setExtractor($this->extractorFactory);
-        $filter->setConfigurator($this->configuratorFactory);
+        $filter->setConfigurator($configuratorFactory);
         $filter->setDateTimeFormat($this->dateTimeFormat);
         $filter->setParameter('filter', $keyword);
     }

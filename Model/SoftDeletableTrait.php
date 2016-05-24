@@ -19,17 +19,17 @@ trait SoftDeletableTrait
     /**
      * @var bool
      */
-    private $isDeleted = false;
+    protected $isDeleted = false;
 
     /**
      * @var \DateTime
      */
-    private $deletedAt;
+    protected $deletedAt;
 
     /**
      * @var string
      */
-    private $deletedBy;
+    protected $deletedBy;
 
     public function isDeleted($isDeleted = null)
     {

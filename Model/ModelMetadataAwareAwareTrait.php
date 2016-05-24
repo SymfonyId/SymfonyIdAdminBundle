@@ -17,12 +17,12 @@ use SymfonyId\AdminBundle\Manager\ManagerFactory;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-trait ModelMetadataTrait
+trait ModelMetadataAwareTrait
 {
     /**
      * @var ManagerFactory
      */
-    private $managerFactory;
+    protected $managerFactory;
 
     /**
      * @param ManagerFactory $managerFactory

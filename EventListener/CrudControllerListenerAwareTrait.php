@@ -17,19 +17,19 @@ use SymfonyId\AdminBundle\Controller\CrudController;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-trait CrudControllerListenerTrait
+trait CrudControllerListenerAwareTrait
 {
     /**
      * @var CrudController
      */
-    private $controller;
+    protected $controller;
 
     /**
      * @param FilterControllerEvent $event
      *
      * @return bool
      */
-    private function isValidCrudListener(FilterControllerEvent $event)
+    public function isValidCrudListener(FilterControllerEvent $event)
     {
         $controller = $event->getController();
         if (!is_array($controller)) {

@@ -31,7 +31,7 @@ use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
  */
 class ControllerAnnotationListener
 {
-    use CrudControllerListenerTrait;
+    use CrudControllerListenerAwareTrait;
 
     /**
      * @var KernelInterface

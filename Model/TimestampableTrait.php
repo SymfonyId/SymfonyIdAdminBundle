@@ -19,22 +19,22 @@ trait TimestampableTrait
     /**
      * @var \DateTime
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var string
      */
-    private $createdBy;
+    protected $createdBy;
 
     /**
      * @var \DateTime
      */
-    private $updatedAt;
+    protected $updatedAt;
 
     /**
      * @var string
      */
-    private $updatedBy;
+    protected $updatedBy;
 
     /**
      * @param \DateTime $date
