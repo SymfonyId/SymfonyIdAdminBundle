@@ -14,10 +14,10 @@
 
             <tag name="symfonyid.odm.filter" />
         </service>
-        <service id="symfonian_id.admin.filter.orm.sort" class="SymfonyId\AdminBundle\Doctrine\Filter\FieldSortFilter" >
+        <service id="symfonyid.admin.filter.orm.sort" class="SymfonyId\AdminBundle\Doctrine\Filter\FieldSortFilter" >
             <argument type="service" id="symfonyid.admin.manager.manager_factory"/>
         </service>
-        <service id="symfonian_id.admin.filter.odm.sort" class="SymfonyId\AdminBundle\Document\Filter\FieldSortFilter" >
+        <service id="symfonyid.admin.filter.odm.sort" class="SymfonyId\AdminBundle\Document\Filter\FieldSortFilter" >
             <argument type="service" id="symfonyid.admin.manager.manager_factory"/>
         </service>
     </services>

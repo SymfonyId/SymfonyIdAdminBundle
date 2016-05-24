@@ -12,6 +12,7 @@
 namespace SymfonyId\AdminBundle\Configuration;
 
 use SymfonyId\AdminBundle\Annotation\Plugin;
+use SymfonyId\AdminBundle\Exception\CallMethodBeforeException;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -24,18 +25,66 @@ class PluginConfigurator implements ConfiguratorInterface
     private $plugin;
 
     /**
-     * @return Plugin
-     */
-    public function getPlugin()
-    {
-        return $this->plugin;
-    }
-
-    /**
      * @param Plugin $plugin
      */
     public function setPlugin(Plugin $plugin)
     {
         $this->plugin = $plugin;
+    }
+
+    /**
+     * @return bool
+     *
+     * @throws CallMethodBeforeException
+     */
+    public function isHtmlEditorEnabled()
+    {
+        if (!$this->plugin) {
+            throw new CallMethodBeforeException('setPlugin');
+        }
+
+        return $this->plugin->isHtmlEditor();
+    }
+
+    /**
+     * @return bool
+     *
+     * @throws CallMethodBeforeException
+     */
+    public function isFileChooserEnabled()
+    {
+        if (!$this->plugin) {
+            throw new CallMethodBeforeException('setPlugin');
+        }
+
+        return $this->plugin->isFileChooser();
+    }
+
+    /**
+     * @return bool
+     *
+     * @throws CallMethodBeforeException
+     */
+    public function isNumericEnabled()
+    {
+        if (!$this->plugin) {
+            throw new CallMethodBeforeException('setPlugin');
+        }
+
+        return $this->plugin->isNumeric();
+    }
+
+    /**
+     * @return bool
+     *
+     * @throws CallMethodBeforeException
+     */
+    public function isBulkInsertEnabled()
+    {
+        if (!$this->plugin) {
+            throw new CallMethodBeforeException('setPlugin');
+        }
+
+        return $this->plugin->isBulkInsert();
     }
 }

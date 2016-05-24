@@ -85,20 +85,20 @@ class EnableFieldSorterListener implements ConfigurationAwareInterface, CrudCont
         }
         $this->session->set(Constants::SESSION_SORTED_ID, $this->sortBy);
 
-        $configurator = $this->getConfiguratorFactory(new \ReflectionObject($this->controller));
+        $configuratorFactory = $this->getConfiguratorFactory(new \ReflectionObject($this->controller));
         /** @var CrudConfigurator $crudConfigurator */
-        $crudConfigurator = $configurator->getConfigurator(CrudConfigurator::class);
+        $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
         $driver = $this->driverFinder->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
         if (Driver::ORM === $driver->getDriver()) {
             /** @var \SymfonyId\AdminBundle\Doctrine\Filter\FieldSortFilter $filter */
-            $filter = $this->container->get('symfonian_id.admin.filter.orm.sort');
+            $filter = $this->container->get('symfonyid.admin.filter.orm.sort');
             $filter->sort($event->getModelClass(), $event->getQueryBuilder(), $this->sortBy);
         }
 
         if (Driver::ODM === $driver->getDriver()) {
             /** @var \SymfonyId\AdminBundle\Document\Filter\FieldSortFilter $filter */
-            $filter = $this->container->get('symfonian_id.admin.filter.odm.sort');
+            $filter = $this->container->get('symfonyid.admin.filter.odm.sort');
             $filter->sort($event->getModelClass(), $event->getQueryBuilder(), $this->sortBy);
         }
     }

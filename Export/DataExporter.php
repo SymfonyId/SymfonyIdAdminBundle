@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Manager\ManagerFactory;
 use SymfonyId\AdminBundle\Model\ModelInterface;
-use SymfonyId\AdminBundle\Util\MethodInvoker;
+use SymfonyId\AdminBundle\Security\MethodInvoker;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>

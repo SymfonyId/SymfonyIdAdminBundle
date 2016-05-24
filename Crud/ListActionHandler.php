@@ -18,7 +18,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Exception\RuntimeException;
 use SymfonyId\AdminBundle\Export\DataExporter;
-use SymfonyId\AdminBundle\Util\MethodInvoker;
+use SymfonyId\AdminBundle\Security\MethodInvoker;
 use SymfonyId\AdminBundle\View\View;
 
 /**

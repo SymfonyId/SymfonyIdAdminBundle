@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\Util;
+namespace SymfonyId\AdminBundle\Security;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>

@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Translation\TranslatorInterface;
 use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Model\ModelInterface;
-use SymfonyId\AdminBundle\Util\MethodInvoker;
+use SymfonyId\AdminBundle\Security\MethodInvoker;
 use SymfonyId\AdminBundle\View\View;
 
 /**
@@ -64,9 +64,9 @@ class DetailActionHandler implements ViewHandlerInterface, ContainerAwareInterfa
     private $allowDelete = true;
 
     /**
-     * @param View                 $view
-     * @param Session              $session
-     * @param TranslatorInterface  $translator
+     * @param View                $view
+     * @param Session             $session
+     * @param TranslatorInterface $translator
      */
     public function __construct(View $view, Session $session, TranslatorInterface $translator)
     {

@@ -12,6 +12,7 @@
 namespace SymfonyId\AdminBundle\Configuration;
 
 use SymfonyId\AdminBundle\Annotation\Page;
+use SymfonyId\AdminBundle\Exception\CallMethodBeforeException;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -24,18 +25,38 @@ class PageConfigurator implements ConfiguratorInterface
     private $page;
 
     /**
-     * @return Page
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
-
-    /**
      * @param Page $page
      */
     public function setPage(Page $page)
     {
         $this->page = $page;
+    }
+
+    /**
+     * @return string
+     *
+     * @throws CallMethodBeforeException
+     */
+    public function getTitle()
+    {
+        if (!$this->page) {
+            throw new CallMethodBeforeException('setPage');
+        }
+
+        return $this->page->getTitle();
+    }
+
+    /**
+     * @return string
+     *
+     * @throws CallMethodBeforeException
+     */
+    public function getDescription()
+    {
+        if (!$this->page) {
+            throw new CallMethodBeforeException('setPage');
+        }
+
+        return $this->page->getDescription();
     }
 }

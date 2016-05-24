@@ -23,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use SymfonyId\AdminBundle\Form\DataTransformer\RoleToArrayTransformer;
 use SymfonyId\AdminBundle\Form\DataTransformer\StringToFileTransformer;
 use SymfonyId\AdminBundle\Form\EventSubscriber\RemovePasswordFieldSubscriber;
-use SymfonyId\AdminBundle\Util\RoleHierarchyListBuilder;
+use SymfonyId\AdminBundle\Security\RoleHierarchyListBuilder;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
