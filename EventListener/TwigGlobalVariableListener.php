@@ -11,8 +11,6 @@
 
 namespace SymfonyId\AdminBundle\EventListener;
 
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
