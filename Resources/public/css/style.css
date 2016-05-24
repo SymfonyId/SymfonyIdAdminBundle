@@ -1,0 +1,33 @@
+.padding-bottom-7 {
+    padding-bottom: 7px !important;
+}
+
+.padding-top-7 {
+    padding-top: 7px !important;
+}
+
+.padding-5 {
+    padding: 5px !important;
+}
+
+.margin-left-7 {
+    margin-left: 7px !important;
+}
+
+.margin-bottom-7 {
+    margin-bottom: 7px !important;
+}
+
+label.required:after {
+    content: '*';
+    padding-left: 3px;
+    color: red;
+}
+
+.text-plain {
+    font-weight: normal !important;
+}
+
+.note-editable {
+    min-height: 327px !important;
+}

@@ -1,0 +1,50 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        {%- include 'SymfonyIdAdminBundle:Layout:header.html.twig'
+        with {
+            page_title: block('page_title'),
+            css: block('css'),
+            use_date_picker: block('date_picker'),
+            use_file_style: block('file_style'),
+            use_editor: block('editor'),
+            use_autocomplete: block('autocomplete'),
+        }
+        -%}
+    </head>
+    <body class="skin-green sidebar-mini">
+        <div class="wrapper">
+            {%- include 'SymfonyIdAdminBundle:Layout:body_header.html.twig'
+            with {
+                logo: block('logo'),
+                widget: block('widget'),
+                user_panel: block('user_panel'),
+            }
+            -%}
+
+            {%- include 'SymfonyIdAdminBundle:Layout:menu.html.twig' with { menu: knp_menu_render(menu, { currentClass: 'active', 'allow_safe_labels': true }) } -%}
+
+            {%- include 'SymfonyIdAdminBundle:Layout:content.html.twig'
+            with {
+                breadcrumb: block('breadcrumb'),
+                content: block('content'),
+                page_title: block('page_title'),
+                page_description: block('page_description'),
+            }
+            -%}
+
+            {%- include 'SymfonyIdAdminBundle:Layout:footer.html.twig'
+            with {
+                javascript: block('javascript'),
+                use_date_picker: block('date_picker'),
+                use_file_style: block('file_style'),
+                use_editor: block('editor'),
+                use_autocomplete: block('autocomplete'),
+                use_numeric: block('numeric'),
+            }
+            -%}
+        </div>
+    </body>
+</html>
+{% endspaceless %}

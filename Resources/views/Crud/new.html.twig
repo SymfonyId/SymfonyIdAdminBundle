@@ -1,0 +1,222 @@
+{%- extends 'SymfonyIdAdminBundle::layout.html.twig' -%}
+
+{%- form_theme form form_theme -%}
+
+{%- block breadcrumb -%}
+    <li><a href="#" class="active">{{- page_title | upper -}}</a></li>
+    <li><a href="#" class="active">{{- (action_method ~ ' ' ~ page_title) | upper -}}</a></li>
+{%- endblock -%}
+
+{%- block page_title -%}
+    {{- page_title -}}
+{%- endblock -%}
+
+{%- block page_description -%}
+    {{- page_description -}}
+{%- endblock -%}
+
+{%- block date_picker -%}
+    {{- use_date_picker -}}
+{%- endblock -%}
+
+{%- block date_picker_format -%}
+    {{- date_picker_format -}}
+{%- endblock -%}
+
+{%- block file_style -%}
+    {{- use_file_style -}}
+{%- endblock -%}
+
+{%- block editor -%}
+    {{- use_editor -}}
+{%- endblock -%}
+
+{%- block numeric -%}
+    {{- use_numeric -}}
+{%- endblock -%}
+
+{%- block autocomplete -%}
+    {{- autocomplete -}}
+{%- endblock -%}
+
+{%- block menu -%}
+    {{- knp_menu_render(menu, { currentClass: 'active', 'allow_safe_labels': true }) -}}
+{%- endblock -%}
+
+{%- block content -%}
+    {% spaceless %}
+    {%- if success is defined -%}
+        <div class="modal modal-success success-message">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">{{- 'message.info' | trans({}, translation_domain) -}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{- success -}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary add_new pull-left" data-dismiss="modal">{{- 'action.add' | trans({}, translation_domain) -}}</button>
+                        <button type="button" class="btn btn-primary success-close pull-left" data-dismiss="modal">{{- 'action.close' | trans({}, translation_domain) -}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
+
+    {%- if errors is defined -%}
+        <div class="modal modal-warning error-message">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">{{- 'message.info' | trans({}, translation_domain) -}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{- 'message.error' | trans({}, translation_domain) -}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">{{- 'action.close' | trans({}, translation_domain) -}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="box box-success box-solid">
+            <div class="box-header">
+                <a href="#" class="btn btn-primary pull-right back-to-list">{{- 'action.back_to_list' | trans({}, translation_domain) -}}</a>
+            </div>
+            <div class="box-body">
+                {{- form_start(form, {attr: { role: 'form' }}) -}}
+                    <div class="box-body with-border">
+                        {%- for field in form.children -%}
+                            {{- form_row(field) -}}
+                        {%- endfor -%}
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">{{- 'action.submit' | trans({}, translation_domain) -}}</button>
+                        </div>
+                    </div>
+                {{- form_end(form) -}}
+            </div>
+        </div>
+    </div>
+    {% endspaceless %}
+{%- endblock -%}
+
+{%- block javascript -%}
+    {%- if success is defined -%}
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                jQuery('.success-message').modal({
+                    backdrop: 'static'
+                });
+            });
+        </script>
+    {%- endif -%}
+
+    {%- if errors is defined -%}
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                jQuery('.error-message').modal({
+                    backdrop: 'static'
+                });
+            });
+        </script>
+    {%- endif -%}
+    <script type="text/javascript">
+        function createActionUrl(action) {
+            var url = document.URL.split('/');
+            var queryString = document.URL.slice(document.URL.indexOf('?'));
+
+            if ('edit' === url[url.length - 2]) {
+                url.splice(-3,3);
+            } else {
+                url.splice(-2,2);
+            }
+
+            url.push(action);
+
+            window.location = url.join('/') + queryString;
+        }
+
+        jQuery(document).ready(function () {
+            jQuery('form').find('input[type=text],textarea,select').filter(':visible:first').focus();
+
+            jQuery(document).on('click', '.back-to-list', function () {
+                createActionUrl('list');
+            });
+
+            jQuery(document).on('click', '.add_new', function () {
+                createActionUrl('new');
+            });
+
+            jQuery(document).on('click', '.success-close', function () {
+                jQuery('.back-to-list').trigger('click');
+            });
+
+            var target = jQuery('.datepicker');
+            target.parent().css('position', 'relative');
+            target.datetimepicker({
+                format: '{{- date_picker['date_format'] -}}',
+                {% if date_picker['flatten'] %}sideBySide: true,{% endif %}
+                locale: '{{- locale -}}'
+            });
+
+            {%- if use_file_style is same as(true) -%}
+                jQuery('input:file').fileinput({
+                    showUpload: false,
+                    showCaption: false,
+                    browseClass: 'btn btn-default',
+                    fileType: ['jpg', 'png'],
+                    allowedFileExtensions : ['jpg', 'png']
+                });
+            {%- endif -%}
+
+            {%- if use_editor is same as(true) -%}
+                jQuery('.editor').summernote();
+            {%- endif -%}
+
+            {% if use_numeric is same as(true) %}
+                jQuery('.numeric').numeric();
+                jQuery('.positive').numeric({ negative: false });
+            {% endif %}
+
+            {%- if autocomplete -%}
+                jQuery('.autocomplete').select2({
+                    minimumInputLength: 3,
+                    ajax: {
+                        url: Routing.generate('{{- ac_config['route'] -}}'),
+                        dataType: 'json',
+                        quietMillis: 250,
+                        data: function (term, page) {
+                            return {
+                                q: term
+                            };
+                        },
+                        results: function (data, page) {
+                            return { results: data };
+                        },
+                        cache: true
+                    },
+                    initSelection : function (element, callback) {
+                        jQuery.ajax(Routing.generate('{{- ac_config['route_callback'] -}}', {id:  jQuery(element).val()}), {
+                            dataType: 'json'
+                        }).done(function(data) {
+                            callback(data);
+                        });
+                    }
+                });
+                jQuery(document).on('select2:select', '.autocomplete', function (e) {
+                    jQuery('{{- ac_config['selector_storage']-}}').val(e.params.data.id);
+                });
+            {%- endif -%}
+        });
+    </script>
+    {%- if include_javascript -%}
+        {% for file in js_include['files'] %}
+            {%- include file with { route: route } -%}
+        {% endfor %}
+    {%- endif -%}
+{%- endblock -%}

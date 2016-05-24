@@ -1,0 +1,42 @@
+{% spaceless %}
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                {%- if allow_delete is same as(true) -%}
+                    <th class="text-center"><input class="check-all-action" type="checkbox"/></th>
+                {% endif %}
+                <th class="text-center"><strong>No</strong></th>
+                {%- for i, value in header -%}
+                    {% if value['sortable'] %}
+                        <th class="text-center header-sortable" data-field="{{- value['field'] -}}">{% if value['field'] is sorted %}<i class="fa fa-fw sorted"></i>{% else %}<i class="fa fa-fw sortable"></i>{% endif %}{{- value['title'] | upper -}}</th>
+                    {% else %}
+                        <th class="text-center"><strong>{{- value['title'] | upper -}}</strong></th>
+                    {% endif %}
+                {%- endfor -%}
+            </tr>
+        </thead>
+        <tbody>
+        {%- include 'SymfonyIdAdminBundle:Crud:record_template.html.twig'
+        with {
+            record: record
+        }
+        -%}
+        </tbody>
+    </table>
+    <div class="padding-top-7">
+        <div class="pull-left">
+            {%- if allow_create is same as(true) -%}
+                <a href = "#" class="btn btn-primary add-new">{{- 'action.add' | trans({}, translation_domain) -}}</a>
+            {% endif %}
+            {%- if allow_delete is same as(true) -%}
+                <button type="button" class="btn btn-danger bulk-delete margin-left-7">{{- 'action.delete' | trans({}, translation_domain) -}}</button>
+            {% endif %}
+            {%- if allow_download is same as(true) -%}
+                <button type="button" class="btn btn-success download-record margin-left-7"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;{{- 'action.download' | trans({}, translation_domain) -}}</button>
+            {% endif %}
+        </div>
+        <div class="pull-right">
+            {{- knp_pagination_render(pagination) -}}
+        </div>
+    </div>
+{% endspaceless %}
