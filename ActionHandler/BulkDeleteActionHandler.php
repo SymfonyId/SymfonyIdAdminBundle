@@ -35,11 +35,6 @@ class BulkDeleteActionHandler extends AbstractActionHandler
     private $translator;
 
     /**
-     * @var CrudConfigurator
-     */
-    private $crudConfigurator;
-
-    /**
      * @var string
      */
     private $translationDomain;
@@ -54,14 +49,6 @@ class BulkDeleteActionHandler extends AbstractActionHandler
         $this->crudOperationHandler = $crudOperationHandler;
         $this->translator = $translator;
         $this->translationDomain = $translationDomain;
-    }
-
-    /**
-     * @param CrudConfigurator $crudConfigurator
-     */
-    public function setCrudConfigurator(CrudConfigurator $crudConfigurator)
-    {
-        $this->crudConfigurator = $crudConfigurator;
     }
 
     /**

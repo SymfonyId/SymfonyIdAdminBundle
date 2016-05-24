@@ -122,6 +122,7 @@ class CrudFactory
     {
         /** @var ListActionHandler $viewHandler */
         $viewHandler = $this->actionHandlers[ListActionHandler::class];
+        $viewHandler->setView($this->view);
         $viewHandler->setRequest($this->request);
         $viewHandler->setGridFields($gridFields);
         $viewHandler->setActionList($actionList);
@@ -141,6 +142,7 @@ class CrudFactory
     {
         /** @var CreateUpdateActionHandler $viewHandler */
         $viewHandler = $this->actionHandlers[CreateUpdateActionHandler::class];
+        $viewHandler->setView($this->view);
         $viewHandler->setRequest($this->request);
         $viewHandler->setForm($form);
 
@@ -158,6 +160,7 @@ class CrudFactory
     {
         /** @var DetailActionHandler $viewHandler */
         $viewHandler = $this->actionHandlers[DetailActionHandler::class];
+        $viewHandler->setView($this->view);
         $viewHandler->setRequest($this->request);
         $viewHandler->setData($model);
         $viewHandler->setShowFields($showFields);
@@ -177,6 +180,7 @@ class CrudFactory
     {
         /** @var DeleteActionHandler $viewHandler */
         $viewHandler = $this->actionHandlers[DeleteActionHandler::class];
+        $viewHandler->setView($this->view);
         $viewHandler->setRequest($this->request);
         $viewHandler->setData($model);
 
@@ -199,6 +203,7 @@ class CrudFactory
     {
         /** @var BulkCreateActionHandler $viewHandler */
         $viewHandler = $this->actionHandlers[BulkCreateActionHandler::class];
+        $viewHandler->setView($this->view);
         $viewHandler->setRequest($this->request);
         $viewHandler->setCrudConfigurator($crudConfigurator);
 
