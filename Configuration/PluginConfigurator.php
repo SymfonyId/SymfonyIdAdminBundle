@@ -43,7 +43,7 @@ class PluginConfigurator implements ConfiguratorInterface
             throw new CallMethodBeforeException('setPlugin');
         }
 
-        return $this->plugin->isHtmlEditor();
+        return $this->plugin->isHtmlEditorEnabled();
     }
 
     /**
@@ -57,7 +57,7 @@ class PluginConfigurator implements ConfiguratorInterface
             throw new CallMethodBeforeException('setPlugin');
         }
 
-        return $this->plugin->isFileChooser();
+        return $this->plugin->isFileChooserEnabled();
     }
 
     /**
@@ -71,7 +71,7 @@ class PluginConfigurator implements ConfiguratorInterface
             throw new CallMethodBeforeException('setPlugin');
         }
 
-        return $this->plugin->isNumeric();
+        return $this->plugin->isNumericEnabled();
     }
 
     /**
@@ -85,6 +85,6 @@ class PluginConfigurator implements ConfiguratorInterface
             throw new CallMethodBeforeException('setPlugin');
         }
 
-        return $this->plugin->isBulkInsert();
+        return $this->plugin->isBulkInsertEnabled();
     }
 }

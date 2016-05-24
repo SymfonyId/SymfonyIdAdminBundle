@@ -13,10 +13,14 @@ namespace SymfonyId\AdminBundle\Controller;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use SymfonyId\AdminBundle\Annotation\AutoComplete;
+use SymfonyId\AdminBundle\Annotation\DatePicker;
+use SymfonyId\AdminBundle\Annotation\ExternalJavascript;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Configuration\PageConfigurator;
 use SymfonyId\AdminBundle\Configuration\PluginConfigurator;
+use SymfonyId\AdminBundle\Configuration\UtilConfigurator;
 use SymfonyId\AdminBundle\Model\ModelInterface;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 use SymfonyId\AdminBundle\View\View;
@@ -51,41 +55,52 @@ abstract class CrudController extends AbstractController
         return $this->createOrUpdate($request, $model, $form, Constants::ACTION_CREATE, $template);
     }
 
-    private function createOrUpdate(Request $request, ModelInterface $data, FormInterface $form, $action, $template)
+    /**
+     * @param Request        $request
+     * @param ModelInterface $model
+     * @param FormInterface  $form
+     * @param string         $action
+     * @param string         $template
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \SymfonyId\AdminBundle\Exception\CallMethodBeforeException
+     */
+    private function createOrUpdate(Request $request, ModelInterface $model, FormInterface $form, $action, $template)
     {
         $translator = $this->container->get('translator');
         $translationDomain = $this->container->getParameter('symfonian_id.admin.translation_domain');
 
         /** @var ConfiguratorFactory $configuratorFactory */
         $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
-        /** @var CrudConfigurator $crudConfigurator */
-        $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
         /* @var PageConfigurator $pageConfigurator */
         $pageConfigurator = $configuratorFactory->getConfigurator(PageConfigurator::class);
         /** @var PluginConfigurator $pluginConfigurator */
         $pluginConfigurator = $configuratorFactory->getConfigurator(PluginConfigurator::class);
+        /** @var UtilConfigurator $utilConfigurator */
+        $utilConfigurator = $configuratorFactory->getConfigurator(UtilConfigurator::class);
         /** @var AutoComplete $autoComplete */
-        $autoComplete = $configuration->getConfiguration(AutoComplete::class);
+        $autoComplete = $utilConfigurator->getAutoComplete();
         /** @var DatePicker $datePicker */
-        $datePicker = $configuration->getConfiguration(DatePicker::class);
+        $datePicker = $utilConfigurator->getDatePicker();
         /** @var ExternalJavascript $externalJavascript */
-        $externalJavascript = $configuration->getConfiguration(ExternalJavascript::class);
+        $externalJavascript = $utilConfigurator->getExternalJavascript();
 
         /** @var View $view */
         $view = $this->get('symfonian_id.admin.view.view');
-        $view->setParam('page_title', $translator->trans($page->getTitle(), array(), $translationDomain));
-        $view->setParam('page_description', $translator->trans($page->getDescription(), array(), $translationDomain));
+        $view->setParam('page_title', $translator->trans($pageConfigurator->getTitle(), array(), $translationDomain));
+        $view->setParam('page_description', $translator->trans($pageConfigurator->getDescription(), array(), $translationDomain));
         $view->setParam('action_method', $translator->trans('page.'.strtolower($action), array(), $translationDomain));
-        $view->setParam('use_file_style', $util->isUseFileChooser());
-        $view->setParam('use_editor', $util->isUseHtmlEditor());
-        $view->setParam('use_numeric', $util->isUseNumeric());
+        $view->setParam('use_file_style', $pluginConfigurator->isFileChooserEnabled());
+        $view->setParam('use_editor', $pluginConfigurator->isHtmlEditorEnabled());
+        $view->setParam('use_numeric', $pluginConfigurator->isNumericEnabled());
         $view->setParam('autocomplete', false);
         $view->setParam('include_javascript', false);
         //Auto complete
-        if ($autoComplete->getRouteStore()) {
+        if ($autoComplete->getRouteResource()) {
             $view->setParam('autocomplete', true);
             $view->setParam('ac_config', array(
-                'route' => $autoComplete->getRouteStore(),
+                'route' => $autoComplete->getRouteResource(),
                 'route_callback' => $autoComplete->getRouteCallback(),
                 'selector_storage' => $autoComplete->getTargetSelector(),
             ));
@@ -97,18 +112,21 @@ abstract class CrudController extends AbstractController
             'flatten' => $datePicker->isFlatten(),
         ));
         //External Javascript
-        if (!empty($externalJavascript->getFiles())) {
+        if (!empty($externalJavascript->getIncludFiles())) {
             $view->setParam('include_javascript', true);
             $view->setParam('js_include', array(
-                'files' => $externalJavascript->getFiles(),
-                'route' => $externalJavascript->getRoutes(),
+                'files' => $externalJavascript->getIncludFiles(),
+                'route' => $externalJavascript->getIncludeRoutes(),
             ));
         }
 
-        $handler = $this->getHandler($configuration->getDriver($crud->getEntityClass()), $crud->getEntityClass());
-        $handler->setTemplate($template);
-        $handler->createNewOrUpdate($this, $request, $data, $form);
+        $driver = $this->container->get('symfonyid.admin.manager.driver_finder')->findDriverForClass(get_class($model));
+        $crudFactory = $this->container->get('symfonyid.admin.crud.crud_factory');
+        $crudFactory->setDriver($driver);
+        $crudFactory->setRequest($request);
+        $crudFactory->setTemplate($template);
+        $crudFactory->createOrUpdate($form);
 
-        return $handler->getResponse();
+        return $crudFactory->getResponse($view);
     }
 }

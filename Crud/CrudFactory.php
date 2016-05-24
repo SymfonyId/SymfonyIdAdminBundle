@@ -12,8 +12,6 @@
 namespace SymfonyId\AdminBundle\Crud;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,10 +22,8 @@ use SymfonyId\AdminBundle\View\View;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class CrudFactory implements ContainerAwareInterface
+class CrudFactory
 {
-    use ContainerAwareTrait;
-
     /**
      * @var EngineInterface
      */

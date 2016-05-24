@@ -1,13 +1,103 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aden
- * Date: 5/23/16
- * Time: 6:51 PM.
+
+/*
+ * This file is part of the AdminBundle package.
+ *
+ * (c) Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace SymfonyId\AdminBundle\Annotation;
 
+/**
+ * @Annotation
+ * @Target({"ANNOTATION", "PROPERTY"})
+ * @Attributes({
+ *   @Attribute("autoComplete", type = "\SymfonyId\AdminBundle\Annotation\AutoComplete"),
+ *   @Attribute("datePicker", type = "\SymfonyId\AdminBundle\Annotation\DatePicker"),
+ *   @Attribute("externalJavascript", type = "\SymfonyId\AdminBundle\Annotation\ExternalJavascript"),
+ *   @Attribute("upload", type = "\SymfonyId\AdminBundle\Annotation\Upload"),
+ * })
+ *
+ * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
+ */
 class Util
 {
+    /**
+     * @var AutoComplete
+     */
+    private $autoComplete;
+
+    /**
+     * @var DatePicker
+     */
+    private $datePicker;
+
+    /**
+     * @var ExternalJavascript
+     */
+    private $externalJavascript;
+
+    /**
+     * @var Upload
+     */
+    private $upload;
+
+    /**
+     * @param array $data
+     */
+    public function __construct(array $data = array())
+    {
+        if (isset($data['autoComplete'])) {
+            $this->autoComplete = $data['autoComplete'];
+        }
+
+        if (isset($data['datePicker'])) {
+            $this->datePicker = $data['datePicker'];
+        }
+
+        if (isset($data['externalJavascript'])) {
+            $this->externalJavascript = $data['externalJavascript'];
+        }
+
+        if (isset($data['autoComplete'])) {
+            $this->autoComplete = $data['autoComplete'];
+        }
+
+        unset($data);
+    }
+
+    /**
+     * @return AutoComplete
+     */
+    public function getAutoComplete()
+    {
+        return $this->autoComplete;
+    }
+
+    /**
+     * @return DatePicker
+     */
+    public function getDatePicker()
+    {
+        return $this->datePicker;
+    }
+
+    /**
+     * @return ExternalJavascript
+     */
+    public function getExternalJavascript()
+    {
+        return $this->externalJavascript;
+    }
+
+    /**
+     * @return Upload
+     */
+    public function getUpload()
+    {
+        return $this->upload;
+    }
 }

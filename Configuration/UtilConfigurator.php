@@ -18,6 +18,9 @@ use SymfonyId\AdminBundle\Annotation\Util;
  */
 class UtilConfigurator implements ConfiguratorInterface
 {
+    /**
+     * @var Util
+     */
     private $util;
 
     /**
@@ -26,5 +29,37 @@ class UtilConfigurator implements ConfiguratorInterface
     public function setUtil(Util $util)
     {
         $this->util = $util;
+    }
+
+    /**
+     * @return \SymfonyId\AdminBundle\Annotation\AutoComplete
+     */
+    public function getAutoComplete()
+    {
+        return $this->util->getAutoComplete();
+    }
+
+    /**
+     * @return \SymfonyId\AdminBundle\Annotation\DatePicker
+     */
+    public function getDatePicker()
+    {
+        return $this->util->getDatePicker();
+    }
+
+    /**
+     * @return \SymfonyId\AdminBundle\Annotation\ExternalJavascript
+     */
+    public function getExternalJavascript()
+    {
+        return $this->util->getExternalJavascript();
+    }
+
+    /**
+     * @return \SymfonyId\AdminBundle\Annotation\Upload
+     */
+    public function getUpload()
+    {
+        return $this->util->getUpload();
     }
 }

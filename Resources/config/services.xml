@@ -11,5 +11,13 @@
             <argument type="service" id="translator"/>
             <argument type="string">%symfonyid.admin.translation_domain%</argument>
         </service>
+        <service id="symfonian_id.admin.view.view" class="SymfonyId\AdminBundle\View\View" />
+        <service id="symfonyid.admin.manager.driver_finder" class="SymfonyId\AdminBundle\Manager\DriverFinder" >
+            <argument type="service" id="symfonyid.admin.extractor.extractor_factory"/>
+            <argument type="string">%symfonyid.admin.driver%</argument>
+        </service>
+        <service id="symfonyid.admin.crud.crud_factory" class="SymfonyId\AdminBundle\Crud\CrudFactory" >
+            <argument type="service" id="templating.engine.twig"/>
+        </service>
     </services>
 </container>

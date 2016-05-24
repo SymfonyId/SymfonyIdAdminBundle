@@ -72,7 +72,7 @@ class Plugin
     /**
      * @return bool
      */
-    public function isHtmlEditor()
+    public function isHtmlEditorEnabled()
     {
         return $this->htmlEditor;
     }
@@ -80,7 +80,7 @@ class Plugin
     /**
      * @return bool
      */
-    public function isFileChooser()
+    public function isFileChooserEnabled()
     {
         return $this->fileChooser;
     }
@@ -88,7 +88,7 @@ class Plugin
     /**
      * @return bool
      */
-    public function isNumeric()
+    public function isNumericEnabled()
     {
         return $this->numeric;
     }
@@ -96,7 +96,7 @@ class Plugin
     /**
      * @return bool
      */
-    public function isBulkInsert()
+    public function isBulkInsertEnabled()
     {
         return $this->bulkInsert;
     }
