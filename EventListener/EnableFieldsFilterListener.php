@@ -78,9 +78,9 @@ class EnableFieldsFilterListener implements ConfigurationAwareInterface
             return;
         }
 
-        $configurator = $this->getConfiguratorFactory(new \ReflectionObject($this->controller));
+        $configurationFactory = $this->getConfiguratorFactory(new \ReflectionObject($this->controller));
         /** @var CrudConfigurator $crudConfigurator */
-        $crudConfigurator = $configurator->getConfigurator(CrudConfigurator::class);
+        $crudConfigurator = $configurationFactory->getConfigurator(CrudConfigurator::class);
 
         $driver = $this->driverFinder->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
         $manager = $this->managerFactory->getManager($driver);
@@ -89,14 +89,14 @@ class EnableFieldsFilterListener implements ConfigurationAwareInterface
             /* @var \Doctrine\ORM\EntityManager $manager */
             /* @var FieldsFilterInterface $filter */
             $filter = $manager->getFilters()->enable('symfonyid.admin.filter.orm.fields');
-            $this->applyFilter($configurator, $filter, $keyword);
+            $this->applyFilter($configurationFactory, $filter, $keyword);
         }
 
         if (Driver::ODM === $driver->getDriver()) {
             /* @var \Doctrine\ODM\MongoDB\DocumentManager $manager */
             /* @var FieldsFilterInterface $filter */
             $filter = $manager->getFilterCollection()->enable('symfonyid.admin.filter.odm.fields');
-            $this->applyFilter($configurator, $filter, $keyword);
+            $this->applyFilter($configurationFactory, $filter, $keyword);
         }
     }
 

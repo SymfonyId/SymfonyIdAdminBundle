@@ -72,6 +72,9 @@ class EnableFieldSorterListener implements ConfigurationAwareInterface, CrudCont
         }
     }
 
+    /**
+     * @param FilterQueryEvent $event
+     */
     public function onFilterQuery(FilterQueryEvent $event)
     {
         if (!$this->sortBy) {

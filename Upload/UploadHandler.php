@@ -14,7 +14,7 @@ namespace SymfonyId\AdminBundle\Upload;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use SymfonyId\AdminBundle\Exception\KeyNotMatchException;
 use SymfonyId\AdminBundle\Model\ModelInterface;
-use SymfonyId\AdminBundle\Security\CamelCaser;
+use SymfonyId\AdminBundle\Util\CamelCaser;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>

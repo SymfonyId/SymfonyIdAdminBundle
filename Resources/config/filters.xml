@@ -14,6 +14,16 @@
 
             <tag name="symfonyid.odm.filter" />
         </service>
+        <service id="symfonyid.admin.filter.orm.soft_deletable" class="SymfonyId\AdminBundle\Doctrine\Filter\SoftDeletableFilter" >
+            <argument type="service" id="doctrine.orm.entity_manager" on-invalid="ignore"/>
+
+            <tag name="symfonyid.orm.filter" />
+        </service>
+        <service id="symfonyid.admin.filter.odm.soft_deletable" class="SymfonyId\AdminBundle\Document\Filter\SoftDeletableFilter" >
+            <argument type="service" id="doctrine_mongodb.odm.document_manager" on-invalid="ignore"/>
+
+            <tag name="symfonyid.odm.filter" />
+        </service>
         <service id="symfonyid.admin.filter.orm.sort" class="SymfonyId\AdminBundle\Doctrine\Filter\FieldSortFilter" >
             <argument type="service" id="symfonyid.admin.manager.manager_factory"/>
         </service>
