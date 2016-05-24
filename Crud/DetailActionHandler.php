@@ -29,11 +29,6 @@ class DetailActionHandler implements ViewHandlerInterface, ContainerAwareInterfa
     use ContainerAwareTrait;
 
     /**
-     * @var CrudOperationHandler
-     */
-    private $crudOperationHandler;
-
-    /**
      * @var View
      */
     private $view;
@@ -69,14 +64,12 @@ class DetailActionHandler implements ViewHandlerInterface, ContainerAwareInterfa
     private $allowDelete = true;
 
     /**
-     * @param CrudOperationHandler $crudOperationHandler
      * @param View                 $view
      * @param Session              $session
      * @param TranslatorInterface  $translator
      */
-    public function __construct(CrudOperationHandler $crudOperationHandler, View $view, Session $session, TranslatorInterface $translator)
+    public function __construct(View $view, Session $session, TranslatorInterface $translator)
     {
-        $this->crudOperationHandler = $crudOperationHandler;
         $this->view = $view;
         $this->session = $session;
         $this->translator = $translator;

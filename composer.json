@@ -1,14 +1,14 @@
 {
-    "name": "symfonyid/admin-bundle",
+    "name": "symfonyid/symfonyid-admin-bundle",
     "type": "symfony-bundle",
-    "description": "Provide Admin Generator with KISS Principle",
-    "keywords": ["crud", "simple admin", "admin", "admin generator", "symfony admin", "crud generator", "symfony2", "bundle", "ihsanudin"],
-    "homepage": "https://github.com/SymfonyId/AdminBundle",
+    "description": "Provide Symfony Admin Generator with KISS Principle",
+    "keywords": ["crud", "simple admin", "admin", "admin generator", "symfony admin", "crud generator", "symfony2", "symfony3", "bundle", "ihsanudin"],
+    "homepage": "https://github.com/SymfonyId/SymfonyIdAdminBundle",
     "license": "MIT",
     "authors": [
         {
             "name": "Komunitas Symfony Indonesia",
-            "homepage": "https://github.com/SymfonyId/AdminBundle"
+            "homepage": "https://github.com/SymfonyId"
         },
         {
             "name": "Muhammad Surya Ihsanuddin",
@@ -29,15 +29,15 @@
         "knplabs/knp-paginator-bundle": "~2.5@dev",
         "knplabs/knp-menu-bundle": "~2.1@dev",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "friendsofsymfony/jsrouting-bundle": "~2.0@dev",
-        "doctrine/mongodb-odm": "~1.0",
-        "doctrine/mongodb-odm-bundle": "~3.0"
+        "friendsofsymfony/jsrouting-bundle": "~2.0@dev"
     },
     "suggest": {
         "doctrine/mongodb-odm": "Needed when using the odm implementation",
         "doctrine/mongodb-odm-bundle": "Needed when using the odm implementation"
     },
     "require-dev": {
+        "doctrine/mongodb-odm": "~1.0",
+        "doctrine/mongodb-odm-bundle": "~3.0",
         "phpunit/phpunit": "5.*"
     },
     "autoload": {
