@@ -11,6 +11,7 @@
 
 namespace SymfonyId\AdminBundle\Crud;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Event\EventSubscriber;
 use SymfonyId\AdminBundle\Event\FilterModelEvent;
@@ -114,6 +115,10 @@ class CrudOperationHandler
         $event->setModel($model);
         $event->setManager($manager);
         $this->eventSubscriber->subscribe(Constants::PRE_DELETE, $event);
+
+        if ($event->getResponse() instanceof JsonResponse) {
+            return $event->getResponse();
+        }
 
         try {
             $manager->remove($model);

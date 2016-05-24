@@ -14,7 +14,6 @@ namespace SymfonyId\AdminBundle\ActionHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Translation\TranslatorInterface;
 use SymfonyId\AdminBundle\Annotation\Driver;
-use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Crud\CrudOperationHandler;
 use SymfonyId\AdminBundle\Model\BulkDeletableInterface;
 use SymfonyId\AdminBundle\View\View;

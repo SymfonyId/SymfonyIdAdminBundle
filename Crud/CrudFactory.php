@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use SymfonyId\AdminBundle\ActionHandler\BulkCreateActionHandler;
+use SymfonyId\AdminBundle\ActionHandler\BulkDeleteActionHandler;
 use SymfonyId\AdminBundle\ActionHandler\CreateUpdateActionHandler;
 use SymfonyId\AdminBundle\ActionHandler\DeleteActionHandler;
 use SymfonyId\AdminBundle\ActionHandler\DetailActionHandler;
@@ -206,6 +207,26 @@ class CrudFactory
         $viewHandler->setView($this->view);
         $viewHandler->setRequest($this->request);
         $viewHandler->setCrudConfigurator($crudConfigurator);
+
+        $view = $viewHandler->getView($this->driver);
+
+        return new JsonResponse(array(
+            'status' => $view->getParam('status'),
+            'message' => $view->getParam('message'),
+        ));
+    }
+
+    /**
+     * @return JsonResponse
+     *
+     * @throws \SymfonyId\AdminBundle\Exception\RuntimeException
+     */
+    public function bulkDelete()
+    {
+        /** @var BulkDeleteActionHandler $viewHandler */
+        $viewHandler = $this->actionHandlers[BulkDeleteActionHandler::class];
+        $viewHandler->setView($this->view);
+        $viewHandler->setRequest($this->request);
 
         $view = $viewHandler->getView($this->driver);
 

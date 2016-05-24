@@ -47,9 +47,9 @@ class FieldsFilter extends SQLFilter implements FieldsFilterInterface
             }
         }
 
-        /** @var GridConfigurator $grid */
-        $grid = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
-        $fields = !empty($fields) ? $fields : $grid->getFilter();
+        /** @var GridConfigurator $gridConfigurator */
+        $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
+        $gridConfigurator->getFilters($targetEntity->getReflectionClass());
 
         foreach ($fields as $key => $field) {
             $fields[$key] = $targetEntity->getFieldMapping($targetEntity->getFieldName($field));

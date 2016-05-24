@@ -108,6 +108,10 @@ class ExtractorFactory
             }
         }
 
+        if ($this->object instanceof \ReflectionProperty) {
+            $annotations = $extractor->extract($this->object);
+        }
+
         return $annotations;
     }
 

@@ -11,13 +11,38 @@
 
 namespace SymfonyId\AdminBundle\Configuration;
 
+use Symfony\Component\HttpKernel\KernelInterface;
+use SymfonyId\AdminBundle\Annotation\Column;
+use SymfonyId\AdminBundle\Annotation\Filter;
 use SymfonyId\AdminBundle\Annotation\Grid;
+use SymfonyId\AdminBundle\Annotation\Sort;
+use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
 class GridConfigurator implements ConfiguratorInterface
 {
+    /**
+     * @var ExtractorFactory
+     */
+    private $extractorFactory;
+
+    /**
+     * @var KernelInterface
+     */
+    private $kernel;
+
+    /**
+     * @param ExtractorFactory $extractorFactory
+     * @param KernelInterface $kernel
+     */
+    public function __construct(ExtractorFactory $extractorFactory, KernelInterface $kernel)
+    {
+        $this->extractorFactory = $extractorFactory;
+        $this->kernel = $kernel;
+    }
+
     /**
      * @var Grid
      */
@@ -40,26 +65,89 @@ class GridConfigurator implements ConfiguratorInterface
     }
 
     /**
-     * @return \SymfonyId\AdminBundle\Annotation\Column
+     * @param \ReflectionClass $reflectionClass
+     *
+     * @return array
      */
-    public function getColumn()
+    public function getColumns(\ReflectionClass $reflectionClass)
     {
-        return $this->grid->getColumn();
+        if ($this->isProduction()) {
+            $this->grid->getColumn()->getFields();
+        }
+
+        $this->extractorFactory->extract($reflectionClass);
+        /** @var \ReflectionProperty $property */
+        foreach ( $this->extractorFactory->getPropertyAnnotations() as $property) {
+            $this->extractorFactory->extract($property);
+            foreach ($this->extractorFactory->getPropertyAnnotations() as $annotation) {
+                if ($annotation instanceof Column) {
+                    $fields[] = $property->getName();
+                }
+            }
+        }
+
+        return !empty($fields) ? $fields : $this->grid->getColumn()->getFields();
     }
 
     /**
-     * @return \SymfonyId\AdminBundle\Annotation\Filter
+     * @param \ReflectionClass $reflectionClass
+     *
+     * @return array
      */
-    public function getFilter()
+    public function getFilters(\ReflectionClass $reflectionClass)
     {
-        return $this->grid->getFilter();
+        if ($this->isProduction()) {
+            $this->grid->getFilter()->getFields();
+        }
+
+        $this->extractorFactory->extract($reflectionClass);
+        /** @var \ReflectionProperty $property */
+        foreach ( $this->extractorFactory->getPropertyAnnotations() as $property) {
+            $this->extractorFactory->extract($property);
+            foreach ($this->extractorFactory->getPropertyAnnotations() as $annotation) {
+                if ($annotation instanceof Filter) {
+                    $fields[] = $property->getName();
+                }
+            }
+        }
+
+        return !empty($fields) ? $fields : $this->grid->getFilter()->getFields();
     }
 
     /**
-     * @return \SymfonyId\AdminBundle\Annotation\Sort
+     * @param \ReflectionClass $reflectionClass
+     *
+     * @return array
      */
-    public function getSort()
+    public function getSorts(\ReflectionClass $reflectionClass)
     {
-        return $this->grid->getSort();
+        if ($this->isProduction()) {
+            $this->grid->getSort()->getFields();
+        }
+
+        $this->extractorFactory->extract($reflectionClass);
+        /** @var \ReflectionProperty $property */
+        foreach ( $this->extractorFactory->getPropertyAnnotations() as $property) {
+            $this->extractorFactory->extract($property);
+            foreach ($this->extractorFactory->getPropertyAnnotations() as $annotation) {
+                if ($annotation instanceof Sort) {
+                    $fields[] = $property->getName();
+                }
+            }
+        }
+
+        return !empty($fields) ? $fields : $this->grid->getSort()->getFields();
+    }
+
+    /**
+     * @return bool
+     */
+    private function isProduction()
+    {
+        if ('prod' === strtolower($this->kernel->getEnvironment())) {
+            return true;
+        }
+
+        return false;
     }
 }

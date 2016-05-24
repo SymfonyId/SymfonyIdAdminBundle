@@ -36,21 +36,9 @@ class FieldsFilter extends BsonFilter implements FieldsFilterInterface
      */
     public function addFilterCriteria(ClassMetadata $targetDocument)
     {
-        $fields = array();
-        $properties = $targetDocument->getReflectionProperties();
-        /** @var \ReflectionProperty $property */
-        foreach ($properties as $property) {
-            $this->extractorFactory->extract($property);
-            foreach ($this->extractorFactory->getPropertyAnnotations() as $annotation) {
-                if ($annotation instanceof Filter) {
-                    $fields[] = $property->getName();
-                }
-            }
-        }
-
-        /** @var GridConfigurator $grid */
-        $grid = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
-        $fields = !empty($fields) ? $fields : $grid->getFilter();
+        /** @var GridConfigurator $gridConfigurator */
+        $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
+        $fields = $gridConfigurator->getFilters($targetDocument->getReflectionClass());
 
         foreach ($fields as $key => $field) {
             $fields[$key] = $targetDocument->getFieldMapping($field);
