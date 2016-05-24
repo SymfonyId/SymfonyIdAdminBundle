@@ -226,14 +226,7 @@ abstract class CrudController extends AbstractController
         }, $filters)));
         $view->setParam('filter_fields_entity', implode(', ', $filters));
 
-        $driver = $this->container->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
-        $crudFactory = $this->container->get('symfonyid.admin.crud.crud_factory');
-        $crudFactory->setDriver($driver);
-        $crudFactory->setView($view);
-        $crudFactory->setRequest($request);
-        $crudFactory->setTemplate($listTemplate);
-
-        return $crudFactory->listView($columns, $crudConfigurator->getGridAction(), $crudConfigurator->getCrud()->isAllowCreate(), $this->isAllowBulkDelete($crudConfigurator));
+        return $this->doList($request, $crudConfigurator, $view, $columns, $listTemplate);
     }
 
     /**
@@ -323,6 +316,18 @@ abstract class CrudController extends AbstractController
         $crudFactory->setView($view);
 
         return $crudFactory->createOrUpdate($form);
+    }
+
+    private function doList(Request $request, CrudConfigurator $crudConfigurator, View $view, array $columns, $template)
+    {
+        $driver = $this->container->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
+        $crudFactory = $this->container->get('symfonyid.admin.crud.crud_factory');
+        $crudFactory->setDriver($driver);
+        $crudFactory->setView($view);
+        $crudFactory->setRequest($request);
+        $crudFactory->setTemplate($template);
+
+        return $crudFactory->listView($columns, $crudConfigurator->getGridAction(), $crudConfigurator->getCrud()->isAllowCreate(), $this->isAllowBulkDelete($crudConfigurator));
     }
 
     /**
