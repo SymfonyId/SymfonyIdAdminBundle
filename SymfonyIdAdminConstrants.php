@@ -56,17 +56,17 @@ class SymfonyIdAdminConstrants
     /**
      * Templating.
      */
-    const TEMPLATE_CREATE = 'SymfonianIndonesiaAdminBundle:Crud:new.html.twig';
-    const TEMPLATE_BULK_CREATE = 'SymfonianIndonesiaAdminBundle:Crud:bulk-new.html.twig';
-    const TEMPLATE_EDIT = 'SymfonianIndonesiaAdminBundle:Crud:new.html.twig';
-    const TEMPLATE_SHOW = 'SymfonianIndonesiaAdminBundle:Crud:show.html.twig';
-    const TEMPLATE_LIST = 'SymfonianIndonesiaAdminBundle:Crud:list.html.twig';
-    const TEMPLATE_AJAX = 'SymfonianIndonesiaAdminBundle:Crud:list_template.html.twig';
-    const TEMPLATE_DASHBOARD = 'SymfonianIndonesiaAdminBundle:Index:index.html.twig';
-    const TEMPLATE_PROFILE = 'SymfonianIndonesiaAdminBundle:Index:profile.html.twig';
-    const TEMPLATE_CHANGE_PASSWORD = 'SymfonianIndonesiaAdminBundle:Index:change_password.html.twig';
-    const TEMPLATE_FORM = 'SymfonianIndonesiaAdminBundle:Form:fields.html.twig';
-    const TEMPLATE_PAGINATION = 'SymfonianIndonesiaAdminBundle:Layout:pagination.html.twig';
+    const TEMPLATE_CREATE = 'SymfonyIdAdminBundle:Crud:new.html.twig';
+    const TEMPLATE_BULK_CREATE = 'SymfonyIdAdminBundle:Crud:bulk-new.html.twig';
+    const TEMPLATE_EDIT = 'SymfonyIdAdminBundle:Crud:new.html.twig';
+    const TEMPLATE_SHOW = 'SymfonyIdAdminBundle:Crud:show.html.twig';
+    const TEMPLATE_LIST = 'SymfonyIdAdminBundle:Crud:list.html.twig';
+    const TEMPLATE_AJAX = 'SymfonyIdAdminBundle:Crud:list_template.html.twig';
+    const TEMPLATE_DASHBOARD = 'SymfonyIdAdminBundle:Index:index.html.twig';
+    const TEMPLATE_PROFILE = 'SymfonyIdAdminBundle:Index:profile.html.twig';
+    const TEMPLATE_CHANGE_PASSWORD = 'SymfonyIdAdminBundle:Index:change_password.html.twig';
+    const TEMPLATE_FORM = 'SymfonyIdAdminBundle:Form:fields.html.twig';
+    const TEMPLATE_PAGINATION = 'SymfonyIdAdminBundle:Layout:pagination.html.twig';
 
     /**
      * Cache.
