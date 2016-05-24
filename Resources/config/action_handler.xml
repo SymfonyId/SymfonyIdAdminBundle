@@ -11,5 +11,38 @@
 
             <tag name="symfonyid.crud_action" />
         </service>
+        <service id="symfonian_id.admin.action_handler.bulk_delete" class="SymfonyId\AdminBundle\ActionHandler\BulkDeleteActionHandler">
+            <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
+            <argument type="service" id="translator"/>
+            <argument type="string">%symfonyid.admin.translation_domain%</argument>
+
+            <tag name="symfonyid.crud_action" />
+        </service>
+        <service id="symfonian_id.admin.action_handler.create_update" class="SymfonyId\AdminBundle\ActionHandler\CreateUpdateActionHandler">
+            <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
+            <argument type="service" id="translator"/>
+
+            <tag name="symfonyid.crud_action" />
+        </service>
+        <service id="symfonian_id.admin.action_handler.delete" class="SymfonyId\AdminBundle\ActionHandler\DeleteActionHandler">
+            <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
+            <argument type="service" id="translator"/>
+            <argument type="string">%symfonyid.admin.translation_domain%</argument>
+
+            <tag name="symfonyid.crud_action" />
+        </service>
+        <service id="symfonian_id.admin.action_handler.detail" class="SymfonyId\AdminBundle\ActionHandler\DetailActionHandler">
+            <argument type="service" id="session" />
+            <argument type="service" id="translator"/>
+
+            <tag name="symfonyid.crud_action" />
+        </service>
+        <service id="symfonian_id.admin.action_handler.list" class="SymfonyId\AdminBundle\ActionHandler\ListActionHandler">
+            <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
+            <argument type="service" id="symfonyid.admin.export.data_exporter"/>
+            <argument type="service" id="translator"/>
+
+            <tag name="symfonyid.crud_action" />
+        </service>
     </services>
 </container>

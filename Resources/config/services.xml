@@ -23,5 +23,8 @@
             <argument type="service" id="symfonyid.admin.manager.manager_factory"/>
             <argument type="service" id="symfonyid.admin.event.event_subscriber"/>
         </service>
+        <service id="symfonyid.admin.export.data_exporter" class="SymfonyId\AdminBundle\Export\DataExporter" >
+            <argument type="service" id="symfonyid.admin.manager.manager_factory"/>
+        </service>
     </services>
 </container>

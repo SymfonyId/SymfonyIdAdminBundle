@@ -143,10 +143,6 @@ class ListActionHandler extends AbstractActionHandler implements ContainerAwareI
      */
     public function getView(Driver $driver)
     {
-        if (!$this->request) {
-            throw new RuntimeException('Call "setRequest()" before call this method.');
-        }
-
         $this->view->setParam('menu', $this->container->getParameter('symfonyid.admin.menu'));
         $this->view->setParam('action_method', $this->translator->trans('page.list', array(), $this->container->getParameter('symfonyid.admin.translation_domain')));
         $this->view->setParam('allow_create', $this->allowCreate);
