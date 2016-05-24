@@ -48,7 +48,7 @@ class EnableFieldSorterListener implements ConfigurationAwareInterface, CrudCont
     private $sortBy;
 
     /**
-     * @param Session $session
+     * @param Session      $session
      * @param DriverFinder $driverFinder
      */
     public function __construct(Session $session, DriverFinder $driverFinder)

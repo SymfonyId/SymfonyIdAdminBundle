@@ -12,7 +12,6 @@
 namespace SymfonyId\AdminBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use SymfonyId\AdminBundle\Controller\CrudController;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
