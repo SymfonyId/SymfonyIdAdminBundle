@@ -11,15 +11,15 @@
 
 namespace SymfonyId\AdminBundle\User;
 
-use SymfonyId\AdminBundle\Model\TimestampableInterface;
-use SymfonyId\AdminBundle\Model\TimestampableTrait;
+use SymfonyId\AdminBundle\Model\TimestampAwareInterface;
+use SymfonyId\AdminBundle\Model\TimestampAwareTrait;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-abstract class UserTimestampable extends User implements TimestampableInterface
+abstract class UserTimestampable extends User implements TimestampAwareInterface
 {
-    use TimestampableTrait;
+    use TimestampAwareTrait;
 
     public function __construct()
     {

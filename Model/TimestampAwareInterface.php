@@ -14,7 +14,7 @@ namespace SymfonyId\AdminBundle\Model;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-interface TimestampableInterface
+interface TimestampAwareInterface
 {
     /**
      * @param \DateTime $date

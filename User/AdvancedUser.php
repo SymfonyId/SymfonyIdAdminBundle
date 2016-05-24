@@ -11,19 +11,19 @@
 
 namespace SymfonyId\AdminBundle\User;
 
-use SymfonyId\AdminBundle\Model\SoftDeletableInterface;
-use SymfonyId\AdminBundle\Model\SoftDeletableTrait;
-use SymfonyId\AdminBundle\Model\TimestampableInterface;
-use SymfonyId\AdminBundle\Model\TimestampableTrait;
+use SymfonyId\AdminBundle\Model\SoftDeleteAwareInterface;
+use SymfonyId\AdminBundle\Model\SoftDeleteAwareTrait;
+use SymfonyId\AdminBundle\Model\TimestampAwareInterface;
+use SymfonyId\AdminBundle\Model\TimestampAwareTrait;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-abstract class AdvancedUser extends User implements SoftDeletableInterface, TimestampableInterface
+abstract class AdvancedUser extends User implements SoftDeleteAwareInterface, TimestampAwareInterface
 {
-    use SoftDeletableTrait;
+    use SoftDeleteAwareTrait;
 
-    use TimestampableTrait;
+    use TimestampAwareTrait;
 
     public function __construct()
     {

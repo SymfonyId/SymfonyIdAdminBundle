@@ -11,15 +11,15 @@
 
 namespace SymfonyId\AdminBundle\User;
 
-use SymfonyId\AdminBundle\Model\SoftDeletableInterface;
-use SymfonyId\AdminBundle\Model\SoftDeletableTrait;
+use SymfonyId\AdminBundle\Model\SoftDeleteAwareInterface;
+use SymfonyId\AdminBundle\Model\SoftDeleteAwareTrait;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-abstract class UserSoftDeletable extends User implements SoftDeletableInterface
+abstract class UserSoftDeletable extends User implements SoftDeleteAwareInterface
 {
-    use SoftDeletableTrait;
+    use SoftDeleteAwareTrait;
 
     public function __construct()
     {

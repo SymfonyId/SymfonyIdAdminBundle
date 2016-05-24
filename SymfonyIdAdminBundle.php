@@ -13,7 +13,7 @@ namespace SymfonyId\AdminBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use SymfonyId\AdminBundle\DependencyInjection\Compiler\ConfigurationPass;
+use SymfonyId\AdminBundle\DependencyInjection\Compiler\ConfiguratorPass;
 use SymfonyId\AdminBundle\DependencyInjection\Compiler\ExtractorPass;
 use SymfonyId\AdminBundle\DependencyInjection\Compiler\PaginationTemplatePass;
 use SymfonyId\AdminBundle\DependencyInjection\Compiler\QueryFilterPass;
@@ -32,7 +32,7 @@ class SymfonyIdAdminBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new PaginationTemplatePass());
-        $container->addCompilerPass(new ConfigurationPass());
+        $container->addCompilerPass(new ConfiguratorPass());
         $container->addCompilerPass(new ExtractorPass());
         $container->addCompilerPass(new QueryFilterPass());
     }

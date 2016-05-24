@@ -9,26 +9,39 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\Crud;
+namespace SymfonyId\AdminBundle\ActionHandler;
 
 use Symfony\Component\HttpFoundation\Request;
-use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\View\View;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-interface ViewHandlerInterface
+abstract class AbstractActionHandler implements ActionHandlerInterface
 {
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * @var View
+     */
+    protected $view;
+
     /**
      * @param Request $request
      */
-    public function setRequest(Request $request);
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
-     * @param Driver $driver
-     *
-     * @return View
+     * @param View $view
      */
-    public function getView(Driver $driver);
+    public function setView(View $view)
+    {
+        $this->view = $view;
+    }
 }

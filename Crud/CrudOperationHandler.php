@@ -56,8 +56,6 @@ class CrudOperationHandler
      */
     public function save(Driver $driver, ModelInterface $model)
     {
-        $this->managerFactory->getManager($driver)->save($model);
-
         $manager = $this->managerFactory->getManager($driver);
         $preSaveEvent = new FilterModelEvent();
         $preSaveEvent->setModel($model);

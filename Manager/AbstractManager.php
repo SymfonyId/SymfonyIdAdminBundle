@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use SymfonyId\AdminBundle\Event\EventSubscriber;
 use SymfonyId\AdminBundle\Exception\ModelNotFoundException;
 use SymfonyId\AdminBundle\Model\ModelInterface;
-use SymfonyId\AdminBundle\Model\SoftDeletableInterface;
+use SymfonyId\AdminBundle\Model\SoftDeleteAwareInterface;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -86,7 +86,7 @@ abstract class AbstractManager implements ManagerInterface
      */
     public function remove(ModelInterface $model)
     {
-        if ($model instanceof SoftDeletableInterface) {
+        if ($model instanceof SoftDeleteAwareInterface) {
             $model->isDeleted(true);
             $model->setDeletedAt(new \DateTime());
             $model->setDeletedBy($this->tokenStorage->getToken()->getUsername());

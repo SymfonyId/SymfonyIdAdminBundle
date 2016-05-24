@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\Crud;
+namespace SymfonyId\AdminBundle\ActionHandler;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -17,13 +17,14 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\TranslatorInterface;
 use SymfonyId\AdminBundle\Annotation\Driver;
+use SymfonyId\AdminBundle\Crud\CrudOperationHandler;
 use SymfonyId\AdminBundle\Exception\RuntimeException;
 use SymfonyId\AdminBundle\View\View;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class CreateUpdateActionHandler implements ViewHandlerInterface, ContainerAwareInterface
+class CreateUpdateActionHandler extends AbstractActionHandler implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
@@ -33,19 +34,9 @@ class CreateUpdateActionHandler implements ViewHandlerInterface, ContainerAwareI
     private $crudOperationHandler;
 
     /**
-     * @var View
-     */
-    private $view;
-
-    /**
      * @var TranslatorInterface
      */
     private $translator;
-
-    /**
-     * @var Request
-     */
-    private $request;
 
     /**
      * @var FormInterface
@@ -54,22 +45,12 @@ class CreateUpdateActionHandler implements ViewHandlerInterface, ContainerAwareI
 
     /**
      * @param CrudOperationHandler $crudOperationHandler
-     * @param View                 $view
      * @param TranslatorInterface  $translator
      */
-    public function __construct(CrudOperationHandler $crudOperationHandler, View $view, TranslatorInterface $translator)
+    public function __construct(CrudOperationHandler $crudOperationHandler, TranslatorInterface $translator)
     {
         $this->crudOperationHandler = $crudOperationHandler;
-        $this->view = $view;
         $this->translator = $translator;
-    }
-
-    /**
-     * @param Request $request
-     */
-    public function setRequest(Request $request)
-    {
-        $this->request = $request;
     }
 
     /**

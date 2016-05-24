@@ -13,7 +13,7 @@ namespace SymfonyId\AdminBundle\Document\Filter;
 
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
-use SymfonyId\AdminBundle\Model\SoftDeletableInterface;
+use SymfonyId\AdminBundle\Model\SoftDeleteAwareInterface;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -31,7 +31,7 @@ class SoftDeletableFilter extends BsonFilter
      */
     public function addFilterCriteria(ClassMetadata $targetDocument)
     {
-        if ($targetDocument->getReflectionClass()->implementsInterface(SoftDeletableInterface::class)) {
+        if ($targetDocument->getReflectionClass()->implementsInterface(SoftDeleteAwareInterface::class)) {
             return array('isDeleted' => $this->getParameter('isDeleted'));
         }
 

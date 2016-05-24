@@ -15,7 +15,14 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use SymfonyId\AdminBundle\ActionHandler\BulkCreateActionHandler;
+use SymfonyId\AdminBundle\ActionHandler\CreateUpdateActionHandler;
+use SymfonyId\AdminBundle\ActionHandler\DeleteActionHandler;
+use SymfonyId\AdminBundle\ActionHandler\DetailActionHandler;
+use SymfonyId\AdminBundle\ActionHandler\ListActionHandler;
+use SymfonyId\AdminBundle\ActionHandler\ActionHandlerInterface;
 use SymfonyId\AdminBundle\Annotation\Driver;
+use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Model\ModelInterface;
 use SymfonyId\AdminBundle\View\View;
 
@@ -32,7 +39,7 @@ class CrudFactory
     /**
      * @var array
      */
-    private $viewHandlers = array();
+    private $actionHandlers = array();
 
     /**
      * @var Request
@@ -43,6 +50,11 @@ class CrudFactory
      * @var Driver
      */
     private $driver;
+
+    /**
+     * @var View
+     */
+    private $view;
 
     /**
      * @var string
@@ -58,11 +70,11 @@ class CrudFactory
     }
 
     /**
-     * @param ViewHandlerInterface $viewHandler
+     * @param ActionHandlerInterface $viewHandler
      */
-    public function addViewHandler(ViewHandlerInterface $viewHandler)
+    public function addActionHandler(ActionHandlerInterface $viewHandler)
     {
-        $this->viewHandlers[get_class($viewHandler)] = $viewHandler;
+        $this->actionHandlers[get_class($viewHandler)] = $viewHandler;
     }
 
     /**
@@ -82,21 +94,19 @@ class CrudFactory
     }
 
     /**
+     * @param View $view
+     */
+    public function setView(View $view)
+    {
+        $this->view = $view;
+    }
+
+    /**
      * @param string $template
      */
     public function setTemplate($template)
     {
         $this->template = $template;
-    }
-
-    /**
-     * @param View $view
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function getResponse(View $view)
-    {
-        return $this->templateEngine->renderResponse($this->template, $view->getParams());
     }
 
     /**
@@ -111,7 +121,7 @@ class CrudFactory
     public function listView(array $gridFields, array $actionList, $allowCreate = true, $allowBulkDelete = true, $formatNumber = true)
     {
         /** @var ListActionHandler $viewHandler */
-        $viewHandler = $this->viewHandlers[ListActionHandler::class];
+        $viewHandler = $this->actionHandlers[ListActionHandler::class];
         $viewHandler->setRequest($this->request);
         $viewHandler->setGridFields($gridFields);
         $viewHandler->setActionList($actionList);
@@ -130,7 +140,7 @@ class CrudFactory
     public function createOrUpdate(FormInterface $form)
     {
         /** @var CreateUpdateActionHandler $viewHandler */
-        $viewHandler = $this->viewHandlers[CreateUpdateActionHandler::class];
+        $viewHandler = $this->actionHandlers[CreateUpdateActionHandler::class];
         $viewHandler->setRequest($this->request);
         $viewHandler->setForm($form);
 
@@ -147,7 +157,7 @@ class CrudFactory
     public function showDetail(ModelInterface $model, array $showFields, $allowDelete = true)
     {
         /** @var DetailActionHandler $viewHandler */
-        $viewHandler = $this->viewHandlers[DetailActionHandler::class];
+        $viewHandler = $this->actionHandlers[DetailActionHandler::class];
         $viewHandler->setRequest($this->request);
         $viewHandler->setData($model);
         $viewHandler->setShowFields($showFields);
@@ -166,7 +176,7 @@ class CrudFactory
     public function remove(ModelInterface $model)
     {
         /** @var DeleteActionHandler $viewHandler */
-        $viewHandler = $this->viewHandlers[DeleteActionHandler::class];
+        $viewHandler = $this->actionHandlers[DeleteActionHandler::class];
         $viewHandler->setRequest($this->request);
         $viewHandler->setData($model);
 
@@ -176,5 +186,37 @@ class CrudFactory
             'status' => $view->getParam('errors'),
             'message' => $view->getParam('message'),
         ));
+    }
+
+    /**
+     * @param CrudConfigurator $crudConfigurator
+     *
+     * @return JsonResponse
+     *
+     * @throws \SymfonyId\AdminBundle\Exception\RuntimeException
+     */
+    public function bulkCreate(CrudConfigurator $crudConfigurator)
+    {
+        /** @var BulkCreateActionHandler $viewHandler */
+        $viewHandler = $this->actionHandlers[BulkCreateActionHandler::class];
+        $viewHandler->setRequest($this->request);
+        $viewHandler->setCrudConfigurator($crudConfigurator);
+
+        $view = $viewHandler->getView($this->driver);
+
+        return new JsonResponse(array(
+            'status' => $view->getParam('status'),
+            'message' => $view->getParam('message'),
+        ));
+    }
+
+    /**
+     * @param View $view
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    private function getResponse(View $view)
+    {
+        return $this->templateEngine->renderResponse($this->template, $view->getParams());
     }
 }

@@ -13,7 +13,7 @@ namespace SymfonyId\AdminBundle\Doctrine\Filter;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Filter\SQLFilter;
-use SymfonyId\AdminBundle\Model\SoftDeletableInterface;
+use SymfonyId\AdminBundle\Model\SoftDeleteAwareInterface;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -30,7 +30,7 @@ class SoftDeletableFilter extends SQLFilter
      */
     public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias)
     {
-        if ($targetEntity->getReflectionClass()->implementsInterface(SoftDeletableInterface::class)) {
+        if ($targetEntity->getReflectionClass()->implementsInterface(SoftDeleteAwareInterface::class)) {
             return sprintf('%s.is_deleted = %s', $targetTableAlias, $this->getParameter('isDeleted'));
         }
 

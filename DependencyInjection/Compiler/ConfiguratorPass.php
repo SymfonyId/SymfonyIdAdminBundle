@@ -18,23 +18,23 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class ConfigurationPass implements CompilerPassInterface
+class ConfiguratorPass implements CompilerPassInterface
 {
-    const CONFIGURATOR = 'symfonyid.admin.congiration.configurator_factory';
+    const CONFIGURATOR_FACTORY = 'symfonyid.admin.congiration.configurator_factory';
 
     /**
      * @param ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has(self::CONFIGURATOR)) {
+        if (!$container->has(self::CONFIGURATOR_FACTORY)) {
             return;
         }
 
         /*
          * Add all service with tag name siab.config
          */
-        $definition = $container->findDefinition(self::CONFIGURATOR);
+        $definition = $container->findDefinition(self::CONFIGURATOR_FACTORY);
         $taggedServices = $container->findTaggedServiceIds('symfonyid.config');
         foreach ($taggedServices as $id => $tags) {
             $definition->addMethodCall('addConfiguration', array(new Reference($id)));

@@ -14,7 +14,7 @@ namespace SymfonyId\AdminBundle\Model;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-trait TimestampableTrait
+trait TimestampAwareTrait
 {
     /**
      * @var \DateTime

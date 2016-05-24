@@ -41,9 +41,10 @@ abstract class CrudController extends AbstractController
         $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
-        $authorizationChecker = $this->container->get('symfonyid.admin.security.authorization_checker');
 
+        $authorizationChecker = $this->container->get('symfonyid.admin.security.authorization_checker');
         $authorizationChecker->isAllowOr404Error($crudConfigurator, Constants::ACTION_CREATE);
+
         /** @var PluginConfigurator $pluginConfigurator */
         $pluginConfigurator = $configuratorFactory->getConfigurator(PluginConfigurator::class);
         $template = $pluginConfigurator->isBulkInsertEnabled() ? $crudConfigurator->getTemplate()->getBulkCreate() : $crudConfigurator->getTemplate()->getCreate();
@@ -53,6 +54,49 @@ abstract class CrudController extends AbstractController
         $form = $crudConfigurator->getForm($model);
 
         return $this->createOrUpdate($request, $model, $form, Constants::ACTION_CREATE, $template);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function bulkNewAction(Request $request)
+    {
+        /** @var ConfiguratorFactory $configuratorFactory */
+        $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
+        /** @var CrudConfigurator $crudConfigurator */
+        $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
+
+        $driver = $this->container->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
+        $crudFactory = $this->container->get('symfonyid.admin.crud.crud_factory');
+        $crudFactory->setDriver($driver);
+        $crudFactory->setRequest($request);
+        $crudFactory->bulkCreate($crudConfigurator);
+
+        return $crudFactory->bulkCreate($crudConfigurator);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction(Request $request, $id)
+    {
+        /** @var ConfiguratorFactory $configuratorFactory */
+        $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
+        /** @var CrudConfigurator $crudConfigurator */
+        $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
+
+        $authorizationChecker = $this->container->get('symfonyid.admin.security.authorization_checker');
+        $authorizationChecker->isAllowOr404Error($crudConfigurator, Constants::ACTION_CREATE);
+
+        $entity = $this->findOr404Error($id);
+        $form = $crud->getForm($entity);
+
+        return $this->handle($request, $entity, $form, Constants::ACTION_UPDATE, $crud->getEditTemplate());
     }
 
     /**
@@ -125,8 +169,8 @@ abstract class CrudController extends AbstractController
         $crudFactory->setDriver($driver);
         $crudFactory->setRequest($request);
         $crudFactory->setTemplate($template);
-        $crudFactory->createOrUpdate($form);
+        $crudFactory->setView($view);
 
-        return $crudFactory->getResponse($view);
+        return $crudFactory->createOrUpdate($form);
     }
 }

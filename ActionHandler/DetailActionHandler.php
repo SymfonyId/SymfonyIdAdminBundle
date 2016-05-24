@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\Crud;
+namespace SymfonyId\AdminBundle\ActionHandler;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -18,20 +18,15 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Translation\TranslatorInterface;
 use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Model\ModelInterface;
-use SymfonyId\AdminBundle\Security\MethodInvoker;
+use SymfonyId\AdminBundle\Util\MethodInvoker;
 use SymfonyId\AdminBundle\View\View;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class DetailActionHandler implements ViewHandlerInterface, ContainerAwareInterface
+class DetailActionHandler extends AbstractActionHandler implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
-
-    /**
-     * @var View
-     */
-    private $view;
 
     /**
      * @var Session
@@ -42,11 +37,6 @@ class DetailActionHandler implements ViewHandlerInterface, ContainerAwareInterfa
      * @var TranslatorInterface
      */
     private $translator;
-
-    /**
-     * @var Request
-     */
-    private $request;
 
     /**
      * @var ModelInterface
@@ -64,13 +54,11 @@ class DetailActionHandler implements ViewHandlerInterface, ContainerAwareInterfa
     private $allowDelete = true;
 
     /**
-     * @param View                $view
      * @param Session             $session
      * @param TranslatorInterface $translator
      */
-    public function __construct(View $view, Session $session, TranslatorInterface $translator)
+    public function __construct(Session $session, TranslatorInterface $translator)
     {
-        $this->view = $view;
         $this->session = $session;
         $this->translator = $translator;
     }
