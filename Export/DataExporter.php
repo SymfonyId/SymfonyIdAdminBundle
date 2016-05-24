@@ -29,11 +29,18 @@ class DataExporter
     private $managerFactory;
 
     /**
-     * @param ManagerFactory $managerFactory
+     * @var int
      */
-    public function __construct(ManagerFactory $managerFactory)
+    private $maxRecords;
+
+    /**
+     * @param ManagerFactory $managerFactory
+     * @param int            $maxRecords
+     */
+    public function __construct(ManagerFactory $managerFactory, $maxRecords)
     {
         $this->managerFactory = $managerFactory;
+        $this->maxRecords = $maxRecords;
     }
 
     /**
@@ -93,7 +100,7 @@ class DataExporter
         $output = array($columns);
 
         /** @var ModelInterface $record */
-        foreach ($this->managerFactory->getManager($driver)->findAll() as $record) {
+        foreach ($this->managerFactory->getManager($driver)->paginate(0, $this->maxRecords) as $record) {
             $temp = array();
             foreach ($columns as $column) {
                 $temp[] = MethodInvoker::invokeGet($record, $column);

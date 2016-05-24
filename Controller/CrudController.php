@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use SymfonyId\AdminBundle\Annotation\AutoComplete;
 use SymfonyId\AdminBundle\Annotation\DatePicker;
+use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Annotation\ExternalJavascript;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
@@ -71,8 +72,8 @@ abstract class CrudController extends AbstractController
 
         $this->isAllowOr404Error($crudConfigurator, Constants::ACTION_CREATE);
 
-        $driver = $this->container->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
-        $crudFactory = $this->container->get('symfonyid.admin.crud.crud_factory');
+        $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
+        $crudFactory = $this->get('symfonyid.admin.crud.crud_factory');
         $crudFactory->setDriver($driver);
         $crudFactory->setRequest($request);
 
@@ -121,8 +122,8 @@ abstract class CrudController extends AbstractController
         /** @var View $view */
         $view = $this->get('symfonian_id.admin.view.view');
 
-        $driver = $this->container->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crud->getModelClass());
-        $crudFactory = $this->container->get('symfonyid.admin.crud.crud_factory');
+        $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crud->getModelClass());
+        $crudFactory = $this->get('symfonyid.admin.crud.crud_factory');
         $crudFactory->setRequest($request);
         $crudFactory->setDriver($driver);
         $crudFactory->setView($view);
@@ -151,8 +152,8 @@ abstract class CrudController extends AbstractController
         /** @var View $view */
         $view = $this->get('symfonian_id.admin.view.view');
 
-        $driver = $this->container->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
-        $crudFactory = $this->container->get('symfonyid.admin.crud.crud_factory');
+        $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
+        $crudFactory = $this->get('symfonyid.admin.crud.crud_factory');
         $crudFactory->setRequest($request);
         $crudFactory->setDriver($driver);
         $crudFactory->setView($view);
@@ -174,8 +175,8 @@ abstract class CrudController extends AbstractController
 
         $this->isAllowOr404Error($crudConfigurator, Constants::ACTION_CREATE);
 
-        $driver = $this->container->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
-        $crudFactory = $this->container->get('symfonyid.admin.crud.crud_factory');
+        $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
+        $crudFactory = $this->get('symfonyid.admin.crud.crud_factory');
         $crudFactory->setDriver($driver);
         $crudFactory->setRequest($request);
 
@@ -203,14 +204,13 @@ abstract class CrudController extends AbstractController
         /* @var PageConfigurator $pageConfigurator */
         $pageConfigurator = $configuratorFactory->getConfigurator(PageConfigurator::class);
 
-        $translator = $this->container->get('translator');
-        $translationDomain = $this->container->getParameter('symfonian_id.admin.translation_domain');
+        $translator = $this->get('translator');
+        $translationDomain = $this->getParameter('symfonian_id.admin.translation_domain');
 
         $template = $crudConfigurator->getTemplate();
         $listTemplate = $request->isXmlHttpRequest() ? $template->getAjaxTemplate() : $template->getList();
 
         $reflectionModel = new \ReflectionClass($crudConfigurator->getCrud()->getModelClass());
-        $columns = $gridConfigurator->getColumns($reflectionModel);
         $filters = $gridConfigurator->getFilters($reflectionModel);
 
         /** @var View $view */
@@ -226,7 +226,31 @@ abstract class CrudController extends AbstractController
         }, $filters)));
         $view->setParam('filter_fields_entity', implode(', ', $filters));
 
-        return $this->doList($request, $crudConfigurator, $view, $columns, $listTemplate);
+        return $this->doList($request, $crudConfigurator, $view, $gridConfigurator->getColumns($reflectionModel), $listTemplate);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function downloadAction()
+    {
+        /** @var ConfiguratorFactory $configuratorFactory */
+        $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
+        /** @var CrudConfigurator $crudConfigurator */
+        $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
+
+        $this->isAllowOr404Error($crudConfigurator, Constants::ACTION_READ);
+
+        $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
+        $this->isAllowDownloadOr404Error($driver);
+
+        $dataExporter = $this->get('symfonyid.admin.export.data_exporter');
+
+        /** @var GridConfigurator $gridConfigurator */
+        $gridConfigurator = $configuratorFactory->getConfigurator(GridConfigurator::class);
+        $reflectionModel = new \ReflectionClass($crudConfigurator->getCrud()->getModelClass());
+
+        return $dataExporter->exportToExcel($driver, $gridConfigurator->getColumns($reflectionModel));
     }
 
     /**
@@ -242,8 +266,8 @@ abstract class CrudController extends AbstractController
      */
     private function createOrUpdate(Request $request, ModelInterface $model, FormInterface $form, $action, $template)
     {
-        $translator = $this->container->get('translator');
-        $translationDomain = $this->container->getParameter('symfonian_id.admin.translation_domain');
+        $translator = $this->get('translator');
+        $translationDomain = $this->getParameter('symfonian_id.admin.translation_domain');
 
         /** @var ConfiguratorFactory $configuratorFactory */
         $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
@@ -308,8 +332,8 @@ abstract class CrudController extends AbstractController
      */
     private function doCreateOrUpdate(ModelInterface $model, Request $request, View $view, FormInterface $form, $template)
     {
-        $driver = $this->container->get('symfonyid.admin.manager.driver_finder')->findDriverForClass(get_class($model));
-        $crudFactory = $this->container->get('symfonyid.admin.crud.crud_factory');
+        $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass(get_class($model));
+        $crudFactory = $this->get('symfonyid.admin.crud.crud_factory');
         $crudFactory->setDriver($driver);
         $crudFactory->setRequest($request);
         $crudFactory->setTemplate($template);
@@ -318,10 +342,19 @@ abstract class CrudController extends AbstractController
         return $crudFactory->createOrUpdate($form);
     }
 
+    /**
+     * @param Request          $request
+     * @param CrudConfigurator $crudConfigurator
+     * @param View             $view
+     * @param array            $columns
+     * @param $template
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     private function doList(Request $request, CrudConfigurator $crudConfigurator, View $view, array $columns, $template)
     {
-        $driver = $this->container->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
-        $crudFactory = $this->container->get('symfonyid.admin.crud.crud_factory');
+        $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
+        $crudFactory = $this->get('symfonyid.admin.crud.crud_factory');
         $crudFactory->setDriver($driver);
         $crudFactory->setView($view);
         $crudFactory->setRequest($request);
@@ -337,16 +370,16 @@ abstract class CrudController extends AbstractController
      */
     private function findOr404Error($id)
     {
-        $translator = $this->container->get('translator');
-        $translationDomain = $this->container->getParameter('symfonian_id.admin.translation_domain');
+        $translator = $this->get('translator');
+        $translationDomain = $this->getParameter('symfonian_id.admin.translation_domain');
 
         /** @var ConfiguratorFactory $configuratorFactory */
         $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
-        $driver = $this->container->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
-        $crudOperationHandler = $this->container->get('symfonyid.admin.crud.crud_operation_handler');
+        $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
+        $crudOperationHandler = $this->get('symfonyid.admin.crud.crud_operation_handler');
 
         /** @var ModelInterface $model */
         $model = $crudOperationHandler->find($driver, $id);
@@ -360,19 +393,43 @@ abstract class CrudController extends AbstractController
     /**
      * @param CrudConfigurator $crudConfigurator
      * @param string           $action
+     *
+     * @return bool
      */
     private function isAllowOr404Error(CrudConfigurator $crudConfigurator, $action)
     {
-        $authorizationChecker = $this->container->get('symfonyid.admin.security.authorization_checker');
-        $authorizationChecker->isAllowOr404Error($crudConfigurator, $action);
+        $authorizationChecker = $this->get('symfonyid.admin.security.authorization_checker');
+
+        return $authorizationChecker->isAllowOr404Error($crudConfigurator, $action);
+    }
+
+    /**
+     * @param Driver $driver
+     *
+     * @return bool
+     */
+    private function isAllowDownloadOr404Error(Driver $driver)
+    {
+        $dataExporter = $this->get('symfonyid.admin.export.data_exporter');
+        $translator = $this->get('translator');
+        $translationDomain = $this->getParameter('symfonian_id.admin.translation_domain');
+
+        if (!$dataExporter->isAllowExport($driver, $this->container->getParameter('symfonyid.admin.max_records'))) {
+            throw new NotFoundHttpException($translator->trans('message.request_not_found', array(), $translationDomain));
+        }
+
+        return true;
     }
 
     /**
      * @param CrudConfigurator $crudConfigurator
+     *
+     * @return bool
      */
     private function isAllowBulkDelete(CrudConfigurator $crudConfigurator)
     {
-        $authorizationChecker = $this->container->get('symfonyid.admin.security.authorization_checker');
-        $authorizationChecker->isAllowBulkDelete($crudConfigurator);
+        $authorizationChecker = $this->get('symfonyid.admin.security.authorization_checker');
+
+        return $authorizationChecker->isAllowBulkDelete($crudConfigurator);
     }
 }

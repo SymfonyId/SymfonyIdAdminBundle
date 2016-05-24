@@ -35,7 +35,7 @@ class GridConfigurator implements ConfiguratorInterface
 
     /**
      * @param ExtractorFactory $extractorFactory
-     * @param KernelInterface $kernel
+     * @param KernelInterface  $kernel
      */
     public function __construct(ExtractorFactory $extractorFactory, KernelInterface $kernel)
     {
@@ -77,7 +77,7 @@ class GridConfigurator implements ConfiguratorInterface
 
         $this->extractorFactory->extract($reflectionClass);
         /** @var \ReflectionProperty $property */
-        foreach ( $this->extractorFactory->getPropertyAnnotations() as $property) {
+        foreach ($this->extractorFactory->getPropertyAnnotations() as $property) {
             $this->extractorFactory->extract($property);
             foreach ($this->extractorFactory->getPropertyAnnotations() as $annotation) {
                 if ($annotation instanceof Column) {
@@ -102,7 +102,7 @@ class GridConfigurator implements ConfiguratorInterface
 
         $this->extractorFactory->extract($reflectionClass);
         /** @var \ReflectionProperty $property */
-        foreach ( $this->extractorFactory->getPropertyAnnotations() as $property) {
+        foreach ($this->extractorFactory->getPropertyAnnotations() as $property) {
             $this->extractorFactory->extract($property);
             foreach ($this->extractorFactory->getPropertyAnnotations() as $annotation) {
                 if ($annotation instanceof Filter) {
@@ -127,7 +127,7 @@ class GridConfigurator implements ConfiguratorInterface
 
         $this->extractorFactory->extract($reflectionClass);
         /** @var \ReflectionProperty $property */
-        foreach ( $this->extractorFactory->getPropertyAnnotations() as $property) {
+        foreach ($this->extractorFactory->getPropertyAnnotations() as $property) {
             $this->extractorFactory->extract($property);
             foreach ($this->extractorFactory->getPropertyAnnotations() as $annotation) {
                 if ($annotation instanceof Sort) {
