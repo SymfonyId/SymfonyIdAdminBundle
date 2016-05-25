@@ -12,10 +12,13 @@
 namespace SymfonyId\AdminBundle\Security;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Model\BulkDeletableInterface;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
+use SymfonyId\AdminBundle\User\User;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -43,6 +46,20 @@ class AuthorizationChecker
     }
 
     /**
+     * @param UserInterface $user
+     *
+     * @return true
+     */
+    public function isGrantedOr403Error(UserInterface $user)
+    {
+        if (!is_object($user) || !$user instanceof User) {
+            throw new AccessDeniedException($this->translator->trans('message.access_denied', array(), $this->translationDomain));
+        }
+
+        return true;
+    }
+
+    /**
      * @param CrudConfigurator $crudConfigurator
      * @param $action
      *
@@ -50,7 +67,7 @@ class AuthorizationChecker
      *
      * @return bool
      */
-    public function isAllowOr404Error(CrudConfigurator $crudConfigurator, $action)
+    public function isGrantedOr404Error(CrudConfigurator $crudConfigurator, $action)
     {
         $crud = $crudConfigurator->getCrud();
         $granted = false;
@@ -77,7 +94,7 @@ class AuthorizationChecker
         return $granted;
     }
 
-    public function isAllowBulkDelete(CrudConfigurator $crudConfigurator)
+    public function isGrantedBulkDelete(CrudConfigurator $crudConfigurator)
     {
         $crud = $crudConfigurator->getCrud();
         $allowBulkDelete = false;

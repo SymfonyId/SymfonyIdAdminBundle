@@ -11,7 +11,7 @@
             <argument type="service" id="translator"/>
             <argument type="string">%symfonyid.admin.translation_domain%</argument>
         </service>
-        <service id="symfonian_id.admin.view.view" class="SymfonyId\AdminBundle\View\View" />
+        <service id="symfonyid.admin.view.view" class="SymfonyId\AdminBundle\View\View" />
         <service id="symfonyid.admin.manager.driver_finder" class="SymfonyId\AdminBundle\Manager\DriverFinder" >
             <argument type="service" id="symfonyid.admin.extractor.extractor_factory"/>
             <argument type="string">%symfonyid.admin.driver%</argument>
@@ -25,6 +25,7 @@
         </service>
         <service id="symfonyid.admin.export.data_exporter" class="SymfonyId\AdminBundle\Export\DataExporter" >
             <argument type="service" id="symfonyid.admin.manager.manager_factory"/>
+            <argument type="string">%symfonyid.admin.max_records%</argument>
         </service>
     </services>
 </container>

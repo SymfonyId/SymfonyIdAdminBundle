@@ -15,8 +15,8 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Filter\SQLFilter;
 use SymfonyId\AdminBundle\Annotation\Filter;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
-use SymfonyId\AdminBundle\Filter\FieldsFilterInterface;
 use SymfonyId\AdminBundle\Filter\FieldsFilterAwareTrait;
+use SymfonyId\AdminBundle\Filter\FieldsFilterInterface;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>

@@ -50,7 +50,7 @@ class ProfileControllerConfiguratorListener
     public function __construct(ConfiguratorFactory $configuratorFactory, KernelInterface $kernel)
     {
         $this->configuratorFactory = $configuratorFactory;
-        $this->kernel;
+        $this->kernel = $kernel;
     }
 
     /**

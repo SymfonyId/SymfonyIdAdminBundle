@@ -13,10 +13,9 @@ namespace SymfonyId\AdminBundle\Document\Filter;
 
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
-use SymfonyId\AdminBundle\Annotation\Filter;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
-use SymfonyId\AdminBundle\Filter\FieldsFilterInterface;
 use SymfonyId\AdminBundle\Filter\FieldsFilterAwareTrait;
+use SymfonyId\AdminBundle\Filter\FieldsFilterInterface;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>

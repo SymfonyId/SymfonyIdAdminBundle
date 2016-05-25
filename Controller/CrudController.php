@@ -45,7 +45,7 @@ abstract class CrudController extends AbstractController
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
-        $this->isAllowOr404Error($crudConfigurator, Constants::ACTION_CREATE);
+        $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_CREATE);
 
         /** @var PluginConfigurator $pluginConfigurator */
         $pluginConfigurator = $configuratorFactory->getConfigurator(PluginConfigurator::class);
@@ -70,7 +70,7 @@ abstract class CrudController extends AbstractController
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
-        $this->isAllowOr404Error($crudConfigurator, Constants::ACTION_CREATE);
+        $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_CREATE);
 
         $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
         $crudFactory = $this->get('symfonyid.admin.crud.crud_factory');
@@ -93,7 +93,7 @@ abstract class CrudController extends AbstractController
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
-        $this->isAllowOr404Error($crudConfigurator, Constants::ACTION_UPDATE);
+        $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_UPDATE);
 
         $model = $this->findOr404Error($id);
         $form = $crudConfigurator->getForm($model);
@@ -114,13 +114,13 @@ abstract class CrudController extends AbstractController
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
-        $this->isAllowOr404Error($crudConfigurator, Constants::ACTION_READ);
+        $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_READ);
 
         $crud = $crudConfigurator->getCrud();
         /** @var ModelInterface $model */
         $model = $this->findOr404Error($id);
         /** @var View $view */
-        $view = $this->get('symfonian_id.admin.view.view');
+        $view = $this->get('symfonyid.admin.view.view');
 
         $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crud->getModelClass());
         $crudFactory = $this->get('symfonyid.admin.crud.crud_factory');
@@ -145,12 +145,12 @@ abstract class CrudController extends AbstractController
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
-        $this->isAllowOr404Error($crudConfigurator, Constants::ACTION_DELETE);
+        $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_DELETE);
 
         /** @var ModelInterface $model */
         $model = $this->findOr404Error($id);
         /** @var View $view */
-        $view = $this->get('symfonian_id.admin.view.view');
+        $view = $this->get('symfonyid.admin.view.view');
 
         $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
         $crudFactory = $this->get('symfonyid.admin.crud.crud_factory');
@@ -173,7 +173,7 @@ abstract class CrudController extends AbstractController
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
-        $this->isAllowOr404Error($crudConfigurator, Constants::ACTION_CREATE);
+        $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_CREATE);
 
         $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
         $crudFactory = $this->get('symfonyid.admin.crud.crud_factory');
@@ -197,7 +197,7 @@ abstract class CrudController extends AbstractController
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
-        $this->isAllowOr404Error($crudConfigurator, Constants::ACTION_READ);
+        $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_READ);
 
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
@@ -214,7 +214,7 @@ abstract class CrudController extends AbstractController
         $filters = $gridConfigurator->getFilters($reflectionModel);
 
         /** @var View $view */
-        $view = $this->get('symfonian_id.admin.view.view');
+        $view = $this->get('symfonyid.admin.view.view');
         $view->setParam('page_title', $translator->trans($pageConfigurator->getTitle(), array(), $translationDomain));
         $view->setParam('page_description', $translator->trans($pageConfigurator->getDescription(), array(), $translationDomain));
 
@@ -239,10 +239,10 @@ abstract class CrudController extends AbstractController
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
-        $this->isAllowOr404Error($crudConfigurator, Constants::ACTION_READ);
+        $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_READ);
 
         $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
-        $this->isAllowDownloadOr404Error($driver);
+        $this->isGrantedDownloadOr404Error($driver);
 
         $dataExporter = $this->get('symfonyid.admin.export.data_exporter');
 
@@ -285,7 +285,7 @@ abstract class CrudController extends AbstractController
         $externalJavascript = $utilConfigurator->getExternalJavascript();
 
         /** @var View $view */
-        $view = $this->get('symfonian_id.admin.view.view');
+        $view = $this->get('symfonyid.admin.view.view');
         $view->setParam('page_title', $translator->trans($pageConfigurator->getTitle(), array(), $translationDomain));
         $view->setParam('page_description', $translator->trans($pageConfigurator->getDescription(), array(), $translationDomain));
         $view->setParam('action_method', $translator->trans('page.'.strtolower($action), array(), $translationDomain));
@@ -360,7 +360,7 @@ abstract class CrudController extends AbstractController
         $crudFactory->setRequest($request);
         $crudFactory->setTemplate($template);
 
-        return $crudFactory->listView($columns, $crudConfigurator->getGridAction(), $crudConfigurator->getCrud()->isAllowCreate(), $this->isAllowBulkDelete($crudConfigurator));
+        return $crudFactory->listView($columns, $crudConfigurator->getGridAction(), $crudConfigurator->getCrud()->isAllowCreate(), $this->isGrantedBulkDelete($crudConfigurator));
     }
 
     /**
@@ -396,11 +396,11 @@ abstract class CrudController extends AbstractController
      *
      * @return bool
      */
-    private function isAllowOr404Error(CrudConfigurator $crudConfigurator, $action)
+    private function isGrantedOr404Error(CrudConfigurator $crudConfigurator, $action)
     {
         $authorizationChecker = $this->get('symfonyid.admin.security.authorization_checker');
 
-        return $authorizationChecker->isAllowOr404Error($crudConfigurator, $action);
+        return $authorizationChecker->isGrantedOr404Error($crudConfigurator, $action);
     }
 
     /**
@@ -408,7 +408,7 @@ abstract class CrudController extends AbstractController
      *
      * @return bool
      */
-    private function isAllowDownloadOr404Error(Driver $driver)
+    private function isGrantedDownloadOr404Error(Driver $driver)
     {
         $dataExporter = $this->get('symfonyid.admin.export.data_exporter');
         $translator = $this->get('translator');
@@ -426,10 +426,10 @@ abstract class CrudController extends AbstractController
      *
      * @return bool
      */
-    private function isAllowBulkDelete(CrudConfigurator $crudConfigurator)
+    private function isGrantedBulkDelete(CrudConfigurator $crudConfigurator)
     {
         $authorizationChecker = $this->get('symfonyid.admin.security.authorization_checker');
 
-        return $authorizationChecker->isAllowBulkDelete($crudConfigurator);
+        return $authorizationChecker->isGrantedBulkDelete($crudConfigurator);
     }
 }
