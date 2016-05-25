@@ -12,45 +12,31 @@
 namespace SymfonyId\AdminBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\KernelInterface;
 use SymfonyId\AdminBundle\Annotation\Crud;
+use SymfonyId\AdminBundle\Annotation\Template;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
-use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
-use SymfonyId\AdminBundle\Controller\ProfileController;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class ProfileControllerConfiguratorListener implements ConfigurationAwareInterface
+class SetDefaultTemplateConfiguration implements CrudControllerListenerAwareInterface, ConfigurationAwareInterface
 {
+    use CrudControllerListenerAwareTrait;
     use ConfigurationAwareTrait;
 
     /**
-     * @var array
+     * @var Template
      */
-    private $profileFields;
+    private $template;
 
     /**
-     * @var string
+     * @param Template $template
      */
-    private $formClass;
-
-    /**
-     * @param string $formClass
-     */
-    public function setFormClass($formClass)
+    public function setTemplate(Template $template)
     {
-        $this->formClass = $formClass;
-    }
-
-    /**
-     * @param array $profileFields
-     */
-    public function setProfileFields(array $profileFields)
-    {
-        $this->profileFields = $profileFields;
+        $this->template = $template;
     }
 
     /**
@@ -58,37 +44,26 @@ class ProfileControllerConfiguratorListener implements ConfigurationAwareInterfa
      */
     public function onKernelController(FilterControllerEvent $event)
     {
-        if ($this->isProduction()) {
+        if (!$this->isValidCrudListener($event)) {
             return;
         }
 
-        $controller = $event->getController();
-        if (!is_array($controller)) {
-            return;
-        }
-
-        $controller = $controller[0];
-        if (!$controller instanceof ProfileController) {
-            return;
-        }
-
-        $reflectionController = new \ReflectionObject($controller);
+        $reflectionController = new \ReflectionObject($this->controller);
         $configuratorFactory = $this->getConfiguratorFactory($reflectionController->getName());
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
         $crudConfiguration = $crudConfigurator->getCrud();
         $crud = new Crud(array(
             'modelClass' => $crudConfiguration->getModelClass(),
-            'form' => $this->formClass,
+            'form' => $crudConfiguration->getForm(),
             'menuIcon' => $crudConfiguration->getMenuIcon(),
-            'showFields' => $this->profileFields,
-            'template' => $crudConfiguration->getTemplate(),
+            'showFields' => $crudConfiguration->getShowFields(),
+            'template' => $this->template,
             'allowCreate' => $crudConfiguration->isAllowCreate(),
             'allowEdit' => $crudConfiguration->isAllowEdit(),
             'allowShow' => $crudConfiguration->isAllowShow(),
             'allowDelete' => $crudConfiguration->isAllowDelete(),
         ));
-
         $crudConfigurator->setCrud($crud);
     }
 }

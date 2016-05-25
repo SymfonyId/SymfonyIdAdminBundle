@@ -55,6 +55,14 @@ class ConfiguratorFactory
         return $this->configurators[$configuratorClass];
     }
 
+    /**
+     * @return ConfiguratorInterface[]
+     */
+    public function getConfigurators()
+    {
+        return $this->configurators;
+    }
+
     public function freeze()
     {
         $this->freeze = true;

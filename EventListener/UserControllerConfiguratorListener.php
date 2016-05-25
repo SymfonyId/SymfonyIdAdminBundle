@@ -15,6 +15,8 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelInterface;
 use SymfonyId\AdminBundle\Annotation\Crud;
 use SymfonyId\AdminBundle\Annotation\Grid;
+use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
+use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
@@ -23,19 +25,10 @@ use SymfonyId\AdminBundle\Controller\UserController;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class UserControllerConfiguratorListener implements CrudControllerListenerAwareInterface
+class UserControllerConfiguratorListener implements CrudControllerListenerAwareInterface, ConfigurationAwareInterface
 {
     use CrudControllerListenerAwareTrait;
-
-    /**
-     * @var ConfiguratorFactory
-     */
-    private $configuratorFactory;
-
-    /**
-     * @var KernelInterface
-     */
-    private $kernel;
+    use ConfigurationAwareTrait;
 
     /**
      * @var string
@@ -61,16 +54,6 @@ class UserControllerConfiguratorListener implements CrudControllerListenerAwareI
      * @var array
      */
     private $gridFilters = array();
-
-    /**
-     * @param ConfiguratorFactory $configuratorFactory
-     * @param KernelInterface     $kernel
-     */
-    public function __construct(ConfiguratorFactory $configuratorFactory, KernelInterface $kernel)
-    {
-        $this->configuratorFactory = $configuratorFactory;
-        $this->kernel = $kernel;
-    }
 
     /**
      * @param string $formClass
@@ -99,7 +82,7 @@ class UserControllerConfiguratorListener implements CrudControllerListenerAwareI
      */
     public function onKernelController(FilterControllerEvent $event)
     {
-        if ('prod' === strtolower($this->kernel->getEnvironment())) {
+        if ($this->isProduction()) {
             return;
         }
 
@@ -111,8 +94,10 @@ class UserControllerConfiguratorListener implements CrudControllerListenerAwareI
             return;
         }
 
+        $reflectionController = new \ReflectionObject($this->controller);
+        $configuratorFactory = $this->getConfiguratorFactory($reflectionController->getName());
         /** @var CrudConfigurator $crudConfigurator */
-        $crudConfigurator = $this->configuratorFactory->getConfigurator(CrudConfigurator::class);
+        $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
         $crudConfiguration = $crudConfigurator->getCrud();
         $crud = new Crud(array(
             'modelClass' => $this->modelClass,
@@ -128,7 +113,7 @@ class UserControllerConfiguratorListener implements CrudControllerListenerAwareI
         $crudConfigurator->setCrud($crud);
 
         /** @var GridConfigurator $gridConfigurator */
-        $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
+        $gridConfigurator = $configuratorFactory->getConfigurator(GridConfigurator::class);
         $grid = new Grid(array(
             'column' => $this->gridColumns,
             'filter' => $this->gridFilters,

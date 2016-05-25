@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the SymfonyIdAdminBundle package.
+ * This file is part of the AdminBundle package.
  *
  * (c) Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  *
@@ -11,9 +11,29 @@
 
 namespace SymfonyId\AdminBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use SymfonyId\AdminBundle\Annotation\Page;
+use SymfonyId\AdminBundle\Annotation\Plugin;
+use SymfonyId\AdminBundle\Annotation\Upload;
+use SymfonyId\AdminBundle\Annotation\Util;
+use SymfonyId\AdminBundle\Controller\CrudController;
+
 /**
+ * @Route("/user")
+ *
+ * @Page(title="page.user.title", description="page.user.description")
+ * @Plugin(fileChooser=true)
+ * @Util(upload={@Upload(uploadable="file", targetField="avatar")})
+ *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class UserController
+class UserController extends CrudController
 {
+    /**
+     * @return string
+     */
+    protected function getClassName()
+    {
+        return __CLASS__;
+    }
 }

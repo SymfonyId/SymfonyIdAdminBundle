@@ -13,7 +13,7 @@ namespace SymfonyId\AdminBundle\Annotation;
 
 /**
  * @Annotation
- * @Target({"ANNOTATION", "PROPERTY"})
+ * @Target({"CLASS"})
  * @Attributes({
  *   @Attribute("autoComplete", type = "\SymfonyId\AdminBundle\Annotation\AutoComplete"),
  *   @Attribute("datePicker", type = "\SymfonyId\AdminBundle\Annotation\DatePicker"),

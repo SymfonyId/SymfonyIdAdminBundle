@@ -65,7 +65,7 @@ trait ConfigurationAwareTrait
      */
     public function getConfiguratorFactory($controllerClass)
     {
-        if ('prod' !== strtolower($this->kernel->getEnvironment())) {
+        if (!$this->isProduction()) {
             return $this->configuratorFactory;
         }
         $this->configuratorFactory = $this->fetchFromCache($controllerClass);
@@ -87,5 +87,17 @@ trait ConfigurationAwareTrait
         }
 
         return require $this->cacheHandler->loadCache($reflectionController);
+    }
+
+    /**
+     * @return bool
+     */
+    private function isProduction()
+    {
+        if ('prod' === strtolower($this->kernel->getEnvironment())) {
+            return true;
+        }
+
+        return false;
     }
 }
