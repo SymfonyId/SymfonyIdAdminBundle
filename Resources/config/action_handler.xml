@@ -7,14 +7,14 @@
         <service id="symfonian_id.admin.action_handler.bulk_create" class="SymfonyId\AdminBundle\ActionHandler\BulkCreateActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
-            <argument type="string">%symfonyid.admin.translation_domain%</argument>
+            <argument>%symfonyid.admin.translation_domain%</argument>
 
             <tag name="symfonyid.crud_action" />
         </service>
         <service id="symfonian_id.admin.action_handler.bulk_delete" class="SymfonyId\AdminBundle\ActionHandler\BulkDeleteActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
-            <argument type="string">%symfonyid.admin.translation_domain%</argument>
+            <argument>%symfonyid.admin.translation_domain%</argument>
 
             <tag name="symfonyid.crud_action" />
         </service>
@@ -27,7 +27,7 @@
         <service id="symfonian_id.admin.action_handler.delete" class="SymfonyId\AdminBundle\ActionHandler\DeleteActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
-            <argument type="string">%symfonyid.admin.translation_domain%</argument>
+            <argument>%symfonyid.admin.translation_domain%</argument>
 
             <tag name="symfonyid.crud_action" />
         </service>

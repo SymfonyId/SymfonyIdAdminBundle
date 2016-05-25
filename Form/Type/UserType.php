@@ -46,7 +46,7 @@ class UserType extends AbstractType
     private $roleHierarchy;
 
     /**
-     * @var string
+     * @var array
      */
     private $uploadDir;
 
@@ -54,9 +54,9 @@ class UserType extends AbstractType
      * @param string $userClass
      * @param string $translationDomain
      * @param array  $roleHierarchy
-     * @param string $uploadDir
+     * @param array  $uploadDir
      */
-    public function __construct($userClass, $translationDomain, array $roleHierarchy, $uploadDir)
+    public function __construct($userClass, $translationDomain, array $roleHierarchy, array $uploadDir)
     {
         $this->userClass = $userClass;
         $this->translationDomain = $translationDomain;

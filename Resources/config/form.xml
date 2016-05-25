@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="symfonyid.admin.form.user_form" class="SymfonyId\AdminBundle\Form\Type\UserType" >
+            <argument>%symfonyid.admin.user.user_entity%</argument>
+            <argument>%symfonyid.admin.translation_domain%</argument>
+            <argument>%security.role_hierarchy.roles%</argument>
+            <argument>%symfonian_id.admin.upload_dir%</argument>
+        </service>
+        <service id="symfonyid.admin.form.change_password_form" class="SymfonyId\AdminBundle\Form\Type\ChangePasswordType" >
+            <argument>%symfonyid.admin.user.user_entity%</argument>
+            <argument>%symfonyid.admin.translation_domain%</argument>
+        </service>
+    </services>
+</container>

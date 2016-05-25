@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\ActionHandler;
+namespace SymfonyId\AdminBundle\Crud\ActionHandler;
 
 use Symfony\Component\HttpFoundation\Request;
 use SymfonyId\AdminBundle\Annotation\Driver;

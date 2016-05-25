@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\ActionHandler;
+namespace SymfonyId\AdminBundle\Crud\ActionHandler;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Translation\TranslatorInterface;

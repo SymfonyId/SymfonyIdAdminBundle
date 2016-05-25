@@ -5,5 +5,25 @@
 
     <services>
         <service id="symfonyid.admin.manager.manager_factory" class="SymfonyId\AdminBundle\Manager\ManagerFactory" />
+        <service id="symfonyid.admin.manager.driver_finder" class="SymfonyId\AdminBundle\Manager\DriverFinder" >
+            <argument type="service" id="symfonyid.admin.extractor.extractor_factory"/>
+            <argument>%symfonyid.admin.driver%</argument>
+        </service>
+        <service id="symfonyid.admin.manager.orm_manager" class="SymfonyId\AdminBundle\Doctrine\OrmManager">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="knp_paginator"/>
+            <argument type="service" id="security.token_storage"/>
+            <argument type="service" id="symfonyid.admin.event.event_subscriber"/>
+
+            <tag name="symfonyid.manager" />
+        </service>
+        <service id="symfonyid.admin.manager.odm_manager" class="SymfonyId\AdminBundle\Document\OdmManager">
+            <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
+            <argument type="service" id="knp_paginator"/>
+            <argument type="service" id="security.token_storage"/>
+            <argument type="service" id="symfonyid.admin.event.event_subscriber"/>
+
+            <tag name="symfonyid.manager" />
+        </service>
     </services>
 </container>
