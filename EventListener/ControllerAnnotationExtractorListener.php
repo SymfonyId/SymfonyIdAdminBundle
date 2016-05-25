@@ -29,7 +29,7 @@ use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class ControllerAnnotationListener
+class ControllerAnnotationExtractorListener
 {
     use CrudControllerListenerAwareTrait;
 

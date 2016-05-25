@@ -81,7 +81,7 @@ class TwigGlobalVariableListener
     {
         $this->variables['translation_domain'] = $translationDomain;
     }
-    
+
     public function onKernelRequest()
     {
         $needToMerge = array(
