@@ -12,11 +12,9 @@
 namespace SymfonyId\AdminBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\KernelInterface;
 use SymfonyId\AdminBundle\Annotation\Crud;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
-use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Controller\ProfileController;
 

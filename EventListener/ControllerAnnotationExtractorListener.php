@@ -36,18 +36,13 @@ class ControllerAnnotationExtractorListener implements CrudControllerListenerAwa
     use ConfigurationAwareTrait;
 
     /**
-     * @var KernelInterface
-     */
-    private $kernel;
-
-    /**
      * @var ExtractorFactory
      */
     private $extractorFactory;
 
     /**
-     * @param KernelInterface     $kernel
-     * @param ExtractorFactory    $extractorFactory
+     * @param KernelInterface  $kernel
+     * @param ExtractorFactory $extractorFactory
      */
     public function __construct(KernelInterface $kernel, ExtractorFactory $extractorFactory)
     {

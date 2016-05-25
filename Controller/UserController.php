@@ -16,7 +16,6 @@ use SymfonyId\AdminBundle\Annotation\Page;
 use SymfonyId\AdminBundle\Annotation\Plugin;
 use SymfonyId\AdminBundle\Annotation\Upload;
 use SymfonyId\AdminBundle\Annotation\Util;
-use SymfonyId\AdminBundle\Controller\CrudController;
 
 /**
  * @Route("/user")
