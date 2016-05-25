@@ -133,7 +133,7 @@ class DetailActionHandler extends AbstractActionHandler implements ContainerAwar
         $this->view->setParam('back', $referer);
         $this->view->setParam('action', $this->allowDelete);
         $this->view->setParam('number', $this->container->getParameter('symfonyid.admin.number'));
-        $this->view->setParam('upload_dir', $this->container->getParameter('symfonyid.admin.upload_dir'));
+        $this->view->setParam('upload_dir', $this->container->getParameter('symfonyid.admin.upload_directory'));
 
         return $this->view;
     }

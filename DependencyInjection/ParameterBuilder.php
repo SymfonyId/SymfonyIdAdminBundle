@@ -72,7 +72,7 @@ class ParameterBuilder
         );
         $this->containerBuilder->setParameter('symfonyid.admin.number', $number);
 
-        $this->containerBuilder->setParameter('symfonyid.admin.upload_dir', array(
+        $this->containerBuilder->setParameter('symfonyid.admin.upload_directory', array(
             'server_path' => $this->containerBuilder->getParameter('kernel.root_dir').'/../web/'.$config['upload_dir'],
             'web_path' => '/'.$config['upload_dir'].'/',
         ));

@@ -4,40 +4,40 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="symfonian_id.admin.action_handler.bulk_create" class="SymfonyId\AdminBundle\ActionHandler\BulkCreateActionHandler">
+        <service id="symfonian_id.admin.action_handler.bulk_create" class="SymfonyId\AdminBundle\Crud\ActionHandler\BulkCreateActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
             <argument>%symfonyid.admin.translation_domain%</argument>
 
             <tag name="symfonyid.crud_action" />
         </service>
-        <service id="symfonian_id.admin.action_handler.bulk_delete" class="SymfonyId\AdminBundle\ActionHandler\BulkDeleteActionHandler">
+        <service id="symfonian_id.admin.action_handler.bulk_delete" class="SymfonyId\AdminBundle\Crud\ActionHandler\BulkDeleteActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
             <argument>%symfonyid.admin.translation_domain%</argument>
 
             <tag name="symfonyid.crud_action" />
         </service>
-        <service id="symfonian_id.admin.action_handler.create_update" class="SymfonyId\AdminBundle\ActionHandler\CreateUpdateActionHandler">
+        <service id="symfonian_id.admin.action_handler.create_update" class="SymfonyId\AdminBundle\Crud\ActionHandler\CreateUpdateActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
 
             <tag name="symfonyid.crud_action" />
         </service>
-        <service id="symfonian_id.admin.action_handler.delete" class="SymfonyId\AdminBundle\ActionHandler\DeleteActionHandler">
+        <service id="symfonian_id.admin.action_handler.delete" class="SymfonyId\AdminBundle\Crud\ActionHandler\DeleteActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
             <argument>%symfonyid.admin.translation_domain%</argument>
 
             <tag name="symfonyid.crud_action" />
         </service>
-        <service id="symfonian_id.admin.action_handler.detail" class="SymfonyId\AdminBundle\ActionHandler\DetailActionHandler">
+        <service id="symfonian_id.admin.action_handler.detail" class="SymfonyId\AdminBundle\Crud\ActionHandler\DetailActionHandler">
             <argument type="service" id="session" />
             <argument type="service" id="translator"/>
 
             <tag name="symfonyid.crud_action" />
         </service>
-        <service id="symfonian_id.admin.action_handler.list" class="SymfonyId\AdminBundle\ActionHandler\ListActionHandler">
+        <service id="symfonian_id.admin.action_handler.list" class="SymfonyId\AdminBundle\Crud\ActionHandler\ListActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="symfonyid.admin.export.data_exporter"/>
             <argument type="service" id="translator"/>

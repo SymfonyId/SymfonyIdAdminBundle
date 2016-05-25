@@ -38,7 +38,8 @@ class SymfonyIdAdminExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
-        $loader->load('configurations.xml');
+        $loader->load('action_handler.xml');
+        $loader->load('configuration.xml');
         $loader->load('extractors.xml');
         $loader->load('filters.xml');
         $loader->load('form.xml');
