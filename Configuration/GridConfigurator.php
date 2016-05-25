@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the AdminBundle package.
+ * This file is part of the SymfonyIdAdminBundle package.
  *
  * (c) Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  *
