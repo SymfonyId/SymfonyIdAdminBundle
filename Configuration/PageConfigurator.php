@@ -25,6 +25,14 @@ class PageConfigurator implements ConfiguratorInterface
     private $page;
 
     /**
+     * @return Page
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
      * @param Page $page
      */
     public function setPage(Page $page)

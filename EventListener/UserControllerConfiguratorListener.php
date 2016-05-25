@@ -98,10 +98,10 @@ class UserControllerConfiguratorListener implements CrudControllerListenerAwareI
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
         $crudConfiguration = $crudConfigurator->getCrud();
         $crud = new Crud(array(
-            'modelClass' => $this->modelClass,
-            'form' => $this->formClass,
+            'modelClass' => $this->modelClass ?: $crudConfiguration->getModelClass(),
+            'form' => $this->formClass ?: $crudConfiguration->getForm(),
             'menuIcon' => $crudConfiguration->getMenuIcon(),
-            'showFields' => $this->showFields,
+            'showFields' => empty($this->showFields) ? $crudConfiguration->getShowFields() : $this->showFields,
             'template' => $crudConfiguration->getTemplate(),
             'allowCreate' => $crudConfiguration->isAllowCreate(),
             'allowEdit' => $crudConfiguration->isAllowEdit(),
@@ -112,10 +112,11 @@ class UserControllerConfiguratorListener implements CrudControllerListenerAwareI
 
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $configuratorFactory->getConfigurator(GridConfigurator::class);
+        $gridConfiguration = $gridConfigurator->getGrid();
         $grid = new Grid(array(
-            'column' => $this->gridColumns,
-            'filter' => $this->gridFilters,
-            'sort' => $this->gridColumns,
+            'column' => empty($this->gridColumns) ? $gridConfiguration->getColumn() : $this->gridColumns,
+            'filter' => empty($this->gridFilters) ? $gridConfiguration->getColumn() : $this->gridFilters,
+            'sort' => empty($this->gridColumns) ? $gridConfiguration->getColumn() : $this->gridColumns,
         ));
         $gridConfigurator->setGrid($grid);
     }

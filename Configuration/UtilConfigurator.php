@@ -24,6 +24,14 @@ class UtilConfigurator implements ConfiguratorInterface
     private $util;
 
     /**
+     * @return Util
+     */
+    public function getUtil()
+    {
+        return $this->util;
+    }
+
+    /**
      * @param Util $util
      */
     public function setUtil(Util $util)

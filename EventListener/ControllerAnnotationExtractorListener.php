@@ -90,22 +90,27 @@ class ControllerAnnotationExtractorListener implements CrudControllerListenerAwa
         foreach ($this->extractorFactory->getClassAnnotations() as $annotation) {
             if ($annotation instanceof Crud) {
                 $crudConfigurator->setCrud($annotation);
+                $configuratorFactory->addConfigurator($crudConfigurator);
             }
 
             if ($annotation instanceof Page) {
                 $pageConfigurator->setPage($annotation);
+                $configuratorFactory->addConfigurator($pageConfigurator);
             }
 
             if ($annotation instanceof Grid) {
                 $gridConfigurator->setGrid($annotation);
+                $configuratorFactory->addConfigurator($gridConfigurator);
             }
 
             if ($annotation instanceof Plugin) {
                 $pluginConfigurator->setPlugin($annotation);
+                $configuratorFactory->addConfigurator($pluginConfigurator);
             }
 
             if ($annotation instanceof Util) {
                 $utilConfigurator->setUtil($annotation);
+                $configuratorFactory->addConfigurator($utilConfigurator);
             }
         }
     }

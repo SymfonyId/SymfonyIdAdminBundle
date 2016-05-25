@@ -25,6 +25,14 @@ class PluginConfigurator implements ConfiguratorInterface
     private $plugin;
 
     /**
+     * @return Plugin
+     */
+    public function getPlugin()
+    {
+        return $this->plugin;
+    }
+
+    /**
      * @param Plugin $plugin
      */
     public function setPlugin(Plugin $plugin)

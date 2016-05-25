@@ -9,23 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\EventListener;
+namespace SymfonyId\AdminBundle\Cache;
 
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use SymfonyId\AdminBundle\Annotation\Crud;
 use SymfonyId\AdminBundle\Annotation\Template;
-use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
-use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
+use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class SetDefaultCrudConfiguration implements CrudControllerListenerAwareInterface, ConfigurationAwareInterface
+class DefaultCrudConfiguration implements DefaultConfigurationInterface
 {
-    use CrudControllerListenerAwareTrait;
-    use ConfigurationAwareTrait;
-
     /**
      * @var Template
      */
@@ -40,16 +35,10 @@ class SetDefaultCrudConfiguration implements CrudControllerListenerAwareInterfac
     }
 
     /**
-     * @param FilterControllerEvent $event
+     * @param ConfiguratorFactory $configuratorFactory
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function setConfiguration(ConfiguratorFactory $configuratorFactory)
     {
-        if (!$this->isValidCrudListener($event)) {
-            return;
-        }
-
-        $reflectionController = new \ReflectionObject($this->controller);
-        $configuratorFactory = $this->getConfiguratorFactory($reflectionController->getName());
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
         $crudConfiguration = $crudConfigurator->getCrud();
@@ -58,7 +47,7 @@ class SetDefaultCrudConfiguration implements CrudControllerListenerAwareInterfac
             'form' => $crudConfiguration->getForm(),
             'menuIcon' => $crudConfiguration->getMenuIcon(),
             'showFields' => $crudConfiguration->getShowFields(),
-            'template' => $this->template,
+            'template' => $this->template ?: $crudConfiguration->getTemplate(),
             'allowCreate' => $crudConfiguration->isAllowCreate(),
             'allowEdit' => $crudConfiguration->isAllowEdit(),
             'allowShow' => $crudConfiguration->isAllowShow(),

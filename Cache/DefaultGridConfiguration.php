@@ -9,22 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\EventListener;
+namespace SymfonyId\AdminBundle\Cache;
 
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use SymfonyId\AdminBundle\Annotation\Grid;
-use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
-use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
+use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class SetDefaultGridConfigurationListener implements CrudControllerListenerAwareInterface, ConfigurationAwareInterface
+class DefaultGridConfiguration implements DefaultConfigurationInterface
 {
-    use CrudControllerListenerAwareTrait;
-    use ConfigurationAwareTrait;
-
     /**
      * @var array
      */
@@ -39,23 +34,16 @@ class SetDefaultGridConfigurationListener implements CrudControllerListenerAware
     }
 
     /**
-     * @param FilterControllerEvent $event
+     * @param ConfiguratorFactory $configuratorFactory
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function setConfiguration(ConfiguratorFactory $configuratorFactory)
     {
-        if (!$this->isValidCrudListener($event)) {
-            return;
-        }
-
-        $reflectionController = new \ReflectionObject($this->controller);
-        $configuratorFactory = $this->getConfiguratorFactory($reflectionController->getName());
-
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $configuratorFactory->getConfigurator(GridConfigurator::class);
         $gridConfiguration = $gridConfigurator->getGrid();
         $grid = new Grid(array(
             'column' => $gridConfiguration->getColumn(),
-            'filter' => empty($this->gridFilters) ? $gridConfiguration->getFilter() : $this->gridFilters,
+            'filter' => empty($this->gridFilters) ? $gridConfiguration->getColumn() : $this->gridFilters,
             'sort' => $gridConfiguration->getColumn(),
         ));
         $gridConfigurator->setGrid($grid);
