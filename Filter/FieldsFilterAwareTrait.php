@@ -37,7 +37,7 @@ trait FieldsFilterAwareTrait
     /**
      * @param ExtractorFactory $extractorFactory
      */
-    public function setExtractor(ExtractorFactory $extractorFactory)
+    public function setExtractorFactory(ExtractorFactory $extractorFactory)
     {
         $this->extractorFactory = $extractorFactory;
     }
@@ -53,7 +53,7 @@ trait FieldsFilterAwareTrait
     /**
      * @param ConfiguratorFactory $configuratorFactory
      */
-    public function setConfigurator(ConfiguratorFactory $configuratorFactory)
+    public function setConfigurationFactory(ConfiguratorFactory $configuratorFactory)
     {
         $this->configuratorFactory = $configuratorFactory;
     }

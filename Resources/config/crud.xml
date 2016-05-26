@@ -33,6 +33,10 @@
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
 
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+
             <tag name="symfonyid.crud_action" />
         </service>
 
@@ -48,6 +52,10 @@
             <argument type="service" id="session" />
             <argument type="service" id="translator"/>
 
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+
             <tag name="symfonyid.crud_action" />
         </service>
 
@@ -55,6 +63,10 @@
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="symfonyid.admin.export.data_exporter"/>
             <argument type="service" id="translator"/>
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
 
             <tag name="symfonyid.crud_action" />
         </service>

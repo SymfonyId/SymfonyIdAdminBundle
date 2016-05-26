@@ -22,12 +22,12 @@ interface FieldsFilterInterface
     /**
      * @param ExtractorFactory $extractor
      */
-    public function setExtractor(ExtractorFactory $extractor);
+    public function setExtractorFactory(ExtractorFactory $extractor);
 
     /**
      * @param ConfiguratorFactory $configuratorFactory
      */
-    public function setConfigurator(ConfiguratorFactory $configuratorFactory);
+    public function setConfigurationFactory(ConfiguratorFactory $configuratorFactory);
 
     /**
      * @param string $dateTimeFormat

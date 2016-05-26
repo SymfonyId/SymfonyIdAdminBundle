@@ -17,7 +17,7 @@ use SymfonyId\AdminBundle\Manager\ManagerFactory;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-trait ModelMetadataAwareAwareTrait
+trait ModelMetadataAwareTrait
 {
     /**
      * @var ManagerFactory

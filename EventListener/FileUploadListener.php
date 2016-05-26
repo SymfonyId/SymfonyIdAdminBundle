@@ -23,8 +23,8 @@ use SymfonyId\AdminBundle\Upload\UploadHandler;
  */
 class FileUploadListener implements ConfigurationAwareInterface, CrudControllerListenerAwareInterface
 {
-    use ConfigurationAwareTrait;
     use CrudControllerListenerAwareTrait;
+    use ConfigurationAwareTrait;
 
     /**
      * @var UploadHandler

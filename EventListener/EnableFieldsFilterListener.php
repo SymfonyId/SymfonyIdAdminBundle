@@ -107,8 +107,8 @@ class EnableFieldsFilterListener implements ConfigurationAwareInterface
      */
     private function applyFilter(ConfiguratorFactory $configuratorFactory, FieldsFilterInterface $filter, $keyword)
     {
-        $filter->setExtractor($this->extractorFactory);
-        $filter->setConfigurator($configuratorFactory);
+        $filter->setExtractorFactory($this->extractorFactory);
+        $filter->setConfigurationFactory($configuratorFactory);
         $filter->setDateTimeFormat($this->dateTimeFormat);
         $filter->setParameter('filter', $keyword);
     }
