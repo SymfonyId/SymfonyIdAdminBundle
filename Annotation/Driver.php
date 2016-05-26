@@ -26,6 +26,7 @@ class Driver
 {
     const ORM = 'orm';
     const ODM = 'odm';
+    const BOTH = 'both';
 
     /**
      * @var string

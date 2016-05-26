@@ -4,6 +4,16 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <service id="symfonyid.admin.manager.orm_manager" class="SymfonyId\AdminBundle\Doctrine\DoctrineOrmManager">
+            <argument type="service" id="doctrine"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="knp_paginator"/>
+            <argument type="service" id="security.token_storage"/>
+            <argument type="service" id="symfonyid.admin.event.event_subscriber"/>
+
+            <tag name="symfonyid.manager" />
+        </service>
+
         <service id="symfonyid.admin.filter.orm.fields" class="SymfonyId\AdminBundle\Doctrine\Filter\FieldsFilter" >
             <argument type="service" id="doctrine.orm.entity_manager" on-invalid="ignore"/>
 
@@ -20,39 +30,13 @@
             <tag name="symfonyid.orm.filter" />
         </service>
 
-        <service id="symfonyid.admin.filter.odm.fields" class="SymfonyId\AdminBundle\Document\Filter\FieldsFilter" >
-            <argument type="service" id="doctrine_mongodb.odm.document_manager" on-invalid="ignore"/>
-
-            <call method="setConfigurationFactory">
-                <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
-            </call>
-            <call method="setExtractorFactory">
-                <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
-            </call>
-            <call method="setDateTimeFormat">
-                <argument>%symfonyid.admin.date_time_format%</argument>
-            </call>
-
-            <tag name="symfonyid.odm.filter" />
-        </service>
-
         <service id="symfonyid.admin.filter.orm.soft_deletable" class="SymfonyId\AdminBundle\Doctrine\Filter\SoftDeletableFilter" >
             <argument type="service" id="doctrine.orm.entity_manager" on-invalid="ignore"/>
 
             <tag name="symfonyid.orm.filter" />
         </service>
 
-        <service id="symfonyid.admin.filter.odm.soft_deletable" class="SymfonyId\AdminBundle\Document\Filter\SoftDeletableFilter" >
-            <argument type="service" id="doctrine_mongodb.odm.document_manager" on-invalid="ignore"/>
-
-            <tag name="symfonyid.odm.filter" />
-        </service>
-
         <service id="symfonyid.admin.filter.orm.sort" class="SymfonyId\AdminBundle\Doctrine\Filter\FieldSortFilter" >
-            <argument type="service" id="symfonyid.admin.manager.manager_factory"/>
-        </service>
-
-        <service id="symfonyid.admin.filter.odm.sort" class="SymfonyId\AdminBundle\Document\Filter\FieldSortFilter" >
             <argument type="service" id="symfonyid.admin.manager.manager_factory"/>
         </service>
     </services>

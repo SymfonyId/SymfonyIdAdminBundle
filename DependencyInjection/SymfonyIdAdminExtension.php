@@ -17,6 +17,7 @@ use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 
 /**
@@ -36,7 +37,8 @@ class SymfonyIdAdminExtension extends Extension
     {
         $processor = new Processor();
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $reflectionObject = new \ReflectionObject($this);
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(dirname($reflectionObject->getFileName()).'/../Resources/config'));
 
         $configuration = new Configuration();
         $config = $processor->processConfiguration($configuration, $configs);
@@ -44,19 +46,14 @@ class SymfonyIdAdminExtension extends Extension
         $parameterBuilder = new ParameterBuilder($container);
         $parameterBuilder->build($config);
 
-        $loader->load('annotations.xml');
-        $loader->load('caches.xml');
-        $loader->load('configurations.xml');
-        $loader->load('cruds.xml');
-        $loader->load('event_listeners.xml');
-        $loader->load('extractors.xml');
-        $loader->load('filters.xml');
-        $loader->load('forms.xml');
-        $loader->load('managers.xml');
-        $loader->load('menus.xml');
-        $loader->load('routes.xml');
-        $loader->load('services.xml');
-        $loader->load('twig_extensions.xml');
+        $this->loadXmlServices($loader);
+
+        if (Driver::BOTH === $container->getParameter('symfonyid.admin.driver')) {
+            $loader->load('orm.xml');
+            $loader->load('odm.xml');
+        } else {
+            $loader->load($container->getParameter('symfonyid.admin.driver').'.xml');
+        }
     }
 
     /**
@@ -79,5 +76,24 @@ class SymfonyIdAdminExtension extends Extension
     public function getAlias()
     {
         return Constants::CONFIGURATION_ALIAS;
+    }
+
+    /**
+     * @param Loader\XmlFileLoader $loader
+     */
+    private function loadXmlServices(Loader\XmlFileLoader $loader)
+    {
+        $loader->load('annotations.xml');
+        $loader->load('caches.xml');
+        $loader->load('configurations.xml');
+        $loader->load('cruds.xml');
+        $loader->load('event_listeners.xml');
+        $loader->load('extractors.xml');
+        $loader->load('forms.xml');
+        $loader->load('managers.xml');
+        $loader->load('menus.xml');
+        $loader->load('routes.xml');
+        $loader->load('services.xml');
+        $loader->load('twig_extensions.xml');
     }
 }

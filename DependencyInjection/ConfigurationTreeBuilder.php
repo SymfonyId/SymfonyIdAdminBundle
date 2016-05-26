@@ -12,6 +12,7 @@
 namespace SymfonyId\AdminBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 
 /**
@@ -45,7 +46,8 @@ class ConfigurationTreeBuilder
                 ->scalarNode('date_time_format')->defaultValue('d-m-Y')->end()
                 ->scalarNode('menu')->defaultValue('symfonian_indonesia_admin_main_menu')->end()
                 ->scalarNode('upload_dir')->defaultValue('uploads')->end()
-                ->scalarNode('driver')
+                ->enumNode('driver')
+                    ->values(array(Driver::ORM, Driver::ODM, Driver::BOTH))
                     ->isRequired()
                 ->end()
                 ->scalarNode('translation_domain')
