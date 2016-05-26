@@ -8,7 +8,7 @@
             <argument>%symfonyid.admin.user.user_entity%</argument>
             <argument>%symfonyid.admin.translation_domain%</argument>
             <argument>%security.role_hierarchy.roles%</argument>
-            <argument>%symfonian_id.admin.upload_dir%</argument>
+            <argument>%symfonyid.admin.upload_dir%</argument>
         </service>
 
         <service id="symfonyid.admin.form.change_password_form" class="SymfonyId\AdminBundle\Form\Type\ChangePasswordType" >
