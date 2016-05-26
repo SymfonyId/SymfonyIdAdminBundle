@@ -31,7 +31,7 @@
                 <argument>%symfonyid.admin.themes.bulk_new%</argument>
             </call>
             <call method="setCreate">
-                <argument>%'symfonyid.admin.themes.new_view%</argument>
+                <argument>%symfonyid.admin.themes.new_view%</argument>
             </call>
             <call method="setEdit">
                 <argument>%symfonyid.admin.themes.edit_view%</argument>

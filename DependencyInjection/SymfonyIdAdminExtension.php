@@ -38,6 +38,12 @@ class SymfonyIdAdminExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
+        $configuration = new Configuration();
+        $config = $processor->processConfiguration($configuration, $configs);
+
+        $parameterBuilder = new ParameterBuilder($container);
+        $parameterBuilder->build($config);
+
         $loader->load('annotations.xml');
         $loader->load('caches.xml');
         $loader->load('configurations.xml');
@@ -50,12 +56,6 @@ class SymfonyIdAdminExtension extends Extension
         $loader->load('routes.xml');
         $loader->load('services.xml');
         $loader->load('twig_extensions.xml');
-
-        $configuration = new Configuration();
-        $config = $processor->processConfiguration($configuration, $configs);
-
-        $parameterBuilder = new ParameterBuilder($container);
-        $parameterBuilder->build($config);
     }
 
     /**
