@@ -22,7 +22,7 @@ use SymfonyId\AdminBundle\Annotation\Util;
  *
  * @Page(title="page.user.title", description="page.user.description")
  * @Plugin(fileChooser=true)
- * @Util(upload={@Upload(uploadable="file", targetField="avatar")})
+ * @Util(upload=@Upload(uploadable="file", targetField="avatar"))
  *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */

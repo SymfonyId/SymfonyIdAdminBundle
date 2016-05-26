@@ -156,6 +156,25 @@
         <service id="symfonyid.admin.listener.twig_global_variable" class="SymfonyId\AdminBundle\EventListener\TwigGlobalVariableListener" >
             <argument type="service" id="twig" />
 
+            <call method="setTitle">
+                <argument>%symfonyid.admin.app_title%</argument>
+            </call>
+            <call method="setShortTitle">
+                <argument>%symfonyid.admin.app_short_title%</argument>
+            </call>
+            <call method="setDateTimeFormat">
+                <argument>%symfonyid.admin.date_time_format%</argument>
+            </call>
+            <call method="setMenu">
+                <argument>%symfonyid.admin.menu%</argument>
+            </call>
+            <call method="setLocale">
+                <argument>%locale%</argument>
+            </call>
+            <call method="setTranslationDomain">
+                <argument>%symfonyid.admin.translation_domain%</argument>
+            </call>
+
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
         </service>
 

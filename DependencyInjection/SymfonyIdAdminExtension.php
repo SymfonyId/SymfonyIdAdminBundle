@@ -52,6 +52,7 @@ class SymfonyIdAdminExtension extends Extension
         $loader->load('extractors.xml');
         $loader->load('filters.xml');
         $loader->load('forms.xml');
+        $loader->load('managers.xml');
         $loader->load('menus.xml');
         $loader->load('routes.xml');
         $loader->load('services.xml');

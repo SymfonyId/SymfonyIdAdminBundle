@@ -9,6 +9,8 @@
             <argument type="service" id="routing.resolver"/>
             <argument type="service" id="symfonyid.admin.controller.controller_finder"/>
             <argument type="service" id="symfonyid.admin.route.route_compiler"/>
+
+            <tag name="routing.loader" />
         </service>
 
         <service id="symfonyid.admin.route.route_compiler" class="SymfonyId\AdminBundle\Route\RouteCollectionCompiler" >
