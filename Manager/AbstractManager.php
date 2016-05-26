@@ -11,6 +11,7 @@
 
 namespace SymfonyId\AdminBundle\Manager;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
@@ -25,6 +26,11 @@ use SymfonyId\AdminBundle\Model\SoftDeleteAwareInterface;
  */
 abstract class AbstractManager implements ManagerInterface
 {
+    /**
+     * @var ManagerRegistry
+     */
+    private $managerRegistry;
+
     /**
      * @var ObjectManager
      */
@@ -51,12 +57,13 @@ abstract class AbstractManager implements ManagerInterface
     private $modelClass;
 
     /**
+     * @param ManagerRegistry       $managerRegistry
      * @param ObjectManager         $manager
      * @param PaginatorInterface    $paginator
      * @param TokenStorageInterface $tokenStorage
      * @param EventSubscriber       $eventSubscriber
      */
-    public function __construct(ObjectManager $manager, PaginatorInterface $paginator, TokenStorageInterface $tokenStorage, EventSubscriber $eventSubscriber)
+    public function __construct(ManagerRegistry $managerRegistry, ObjectManager $manager, PaginatorInterface $paginator, TokenStorageInterface $tokenStorage, EventSubscriber $eventSubscriber)
     {
         $this->manager = $manager;
         $this->paginator = $paginator;
@@ -134,6 +141,16 @@ abstract class AbstractManager implements ManagerInterface
         }
 
         return $this->manager->getClassMetadata($this->modelClass);
+    }
+
+    /**
+     * @param string
+     *
+     * @return string
+     */
+    public function getAliasNamespace($alias)
+    {
+        return $this->managerRegistry->getAliasNamespace($alias);
     }
 
     /**

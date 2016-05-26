@@ -45,4 +45,17 @@ trait ModelMetadataAwareTrait
 
         return $manager->getClassMetadata();
     }
+
+    /**
+     * @param Driver $driver
+     * @param string $alias
+     *
+     * @return \Doctrine\ORM\Mapping\ClassMetadata
+     */
+    public function getAliasNamespace(Driver $driver, $alias)
+    {
+        $manager = $this->managerFactory->getManager($driver);
+
+        return $manager->getAliasNamespace($alias);
+    }
 }

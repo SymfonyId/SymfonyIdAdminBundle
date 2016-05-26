@@ -68,4 +68,11 @@ interface ManagerInterface
      * @return ClassMetadata
      */
     public function getClassMetadata();
+
+    /**
+     * @param string
+     *
+     * @return string
+     */
+    public function getAliasNamespace($alias);
 }

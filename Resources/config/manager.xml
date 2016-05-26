@@ -11,7 +11,7 @@
             <argument>%symfonyid.admin.driver%</argument>
         </service>
 
-        <service id="symfonyid.admin.manager.orm_manager" class="SymfonyId\AdminBundle\Doctrine\OrmManager">
+        <service id="symfonyid.admin.manager.orm_manager" class="SymfonyId\AdminBundle\Doctrine\DoctrineOrmManager">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="knp_paginator"/>
             <argument type="service" id="security.token_storage"/>
@@ -20,7 +20,7 @@
             <tag name="symfonyid.manager" />
         </service>
 
-        <service id="symfonyid.admin.manager.odm_manager" class="SymfonyId\AdminBundle\Document\OdmManager">
+        <service id="symfonyid.admin.manager.odm_manager" class="SymfonyId\AdminBundle\Document\DoctrineMongoDbManager">
             <argument type="service" id="doctrine_mongodb.odm.document_manager"/>
             <argument type="service" id="knp_paginator"/>
             <argument type="service" id="security.token_storage"/>

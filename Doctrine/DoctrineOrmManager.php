@@ -9,10 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\Document;
+namespace SymfonyId\AdminBundle\Doctrine;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Event\EventSubscriber;
@@ -24,17 +26,18 @@ use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class OdmManager extends AbstractManager
+class DoctrineOrmManager extends AbstractManager
 {
     /**
-     * @param DocumentManager       $manager
+     * @param ManagerRegistry       $managerRegistry
+     * @param EntityManager         $manager
      * @param PaginatorInterface    $paginator
      * @param TokenStorageInterface $tokenStorage
      * @param EventSubscriber       $eventSubscriber
      */
-    public function __construct(DocumentManager $manager, PaginatorInterface $paginator, TokenStorageInterface $tokenStorage, EventSubscriber $eventSubscriber)
+    public function __construct(ManagerRegistry $managerRegistry, EntityManager $manager, PaginatorInterface $paginator, TokenStorageInterface $tokenStorage, EventSubscriber $eventSubscriber)
     {
-        parent::__construct($manager, $paginator, $tokenStorage, $eventSubscriber);
+        parent::__construct($managerRegistry, $manager, $paginator, $tokenStorage, $eventSubscriber);
     }
 
     /**
@@ -49,11 +52,12 @@ class OdmManager extends AbstractManager
             throw new ModelNotFoundException('setModelClass');
         }
 
-        /** @var DocumentManager $manager */
-        $manager = $this->getManager();
-        $queryBuilder = $manager->createQueryBuilder($this->getModelClass());
+        /** @var EntityRepository $repository */
+        $repository = $this->getManager()->getRepository($this->getModelClass());
+        $queryBuilder = $repository->createQueryBuilder(Constants::ENTITY_ALIAS);
         $filterList = new FilterQueryEvent();
         $filterList->setQueryBuilder($queryBuilder);
+        $filterList->setAlias(Constants::ENTITY_ALIAS);
         $filterList->setModelClass($this->getModelClass());
         $this->getEventSubscriber()->subscribe(Constants::FILTER_LIST, $filterList);
 
@@ -67,13 +71,12 @@ class OdmManager extends AbstractManager
      */
     public function count()
     {
-        /** @var DocumentManager $manager */
-        $manager = $this->getManager();
-        $queryBuilder = $manager->createQueryBuilder($this->getModelClass());
-        $queryBuilder->eagerCursor(true);
-        $queryBuilder->prime(true);
+        /** @var EntityRepository $repository */
+        $repository = $this->getManager()->getRepository($this->getModelClass());
+        $queryBuilder = $repository->createQueryBuilder(Constants::ENTITY_ALIAS);
+        $queryBuilder->select(sprintf('COUNT(%s.id)', Constants::ENTITY_ALIAS));
 
-        return $queryBuilder->getQuery()->execute()->count();
+        return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 
     /**
@@ -81,6 +84,6 @@ class OdmManager extends AbstractManager
      */
     public function getDriver()
     {
-        return Driver::ODM;
+        return Driver::ORM;
     }
 }

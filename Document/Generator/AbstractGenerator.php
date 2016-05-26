@@ -9,10 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\Generator;
+namespace SymfonyId\AdminBundle\Document\Generator;
 
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
+use SymfonyId\AdminBundle\Generator\GeneratorInterface;
 
 /**
  * Generates a form class based on a Doctrine entity.
@@ -21,7 +23,7 @@ use Sensio\Bundle\GeneratorBundle\Generator\Generator;
  * @author Hugo Hamon <hugo.hamon@sensio.com>
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class AbstractGenerator extends Generator
+abstract class AbstractGenerator extends Generator implements GeneratorInterface
 {
     /**
      * @var string
@@ -53,13 +55,14 @@ class AbstractGenerator extends Generator
      * Returns an array of fields. Fields can be both column fields and
      * association fields.
      *
-     * @param ClassMetadataInfo $metadata
+     * @param ClassMetadata $metadata
      *
      * @return array $fields
      */
-    protected function getFieldsFromMetadata(ClassMetadataInfo $metadata)
+    public function getFieldsFromMetadata(ClassMetadata $metadata)
     {
-        $fields = (array) $metadata->fieldNames;
+        /* @var ClassMetadataInfo $metadata */
+        $fields = (array) $metadata->getFieldNames();
 
         $exclude = array(
             'createdAt', 'created_at', 'createdBy', 'created_by',
@@ -67,12 +70,12 @@ class AbstractGenerator extends Generator
         );
 
         // Remove the primary key field if it's not managed manually
-        if (!$metadata->isIdentifierNatural()) {
+        if (!$metadata->isIdGeneratorIncrement()) {
             $fields = array_diff($fields, $metadata->identifier);
         }
 
         foreach ($metadata->associationMappings as $fieldName => $relation) {
-            if ($relation['type'] !== ClassMetadataInfo::ONE_TO_MANY) {
+            if ($relation['type'] !== ClassMetadataInfo::EMBED_MANY) {
                 $fields[] = $fieldName;
             }
         }

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\Generator;
+namespace SymfonyId\AdminBundle\Doctrine\Generator;
 
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use SymfonyId\AdminBundle\Exception\RuntimeException;
 
@@ -27,15 +27,16 @@ class ControllerGenerator extends AbstractGenerator
     /**
      * Generates the entity form class.
      *
-     * @param BundleInterface   $bundle         The bundle in which to create the class
-     * @param string            $entity         The entity relative class name
-     * @param ClassMetadataInfo $metadata       The entity metadata class
-     * @param bool              $forceOverwrite If true, remove any existing form class before generating it again
+     * @param BundleInterface $bundle         The bundle in which to create the class
+     * @param string          $entity         The entity relative class name
+     * @param ClassMetadata   $metadata       The entity metadata class
+     * @param bool            $forceOverwrite If true, remove any existing form class before generating it again
      *
      * @throws RuntimeException
      */
-    public function generate(BundleInterface $bundle, $entity, ClassMetadataInfo $metadata, $forceOverwrite = false)
+    public function generate(BundleInterface $bundle, $entity, ClassMetadata $metadata, $forceOverwrite = false)
     {
+        /* @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
 
