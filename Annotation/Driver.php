@@ -37,7 +37,7 @@ class Driver
      *
      * @throws DriverNotFoundException when driver not found
      */
-    public function __construct(array $data)
+    public function __construct(array $data = array())
     {
         if (isset($data['value'])) {
             if (!in_array($data['value'], array(self::ORM, self::ODM))) {

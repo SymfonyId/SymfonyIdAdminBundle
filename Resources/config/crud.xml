@@ -4,6 +4,15 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <service id="symfonyid.admin.crud.crud_factory" class="SymfonyId\AdminBundle\Crud\CrudFactory" >
+            <argument type="service" id="templating.engine.twig"/>
+        </service>
+
+        <service id="symfonyid.admin.crud.crud_operation_handler" class="SymfonyId\AdminBundle\Crud\CrudOperationHandler" >
+            <argument type="service" id="symfonyid.admin.manager.manager_factory"/>
+            <argument type="service" id="symfonyid.admin.event.event_subscriber"/>
+        </service>
+
         <service id="symfonian_id.admin.action_handler.bulk_create" class="SymfonyId\AdminBundle\Crud\ActionHandler\BulkCreateActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
@@ -11,6 +20,7 @@
 
             <tag name="symfonyid.crud_action" />
         </service>
+
         <service id="symfonian_id.admin.action_handler.bulk_delete" class="SymfonyId\AdminBundle\Crud\ActionHandler\BulkDeleteActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
@@ -18,12 +28,14 @@
 
             <tag name="symfonyid.crud_action" />
         </service>
+
         <service id="symfonian_id.admin.action_handler.create_update" class="SymfonyId\AdminBundle\Crud\ActionHandler\CreateUpdateActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
 
             <tag name="symfonyid.crud_action" />
         </service>
+
         <service id="symfonian_id.admin.action_handler.delete" class="SymfonyId\AdminBundle\Crud\ActionHandler\DeleteActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
@@ -31,12 +43,14 @@
 
             <tag name="symfonyid.crud_action" />
         </service>
+
         <service id="symfonian_id.admin.action_handler.detail" class="SymfonyId\AdminBundle\Crud\ActionHandler\DetailActionHandler">
             <argument type="service" id="session" />
             <argument type="service" id="translator"/>
 
             <tag name="symfonyid.crud_action" />
         </service>
+
         <service id="symfonian_id.admin.action_handler.list" class="SymfonyId\AdminBundle\Crud\ActionHandler\ListActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="symfonyid.admin.export.data_exporter"/>

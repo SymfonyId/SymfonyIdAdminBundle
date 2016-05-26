@@ -30,7 +30,7 @@ class Filter
     /**
      * @param array $data
      */
-    public function __construct(array $data)
+    public function __construct(array $data = array())
     {
         if (isset($data['value'])) {
             $this->value = $data['value'];

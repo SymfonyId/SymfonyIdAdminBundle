@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="symfonyid.admin.cache.cache_handler" class="SymfonyId\AdminBundle\Cache\CacheHandler">
+            <argument type="service" id="kernel" />
+        </service>
+
+        <service id="symfonyid.admin.cache.configuration_cache_writer" class="SymfonyId\AdminBundle\Cache\ConfigurationCacheWriter">
+            <argument type="service" id="symfonyid.admin.cache.cache_handler" />
+        </service>
+
+        <service id="symfonyid.admin.cache.crud_controller_cache_warmer" class="SymfonyId\AdminBundle\Cache\CrudControllerCacheWarmer">
+            <argument type="service" id="router" />
+            <argument type="service" id="symfonyid.admin.configuration.configuration_mapper" />
+            <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+            <argument type="service" id="symfonyid.admin.cache.configuration_cache_writer" />
+            <argument type="service" id="symfonyid.admin.cache.default_configuration_factory" />
+        </service>
+
+        <service id="symfonyid.admin.cache.default_configuration_factory" class="SymfonyId\AdminBundle\Cache\DefaultConfigurationFactory" />
+
+        <service id="symfonyid.admin.cache.default_crud_configuration" class="SymfonyId\AdminBundle\Cache\DefaultCrudConfiguration">
+            <call method="setTemplate">
+                <argument type="service" id="symfonyid.admin.annotation.template" />
+            </call>
+        </service>
+
+        <service id="symfonyid.admin.cache.default_grid_configuration" class="SymfonyId\AdminBundle\Cache\DefaultGridConfiguration">
+            <call method="setGridFilters">
+                <argument>%symfonyid.admin.filter%</argument>
+            </call>
+        </service>
+
+        <service id="symfonyid.admin.cache.profile_controller_cache_warmer" class="SymfonyId\AdminBundle\Cache\ProfileControllerCacheWarmer">
+            <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+            <argument type="service" id="symfonyid.admin.cache.configuration_cache_writer" />
+            <argument type="service" id="symfonyid.admin.cache.default_configuration_factory" />
+
+            <call method="setForm">
+                <argument>%symfonyid.admin.themes.change_password%</argument>
+            </call>
+            <call method="setShowFields">
+                <argument>%symfonyid.admin.profile_fields%</argument>
+            </call>
+        </service>
+
+        <service id="symfonyid.admin.cache.user_controller_cache_warmer" class="SymfonyId\AdminBundle\Cache\UserControllerCacheWarmer">
+            <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+            <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
+            <argument type="service" id="symfonyid.admin.cache.configuration_cache_writer" />
+            <argument type="service" id="symfonyid.admin.cache.default_configuration_factory" />
+
+            <call method="setForm">
+                <argument>%symfonyid.admin.user.user_form%</argument>
+            </call>
+            <call method="setModelClass">
+                <argument>%symfonyid.admin.user.user_entity%</argument>
+            </call>
+            <call method="setShowFields">
+                <argument>%symfonyid.admin.user.show_fields%</argument>
+            </call>
+            <call method="setGridColumns">
+                <argument>%symfonyid.admin.user.grid_fields%</argument>
+            </call>
+            <call method="setGridFilters">
+                <argument>%symfonyid.admin.user.grid_filters%</argument>
+            </call>
+            <call method="setGridSorters">
+                <argument>%symfonyid.admin.user.grid_fields%</argument>
+            </call>
+        </service>
+    </services>
+</container>

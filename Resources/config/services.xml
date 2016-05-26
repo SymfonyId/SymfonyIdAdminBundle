@@ -26,12 +26,8 @@
         <service id="symfonyid.admin.event.event_subscriber" class="SymfonyId\AdminBundle\Event\EventSubscriber" >
             <argument type="service" id="event_dispatcher"/>
         </service>
-        <service id="symfonyid.admin.crud.crud_factory" class="SymfonyId\AdminBundle\Crud\CrudFactory" >
-            <argument type="service" id="templating.engine.twig"/>
-        </service>
-        <service id="symfonyid.admin.crud.crud_operation_handler" class="SymfonyId\AdminBundle\Crud\CrudOperationHandler" >
-            <argument type="service" id="symfonyid.admin.manager.manager_factory"/>
-            <argument type="service" id="symfonyid.admin.event.event_subscriber"/>
+        <service id="symfonyid.admin.controller.controller_finder" class="SymfonyId\AdminBundle\Controller\ControllerFinder" >
+            <argument type="service" id="kernel"/>
         </service>
     </services>
 </container>

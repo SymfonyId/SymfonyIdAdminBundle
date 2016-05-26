@@ -18,26 +18,28 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class ManagerPass implements CompilerPassInterface
+class DefaultConfigurationPass implements CompilerPassInterface
 {
-    const MANAGER_FACTORY = 'symfonyid.admin.manager.manager_factory';
+    const DEFAULT_CONFIGURATON_FACTORY = 'symfonyid.admin.cache.default_configuration_factory';
 
     /**
      * @param ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has(self::MANAGER_FACTORY)) {
+        if (!$container->has(self::DEFAULT_CONFIGURATON_FACTORY)) {
             return;
         }
 
         /*
          * Add all service with tag name symfonyid.extractor
          */
-        $definition = $container->findDefinition(self::MANAGER_FACTORY);
-        $taggedServices = $container->findTaggedServiceIds('symfonyid.manager');
+        $definition = $container->findDefinition(self::DEFAULT_CONFIGURATON_FACTORY);
+        $taggedServices = $container->findTaggedServiceIds('symfonyid.default');
         foreach ($taggedServices as $id => $tags) {
-            $definition->addMethodCall('addManager', array(new Reference($id)));
+            $definition->addMethodCall('addDefaultConfiguration', array(new Reference($id)));
         }
+
+        $definition->addMethodCall('freeze');
     }
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="symfonyid.admin.annotation.auto_complete" class="SymfonyId\AdminBundle\Annotation\AutoComplete" />
+
+        <service id="symfonyid.admin.annotation.column" class="SymfonyId\AdminBundle\Annotation\Column" />
+
+        <service id="symfonyid.admin.annotation.crud" class="SymfonyId\AdminBundle\Annotation\Crud" />
+
+        <service id="symfonyid.admin.annotation.date_picker" class="SymfonyId\AdminBundle\Annotation\DatePicker" />
+
+        <service id="symfonyid.admin.annotation.driver" class="SymfonyId\AdminBundle\Annotation\Driver" />
+
+        <service id="symfonyid.admin.annotation.external_javascript" class="SymfonyId\AdminBundle\Annotation\ExternalJavascript" />
+
+        <service id="symfonyid.admin.annotation.filter" class="SymfonyId\AdminBundle\Annotation\Filter" />
+
+        <service id="symfonyid.admin.annotation.grid" class="SymfonyId\AdminBundle\Annotation\Grid" />
+
+        <service id="symfonyid.admin.annotation.page" class="SymfonyId\AdminBundle\Annotation\Page" />
+
+        <service id="symfonyid.admin.annotation.plugin" class="SymfonyId\AdminBundle\Annotation\Plugin" />
+
+        <service id="symfonyid.admin.annotation.sort" class="SymfonyId\AdminBundle\Annotation\Sort" />
+
+        <service id="symfonyid.admin.annotation.template" class="SymfonyId\AdminBundle\Annotation\Template">
+            <call method="setBulkCreate">
+                <argument>%symfonyid.admin.themes.bulk_new%</argument>
+            </call>
+            <call method="setCreate">
+                <argument>%'symfonyid.admin.themes.new_view%</argument>
+            </call>
+            <call method="setEdit">
+                <argument>%symfonyid.admin.themes.edit_view%</argument>
+            </call>
+            <call method="setList">
+                <argument>%symfonyid.admin.themes.list_view%</argument>
+            </call>
+            <call method="setShow">
+                <argument>%symfonyid.admin.themes.show_view%</argument>
+            </call>
+        </service>
+
+        <service id="symfonyid.admin.annotation.upload" class="SymfonyId\AdminBundle\Annotation\Upload" />
+
+        <service id="symfonyid.admin.annotation.util" class="SymfonyId\AdminBundle\Annotation\Util" />
+    </services>
+</container>

@@ -65,7 +65,7 @@ class Template
     /**
      * @param array $data
      */
-    public function __construct(array $data)
+    public function __construct(array $data = array())
     {
         if (isset($data['value'])) {
             $this->create = $data['value'];
@@ -107,11 +107,27 @@ class Template
     }
 
     /**
+     * @param string $create
+     */
+    public function setCreate($create)
+    {
+        $this->create = $create;
+    }
+
+    /**
      * @return string
      */
     public function getBulkCreate()
     {
         return $this->bulkCreate;
+    }
+
+    /**
+     * @param string $bulkCreate
+     */
+    public function setBulkCreate($bulkCreate)
+    {
+        $this->bulkCreate = $bulkCreate;
     }
 
     /**
@@ -123,6 +139,14 @@ class Template
     }
 
     /**
+     * @param string $edit
+     */
+    public function setEdit($edit)
+    {
+        $this->edit = $edit;
+    }
+
+    /**
      * @return string
      */
     public function getShow()
@@ -131,11 +155,27 @@ class Template
     }
 
     /**
+     * @param string $show
+     */
+    public function setShow($show)
+    {
+        $this->show = $show;
+    }
+
+    /**
      * @return string
      */
     public function getList()
     {
         return $this->list;
+    }
+
+    /**
+     * @param string $list
+     */
+    public function setList($list)
+    {
+        $this->list = $list;
     }
 
     /**

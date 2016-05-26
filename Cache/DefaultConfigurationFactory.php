@@ -12,6 +12,7 @@
 namespace SymfonyId\AdminBundle\Cache;
 
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
+use SymfonyId\AdminBundle\Exception\FreezeStateException;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -24,10 +25,19 @@ class DefaultConfigurationFactory
     private $defaultConfigurations = array();
 
     /**
+     * @var bool
+     */
+    private $freeze = false;
+
+    /**
      * @param DefaultConfigurationInterface $defaultConfiguration
      */
     public function addDefaultConfiguration(DefaultConfigurationInterface $defaultConfiguration)
     {
+        if ($this->freeze) {
+            throw new FreezeStateException($this);
+        }
+
         $this->defaultConfigurations[get_class($defaultConfiguration)] = $defaultConfiguration;
     }
 
@@ -36,5 +46,10 @@ class DefaultConfigurationFactory
         foreach ($this->defaultConfigurations as $defaultConfiguration) {
             $defaultConfiguration->setConfiguration($configuratorFactory);
         }
+    }
+
+    public function freeze()
+    {
+        $this->freeze = true;
     }
 }

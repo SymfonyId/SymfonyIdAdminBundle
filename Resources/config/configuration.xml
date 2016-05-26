@@ -7,5 +7,40 @@
         <service id="symfonyid.admin.configuration.configuration_mapper" class="SymfonyId\AdminBundle\Configuration\ConfigurationMapper">
             <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
         </service>
+
+        <service id="symfonyid.admin.configuration.configuration_factory" class="SymfonyId\AdminBundle\Configuration\ConfiguratorFactory" />
+
+        <service id="symfonyid.admin.configuration.crud_configurator" class="SymfonyId\AdminBundle\Configuration\CrudConfigurator">
+            <argument type="service" id="form.factory" />
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+
+            <tag name="symfonyid.config" />
+        </service>
+
+        <service id="symfonyid.admin.configuration.driver_configurator" class="SymfonyId\AdminBundle\Configuration\DriverConfigurator">
+            <tag name="symfonyid.config" />
+        </service>
+
+        <service id="symfonyid.admin.configuration.grid_configurator" class="SymfonyId\AdminBundle\Configuration\GridConfigurator">
+            <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
+            <argument type="service" id="kernel" />
+
+            <tag name="symfonyid.config" />
+        </service>
+
+        <service id="symfonyid.admin.configuration.page_configurator" class="SymfonyId\AdminBundle\Configuration\PageConfigurator">
+            <tag name="symfonyid.config" />
+        </service>
+
+        <service id="symfonyid.admin.configuration.plugin_configurator" class="SymfonyId\AdminBundle\Configuration\PluginConfigurator">
+            <tag name="symfonyid.config" />
+        </service>
+
+        <service id="symfonyid.admin.configuration.util_configurator" class="SymfonyId\AdminBundle\Configuration\UtilConfigurator">
+            <tag name="symfonyid.config" />
+        </service>
     </services>
 </container>
