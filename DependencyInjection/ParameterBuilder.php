@@ -106,10 +106,10 @@ class ParameterBuilder
     {
         $this->containerBuilder->setParameter($alias.'.admin.user.user_form', $config['user']['form_class']);
         $this->containerBuilder->setParameter($alias.'.admin.user.auto_enable', $config['user']['auto_enable']);
-        $this->containerBuilder->setParameter($alias.'.admin.user.user_entity', $config['user']['entity_class']);
+        $this->containerBuilder->setParameter($alias.'.admin.user.model_class', $config['user']['model_class']);
         $this->containerBuilder->setParameter($alias.'.admin.user.show_fields', $config['user']['show_fields']);
-        $this->containerBuilder->setParameter($alias.'.admin.user.grid_fields', $config['user']['grid_fields']);
-        $this->containerBuilder->setParameter($alias.'.admin.user.grid_filters', $config['user']['filter']);
+        $this->containerBuilder->setParameter($alias.'.admin.user.grid_columns', $config['user']['grid_columns']);
+        $this->containerBuilder->setParameter($alias.'.admin.user.grid_filters', $config['user']['filters']);
         $this->containerBuilder->setParameter($alias.'.admin.user.password_form', $config['user']['password_form']);
     }
 }

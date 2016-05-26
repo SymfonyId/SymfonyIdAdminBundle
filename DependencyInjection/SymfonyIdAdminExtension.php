@@ -44,19 +44,19 @@ class SymfonyIdAdminExtension extends Extension
         $config = $processor->processConfiguration($configuration, $configs);
 
         $parameterBuilder = new ParameterBuilder($container);
-        $parameterBuilder->build($this->getAlias(), $config);
+        $parameterBuilder->build(Constants::ROOT_PARAMETER, $config);
 
         $this->loadXmlServices($loader);
 
-        if (Driver::BOTH === $container->getParameter($this->getAlias().'.admin.driver')) {
-            $container->setParameter($this->getAlias().'.admin.backend_type_orm', true);
-            $container->setParameter($this->getAlias().'.admin.backend_type_odm', true);
+        if (Driver::BOTH === $container->getParameter(Constants::ROOT_PARAMETER.'.admin.driver')) {
+            $container->setParameter(Constants::ROOT_PARAMETER.'.admin.backend_type_orm', true);
+            $container->setParameter(Constants::ROOT_PARAMETER.'.admin.backend_type_odm', true);
 
             $loader->load('orm.xml');
             $loader->load('odm.xml');
         } else {
-            $driver = $container->getParameter($this->getAlias().'.admin.driver');
-            $container->setParameter($this->getAlias().'.admin.backend_type_'.$driver, true);
+            $driver = $container->getParameter(Constants::ROOT_PARAMETER.'.admin.driver');
+            $container->setParameter(Constants::ROOT_PARAMETER.'.admin.backend_type_'.$driver, true);
 
             $loader->load($driver.'.xml');
         }

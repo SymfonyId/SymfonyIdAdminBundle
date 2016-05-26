@@ -55,23 +55,41 @@ class UserControllerConfiguratorListener implements CrudControllerListenerAwareI
 
     /**
      * @param string $formClass
-     * @param string $modelClass
      */
-    public function setForm($formClass, $modelClass)
+    public function setFormClass($formClass)
     {
         $this->formClass = $formClass;
+    }
+
+    /**
+     * @param string $modelClass
+     */
+    public function setModelClass($modelClass)
+    {
         $this->modelClass = $modelClass;
     }
 
     /**
      * @param array $showFields
-     * @param array $gridColumns
-     * @param array $gridFilters
      */
-    public function setView(array $showFields, array $gridColumns, array $gridFilters)
+    public function setShowFields(array $showFields)
     {
         $this->showFields = $showFields;
+    }
+
+    /**
+     * @param array $gridColumns
+     */
+    public function setGridColumns(array $gridColumns)
+    {
         $this->gridColumns = $gridColumns;
+    }
+
+    /**
+     * @param array $gridFilters
+     */
+    public function setGridFilters(array $gridFilters)
+    {
         $this->gridFilters = $gridFilters;
     }
 
