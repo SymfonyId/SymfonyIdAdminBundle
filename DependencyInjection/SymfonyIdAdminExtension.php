@@ -38,17 +38,18 @@ class SymfonyIdAdminExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
-        $loader->load('annotation.xml');
-        $loader->load('cache.xml');
-        $loader->load('configuration.xml');
-        $loader->load('crud.xml');
-        $loader->load('event_listener.xml');
-        $loader->load('extractor.xml');
-        $loader->load('filter.xml');
-        $loader->load('form.xml');
-        $loader->load('listeners.xml');
-        $loader->load('menu.xml');
-        $loader->load('twig.xml');
+        $loader->load('annotations.xml');
+        $loader->load('caches.xml');
+        $loader->load('configurations.xml');
+        $loader->load('cruds.xml');
+        $loader->load('event_listeners.xml');
+        $loader->load('extractors.xml');
+        $loader->load('filters.xml');
+        $loader->load('forms.xml');
+        $loader->load('menus.xml');
+        $loader->load('routes.xml');
+        $loader->load('services.xml');
+        $loader->load('twig_extensions.xml');
 
         $configuration = new Configuration();
         $config = $processor->processConfiguration($configuration, $configs);
