@@ -21,9 +21,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
-use SymfonyId\AdminBundle\Exception\ModelNotFoundException;
-use SymfonyId\AdminBundle\Doctrine\Generator\ControllerGenerator;
-use SymfonyId\AdminBundle\Doctrine\Generator\FormGenerator;
+use SymfonyId\AdminBundle\Annotation\Driver;
+use SymfonyId\AdminBundle\Generator\ControllerGenerator;
+use SymfonyId\AdminBundle\Generator\FormGenerator;
+use SymfonyId\AdminBundle\Exception\RuntimeException;
+use SymfonyId\AdminBundle\Generator\GeneratorInterface;
 use SymfonyId\AdminBundle\Model\ModelMetadataAwareTrait;
 
 /**
@@ -39,15 +41,15 @@ class GenerateCrudCommand extends GenerateDoctrineCommand
     protected function configure()
     {
         $this
-            ->addArgument('entity', InputArgument::REQUIRED, 'The entity class name to initialize (shortcut notation)')
+            ->addArgument('model', InputArgument::REQUIRED, 'The entity class name to initialize (shortcut notation)')
             ->addOption('overwrite', null, InputOption::VALUE_NONE, 'Overwrite any existing controller or form class when generating the CRUD contents')
             ->setName('symfonyid:generate:crud')
             ->setAliases(array('symfonyid:generate', 'symfonyid:crud:generate'))
-            ->setDescription('Generate CRUD from Entity using SymfonyId Admin Bundle style')
+            ->setDescription('Generate CRUD from Model using SymfonyId Admin Bundle style')
             ->setHelp(<<<EOT
-The <info>siab:generate:crud</info> command generates a CRUD based on a Doctrine entity using SymfonyId Admin Bundle style.
+The <info>siab:generate:crud</info> command generates a CRUD based on a Doctrine ORM or ODM using SymfonyId Admin Bundle style.
 
-<info>php bin/console siab:generate:crud --entity=AcmeBlogBundle:Post</info>
+<info>php bin/console siab:generate:crud --model=AcmeBlogBundle:Post</info>
 
 Every generated file is based on a template. There are default templates but they can be overriden by overriding config parameters.
 EOT
@@ -66,6 +68,8 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->setManagerFactory($this->getContainer()->get('symfonyid.admin.manager.manager_factory'));
+
         $questionHelper = $this->getQuestionHelper();
 
         /*
@@ -80,43 +84,46 @@ EOT
             }
         }
 
-        $entity = Validators::validateEntityName($input->getArgument('entity'));
+        $model = Validators::validateEntityName($input->getArgument('model'));
         $forceOverwrite = $input->getOption('overwrite');
-        list($bundle, $entity) = $this->parseShortcutNotation($entity);
+        list($bundle, $model) = $this->parseShortcutNotation($model);
 
-        $entityClass = $this->getContainer()->get('doctrine')->getAliasNamespace($bundle).'\\'.$entity;
+        $driver = new Driver(array('value' => Driver::ORM));
         try {
-            $metadata = $this->getEntityMetadata($entityClass);
-        } catch (\Exception $e) {
-            throw new ModelNotFoundException(sprintf('Entity "%s" does not exist in the "%s" bundle. Create it before and then execute this command again.', $entity, $bundle));
+            $modelClass = $this->getAliasNamespace($driver, $bundle).'\\'.$model;
+        } catch (\Exception $exception) {
+            $driver = new Driver(array('value' => Driver::ODM));
+            $modelClass = $this->getAliasNamespace($driver, $bundle).'\\'.$model;
         }
+
+        $metadata = $this->getClassMetadata($driver, $modelClass);
         $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
 
-        /** @var FormGenerator $formGenerator */
-        $formGenerator = $this->getGenerator($bundle);
-        $formGenerator->generate($bundle, $entity, $metadata[0], $forceOverwrite);
+        /** @var GeneratorInterface $formGenerator */
+        $formGenerator = $this->getFormGenerator();
+        $formGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
 
-        $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $entityClass));
+        $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $modelClass));
 
         $controllerGenerator = $this->getControllerGenerator($bundle);
-        $controllerGenerator->generate($bundle, $entityClass, $metadata[0], $forceOverwrite);
+        $controllerGenerator->generate($bundle, $modelClass, $metadata, $forceOverwrite);
 
-        $output->writeln(sprintf('<info>Controller for entity %s has been generated</info>', $entityClass));
+        $output->writeln(sprintf('<info>Controller for entity %s has been generated</info>', $modelClass));
 
         /** @var KernelInterface $kernel */
         $kernel = $this->getContainer()->get('kernel');
         $cacheClearCommand = $this->getApplication()->find('cache:clear');
         $cacheClearCommand->run(new ArrayInput(array('--env' => $kernel->getEnvironment())), $output);
 
-        $output->writeln(sprintf('<info>CRUD Generation is successfully!</info>', $entityClass));
+        $output->writeln(sprintf('<info>CRUD Generation is successfully!</info>', $modelClass));
     }
 
     /**
-     * @return FormGenerator
+     * @throws RuntimeException
      */
     protected function createGenerator()
     {
-        return new FormGenerator();
+        throw new RuntimeException();
     }
 
     /**
@@ -153,7 +160,7 @@ EOT
     }
 
     /**
-     * @param null $bundle
+     * @param null|string $bundle
      *
      * @return ControllerGenerator
      */
@@ -163,5 +170,13 @@ EOT
         $generator->setSkeletonDirs($this->getSkeletonDirs($bundle));
 
         return $generator;
+    }
+
+    /**
+     * @return FormGenerator
+     */
+    private function getFormGenerator()
+    {
+        return new FormGenerator();
     }
 }
