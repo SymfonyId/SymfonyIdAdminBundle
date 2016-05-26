@@ -22,8 +22,12 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use SymfonyId\AdminBundle\Annotation\Driver;
-use SymfonyId\AdminBundle\Doctrine\Generator\ControllerGenerator;
-use SymfonyId\AdminBundle\Doctrine\Generator\FormGenerator;
+use SymfonyId\AdminBundle\Doctrine\Generator\ControllerGenerator as OrmControllerGenerator;
+use SymfonyId\AdminBundle\Doctrine\Generator\FormGenerator as OrmFormGenerator;
+use SymfonyId\AdminBundle\Document\Generator\ControllerGenerator as OdmControllerGenerator;
+use SymfonyId\AdminBundle\Document\Generator\FormGenerator as OdmFormGenerator;
+use SymfonyId\AdminBundle\Exception\RuntimeException;
+use SymfonyId\AdminBundle\Generator\GeneratorInterface;
 use SymfonyId\AdminBundle\Model\ModelMetadataAwareTrait;
 
 /**
@@ -97,13 +101,13 @@ EOT
         $metadata = $this->getClassMetadata($driver, $modelClass);
         $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
 
-        /** @var FormGenerator $formGenerator */
-        $formGenerator = $this->getGenerator($bundle);
+        /** @var GeneratorInterface $formGenerator */
+        $formGenerator = $this->getFormGenerator($driver);
         $formGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
 
         $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $modelClass));
 
-        $controllerGenerator = $this->getControllerGenerator($bundle);
+        $controllerGenerator = $this->getControllerGenerator($driver, $bundle);
         $controllerGenerator->generate($bundle, $modelClass, $metadata, $forceOverwrite);
 
         $output->writeln(sprintf('<info>Controller for entity %s has been generated</info>', $modelClass));
@@ -117,11 +121,11 @@ EOT
     }
 
     /**
-     * @return FormGenerator
+     * @throws RuntimeException
      */
     protected function createGenerator()
     {
-        return new FormGenerator();
+        throw new RuntimeException();
     }
 
     /**
@@ -158,15 +162,33 @@ EOT
     }
 
     /**
-     * @param null $bundle
+     * @param Driver $driver
+     * @param null|string $bundle
      *
-     * @return ControllerGenerator
+     * @return OrmControllerGenerator|OdmControllerGenerator
      */
-    private function getControllerGenerator($bundle = null)
+    private function getControllerGenerator(Driver $driver, $bundle = null)
     {
-        $generator = new ControllerGenerator();
+        if (Driver::ODM === $driver) {
+            $generator = new OrmControllerGenerator();
+        } else {
+            $generator = new OdmControllerGenerator();
+        }
         $generator->setSkeletonDirs($this->getSkeletonDirs($bundle));
 
         return $generator;
+    }
+
+    /**
+     * @param Driver $driver
+     * @return OrmFormGenerator|OdmFormGenerator
+     */
+    private function getFormGenerator(Driver $driver)
+    {
+        if (Driver::ORM === $driver->getDriver()) {
+            return new OrmFormGenerator();
+        }
+
+        return new OdmFormGenerator();
     }
 }
