@@ -15,6 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use SymfonyId\AdminBundle\Annotation\Driver;
+use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Crud\ActionHandler\ActionHandlerInterface;
 use SymfonyId\AdminBundle\Crud\ActionHandler\BulkCreateActionHandler;
 use SymfonyId\AdminBundle\Crud\ActionHandler\BulkDeleteActionHandler;
@@ -22,8 +24,6 @@ use SymfonyId\AdminBundle\Crud\ActionHandler\CreateUpdateActionHandler;
 use SymfonyId\AdminBundle\Crud\ActionHandler\DeleteActionHandler;
 use SymfonyId\AdminBundle\Crud\ActionHandler\DetailActionHandler;
 use SymfonyId\AdminBundle\Crud\ActionHandler\ListActionHandler;
-use SymfonyId\AdminBundle\Annotation\Driver;
-use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Model\ModelInterface;
 use SymfonyId\AdminBundle\View\View;
 

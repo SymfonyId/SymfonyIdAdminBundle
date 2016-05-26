@@ -12,8 +12,8 @@
 namespace SymfonyId\AdminBundle\Generator;
 
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use SymfonyId\AdminBundle\Exception\RuntimeException;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use SymfonyId\AdminBundle\Exception\RuntimeException;
 
 /**
  * Generates a form class based on a Doctrine entity.

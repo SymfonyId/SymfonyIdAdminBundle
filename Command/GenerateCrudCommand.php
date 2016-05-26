@@ -13,9 +13,6 @@ namespace SymfonyId\AdminBundle\Command;
 
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use SymfonyId\AdminBundle\Exception\ModelNotFoundException;
-use SymfonyId\AdminBundle\Generator\ControllerGenerator;
-use SymfonyId\AdminBundle\Generator\FormGenerator;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,6 +21,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use SymfonyId\AdminBundle\Exception\ModelNotFoundException;
+use SymfonyId\AdminBundle\Generator\ControllerGenerator;
+use SymfonyId\AdminBundle\Generator\FormGenerator;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -142,7 +142,7 @@ EOT
             $skeletonDirs[] = $dir;
         }
 
-        $reflClass = new \ReflectionClass(get_class($this));
+        $reflClass = new \ReflectionObject($this);
         $skeletonDirs[] = dirname($reflClass->getFileName()).'/../Resources/skeleton';
         $skeletonDirs[] = dirname($reflClass->getFileName()).'/../Resources';
 
