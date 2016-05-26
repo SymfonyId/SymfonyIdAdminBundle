@@ -162,7 +162,7 @@ EOT
     }
 
     /**
-     * @param Driver $driver
+     * @param Driver      $driver
      * @param null|string $bundle
      *
      * @return OrmControllerGenerator|OdmControllerGenerator
@@ -181,6 +181,7 @@ EOT
 
     /**
      * @param Driver $driver
+     *
      * @return OrmFormGenerator|OdmFormGenerator
      */
     private function getFormGenerator(Driver $driver)
