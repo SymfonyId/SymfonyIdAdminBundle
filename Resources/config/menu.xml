@@ -2,4 +2,36 @@
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="symfonyid.admin.menu.symfonyid_menu_builder" class="SymfonyId\AdminBundle\Menu\SymfonyIdMenuBuilder" >
+            <argument type="service" id="symfonyid.admin.menu.menu_loader_factory" />
+            <argument type="service" id="security.authorization_checker" />
+            <argument type="service" id="symfonyid.admin.cache.cache_handler" />
+            <argument type="service" id="translator" />
+            <argument>%symfonyid.admin.translation_domain%</argument>
+        </service>
+
+        <service id="symfonyid.admin.menu.menu_loader_factory" class="SymfonyId\AdminBundle\Menu\MenuLoaderFactory" >
+            <argument>%symfonyid.admin.menu%</argument>
+        </service>
+
+        <service id="symfonyid.admin.menu.default_menu_loader" class="SymfonyId\AdminBundle\Menu\DefaultMenuLoader" >
+            <argument type="service" id="router" />
+            <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
+            <argument type="service" id="translator" />
+            <argument>%symfonyid.admin.translation_domain%</argument>
+
+            <tag name="symfonyid.menu" />
+        </service>
+
+        <service id="symfonyid.admin.menu.symfonyid_menu" class="Knp\Menu\MenuItem" >
+            <factory service="symfonyid.admin.menu.symfonyid_menu_builder" method="createMenu" />
+
+            <argument type="service" id="knp_menu.factory" />
+            <argument type="collection" />
+
+            <tag name="knp_menu.menu" alias="symfonyid_menu" />
+        </service>
+    </services>
 </container>

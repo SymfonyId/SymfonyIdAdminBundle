@@ -23,14 +23,14 @@ class GenerateUserAvatarFunction extends \Twig_Extension implements ContainerAwa
     use ContainerAwareTrait;
 
     /**
-     * @var string
+     * @var array
      */
     private $uploadDir;
 
     /**
-     * @param string $uploadDir
+     * @param array $uploadDir
      */
-    public function __construct($uploadDir)
+    public function __construct(array $uploadDir)
     {
         $this->uploadDir = $uploadDir;
     }

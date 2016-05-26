@@ -5,27 +5,23 @@
 
     <services>
         <service id="symfonyid.admin.view.view" class="SymfonyId\AdminBundle\View\View" />
+
         <service id="symfonyid.admin.upload.upload_handler" class="SymfonyId\AdminBundle\Upload\UploadHandler" />
+
         <service id="symfonyid.admin.security.authorization_checker" class="SymfonyId\AdminBundle\Security\AuthorizationChecker" >
             <argument type="service" id="translator"/>
             <argument>%symfonyid.admin.translation_domain%</argument>
         </service>
-        <service id="symfonyid.admin.route.route_loader" class="SymfonyId\AdminBundle\Route\SymfonyIdRouteLoader" >
-            <argument type="service" id="controller_name_converter"/>
-            <argument type="service" id="routing.resolver"/>
-            <argument type="service" id="symfonyid.admin.controller.controller_finder"/>
-            <argument type="service" id="symfonyid.admin.route.route_compiler"/>
-        </service>
-        <service id="symfonyid.admin.route.route_compiler" class="SymfonyId\AdminBundle\Route\RouteCollectionCompiler" >
-            <argument type="service" id="symfonyid.admin.extractor.extractor_factory"/>
-        </service>
+
         <service id="symfonyid.admin.export.data_exporter" class="SymfonyId\AdminBundle\Export\DataExporter" >
             <argument type="service" id="symfonyid.admin.manager.manager_factory"/>
             <argument>%symfonyid.admin.max_records%</argument>
         </service>
+
         <service id="symfonyid.admin.event.event_subscriber" class="SymfonyId\AdminBundle\Event\EventSubscriber" >
             <argument type="service" id="event_dispatcher"/>
         </service>
+
         <service id="symfonyid.admin.controller.controller_finder" class="SymfonyId\AdminBundle\Controller\ControllerFinder" >
             <argument type="service" id="kernel"/>
         </service>

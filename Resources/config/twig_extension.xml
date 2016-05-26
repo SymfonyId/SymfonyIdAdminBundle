@@ -4,8 +4,32 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="symfonyid.admin.event.event_subscriber" class="SymfonyId\AdminBundle\Event\EventSubscriber" >
-            <argument type="service" id="event_dispatcher"/>
+        <service id="symfonyid.admin.twig.boolean_type_test_extension" class="SymfonyId\AdminBundle\Twig\Extension\BooleanTypeTest" >
+            <tag name="twig.extension" />
+        </service>
+
+        <service id="symfonyid.admin.twig.generate_user_avatar_extension" class="SymfonyId\AdminBundle\Twig\Extension\GenerateUserAvatarFunction" >
+            <argument>%symfonyid.admin.upload_directory%</argument>
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+
+            <tag name="twig.extension" />
+        </service>
+
+        <service id="symfonyid.admin.twig.numeric_type_test_extension" class="SymfonyId\AdminBundle\Twig\Extension\NumericTypeTest" >
+            <tag name="twig.extension" />
+        </service>
+
+        <service id="symfonyid.admin.twig.sorted_field_test_extension" class="SymfonyId\AdminBundle\Twig\Extension\SortedFieldTest" >
+            <argument type="service" id="session" />
+
+            <tag name="twig.extension" />
+        </service>
+
+        <service id="symfonyid.admin.twig.ucwords_test_extension" class="SymfonyId\AdminBundle\Twig\Extension\UcWordsFilter" >
+            <tag name="twig.extension" />
         </service>
     </services>
 </container>

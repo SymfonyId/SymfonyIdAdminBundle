@@ -21,7 +21,7 @@ use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class ControllerMenuLoader implements MenuLoaderInterface
+class DefaultMenuLoader implements MenuLoaderInterface
 {
     /**
      * @var Router

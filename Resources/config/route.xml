@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="symfonyid.admin.route.route_loader" class="SymfonyId\AdminBundle\Route\SymfonyIdRouteLoader" >
+            <argument type="service" id="controller_name_converter"/>
+            <argument type="service" id="routing.resolver"/>
+            <argument type="service" id="symfonyid.admin.controller.controller_finder"/>
+            <argument type="service" id="symfonyid.admin.route.route_compiler"/>
+        </service>
+
+        <service id="symfonyid.admin.route.route_compiler" class="SymfonyId\AdminBundle\Route\RouteCollectionCompiler" >
+            <argument type="service" id="symfonyid.admin.extractor.extractor_factory"/>
+        </service>
+    </services>
+</container>
