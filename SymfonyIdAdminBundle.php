@@ -71,11 +71,11 @@ class SymfonyIdAdminBundle extends Bundle
         );
 
         if (class_exists(DoctrineOrmMappingsPass::class)) {
-            $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings));
+            $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings, array('symfonyid.admin.manager.orm_manager'), 'symfonyid.admin.backend_type_orm'));
         }
 
         if (class_exists(DoctrineMongoDBMappingsPass::class)) {
-            $container->addCompilerPass(DoctrineMongoDBMappingsPass::createXmlMappingDriver($mappings, array('symfonyid.admin.manager.odm_manager')));
+            $container->addCompilerPass(DoctrineMongoDBMappingsPass::createXmlMappingDriver($mappings, array('symfonyid.admin.manager.odm_manager'), 'symfonyid.admin.backend_type_odm'));
         }
     }
 }
