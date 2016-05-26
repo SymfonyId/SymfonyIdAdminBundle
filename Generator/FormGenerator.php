@@ -9,10 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\Doctrine\Generator;
+namespace SymfonyId\AdminBundle\Generator;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use SymfonyId\AdminBundle\Exception\RuntimeException;
 
@@ -37,7 +36,7 @@ class FormGenerator extends AbstractGenerator
      */
     public function generate(BundleInterface $bundle, $entity, ClassMetadata $metadata, $forceOverwrite = false)
     {
-        /* @var ClassMetadataInfo $metadata */
+        /* @var \Doctrine\ORM\Mapping\ClassMetadataInfo|\Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo $metadata */
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
 
@@ -70,12 +69,13 @@ class FormGenerator extends AbstractGenerator
     }
 
     /**
-     * @param ClassMetadataInfo $metadata
+     * @param ClassMetadata $metadata
      *
      * @return bool
      */
-    private function hasDateTimeField(ClassMetadataInfo $metadata)
+    private function hasDateTimeField(ClassMetadata $metadata)
     {
+        /* @var \Doctrine\ORM\Mapping\ClassMetadataInfo|\Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo $metadata */
         $hasDateTime = false;
 
         foreach ($this->getFieldsFromMetadata($metadata) as $field) {

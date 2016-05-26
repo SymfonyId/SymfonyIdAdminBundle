@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\Doctrine\Generator;
+namespace SymfonyId\AdminBundle\Generator;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
@@ -36,7 +36,7 @@ class ControllerGenerator extends AbstractGenerator
      */
     public function generate(BundleInterface $bundle, $entity, ClassMetadata $metadata, $forceOverwrite = false)
     {
-        /* @var \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata */
+        /* @var \Doctrine\ORM\Mapping\ClassMetadataInfo|\Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo $metadata */
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
 

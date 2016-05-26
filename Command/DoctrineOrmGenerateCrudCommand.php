@@ -22,10 +22,8 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use SymfonyId\AdminBundle\Annotation\Driver;
-use SymfonyId\AdminBundle\Doctrine\Generator\ControllerGenerator as OrmControllerGenerator;
-use SymfonyId\AdminBundle\Doctrine\Generator\FormGenerator as OrmFormGenerator;
-use SymfonyId\AdminBundle\Document\Generator\ControllerGenerator as OdmControllerGenerator;
-use SymfonyId\AdminBundle\Document\Generator\FormGenerator as OdmFormGenerator;
+use SymfonyId\AdminBundle\Generator\ControllerGenerator;
+use SymfonyId\AdminBundle\Generator\FormGenerator;
 use SymfonyId\AdminBundle\Exception\RuntimeException;
 use SymfonyId\AdminBundle\Generator\GeneratorInterface;
 use SymfonyId\AdminBundle\Model\ModelMetadataAwareTrait;
@@ -102,12 +100,12 @@ EOT
         $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
 
         /** @var GeneratorInterface $formGenerator */
-        $formGenerator = $this->getFormGenerator($driver);
+        $formGenerator = $this->getFormGenerator();
         $formGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
 
         $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $modelClass));
 
-        $controllerGenerator = $this->getControllerGenerator($driver, $bundle);
+        $controllerGenerator = $this->getControllerGenerator($bundle);
         $controllerGenerator->generate($bundle, $modelClass, $metadata, $forceOverwrite);
 
         $output->writeln(sprintf('<info>Controller for entity %s has been generated</info>', $modelClass));
@@ -162,34 +160,23 @@ EOT
     }
 
     /**
-     * @param Driver      $driver
      * @param null|string $bundle
      *
-     * @return OrmControllerGenerator|OdmControllerGenerator
+     * @return ControllerGenerator
      */
-    private function getControllerGenerator(Driver $driver, $bundle = null)
+    private function getControllerGenerator($bundle = null)
     {
-        if (Driver::ODM === $driver) {
-            $generator = new OrmControllerGenerator();
-        } else {
-            $generator = new OdmControllerGenerator();
-        }
+        $generator = new ControllerGenerator();
         $generator->setSkeletonDirs($this->getSkeletonDirs($bundle));
 
         return $generator;
     }
 
     /**
-     * @param Driver $driver
-     *
-     * @return OrmFormGenerator|OdmFormGenerator
+     * @return FormGenerator
      */
-    private function getFormGenerator(Driver $driver)
+    private function getFormGenerator()
     {
-        if (Driver::ORM === $driver->getDriver()) {
-            return new OrmFormGenerator();
-        }
-
-        return new OdmFormGenerator();
+        return new FormGenerator();
     }
 }

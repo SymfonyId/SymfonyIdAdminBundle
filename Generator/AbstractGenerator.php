@@ -9,12 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\Document\Generator;
+namespace SymfonyId\AdminBundle\Generator;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
-use SymfonyId\AdminBundle\Generator\GeneratorInterface;
 
 /**
  * Generates a form class based on a Doctrine entity.
@@ -61,7 +59,7 @@ abstract class AbstractGenerator extends Generator implements GeneratorInterface
      */
     public function getFieldsFromMetadata(ClassMetadata $metadata)
     {
-        /* @var ClassMetadataInfo $metadata */
+        /* @var \Doctrine\ORM\Mapping\ClassMetadataInfo|\Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo $metadata */
         $fields = (array) $metadata->getFieldNames();
 
         $exclude = array(
@@ -70,12 +68,12 @@ abstract class AbstractGenerator extends Generator implements GeneratorInterface
         );
 
         // Remove the primary key field if it's not managed manually
-        if (!$metadata->isIdGeneratorIncrement()) {
+        if (!$metadata->isIdentifierNatural()) {
             $fields = array_diff($fields, $metadata->identifier);
         }
 
         foreach ($metadata->associationMappings as $fieldName => $relation) {
-            if ($relation['type'] !== ClassMetadataInfo::EMBED_MANY) {
+            if ($relation['type'] !== 4) {
                 $fields[] = $fieldName;
             }
         }
