@@ -78,7 +78,7 @@ class ProfileControllerConfiguratorListener implements ConfigurationAwareInterfa
         $crud = new Crud(array(
             'modelClass' => $crudConfiguration->getModelClass(),
             'form' => $this->formClass ?: $crudConfiguration->getForm(),
-            'menuIcon' => $crudConfiguration->getMenuIcon(),
+            'menu' => $crudConfiguration->getMenu(),
             'showFields' => empty($this->showFields) ? $crudConfiguration->getShowFields() : $this->showFields,
             'template' => $crudConfiguration->getTemplate(),
             'allowCreate' => $crudConfiguration->isAllowCreate(),

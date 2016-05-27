@@ -20,7 +20,7 @@ namespace SymfonyId\AdminBundle\Annotation;
  *   @Attribute("showFields",  type = "array"),
  *   @Attribute("modelClass",  type = "string"),
  *   @Attribute("form",  type = "string"),
- *   @Attribute("menuIcon",  type = "string"),
+ *   @Attribute("menu",  type = "\SymfonyId\AdminBundle\Annotation\Menu"),
  *   @Attribute("allowCreate",  type = "boolean"),
  *   @Attribute("allowEdit",  type = "boolean"),
  *   @Attribute("allowShow",  type = "boolean"),
@@ -60,9 +60,9 @@ class Crud
     private $form;
 
     /**
-     * @var string
+     * @var Menu
      */
-    private $menuIcon = 'fa-bars';
+    private $menu;
 
     /**
      * @var bool
@@ -101,8 +101,8 @@ class Crud
             $this->form = $data['form'];
         }
 
-        if (isset($data['menuIcon'])) {
-            $this->menuIcon = $data['menuIcon'];
+        if (isset($data['menu'])) {
+            $this->menu = $data['menu'];
         }
 
         if (isset($data['showFields'])) {
@@ -165,11 +165,11 @@ class Crud
     }
 
     /**
-     * @return string
+     * @return Menu
      */
-    public function getMenuIcon()
+    public function getMenu()
     {
-        return $this->menuIcon;
+        return $this->menu;
     }
 
     /**

@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Translation\TranslatorInterface;
 use SymfonyId\AdminBundle\Annotation\Crud;
-use SymfonyId\AdminBundle\Controller\UserController;
+use SymfonyId\AdminBundle\Controller\CrudController;
 use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 
 /**
@@ -81,10 +81,13 @@ class DefaultMenuLoader implements MenuLoaderInterface
                 $reflectionController = new \ReflectionClass($controller[0]);
                 $this->extractorFactory->extract($reflectionController);
                 foreach ($this->extractorFactory->getClassAnnotations() as $annotation) {
-                    if ($annotation instanceof Crud && !$annotation instanceof UserController) {
+                    if ($annotation instanceof Crud && $reflectionController->isSubclassOf(CrudController::class)) {
+                        $menu = $annotation->getMenu();
+
                         $menuItems[$name] = array(
                             'name' => $this->translator->trans(sprintf('menu.label.%s', strtolower(str_replace('Controller', '', $reflectionController->getShortName()))), array(), $this->translationDomain),
-                            'icon' => $annotation->getMenuIcon(),
+                            'icon' => $menu->getIcon(),
+                            'extra_css' => $menu->getExtraCss(),
                         );
                     }
                 }
