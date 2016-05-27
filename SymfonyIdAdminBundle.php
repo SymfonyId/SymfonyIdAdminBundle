@@ -46,8 +46,6 @@ class SymfonyIdAdminBundle extends Bundle
         $container->addCompilerPass(new MenuLoaderPass());
         $container->addCompilerPass(new PaginationTemplatePass());
         $container->addCompilerPass(new QueryFilterPass());
-
-        $this->addRegisterMappingsPass($container);
     }
 
     /**
@@ -56,36 +54,5 @@ class SymfonyIdAdminBundle extends Bundle
     public function getContainerExtension()
     {
         return new SymfonyIdAdminExtension();
-    }
-
-    /**
-     * @param ContainerBuilder $container
-     */
-    private function addRegisterMappingsPass(ContainerBuilder $container)
-    {
-        $reflectionUser = new \ReflectionClass(User::class);
-        $reflectionBundle = new \ReflectionObject($this);
-
-        $mappings = array(
-            realpath(sprintf('%s/%s', dirname($reflectionBundle->getFileName()), 'Resources/config/doctrine')) => $reflectionUser->getNamespaceName(),
-        );
-
-        if (class_exists(DoctrineOrmMappingsPass::class)) {
-            $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver(
-                $mappings,
-                array('symfonyid.admin.manager.orm_manager'),
-                'symfonyid.admin.backend_type_orm',
-                array($reflectionBundle->getShortName() => $reflectionUser->getNamespaceName())
-            ));
-        }
-
-        if (class_exists(DoctrineMongoDBMappingsPass::class)) {
-            $container->addCompilerPass(DoctrineMongoDBMappingsPass::createXmlMappingDriver(
-                $mappings,
-                array('symfonyid.admin.manager.odm_manager'),
-                'symfonyid.admin.backend_type_odm',
-                array($reflectionBundle->getShortName() => $reflectionUser->getNamespaceName())
-            ));
-        }
     }
 }
