@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <mapped-superclass name="SymfonyId\AdminBundle\User\User" collection="symfonyid_user">
+    <mapped-superclass name="SymfonyId\AdminBundle\User\User" collection="symfonyid_admin_user">
         <field name="fullName" fieldName="fullName" type="string" />
         <field name="avatar" fieldName="avatar" type="string" />
     </mapped-superclass>
