@@ -12,17 +12,14 @@
 namespace SymfonyId\AdminBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use SymfonyId\AdminBundle\Annotation\Page;
-use SymfonyId\AdminBundle\Annotation\Plugin;
-use SymfonyId\AdminBundle\Annotation\Upload;
-use SymfonyId\AdminBundle\Annotation\Util;
+use SymfonyId\AdminBundle\Annotation as Siab;
 
 /**
  * @Route("/user")
  *
- * @Page(title="page.user.title", description="page.user.description")
- * @Plugin(fileChooser=true)
- * @Util(upload=@Upload(uploadable="file", targetField="avatar"))
+ * @Siab\Page(title="page.user.title", description="page.user.description")
+ * @Siab\Plugin(fileChooser=true)
+ * @Siab\Util(upload=@Siab\Upload(uploadable="file", targetField="avatar"))
  *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
