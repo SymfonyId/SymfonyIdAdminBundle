@@ -25,7 +25,6 @@
         "symfony/monolog-bundle": "^2.8",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
-        "sensio/generator-bundle": "^3.0",
         "knplabs/knp-paginator-bundle": "~2.5@dev",
         "knplabs/knp-menu-bundle": "~2.1@dev",
         "friendsofsymfony/user-bundle": "~2.0@dev",
@@ -40,6 +39,7 @@
         "pagerfanta/pagerfanta": "Required when use Restful Api"
     },
     "require-dev": {
+        "sensio/generator-bundle": "^3.0",
         "doctrine/mongodb-odm": "~1.0",
         "doctrine/mongodb-odm-bundle": "~3.0",
         "willdurand/hateoas-bundle": "~1.1",
