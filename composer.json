@@ -33,6 +33,7 @@
     "suggest": {
         "doctrine/mongodb-odm": "Required when use doctrine odm",
         "doctrine/mongodb-odm-bundle": "Required when use doctrine odm",
+        "nelmio/api-doc-bundle": "Required when use Restful Api",
         "willdurand/hateoas-bundle": "Required when use Restful Api",
         "jms/serializer-bundle": "Required when use Restful Api",
         "friendsofsymfony/rest-bundle": "Required when use Restful Api",
@@ -42,6 +43,7 @@
         "sensio/generator-bundle": "^3.0",
         "doctrine/mongodb-odm": "~1.0",
         "doctrine/mongodb-odm-bundle": "~3.0",
+        "nelmio/api-doc-bundle": "~2.9",
         "willdurand/hateoas-bundle": "~1.1",
         "jms/serializer-bundle": "~1.1",
         "friendsofsymfony/rest-bundle": "~1.7",
