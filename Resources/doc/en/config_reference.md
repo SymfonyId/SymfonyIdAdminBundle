@@ -23,7 +23,7 @@ symfonyid_admin:
         show_fields: ['full_name', 'username', 'email', 'roles', 'enabled']
         grid_columns: ['full_name', 'username', 'email', 'roles', 'enabled']
         filters: ['full_name', 'username']
-        password_form: 'symfonyid.admin.form.change_password_form
+        password_form: 'symfonyid.admin.form.change_password_form'
     themes:
         dashboard: 'SymfonyIdAdminBundle:Index:index.html.twig'
         profile: 'SymfonyIdAdminBundle:Index:profile.html.twig'
