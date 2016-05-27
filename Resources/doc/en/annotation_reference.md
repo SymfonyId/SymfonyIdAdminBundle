@@ -2,14 +2,20 @@
 
 This annotation using select2 jQuery plugin to handling behaviour. This annotation is used inside `@Util` annotation. 
 
-+ `routeResource` : Route that providing search datas.
+`routeResource` : Route that providing search datas.
 
-+ `routeCallback` : Route will be called when data is provided on load (see: [initSelection](http://select2.github.io/select2/#documentation))
+`routeCallback` : Route will be called when data is provided on load (see: [initSelection](http://select2.github.io/select2/#documentation))
 
-+ `targetSelector` : jQuery selector to store data
+`targetSelector` : jQuery selector to store data
 
 ```lang=php
-@Util(autoComplete=@AutoComplete(routeResource="search", routeCallback="detail", targetSelector="#store_value"))
+@Util(
+    autoComplete=@AutoComplete(
+        routeResource="search", 
+        routeCallback="detail", 
+        targetSelector="#store_value"
+    )
+)
 ```
 
 ### @Column ###
@@ -37,3 +43,25 @@ class User
     protected $username;
 }
 ```
+
+### @Crud ###
+
+This annotation is required to manipulate crud operation.
+
+`template` : Handle templating for create, read, edit and delete operation (see: `@Template`)
+
+`showFields` : List of entity or document field to show on detail
+
+`modelClass` : FQCN of entity or document class
+
+`form` : FQCN or service name of form to use on create and edit operation
+
+`menu` : Handling menu for current controller (see: `@Menu`)
+
+`allowCreate` : Booelan to allowing create operation, by default is `true`
+
+`allowEdit` : Booelan to allowing edit operation, by default is `true`
+
+`allowShow` : Booelan to allowing show operation, by default is `true`
+
+`allowDelete` : Booelan to allowing delete operation, by default is `true`
