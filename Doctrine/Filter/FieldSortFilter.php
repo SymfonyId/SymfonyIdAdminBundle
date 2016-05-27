@@ -41,6 +41,6 @@ class FieldSortFilter implements FieldSortInterface, ModelMetadataAwareInterface
     {
         $classMetadata = $this->getClassMetadata(new Driver(array('value' => self::DRIVER)), $modelClass);
         $metadata = $classMetadata->getFieldMapping($classMetadata->getFieldName($sortBy));
-        $queryBuilder->addOrderBy(sprintf('%s.%s', Constants::ENTITY_ALIAS, $metadata['fieldName']));
+        $queryBuilder->addOrderBy(sprintf('%s.%s', Constants::MODEL_ALIAS, $metadata['fieldName']));
     }
 }

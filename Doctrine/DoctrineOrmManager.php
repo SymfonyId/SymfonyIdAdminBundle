@@ -54,10 +54,10 @@ class DoctrineOrmManager extends AbstractManager
 
         /** @var EntityRepository $repository */
         $repository = $this->getManager()->getRepository($this->getModelClass());
-        $queryBuilder = $repository->createQueryBuilder(Constants::ENTITY_ALIAS);
+        $queryBuilder = $repository->createQueryBuilder(Constants::MODEL_ALIAS);
         $filterList = new FilterQueryEvent();
         $filterList->setQueryBuilder($queryBuilder);
-        $filterList->setAlias(Constants::ENTITY_ALIAS);
+        $filterList->setAlias(Constants::MODEL_ALIAS);
         $filterList->setModelClass($this->getModelClass());
         $this->getEventSubscriber()->subscribe(Constants::FILTER_LIST, $filterList);
 
@@ -73,8 +73,8 @@ class DoctrineOrmManager extends AbstractManager
     {
         /** @var EntityRepository $repository */
         $repository = $this->getManager()->getRepository($this->getModelClass());
-        $queryBuilder = $repository->createQueryBuilder(Constants::ENTITY_ALIAS);
-        $queryBuilder->select(sprintf('COUNT(%s.id)', Constants::ENTITY_ALIAS));
+        $queryBuilder = $repository->createQueryBuilder(Constants::MODEL_ALIAS);
+        $queryBuilder->select(sprintf('COUNT(%s.id)', Constants::MODEL_ALIAS));
 
         return $queryBuilder->getQuery()->getSingleScalarResult();
     }

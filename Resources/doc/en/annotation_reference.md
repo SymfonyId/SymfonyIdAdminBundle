@@ -75,3 +75,7 @@ This annotation is required to manipulate crud operation.
 `allowDelete` : Booelan to allowing delete operation, by default is `true`
 
 #### Example usage ####
+
+```lang=php
+@Crud("AppBundle\Entity\User", form="user_form_service")
+```

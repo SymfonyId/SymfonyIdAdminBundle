@@ -32,12 +32,20 @@
         "friendsofsymfony/jsrouting-bundle": "~2.0@dev"
     },
     "suggest": {
-        "doctrine/mongodb-odm": "Needed when using the odm implementation",
-        "doctrine/mongodb-odm-bundle": "Needed when using the odm implementation"
+        "doctrine/mongodb-odm": "Required when use doctrine odm",
+        "doctrine/mongodb-odm-bundle": "Required when use doctrine odm",
+        "willdurand/hateoas-bundle": "Required when use Restful Api",
+        "jms/serializer-bundle": "Required when use Restful Api",
+        "friendsofsymfony/rest-bundle": "Required when use Restful Api",
+        "pagerfanta/pagerfanta": "Required when use Restful Api"
     },
     "require-dev": {
         "doctrine/mongodb-odm": "~1.0",
         "doctrine/mongodb-odm-bundle": "~3.0",
+        "willdurand/hateoas-bundle": "~1.1",
+        "jms/serializer-bundle": "~1.1",
+        "friendsofsymfony/rest-bundle": "~1.7",
+        "pagerfanta/pagerfanta": "~1.0",
         "phpunit/phpunit": "5.*"
     },
     "autoload": {

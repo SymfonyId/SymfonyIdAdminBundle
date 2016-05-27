@@ -51,7 +51,7 @@ class SymfonyIdAdminConstrants
     /**
      * Model Utilities.
      */
-    const ENTITY_ALIAS = 'e';
+    const MODEL_ALIAS = 'e';
     const SESSION_SORTED_ID = self::ROOT_PARAMETER.'_sorted';
 
     /**
