@@ -11,8 +11,6 @@
 
 namespace SymfonyId\AdminBundle;
 
-use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
-use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use SymfonyId\AdminBundle\DependencyInjection\Compiler\ActionHandlerPass;
@@ -24,7 +22,6 @@ use SymfonyId\AdminBundle\DependencyInjection\Compiler\MenuLoaderPass;
 use SymfonyId\AdminBundle\DependencyInjection\Compiler\PaginationTemplatePass;
 use SymfonyId\AdminBundle\DependencyInjection\Compiler\QueryFilterPass;
 use SymfonyId\AdminBundle\DependencyInjection\SymfonyIdAdminExtension;
-use SymfonyId\AdminBundle\User\User;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
