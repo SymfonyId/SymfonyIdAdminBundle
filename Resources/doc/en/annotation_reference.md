@@ -2,11 +2,15 @@
 
 This annotation using select2 jQuery plugin to handling behaviour. This annotation is used inside `@Util` annotation. 
 
+#### Annotation attributes ####
+
 `routeResource` : Route that providing search datas.
 
 `routeCallback` : Route will be called when data is provided on load (see: [initSelection](http://select2.github.io/select2/#documentation))
 
 `targetSelector` : jQuery selector to store data
+
+#### Example usage ####
 
 ```lang=php
 @Util(
@@ -21,6 +25,8 @@ This annotation using select2 jQuery plugin to handling behaviour. This annotati
 ### @Column ###
 
 This annotation is used inside `@Grid` annotation or on class property of entity or document
+
+#### Example usage ####
 
 ```lang=php
 @Grid(column=@Column({"column1", "column2", "column3"}))
@@ -48,6 +54,8 @@ class User
 
 This annotation is required to manipulate crud operation.
 
+#### Annotation attributes ####
+
 `template` : Handle templating for create, read, edit and delete operation (see: `@Template`)
 
 `showFields` : List of entity or document field to show on detail
@@ -65,3 +73,5 @@ This annotation is required to manipulate crud operation.
 `allowShow` : Booelan to allowing show operation, by default is `true`
 
 `allowDelete` : Booelan to allowing delete operation, by default is `true`
+
+#### Example usage ####
