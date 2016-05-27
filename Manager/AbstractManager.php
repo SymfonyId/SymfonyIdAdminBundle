@@ -65,6 +65,7 @@ abstract class AbstractManager implements ManagerInterface
      */
     public function __construct(ManagerRegistry $managerRegistry, ObjectManager $manager, PaginatorInterface $paginator, TokenStorageInterface $tokenStorage, EventSubscriber $eventSubscriber)
     {
+        $this->managerRegistry = $managerRegistry;
         $this->manager = $manager;
         $this->paginator = $paginator;
         $this->tokenStorage = $tokenStorage;

@@ -101,7 +101,7 @@ EOT
         $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
 
         /** @var GeneratorInterface $formGenerator */
-        $formGenerator = $this->getFormGenerator();
+        $formGenerator = $this->getFormGenerator($bundle);
         $formGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
 
         $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $modelClass));
@@ -174,10 +174,15 @@ EOT
     }
 
     /**
-     * @return FormGenerator
+     * @param null|string $bundle
+     *
+     * @return ControllerGenerator
      */
-    private function getFormGenerator()
+    private function getFormGenerator($bundle = null)
     {
-        return new FormGenerator();
+        $generator = new FormGenerator();
+        $generator->setSkeletonDirs($this->getSkeletonDirs($bundle));
+
+        return $generator;
     }
 }
