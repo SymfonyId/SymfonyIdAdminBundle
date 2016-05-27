@@ -18,7 +18,6 @@ use Hateoas\Representation\Factory\PagerfantaFactory;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 
 /**
@@ -50,14 +49,14 @@ trait RestResourceControllerTrait
     /**
      * @param View $view
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     abstract protected function handleView(View $view);
 
     /**
      * @param Request $request
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function searchAction(Request $request)
     {
