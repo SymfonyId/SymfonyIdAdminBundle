@@ -19,7 +19,6 @@ use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 
 /**
@@ -27,8 +26,6 @@ use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
  */
 trait RestResourceControllerTrait
 {
-    use ConfigurationAwareTrait;
-
     /**
      * Get controller class name.
      *
