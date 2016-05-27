@@ -30,6 +30,6 @@ class UserController extends CrudController
      */
     protected function getClassName()
     {
-        return __CLASS__;
+        return get_class($this);
     }
 }

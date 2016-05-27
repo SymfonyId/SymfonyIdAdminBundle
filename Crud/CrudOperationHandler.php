@@ -99,6 +99,10 @@ class CrudOperationHandler
      */
     public function paginateResult(Driver $driver, $page, $limit)
     {
+        if (100 < $limit) {
+            $limit = 100;
+        }
+
         return $this->managerFactory->getManager($driver)->paginate($page, $limit);
     }
 

@@ -30,6 +30,10 @@ abstract class AbstractController extends BaseController implements Configuratio
      */
     abstract protected function getClassName();
 
+    /**
+     * @param string $eventName
+     * @param Event  $event
+     */
     protected function subscribeEvent($eventName, Event $event)
     {
         /** @var \SymfonyId\AdminBundle\Event\EventSubscriber $eventSubscriber */
