@@ -92,6 +92,7 @@ EOT
         try {
             $modelClass = $this->getAliasNamespace($driver, $bundle).'\\'.$model;
         } catch (\Exception $exception) {
+            echo $exception->getTraceAsString();
             $driver = new Driver(array('value' => Driver::ODM));
             $modelClass = $this->getAliasNamespace($driver, $bundle).'\\'.$model;
         }

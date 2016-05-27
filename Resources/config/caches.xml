@@ -57,19 +57,19 @@
                 <argument>%symfonyid.admin.user.user_form%</argument>
             </call>
             <call method="setModelClass">
-                <argument>%symfonyid.admin.user.user_entity%</argument>
+                <argument>%symfonyid.admin.user.model_class%</argument>
             </call>
             <call method="setShowFields">
                 <argument>%symfonyid.admin.user.show_fields%</argument>
             </call>
             <call method="setGridColumns">
-                <argument>%symfonyid.admin.user.grid_fields%</argument>
+                <argument>%symfonyid.admin.user.grid_columns%</argument>
             </call>
             <call method="setGridFilters">
                 <argument>%symfonyid.admin.user.grid_filters%</argument>
             </call>
             <call method="setGridSorters">
-                <argument>%symfonyid.admin.user.grid_fields%</argument>
+                <argument>%symfonyid.admin.user.grid_columns%</argument>
             </call>
         </service>
     </services>

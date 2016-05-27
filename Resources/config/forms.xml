@@ -5,14 +5,14 @@
 
     <services>
         <service id="symfonyid.admin.form.user_form" class="SymfonyId\AdminBundle\Form\Type\UserType" >
-            <argument>%symfonyid.admin.user.user_entity%</argument>
+            <argument>%symfonyid.admin.user.model_class%</argument>
             <argument>%symfonyid.admin.translation_domain%</argument>
             <argument>%security.role_hierarchy.roles%</argument>
             <argument>%symfonyid.admin.upload_directory%</argument>
         </service>
 
         <service id="symfonyid.admin.form.change_password_form" class="SymfonyId\AdminBundle\Form\Type\ChangePasswordType" >
-            <argument>%symfonyid.admin.user.user_entity%</argument>
+            <argument>%symfonyid.admin.user.model_class%</argument>
             <argument>%symfonyid.admin.translation_domain%</argument>
         </service>
     </services>
