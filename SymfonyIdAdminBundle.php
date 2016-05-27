@@ -67,7 +67,7 @@ class SymfonyIdAdminBundle extends Bundle
         $reflectionBundle = new \ReflectionObject($this);
 
         $mappings = array(
-            realpath(sprintf('%s/%s', dirname($reflectionBundle->getFileName()), 'Resources/config/doctrine')) => $reflectionUser->getNamespaceName(),
+            realpath(sprintf('%s/%s', dirname($reflectionBundle->getFileName()), 'Resources/config/doctrine-mapping')) => $reflectionUser->getNamespaceName(),
         );
 
         if (class_exists(DoctrineOrmMappingsPass::class)) {
