@@ -26,7 +26,7 @@ use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class EnableFieldSorterListener implements ConfigurationAwareInterface, CrudControllerListenerAwareInterface, ContainerAwareInterface
+class EnableFieldSorterListener implements CrudControllerListenerAwareInterface
 {
     use CrudControllerListenerAwareTrait;
     use ConfigurationAwareTrait;
