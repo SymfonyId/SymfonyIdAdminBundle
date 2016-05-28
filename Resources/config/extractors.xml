@@ -6,19 +6,19 @@
     <services>
         <service id="symfonyid.admin.extractor.extractor_factory" class="SymfonyId\AdminBundle\Extractor\ExtractorFactory" />
 
-        <service id="symfonian_id.admin.extractor.class_extractor" class="SymfonyId\AdminBundle\Extractor\ClassExtractor">
+        <service id="symfonyid.admin.extractor.class_extractor" class="SymfonyId\AdminBundle\Extractor\ClassExtractor">
             <argument type="service" id="annotations.cached_reader" />
 
             <tag name="symfonyid.extractor" />
         </service>
 
-        <service id="symfonian_id.admin.extractor.method_extractor" class="SymfonyId\AdminBundle\Extractor\MethodExtractor">
+        <service id="symfonyid.admin.extractor.method_extractor" class="SymfonyId\AdminBundle\Extractor\MethodExtractor">
             <argument type="service" id="annotations.cached_reader" />
 
             <tag name="symfonyid.extractor" />
         </service>
 
-        <service id="symfonian_id.admin.extractor.property_extractor" class="SymfonyId\AdminBundle\Extractor\PropertyExtractor">
+        <service id="symfonyid.admin.extractor.property_extractor" class="SymfonyId\AdminBundle\Extractor\PropertyExtractor">
             <argument type="service" id="annotations.cached_reader" />
 
             <tag name="symfonyid.extractor" />

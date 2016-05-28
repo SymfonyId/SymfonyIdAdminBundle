@@ -205,7 +205,7 @@ abstract class CrudController extends AbstractController
         $pageConfigurator = $configuratorFactory->getConfigurator(PageConfigurator::class);
 
         $translator = $this->get('translator');
-        $translationDomain = $this->getParameter('symfonian_id.admin.translation_domain');
+        $translationDomain = $this->getParameter('symfonyid.admin.translation_domain');
 
         $template = $crudConfigurator->getTemplate();
         $listTemplate = $request->isXmlHttpRequest() ? $template->getAjaxTemplate() : $template->getList();
@@ -267,7 +267,7 @@ abstract class CrudController extends AbstractController
     private function createOrUpdate(Request $request, ModelInterface $model, FormInterface $form, $action, $template)
     {
         $translator = $this->get('translator');
-        $translationDomain = $this->getParameter('symfonian_id.admin.translation_domain');
+        $translationDomain = $this->getParameter('symfonyid.admin.translation_domain');
 
         /** @var ConfiguratorFactory $configuratorFactory */
         $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
@@ -371,7 +371,7 @@ abstract class CrudController extends AbstractController
     private function findOr404Error($id)
     {
         $translator = $this->get('translator');
-        $translationDomain = $this->getParameter('symfonian_id.admin.translation_domain');
+        $translationDomain = $this->getParameter('symfonyid.admin.translation_domain');
 
         /** @var ConfiguratorFactory $configuratorFactory */
         $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
@@ -412,7 +412,7 @@ abstract class CrudController extends AbstractController
     {
         $dataExporter = $this->get('symfonyid.admin.export.data_exporter');
         $translator = $this->get('translator');
-        $translationDomain = $this->getParameter('symfonian_id.admin.translation_domain');
+        $translationDomain = $this->getParameter('symfonyid.admin.translation_domain');
 
         if (!$dataExporter->isAllowExport($driver, $this->container->getParameter('symfonyid.admin.max_records'))) {
             throw new NotFoundHttpException($translator->trans('message.request_not_found', array(), $translationDomain));

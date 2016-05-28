@@ -13,7 +13,7 @@
             <argument type="service" id="symfonyid.admin.event.event_subscriber"/>
         </service>
 
-        <service id="symfonian_id.admin.action_handler.bulk_create" class="SymfonyId\AdminBundle\Crud\ActionHandler\BulkCreateActionHandler">
+        <service id="symfonyid.admin.action_handler.bulk_create" class="SymfonyId\AdminBundle\Crud\ActionHandler\BulkCreateActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
             <argument>%symfonyid.admin.translation_domain%</argument>
@@ -21,7 +21,7 @@
             <tag name="symfonyid.crud_action" />
         </service>
 
-        <service id="symfonian_id.admin.action_handler.bulk_delete" class="SymfonyId\AdminBundle\Crud\ActionHandler\BulkDeleteActionHandler">
+        <service id="symfonyid.admin.action_handler.bulk_delete" class="SymfonyId\AdminBundle\Crud\ActionHandler\BulkDeleteActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
             <argument>%symfonyid.admin.translation_domain%</argument>
@@ -29,7 +29,7 @@
             <tag name="symfonyid.crud_action" />
         </service>
 
-        <service id="symfonian_id.admin.action_handler.create_update" class="SymfonyId\AdminBundle\Crud\ActionHandler\CreateUpdateActionHandler">
+        <service id="symfonyid.admin.action_handler.create_update" class="SymfonyId\AdminBundle\Crud\ActionHandler\CreateUpdateActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
 
@@ -40,7 +40,7 @@
             <tag name="symfonyid.crud_action" />
         </service>
 
-        <service id="symfonian_id.admin.action_handler.delete" class="SymfonyId\AdminBundle\Crud\ActionHandler\DeleteActionHandler">
+        <service id="symfonyid.admin.action_handler.delete" class="SymfonyId\AdminBundle\Crud\ActionHandler\DeleteActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="translator"/>
             <argument>%symfonyid.admin.translation_domain%</argument>
@@ -48,7 +48,7 @@
             <tag name="symfonyid.crud_action" />
         </service>
 
-        <service id="symfonian_id.admin.action_handler.detail" class="SymfonyId\AdminBundle\Crud\ActionHandler\DetailActionHandler">
+        <service id="symfonyid.admin.action_handler.detail" class="SymfonyId\AdminBundle\Crud\ActionHandler\DetailActionHandler">
             <argument type="service" id="session" />
             <argument type="service" id="translator"/>
 
@@ -59,7 +59,7 @@
             <tag name="symfonyid.crud_action" />
         </service>
 
-        <service id="symfonian_id.admin.action_handler.list" class="SymfonyId\AdminBundle\Crud\ActionHandler\ListActionHandler">
+        <service id="symfonyid.admin.action_handler.list" class="SymfonyId\AdminBundle\Crud\ActionHandler\ListActionHandler">
             <argument type="service" id="symfonyid.admin.crud.crud_operation_handler" />
             <argument type="service" id="symfonyid.admin.export.data_exporter"/>
             <argument type="service" id="translator"/>

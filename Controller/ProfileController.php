@@ -63,11 +63,11 @@ final class ProfileController extends Controller implements ConfigurationAwareIn
         }
 
         $translator = $this->container->get('translator');
-        $translationDomain = $this->container->getParameter('symfonian_id.admin.translation_domain');
+        $translationDomain = $this->container->getParameter('symfonyid.admin.translation_domain');
 
-        return $this->render($this->container->getParameter('symfonian_id.admin.themes.profile'), array(
+        return $this->render($this->container->getParameter('symfonyid.admin.themes.profile'), array(
             'data' => $data,
-            'menu' => $this->container->getParameter('symfonian_id.admin.menu'),
+            'menu' => $this->container->getParameter('symfonyid.admin.menu'),
             'page_title' => $translator->trans('page.profile.title', array(), $translationDomain),
             'page_description' => $translator->trans('page.profile.description', array(), $translationDomain),
         ));
@@ -85,7 +85,7 @@ final class ProfileController extends Controller implements ConfigurationAwareIn
     {
         /** @var TranslatorInterface $translator */
         $translator = $this->container->get('translator');
-        $translationDomain = $this->container->getParameter('symfonian_id.admin.translation_domain');
+        $translationDomain = $this->container->getParameter('symfonyid.admin.translation_domain');
 
         $user = $this->getUser();
         $this->isGrantedOr403Error($user);
@@ -106,7 +106,7 @@ final class ProfileController extends Controller implements ConfigurationAwareIn
 
         $this->handleRequest($request, $driver, $view, $form, $translator, $translationDomain);
 
-        return $this->render($this->container->getParameter('symfonian_id.admin.themes.change_password'), $view->getParams());
+        return $this->render($this->container->getParameter('symfonyid.admin.themes.change_password'), $view->getParams());
     }
 
     /**
@@ -189,8 +189,8 @@ final class ProfileController extends Controller implements ConfigurationAwareIn
         $view = $this->get('symfonyid.admin.view.view');
         $view->setParam('page_title', $translator->trans('page.change_password.title', array(), $translationDomain));
         $view->setParam('page_description', $translator->trans('page.change_password.description', array(), $translationDomain));
-        $view->setParam('form_theme', $this->container->getParameter('symfonian_id.admin.themes.form_theme'));
-        $view->setParam('menu', $this->container->getParameter('symfonian_id.admin.menu'));
+        $view->setParam('form_theme', $this->container->getParameter('symfonyid.admin.themes.form_theme'));
+        $view->setParam('menu', $this->container->getParameter('symfonyid.admin.menu'));
 
         return $view;
     }
