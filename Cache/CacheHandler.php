@@ -42,6 +42,14 @@ class CacheHandler
     public function writeCache(\ReflectionClass $reflectionClass, $content)
     {
         $cacheFile = $this->getCacheFile($reflectionClass);
+
+        $cacheDir = dirname($cacheFile);
+        if (!is_dir($cacheDir)) {
+            mkdir($cacheDir);
+
+            @chmod($cacheDir, 0777 & ~umask());
+        }
+
         $tmpFile = tempnam(dirname($cacheFile), basename($cacheFile));
         if (false !== @file_put_contents($tmpFile, sprintf('<?php return unserialize(\'%s\');', serialize($content))) && @rename($tmpFile, $cacheFile)) {
             @chmod($cacheFile, 0666 & ~umask());

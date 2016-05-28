@@ -9,18 +9,16 @@ namespace {{ namespace }}\Admin;
 
 {% block use_statements %}
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use SymfonyId\AdminBundle\Annotation\Crud;
-use SymfonyId\AdminBundle\Annotation\Grid;
-use SymfonyId\AdminBundle\Annotation\Page;
+use SymfonyId\AdminBundle\Annotation as Siab;
 use SymfonyId\AdminBundle\Controller\CrudController;
 {% endblock use_statements %}
 
 /**
  * @Route("/{{ entity_class }}")
  *
- * @Page("{{ title }}", description="Description of {{ title }}")
- * @Crud("{{ entity }}", form="{{ form_class }}Type")
- * @Grid({{ '{"' ~ fields | join('", "') ~ '"}'}}, filters={"{{ fields[0] }}"})
+ * @Siab\Page("{{ title }}", description="Description of {{ title }}")
+ * @Siab\Crud("{{ entity }}", form="{{ form_class }}Type")
+ * @Siab\Grid(@Siab\Column({{ '{"' ~ fields | join('", "') ~ '"}'}}), filter=@Siab\Filter({"{{ fields[0] }}"}))
  */
 {% block class_definition %}
 class {{ controller_class }} extends CrudController

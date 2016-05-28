@@ -8,7 +8,7 @@
             <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
         </service>
 
-        <service id="symfonyid.admin.configuration.configuration_factory" class="SymfonyId\AdminBundle\Configuration\ConfiguratorFactory" />
+        <service id="symfonyid.admin.configuration.configurator_factory" class="SymfonyId\AdminBundle\Configuration\ConfiguratorFactory" />
 
         <service id="symfonyid.admin.configuration.crud_configurator" class="SymfonyId\AdminBundle\Configuration\CrudConfigurator">
             <argument type="service" id="form.factory" />

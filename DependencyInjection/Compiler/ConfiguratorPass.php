@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class ConfiguratorPass implements CompilerPassInterface
 {
-    const CONFIGURATOR_FACTORY = 'symfonyid.admin.congiration.configurator_factory';
+    const CONFIGURATOR_FACTORY = 'symfonyid.admin.configuration.configurator_factory';
 
     /**
      * @param ContainerBuilder $container
@@ -37,7 +37,7 @@ class ConfiguratorPass implements CompilerPassInterface
         $definition = $container->findDefinition(self::CONFIGURATOR_FACTORY);
         $taggedServices = $container->findTaggedServiceIds('symfonyid.config');
         foreach ($taggedServices as $id => $tags) {
-            $definition->addMethodCall('addConfiguration', array(new Reference($id)));
+            $definition->addMethodCall('addConfigurator', array(new Reference($id)));
         }
     }
 }

@@ -15,9 +15,15 @@
         <service id="symfonyid.admin.cache.crud_controller_cache_warmer" class="SymfonyId\AdminBundle\Cache\CrudControllerCacheWarmer">
             <argument type="service" id="router" />
             <argument type="service" id="symfonyid.admin.configuration.configuration_mapper" />
-            <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+            <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             <argument type="service" id="symfonyid.admin.cache.configuration_cache_writer" />
             <argument type="service" id="symfonyid.admin.cache.default_configuration_factory" />
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+
+            <tag name="kernel.cache_warmer" />
         </service>
 
         <service id="symfonyid.admin.cache.default_configuration_factory" class="SymfonyId\AdminBundle\Cache\DefaultConfigurationFactory" />
@@ -35,7 +41,7 @@
         </service>
 
         <service id="symfonyid.admin.cache.profile_controller_cache_warmer" class="SymfonyId\AdminBundle\Cache\ProfileControllerCacheWarmer">
-            <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+            <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             <argument type="service" id="symfonyid.admin.cache.configuration_cache_writer" />
             <argument type="service" id="symfonyid.admin.cache.default_configuration_factory" />
 
@@ -45,10 +51,12 @@
             <call method="setShowFields">
                 <argument>%symfonyid.admin.profile_fields%</argument>
             </call>
+
+            <tag name="kernel.cache_warmer" />
         </service>
 
         <service id="symfonyid.admin.cache.user_controller_cache_warmer" class="SymfonyId\AdminBundle\Cache\UserControllerCacheWarmer">
-            <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+            <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
             <argument type="service" id="symfonyid.admin.cache.configuration_cache_writer" />
             <argument type="service" id="symfonyid.admin.cache.default_configuration_factory" />
@@ -71,6 +79,8 @@
             <call method="setGridSorters">
                 <argument>%symfonyid.admin.user.grid_columns%</argument>
             </call>
+
+            <tag name="kernel.cache_warmer" />
         </service>
     </services>
 </container>

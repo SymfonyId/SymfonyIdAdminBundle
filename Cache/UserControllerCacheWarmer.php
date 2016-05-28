@@ -142,7 +142,7 @@ class UserControllerCacheWarmer implements CacheWarmerInterface
         $crudConfigurator = $this->configuratorFactory->getConfigurator(CrudConfigurator::class);
         $crudConfiguration = $crudConfigurator->getCrud();
         /** @var GridConfigurator $gridConfigurator */
-        $gridConfigurator = $this->configuratorFactory->getConfigurator(CrudConfigurator::class);
+        $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
         $gridConfiguration = $gridConfigurator->getGrid();
 
         $this->extractorFactory->extract(new \ReflectionClass(UserController::class));

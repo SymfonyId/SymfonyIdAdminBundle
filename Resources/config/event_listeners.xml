@@ -15,7 +15,7 @@
             <argument type="service" id="symfonyid.admin.configuration.configuration_mapper" />
 
             <call method="setConfiguratorFactory">
-                <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
             <call method="setCacheHandler">
                 <argument type="service" id="symfonyid.admin.cache.cache_handler" />
@@ -34,7 +34,7 @@
             <argument>%symfonyid.admin.date_time_format%</argument>
 
             <call method="setConfiguratorFactory">
-                <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
             <call method="setCacheHandler">
                 <argument type="service" id="symfonyid.admin.cache.cache_handler" />
@@ -54,7 +54,7 @@
                 <argument type="service" id="service_container" />
             </call>
             <call method="setConfiguratorFactory">
-                <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
             <call method="setCacheHandler">
                 <argument type="service" id="symfonyid.admin.cache.cache_handler" />
@@ -68,7 +68,7 @@
 
         <service id="symfonyid.admin.listener.enable_soft_delete_filter" class="SymfonyId\AdminBundle\EventListener\EnableSoftDeleteListener" >
             <call method="setConfiguratorFactory">
-                <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
             <call method="setCacheHandler">
                 <argument type="service" id="symfonyid.admin.cache.cache_handler" />
@@ -85,7 +85,7 @@
             <argument>%symfonyid.admin.upload_directory%</argument>
 
             <call method="setConfiguratorFactory">
-                <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
             <call method="setCacheHandler">
                 <argument type="service" id="symfonyid.admin.cache.cache_handler" />
@@ -107,7 +107,7 @@
 
         <service id="symfonyid.admin.listener.profile_controller_configurator" class="SymfonyId\AdminBundle\EventListener\ProfileControllerConfiguratorListener" >
             <call method="setConfiguratorFactory">
-                <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
             <call method="setCacheHandler">
                 <argument type="service" id="symfonyid.admin.cache.cache_handler" />
@@ -121,7 +121,7 @@
 
         <service id="symfonyid.admin.listener.set_default_crud_configuration" class="SymfonyId\AdminBundle\EventListener\SetDefaultCrudConfigurationListener" >
             <call method="setConfiguratorFactory">
-                <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
             <call method="setCacheHandler">
                 <argument type="service" id="symfonyid.admin.cache.cache_handler" />
@@ -135,7 +135,7 @@
 
         <service id="symfonyid.admin.listener.set_default_grid_configuration" class="SymfonyId\AdminBundle\EventListener\SetDefaultGridConfigurationListener" >
             <call method="setConfiguratorFactory">
-                <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
             <call method="setCacheHandler">
                 <argument type="service" id="symfonyid.admin.cache.cache_handler" />
@@ -180,7 +180,7 @@
 
         <service id="symfonyid.admin.listener.user_controller_configurator" class="SymfonyId\AdminBundle\EventListener\UserControllerConfiguratorListener" >
             <call method="setConfiguratorFactory">
-                <argument type="service" id="symfonyid.admin.configuration.configuration_factory" />
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
             <call method="setCacheHandler">
                 <argument type="service" id="symfonyid.admin.cache.cache_handler" />

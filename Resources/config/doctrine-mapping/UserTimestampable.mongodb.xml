@@ -4,9 +4,9 @@
     xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
     <mapped-superclass name="SymfonyId\AdminBundle\User\UserTimestampable" collection="symfonyid_admin_user_time_stamp">
-        <field name="createdAt" fieldName="createdAt" type="timestamp" />
+        <field name="createdAt" fieldName="createdAt" type="datetime" />
         <field name="createdBy" fieldName="createdBy" type="string" />
-        <field name="updatedAt" fieldName="updatedAt" type="timestamp" />
+        <field name="updatedAt" fieldName="updatedAt" type="datetime" />
         <field name="updatedBy" fieldName="updatedBy" type="string" />
     </mapped-superclass>
 </doctrine-mongo-mapping>

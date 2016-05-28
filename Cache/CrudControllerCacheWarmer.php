@@ -99,8 +99,6 @@ class CrudControllerCacheWarmer implements CacheWarmerInterface, ContainerAwareI
                 if ($reflectionController->isSubclassOf(CrudController::class)) {
                     $controllers[] = $reflectionController;
                 }
-
-                $controllers[] = $this->guessControllerClass($attribute['_controller']);
             }
         }
 

@@ -5,6 +5,6 @@
 
     <mapped-superclass name="SymfonyId\AdminBundle\User\User">
         <field name="fullName" column="fullname" type="string" length="99" />
-        <field name="avatar" column="avatar" type="string" length="255" />
+        <field name="avatar" column="avatar" type="string" length="255" nullable="true" />
     </mapped-superclass>
 </doctrine-mapping>
