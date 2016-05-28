@@ -12,8 +12,11 @@
 namespace SymfonyId\AdminBundle\Cache;
 
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
+use SymfonyId\AdminBundle\Annotation\Column;
 use SymfonyId\AdminBundle\Annotation\Crud;
+use SymfonyId\AdminBundle\Annotation\Filter;
 use SymfonyId\AdminBundle\Annotation\Grid;
+use SymfonyId\AdminBundle\Annotation\Sort;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
@@ -194,9 +197,9 @@ class UserControllerCacheWarmer implements CacheWarmerInterface
         $gridConfigurator = $configuratorFactory->getConfigurator(GridConfigurator::class);
         $gridConfiguration = $gridConfigurator->getGrid();
         $grid = new Grid(array(
-            'column' => empty($this->gridColumns) ? $gridConfiguration->getColumn() : $this->gridColumns,
-            'filter' => empty($this->gridFilters) ? $gridConfiguration->getFilter() : $this->gridFilters,
-            'sort' => empty($this->gridSorters) ? $gridConfiguration->getSort() : $this->gridSorters,
+            'column' => empty($this->gridColumns) ? $gridConfiguration->getColumn() : new Column(array('value' => $this->gridColumns)),
+            'filter' => empty($this->gridFilters) ? $gridConfiguration->getFilter() : new Filter(array('value' => $this->gridFilters)),
+            'sort' => empty($this->gridSorters) ? $gridConfiguration->getSort() : new Sort(array('value' => $this->gridSorters)),
         ));
         $gridConfigurator->setGrid($grid);
         $configuratorFactory->addConfigurator($gridConfigurator);

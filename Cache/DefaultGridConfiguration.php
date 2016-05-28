@@ -11,6 +11,7 @@
 
 namespace SymfonyId\AdminBundle\Cache;
 
+use SymfonyId\AdminBundle\Annotation\Column;
 use SymfonyId\AdminBundle\Annotation\Grid;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
@@ -43,7 +44,7 @@ class DefaultGridConfiguration implements DefaultConfigurationInterface
         $gridConfiguration = $gridConfigurator->getGrid();
         $grid = new Grid(array(
             'column' => $gridConfiguration->getColumn(),
-            'filter' => empty($this->gridFilters) ? $gridConfiguration->getColumn() : $this->gridFilters,
+            'filter' => empty($this->gridFilters) ? $gridConfiguration->getColumn() : new Column(array('value' => $this->gridFilters)),
             'sort' => $gridConfiguration->getColumn(),
         ));
         $gridConfigurator->setGrid($grid);

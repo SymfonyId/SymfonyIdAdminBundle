@@ -75,9 +75,7 @@ class GridConfigurator implements ConfiguratorInterface
             $this->grid->getColumn()->getFields();
         }
 
-        $this->extractorFactory->extract($reflectionClass);
-        /** @var \ReflectionProperty $property */
-        foreach ($this->extractorFactory->getPropertyAnnotations() as $property) {
+        foreach ($reflectionClass->getProperties(\ReflectionProperty::IS_PRIVATE|\ReflectionProperty::IS_PROTECTED) as $property) {
             $this->extractorFactory->extract($property);
             foreach ($this->extractorFactory->getPropertyAnnotations() as $annotation) {
                 if ($annotation instanceof Column) {
@@ -100,9 +98,8 @@ class GridConfigurator implements ConfiguratorInterface
             $this->grid->getFilter()->getFields();
         }
 
-        $this->extractorFactory->extract($reflectionClass);
         /** @var \ReflectionProperty $property */
-        foreach ($this->extractorFactory->getPropertyAnnotations() as $property) {
+        foreach ($reflectionClass->getProperties(\ReflectionProperty::IS_PRIVATE|\ReflectionProperty::IS_PROTECTED) as $property) {
             $this->extractorFactory->extract($property);
             foreach ($this->extractorFactory->getPropertyAnnotations() as $annotation) {
                 if ($annotation instanceof Filter) {
@@ -125,9 +122,8 @@ class GridConfigurator implements ConfiguratorInterface
             $this->grid->getSort()->getFields();
         }
 
-        $this->extractorFactory->extract($reflectionClass);
         /** @var \ReflectionProperty $property */
-        foreach ($this->extractorFactory->getPropertyAnnotations() as $property) {
+        foreach ($reflectionClass->getProperties(\ReflectionProperty::IS_PRIVATE|\ReflectionProperty::IS_PROTECTED) as $property) {
             $this->extractorFactory->extract($property);
             foreach ($this->extractorFactory->getPropertyAnnotations() as $annotation) {
                 if ($annotation instanceof Sort) {

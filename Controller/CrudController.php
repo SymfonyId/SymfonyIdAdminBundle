@@ -200,7 +200,7 @@ abstract class CrudController extends AbstractController
         $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_READ);
 
         /** @var GridConfigurator $gridConfigurator */
-        $gridConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
+        $gridConfigurator = $configuratorFactory->getConfigurator(GridConfigurator::class);
         /* @var PageConfigurator $pageConfigurator */
         $pageConfigurator = $configuratorFactory->getConfigurator(PageConfigurator::class);
 

@@ -12,6 +12,7 @@
 namespace SymfonyId\AdminBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use SymfonyId\AdminBundle\Annotation\Filter;
 use SymfonyId\AdminBundle\Annotation\Grid;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
@@ -55,7 +56,7 @@ class SetDefaultGridConfigurationListener implements CrudControllerListenerAware
         $gridConfiguration = $gridConfigurator->getGrid();
         $grid = new Grid(array(
             'column' => $gridConfiguration->getColumn(),
-            'filter' => empty($this->gridFilters) ? $gridConfiguration->getFilter() : $this->gridFilters,
+            'filter' => empty($this->gridFilters) ? $gridConfiguration->getFilter() : new Filter(array('value' => $this->gridFilters)),
             'sort' => $gridConfiguration->getColumn(),
         ));
         $gridConfigurator->setGrid($grid);
