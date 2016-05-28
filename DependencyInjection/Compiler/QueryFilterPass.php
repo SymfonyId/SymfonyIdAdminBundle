@@ -27,28 +27,28 @@ class QueryFilterPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has(self::ORM_CONFIGURATION) || !$container->has(self::ODM_CONFIGURATION)) {
-            return;
-        }
-
         /*
          * Add all service with tag name symfonyid.orm.filter
          */
-        $definition = $container->findDefinition(self::ORM_CONFIGURATION);
-        $taggedServices = $container->findTaggedServiceIds('symfonyid.orm.filter');
-        foreach ($taggedServices as $id => $tags) {
-            $filter = $container->findDefinition($id);
-            $definition->addMethodCall('addFilter', array($id, $filter->getClass()));
+        if ($container->hasDefinition(self::ORM_CONFIGURATION)) {
+            $definition = $container->findDefinition(self::ORM_CONFIGURATION);
+            $taggedServices = $container->findTaggedServiceIds('symfonyid.orm.filter');
+            foreach ($taggedServices as $id => $tags) {
+                $filter = $container->findDefinition($id);
+                $definition->addMethodCall('addFilter', array($id, $filter->getClass()));
+            }
         }
 
         /*
          * Add all service with tag name symfonyid.odm.filter
          */
-        $definition = $container->findDefinition(self::ODM_CONFIGURATION);
-        $taggedServices = $container->findTaggedServiceIds('symfonyid.odm.filter');
-        foreach ($taggedServices as $id => $tags) {
-            $filter = $container->findDefinition($id);
-            $definition->addMethodCall('addFilter', array($id, $filter->getClass()));
+        if ($container->hasDefinition(self::ODM_CONFIGURATION)) {
+            $definition = $container->findDefinition(self::ODM_CONFIGURATION);
+            $taggedServices = $container->findTaggedServiceIds('symfonyid.odm.filter');
+            foreach ($taggedServices as $id => $tags) {
+                $filter = $container->findDefinition($id);
+                $definition->addMethodCall('addFilter', array($id, $filter->getClass()));
+            }
         }
     }
 }

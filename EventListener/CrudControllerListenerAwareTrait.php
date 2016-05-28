@@ -11,6 +11,7 @@
 
 namespace SymfonyId\AdminBundle\EventListener;
 
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use SymfonyId\AdminBundle\Controller\CrudController;
 
@@ -19,6 +20,8 @@ use SymfonyId\AdminBundle\Controller\CrudController;
  */
 trait CrudControllerListenerAwareTrait
 {
+    use ContainerAwareTrait;
+
     /**
      * @var CrudController
      */
@@ -40,6 +43,10 @@ trait CrudControllerListenerAwareTrait
         if (!$controller instanceof CrudController) {
             return false;
         }
+
+        $controller->setCacheHandler($this->container->get('symfonyid.admin.cache.cache_handler'));
+        $controller->setConfiguratorFactory($this->container->get('symfonyid.admin.configuration.configurator_factory'));
+        $controller->setKernel($this->container->get('kernel'));
 
         $this->controller = $controller;
 

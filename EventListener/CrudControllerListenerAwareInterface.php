@@ -11,12 +11,13 @@
 
 namespace SymfonyId\AdminBundle\EventListener;
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-interface CrudControllerListenerAwareInterface
+interface CrudControllerListenerAwareInterface extends ContainerAwareInterface
 {
     public function isValidCrudListener(FilterControllerEvent $event);
 }
