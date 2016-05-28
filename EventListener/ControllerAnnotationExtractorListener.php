@@ -20,7 +20,7 @@ use SymfonyId\AdminBundle\Configuration\ConfigurationMapper;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class ControllerAnnotationExtractorListener implements CrudControllerListenerAwareInterface, ConfigurationAwareInterface
+class ControllerAnnotationExtractorListener implements CrudControllerListenerAwareInterface
 {
     use CrudControllerListenerAwareTrait;
     use ConfigurationAwareTrait;

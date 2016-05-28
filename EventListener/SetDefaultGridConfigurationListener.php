@@ -20,7 +20,7 @@ use SymfonyId\AdminBundle\Configuration\GridConfigurator;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class SetDefaultGridConfigurationListener implements CrudControllerListenerAwareInterface, ConfigurationAwareInterface
+class SetDefaultGridConfigurationListener implements CrudControllerListenerAwareInterface
 {
     use CrudControllerListenerAwareTrait;
     use ConfigurationAwareTrait;

@@ -23,7 +23,7 @@ use SymfonyId\AdminBundle\Controller\UserController;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class UserControllerConfiguratorListener implements CrudControllerListenerAwareInterface, ConfigurationAwareInterface
+class UserControllerConfiguratorListener implements CrudControllerListenerAwareInterface
 {
     use CrudControllerListenerAwareTrait;
     use ConfigurationAwareTrait;

@@ -21,7 +21,7 @@ use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class SetDefaultCrudConfigurationListener implements CrudControllerListenerAwareInterface, ConfigurationAwareInterface
+class SetDefaultCrudConfigurationListener implements CrudControllerListenerAwareInterface
 {
     use CrudControllerListenerAwareTrait;
     use ConfigurationAwareTrait;
