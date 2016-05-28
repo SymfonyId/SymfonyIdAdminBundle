@@ -432,11 +432,4 @@ abstract class CrudController extends AbstractController
 
         return $authorizationChecker->isGrantedBulkDelete($crudConfigurator);
     }
-
-    private function init()
-    {
-        $this->setCacheHandler($this->get('symfonyid.admin.cache.cache_handler'));
-        $this->setConfiguratorFactory($this->get('symfonyid.admin.configuration.configurator_factory'));
-        $this->setKernel($this->get('kernel'));
-    }
 }
