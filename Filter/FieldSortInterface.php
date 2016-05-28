@@ -22,4 +22,10 @@ interface FieldSortInterface
      * @param string                                                         $sortBy
      */
     public function sort($modelClass, $queryBuilder, $sortBy);
+
+    /**
+     * @param string $key
+     * @param string $param
+     */
+    public function setParameter($key, $param);
 }

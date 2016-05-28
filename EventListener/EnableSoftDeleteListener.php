@@ -37,6 +37,12 @@ class EnableSoftDeleteListener implements ConfigurationAwareInterface, CrudContr
      */
     private $driverFinder;
 
+    public function __construct(ManagerFactory $managerFactory, DriverFinder $driverFinder)
+    {
+        $this->managerFactory = $managerFactory;
+        $this->driverFinder = $driverFinder;
+    }
+
     /**
      * @param FilterControllerEvent $event
      */

@@ -16,11 +16,18 @@
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
+            <call method="setCrud">
+                <argument type="service" id="symfonyid.admin.annotation.crud" />
+            </call>
 
             <tag name="symfonyid.config" />
         </service>
 
         <service id="symfonyid.admin.configuration.driver_configurator" class="SymfonyId\AdminBundle\Configuration\DriverConfigurator">
+            <call method="setDriver">
+                <argument type="service" id="symfonyid.admin.annotation.driver" />
+            </call>
+
             <tag name="symfonyid.config" />
         </service>
 
@@ -28,18 +35,34 @@
             <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
             <argument type="service" id="kernel" />
 
+            <call method="setGrid">
+                <argument type="service" id="symfonyid.admin.annotation.grid" />
+            </call>
+
             <tag name="symfonyid.config" />
         </service>
 
         <service id="symfonyid.admin.configuration.page_configurator" class="SymfonyId\AdminBundle\Configuration\PageConfigurator">
+            <call method="setPage">
+                <argument type="service" id="symfonyid.admin.annotation.page" />
+            </call>
+
             <tag name="symfonyid.config" />
         </service>
 
         <service id="symfonyid.admin.configuration.plugin_configurator" class="SymfonyId\AdminBundle\Configuration\PluginConfigurator">
+            <call method="setPlugin">
+                <argument type="service" id="symfonyid.admin.annotation.plugin" />
+            </call>
+
             <tag name="symfonyid.config" />
         </service>
 
         <service id="symfonyid.admin.configuration.util_configurator" class="SymfonyId\AdminBundle\Configuration\UtilConfigurator">
+            <call method="setUtil">
+                <argument type="service" id="symfonyid.admin.annotation.util" />
+            </call>
+
             <tag name="symfonyid.config" />
         </service>
     </services>

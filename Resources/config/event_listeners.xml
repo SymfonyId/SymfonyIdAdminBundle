@@ -67,6 +67,9 @@
         </service>
 
         <service id="symfonyid.admin.listener.enable_soft_delete_filter" class="SymfonyId\AdminBundle\EventListener\EnableSoftDeleteListener" >
+            <argument type="service" id="symfonyid.admin.manager.manager_factory" />
+            <argument type="service" id="symfonyid.admin.manager.driver_finder" />
+
             <call method="setConfiguratorFactory">
                 <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
