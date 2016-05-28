@@ -14,6 +14,9 @@
             <argument type="service" id="kernel" />
             <argument type="service" id="symfonyid.admin.configuration.configuration_mapper" />
 
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
             <call method="setConfiguratorFactory">
                 <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
@@ -33,6 +36,9 @@
             <argument type="service" id="symfonyid.admin.manager.driver_finder" />
             <argument>%symfonyid.admin.date_time_format%</argument>
 
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
             <call method="setConfiguratorFactory">
                 <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
@@ -70,6 +76,9 @@
             <argument type="service" id="symfonyid.admin.manager.manager_factory" />
             <argument type="service" id="symfonyid.admin.manager.driver_finder" />
 
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
             <call method="setConfiguratorFactory">
                 <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
@@ -87,6 +96,9 @@
             <argument type="service" id="symfonyid.admin.upload.upload_handler" />
             <argument>%symfonyid.admin.upload_directory%</argument>
 
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
             <call method="setConfiguratorFactory">
                 <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
@@ -123,6 +135,9 @@
         </service>
 
         <service id="symfonyid.admin.listener.set_default_crud_configuration" class="SymfonyId\AdminBundle\EventListener\SetDefaultCrudConfigurationListener" >
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
             <call method="setConfiguratorFactory">
                 <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
@@ -137,6 +152,9 @@
         </service>
 
         <service id="symfonyid.admin.listener.set_default_grid_configuration" class="SymfonyId\AdminBundle\EventListener\SetDefaultGridConfigurationListener" >
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
             <call method="setConfiguratorFactory">
                 <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>
@@ -182,6 +200,9 @@
         </service>
 
         <service id="symfonyid.admin.listener.user_controller_configurator" class="SymfonyId\AdminBundle\EventListener\UserControllerConfiguratorListener" >
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
             <call method="setConfiguratorFactory">
                 <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
             </call>

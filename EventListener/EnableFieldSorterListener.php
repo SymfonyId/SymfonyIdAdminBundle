@@ -30,7 +30,6 @@ class EnableFieldSorterListener implements CrudControllerListenerAwareInterface
 {
     use CrudControllerListenerAwareTrait;
     use ConfigurationAwareTrait;
-    use ContainerAwareTrait;
 
     /**
      * @var Session
