@@ -8,7 +8,14 @@
 
         <service id="symfonyid.admin.annotation.column" class="SymfonyId\AdminBundle\Annotation\Column" />
 
-        <service id="symfonyid.admin.annotation.crud" class="SymfonyId\AdminBundle\Annotation\Crud" />
+        <service id="symfonyid.admin.annotation.crud" class="SymfonyId\AdminBundle\Annotation\Crud">
+            <call method="setTemplate">
+                <argument type="service" id="symfonyid.admin.annotation.template" />
+            </call>
+            <call method="setMenu">
+                <argument type="service" id="symfonyid.admin.annotation.menu" />
+            </call>
+        </service>
 
         <service id="symfonyid.admin.annotation.date_picker" class="SymfonyId\AdminBundle\Annotation\DatePicker" />
 
@@ -18,7 +25,19 @@
 
         <service id="symfonyid.admin.annotation.filter" class="SymfonyId\AdminBundle\Annotation\Filter" />
 
-        <service id="symfonyid.admin.annotation.grid" class="SymfonyId\AdminBundle\Annotation\Grid" />
+        <service id="symfonyid.admin.annotation.grid" class="SymfonyId\AdminBundle\Annotation\Grid">
+            <call method="setColumn">
+                <argument type="service" id="symfonyid.admin.annotation.column" />
+            </call>
+            <call method="setFilter">
+                <argument type="service" id="symfonyid.admin.annotation.filter" />
+            </call>
+            <call method="setSort">
+                <argument type="service" id="symfonyid.admin.annotation.sort" />
+            </call>
+        </service>
+
+        <service id="symfonyid.admin.annotation.menu" class="SymfonyId\AdminBundle\Annotation\Menu" />
 
         <service id="symfonyid.admin.annotation.page" class="SymfonyId\AdminBundle\Annotation\Page" />
 
@@ -46,6 +65,19 @@
 
         <service id="symfonyid.admin.annotation.upload" class="SymfonyId\AdminBundle\Annotation\Upload" />
 
-        <service id="symfonyid.admin.annotation.util" class="SymfonyId\AdminBundle\Annotation\Util" />
+        <service id="symfonyid.admin.annotation.util" class="SymfonyId\AdminBundle\Annotation\Util">
+            <call method="setAutoComplete">
+                <argument type="service" id="symfonyid.admin.annotation.auto_complete" />
+            </call>
+            <call method="setDatePicker">
+                <argument type="service" id="symfonyid.admin.annotation.date_picker" />
+            </call>
+            <call method="setExternalJavascript">
+                <argument type="service" id="symfonyid.admin.annotation.external_javascript" />
+            </call>
+            <call method="setUpload">
+                <argument type="service" id="symfonyid.admin.annotation.upload" />
+            </call>
+        </service>
     </services>
 </container>

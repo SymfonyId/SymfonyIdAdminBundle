@@ -82,6 +82,30 @@ class Grid
     }
 
     /**
+     * @param Sort $sort
+     */
+    public function setSort(Sort $sort)
+    {
+        $this->sort = $sort;
+    }
+
+    /**
+     * @param Filter $filter
+     */
+    public function setFilter(Filter $filter)
+    {
+        $this->filter = $filter;
+    }
+
+    /**
+     * @param Column $column
+     */
+    public function setColumn(Column $column)
+    {
+        $this->column = $column;
+    }
+
+    /**
      * @return Column
      */
     public function getColumn()

@@ -70,6 +70,38 @@ class Util
     }
 
     /**
+     * @param AutoComplete $autoComplete
+     */
+    public function setAutoComplete(AutoComplete $autoComplete)
+    {
+        $this->autoComplete = $autoComplete;
+    }
+
+    /**
+     * @param DatePicker $datePicker
+     */
+    public function setDatePicker(DatePicker $datePicker)
+    {
+        $this->datePicker = $datePicker;
+    }
+
+    /**
+     * @param ExternalJavascript $externalJavascript
+     */
+    public function setExternalJavascript(ExternalJavascript $externalJavascript)
+    {
+        $this->externalJavascript = $externalJavascript;
+    }
+
+    /**
+     * @param Upload $upload
+     */
+    public function setUpload(Upload $upload)
+    {
+        $this->upload = $upload;
+    }
+
+    /**
      * @return AutoComplete
      */
     public function getAutoComplete()

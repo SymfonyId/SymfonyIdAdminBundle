@@ -133,6 +133,22 @@ class Crud
     }
 
     /**
+     * @param Template $template
+     */
+    public function setTemplate(Template $template)
+    {
+        $this->template = $template;
+    }
+
+    /**
+     * @param Menu $menu
+     */
+    public function setMenu(Menu $menu)
+    {
+        $this->menu = $menu;
+    }
+
+    /**
      * @return string
      */
     public function getModelClass()
