@@ -59,18 +59,8 @@ class EnableSoftDeleteListener implements ConfigurationAwareInterface, CrudContr
         $driver = $this->driverFinder->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
         $manager = $this->managerFactory->getManager($driver);
 
-        if (Driver::ORM === $driver->getDriver()) {
-            /* @var \Doctrine\ORM\EntityManager $manager */
-            /* @var \SymfonyId\AdminBundle\Filter\FieldSortInterface $filter */
-            $filter = $manager->getFilters()->enable('symfonyid.admin.filter.orm.soft_deletable');
-            $filter->setParameter('isDeleted', false);
-        }
-
-        if (Driver::ODM === $driver->getDriver()) {
-            /* @var \Doctrine\ODM\MongoDB\DocumentManager $manager */
-            /* @var \SymfonyId\AdminBundle\Filter\FieldSortInterface $filter */
-            $filter = $manager->getFilterCollection()->enable('symfonyid.admin.filter.odm.soft_deletable');
-            $filter->setParameter('isDeleted', false);
-        }
+        /* @var \SymfonyId\AdminBundle\Filter\FieldSortInterface $filter */
+        $filter = $manager->getFilters()->enable('symfonyid.admin.filter.'.$driver->getDriver().'.soft_deletable');
+        $filter->setParameter('isDeleted', false);
     }
 }

@@ -75,4 +75,9 @@ interface ManagerInterface
      * @return string
      */
     public function getAliasNamespace($alias);
+
+    /**
+     * @return \Doctrine\ODM\MongoDB\Query\FilterCollection|\Doctrine\ORM\Query\FilterCollection
+     */
+    public function getFilters();
 }

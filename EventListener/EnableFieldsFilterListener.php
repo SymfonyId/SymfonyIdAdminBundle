@@ -85,19 +85,9 @@ class EnableFieldsFilterListener implements ConfigurationAwareInterface
         $driver = $this->driverFinder->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
         $manager = $this->managerFactory->getManager($driver);
 
-        if (Driver::ORM === $driver->getDriver()) {
-            /* @var \Doctrine\ORM\EntityManager $manager */
-            /* @var FieldsFilterInterface $filter */
-            $filter = $manager->getFilters()->enable('symfonyid.admin.filter.orm.fields');
-            $this->applyFilter($configurationFactory, $filter, $keyword);
-        }
-
-        if (Driver::ODM === $driver->getDriver()) {
-            /* @var \Doctrine\ODM\MongoDB\DocumentManager $manager */
-            /* @var FieldsFilterInterface $filter */
-            $filter = $manager->getFilterCollection()->enable('symfonyid.admin.filter.odm.fields');
-            $this->applyFilter($configurationFactory, $filter, $keyword);
-        }
+        /* @var FieldsFilterInterface $filter */
+        $filter = $manager->getFilters()->enable('symfonyid.admin.filter.'.$driver->getDriver().'.fields');
+        $this->applyFilter($configurationFactory, $filter, $keyword);
     }
 
     /**

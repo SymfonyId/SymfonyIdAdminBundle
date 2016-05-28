@@ -24,7 +24,7 @@
                 <argument type="service" id="kernel" />
             </call>
 
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.controller" priority="255" method="onKernelController" />
         </service>
 
         <service id="symfonyid.admin.listener.enable_fields_filter" class="SymfonyId\AdminBundle\EventListener\EnableFieldsFilterListener" >

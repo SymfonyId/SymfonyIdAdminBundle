@@ -85,4 +85,12 @@ class DoctrineMongoDbManager extends AbstractManager
     {
         return Driver::ODM;
     }
+
+    /**
+     * @return \Doctrine\ODM\MongoDB\Query\FilterCollection
+     */
+    public function getFilters()
+    {
+        return $this->getManager()->getFilterCollection();
+    }
 }

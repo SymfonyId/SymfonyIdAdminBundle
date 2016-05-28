@@ -86,4 +86,12 @@ class DoctrineOrmManager extends AbstractManager
     {
         return Driver::ORM;
     }
+
+    /**
+     * @return \Doctrine\ORM\Query\FilterCollection
+     */
+    public function getFilters()
+    {
+        return $this->getManager()->getFilters();
+    }
 }

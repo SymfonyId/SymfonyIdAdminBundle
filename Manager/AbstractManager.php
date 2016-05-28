@@ -163,7 +163,7 @@ abstract class AbstractManager implements ManagerInterface
     }
 
     /**
-     * @return ObjectManager
+     * @return \Doctrine\ODM\MongoDB\DocumentManager|\Doctrine\ORM\EntityManager
      */
     protected function getManager()
     {
