@@ -139,8 +139,8 @@ class SymfonyIdMenuBuilder
     private function addDefaultMenu(ItemInterface $parentMenu)
     {
         $this->addChildMenu($parentMenu, 'home', 'menu.dashboard');
-        $this->addChildMenu($parentMenu, 'symfonian_indonesia_admin_profile_profile', 'menu.profile');
-        $this->addChildMenu($parentMenu, 'symfonian_indonesia_admin_profile_changepassword', 'menu.user.change_password');
+        $this->addChildMenu($parentMenu, 'symfonyid_admin_profile_profile', 'menu.profile');
+        $this->addChildMenu($parentMenu, 'symfonyid_admin_profile_changepassword', 'menu.user.change_password');
     }
 
     /**
@@ -148,7 +148,7 @@ class SymfonyIdMenuBuilder
      */
     private function addAdminMenu(ItemInterface $parentMenu)
     {
-        $this->addChildMenu($parentMenu, 'symfonian_indonesia_admin_user_list', 'menu.user.title');
+        $this->addChildMenu($parentMenu, 'symfonyid_admin_user_list', 'menu.user.title');
     }
 
     /**
