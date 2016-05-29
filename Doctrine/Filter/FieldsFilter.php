@@ -56,7 +56,7 @@ class FieldsFilter extends SQLFilter implements FieldsFilterInterface
         }
 
         $filter = '';
-        $parameter = str_replace('\'', '', $this->getParameter('filter'));//Remove single quote from paramter
+        $parameter = str_replace('\'', '', $this->getParameter('filter')); //Remove single quote from paramter
         /*
          * Filter is low level query so you can't use property name as field filter, use column name instead
          */

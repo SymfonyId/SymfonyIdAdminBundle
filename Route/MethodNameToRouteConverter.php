@@ -32,7 +32,7 @@ class MethodNameToRouteConverter
         }
 
         switch ($methodName) {
-            case SymfonyIdRouteLoader::METHOD_NEW :
+            case SymfonyIdRouteLoader::METHOD_NEW:
             case SymfonyIdRouteLoader::METHOD_DOWNLOAD:
             case SymfonyIdRouteLoader::METHOD_LIST:
                 if (!$flag) {

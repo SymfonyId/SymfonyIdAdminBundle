@@ -17,7 +17,6 @@ use SymfonyId\AdminBundle\Annotation\Crud;
 use SymfonyId\AdminBundle\Annotation\Filter;
 use SymfonyId\AdminBundle\Annotation\Grid;
 use SymfonyId\AdminBundle\Annotation\Sort;
-use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;

@@ -46,7 +46,7 @@ class GenerateCrudCommand extends GenerateDoctrineCommand
             ->setName('symfonyid:generate:crud')
             ->setAliases(array('symfonyid:generate', 'symfonyid:crud:generate'))
             ->setDescription('Generate CRUD from Model using SymfonyId Admin Bundle style')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>siab:generate:crud</info> command generates a CRUD based on a Doctrine ORM or ODM using SymfonyId Admin Bundle style.
 
 <info>php bin/console siab:generate:crud --model=AcmeBlogBundle:Post</info>

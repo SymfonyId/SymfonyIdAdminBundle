@@ -111,23 +111,22 @@ class CrudFactory
     }
 
     /**
-     * @param array $gridFields
-     * @param array $actionList
-     * @param bool  $allowCreate
-     * @param bool  $allowBulkDelete
-     * @param bool  $formatNumber
+     * @param CrudConfigurator $crudConfigurator
+     * @param array            $gridFields
+     * @param bool             $allowBulkDelete
+     * @param bool             $formatNumber
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listView(array $gridFields, array $actionList, $allowCreate = true, $allowBulkDelete = true, $formatNumber = true)
+    public function listView(CrudConfigurator $crudConfigurator, array $gridFields, $allowBulkDelete, $formatNumber)
     {
         /** @var ListActionHandler $viewHandler */
         $viewHandler = $this->actionHandlers[ListActionHandler::class];
         $viewHandler->setView($this->view);
         $viewHandler->setRequest($this->request);
         $viewHandler->setGridFields($gridFields);
-        $viewHandler->setActionList($actionList);
-        $viewHandler->isAllowCrate($allowCreate);
+        $viewHandler->setActionList($crudConfigurator->getGridAction());
+        $viewHandler->isAllowCrate($crudConfigurator->getCrud()->isAllowCreate());
         $viewHandler->isAllowBulkDelete($allowBulkDelete);
         $viewHandler->isFormatNumber($formatNumber);
 

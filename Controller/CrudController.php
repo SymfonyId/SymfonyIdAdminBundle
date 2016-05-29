@@ -226,7 +226,7 @@ abstract class CrudController extends AbstractController
         }, $filters)));
         $view->setParam('filter_fields_entity', implode(', ', $filters));
 
-        return $this->doList($request, $crudConfigurator, $view, $gridConfigurator->getColumns($reflectionModel), $listTemplate);
+        return $this->doList($request, $crudConfigurator, $view, $gridConfigurator->getColumns($reflectionModel), $listTemplate, $gridConfigurator->getGrid()->isFormatNumber());
     }
 
     /**
@@ -347,11 +347,12 @@ abstract class CrudController extends AbstractController
      * @param CrudConfigurator $crudConfigurator
      * @param View             $view
      * @param array            $columns
-     * @param $template
+     * @param string           $template
+     * @param bool             $formatNumber
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function doList(Request $request, CrudConfigurator $crudConfigurator, View $view, array $columns, $template)
+    private function doList(Request $request, CrudConfigurator $crudConfigurator, View $view, array $columns, $template, $formatNumber = true)
     {
         $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
         $crudFactory = $this->get('symfonyid.admin.crud.crud_factory');
@@ -360,7 +361,7 @@ abstract class CrudController extends AbstractController
         $crudFactory->setRequest($request);
         $crudFactory->setTemplate($template);
 
-        return $crudFactory->listView($columns, $crudConfigurator->getGridAction(), $crudConfigurator->getCrud()->isAllowCreate(), $this->isGrantedBulkDelete($crudConfigurator));
+        return $crudFactory->listView($crudConfigurator, $columns, $this->isGrantedBulkDelete($crudConfigurator), $formatNumber);
     }
 
     /**

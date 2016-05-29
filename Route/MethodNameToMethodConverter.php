@@ -31,7 +31,7 @@ class MethodNameToMethodConverter
         }
 
         switch ($methodName) {
-            case SymfonyIdRouteLoader::METHOD_NEW :
+            case SymfonyIdRouteLoader::METHOD_NEW:
             case SymfonyIdRouteLoader::METHOD_EDIT:
                 return new Method(array(
                     'methods' => array('GET', 'POST'),

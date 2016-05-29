@@ -14,7 +14,6 @@ namespace SymfonyId\AdminBundle\EventListener;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use SymfonyId\AdminBundle\Annotation\Filter;
 use SymfonyId\AdminBundle\Annotation\Grid;
-use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
 

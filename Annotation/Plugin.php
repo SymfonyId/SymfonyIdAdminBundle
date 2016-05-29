@@ -51,19 +51,19 @@ class Plugin
     public function __construct(array $data = array())
     {
         if (isset($data['htmlEditor'])) {
-            $this->htmlEditor = (boolean) $data['htmlEditor'];
+            $this->htmlEditor = (bool) $data['htmlEditor'];
         }
 
         if (isset($data['fileChooser'])) {
-            $this->fileChooser = (boolean) $data['fileChooser'];
+            $this->fileChooser = (bool) $data['fileChooser'];
         }
 
         if (isset($data['numeric'])) {
-            $this->numeric = (boolean) $data['numeric'];
+            $this->numeric = (bool) $data['numeric'];
         }
 
         if (isset($data['bulkInsert'])) {
-            $this->bulkInsert = (boolean) $data['bulkInsert'];
+            $this->bulkInsert = (bool) $data['bulkInsert'];
         }
 
         unset($data);
