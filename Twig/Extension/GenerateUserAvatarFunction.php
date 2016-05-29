@@ -55,7 +55,7 @@ class GenerateUserAvatarFunction extends \Twig_Extension implements ContainerAwa
         if ($user->getAvatar()) {
             return $this->uploadDir['web_path'].$user->getAvatar();
         } else {
-            return $this->container->getParameter('symfonyid.user.default_avatar');
+            return $this->container->getParameter('symfonyid.admin.user.default_avatar');
         }
     }
 

@@ -111,5 +111,6 @@ class ParameterBuilder
         $this->containerBuilder->setParameter($alias.'.admin.user.grid_columns', $config['user']['grid_columns']);
         $this->containerBuilder->setParameter($alias.'.admin.user.grid_filters', $config['user']['filters']);
         $this->containerBuilder->setParameter($alias.'.admin.user.password_form', $config['user']['password_form']);
+        $this->containerBuilder->setParameter($alias.'.admin.user.default_avatar', 'bundles/symfonianindonesiaadmin/img/apple-icon-114x114.png');
     }
 }
