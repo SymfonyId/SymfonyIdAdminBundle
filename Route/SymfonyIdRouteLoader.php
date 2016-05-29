@@ -18,6 +18,8 @@ use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Routing\RouteCollection;
 use SymfonyId\AdminBundle\Controller\ControllerFinder;
 use SymfonyId\AdminBundle\Controller\CrudController;
+use SymfonyId\AdminBundle\Controller\HomeController;
+use SymfonyId\AdminBundle\Controller\ProfileController;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -87,7 +89,7 @@ class SymfonyIdRouteLoader extends DelegatingLoader
                 continue;
             }
 
-            if ($controller->isSubclassOf(CrudController::class)) {
+            if ($controller->isSubclassOf(CrudController::class) || $controller->getName() === HomeController::class || $controller->getName() === ProfileController::class) {
                 $this->registerRoute($collection, $controller);
             } else {
                 $collection->addCollection(parent::load($resource, 'annotation'));

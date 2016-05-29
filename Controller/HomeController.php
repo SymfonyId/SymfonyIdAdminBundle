@@ -16,6 +16,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as Base;
 
 /**
+ * @Route("")
+ *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
 class HomeController extends Base

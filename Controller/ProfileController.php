@@ -31,6 +31,8 @@ use SymfonyId\AdminBundle\Util\MethodInvoker;
 use SymfonyId\AdminBundle\View\View;
 
 /**
+ * @Route("/profile")
+ *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
 final class ProfileController extends Controller implements ConfigurationAwareInterface
@@ -38,7 +40,7 @@ final class ProfileController extends Controller implements ConfigurationAwareIn
     use ConfigurationAwareTrait;
 
     /**
-     * @Route("/profile/")
+     * @Route("/")
      * @Method({"GET"})
      *
      * @return \Symfony\Component\HttpFoundation\Response

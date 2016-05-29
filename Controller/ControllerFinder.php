@@ -53,7 +53,9 @@ class ControllerFinder
         foreach ($finder as $file) {
             $controllers[] = $this->getReflectionClassFromFile($file);
         }
-        $controllers[] = new \ReflectionClass(UserController::class); //Include UserController
+        $controllers[] = new \ReflectionClass(UserController::class);
+        $controllers[] = new \ReflectionClass(ProfileController::class);
+        $controllers[] = new \ReflectionClass(HomeController::class);
 
         return $controllers;
     }
