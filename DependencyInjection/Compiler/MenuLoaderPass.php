@@ -37,7 +37,7 @@ class MenuLoaderPass implements CompilerPassInterface
         $definition = $container->findDefinition(self::MENU_LOADER_FACTORY);
         $taggedServices = $container->findTaggedServiceIds('symfonyid.menu');
         foreach ($taggedServices as $id => $tags) {
-            $definition->addMethodCall('addMenuLoader', array(new Reference($id)));
+            $definition->addMethodCall('addMenuLoader', array($id, new Reference($id)));
         }
     }
 }

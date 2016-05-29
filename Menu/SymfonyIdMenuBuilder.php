@@ -13,8 +13,10 @@ namespace SymfonyId\AdminBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use Knp\Menu\MenuFactory;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use SymfonyId\AdminBundle\Annotation\Menu;
 use SymfonyId\AdminBundle\Cache\CacheHandler;
 
 /**
@@ -22,6 +24,11 @@ use SymfonyId\AdminBundle\Cache\CacheHandler;
  */
 class SymfonyIdMenuBuilder
 {
+    /**
+     * @var MenuFactory
+     */
+    private $menuFactory;
+
     /**
      * @var MenuLoaderFactory
      */
@@ -48,14 +55,16 @@ class SymfonyIdMenuBuilder
     private $translationDomain;
 
     /**
+     * @param MenuFactory                   $menuFactory
      * @param MenuLoaderFactory             $menuLoaderFactory
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param CacheHandler                  $cacheHandler
      * @param TranslatorInterface           $translator
      * @param string                        $translationDomain
      */
-    public function __construct(MenuLoaderFactory $menuLoaderFactory, AuthorizationCheckerInterface $authorizationChecker, CacheHandler $cacheHandler, TranslatorInterface $translator, $translationDomain)
+    public function __construct(MenuFactory $menuFactory, MenuLoaderFactory $menuLoaderFactory, AuthorizationCheckerInterface $authorizationChecker, CacheHandler $cacheHandler, TranslatorInterface $translator, $translationDomain)
     {
+        $this->menuFactory = $menuFactory;
         $this->menuLoaderFactory = $menuLoaderFactory;
         $this->authorizationChecker = $authorizationChecker;
         $this->cacheHandler = $cacheHandler;
@@ -64,13 +73,13 @@ class SymfonyIdMenuBuilder
     }
 
     /**
-     * @param FactoryInterface $menuFactory
+     * @param array $options
      *
      * @return ItemInterface
      */
-    public function createMenu(FactoryInterface $menuFactory)
+    public function createMenu(array $options)
     {
-        $rootMenu = $this->createRootMenu($menuFactory);
+        $rootMenu = $this->createRootMenu($this->menuFactory);
         $this->addDefaultMenu($rootMenu);
         if ($this->isGranted('ROLE_SUPER_ADMIN')) {
             $this->addAdminMenu($rootMenu);

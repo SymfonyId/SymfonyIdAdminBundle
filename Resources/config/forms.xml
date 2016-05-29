@@ -9,11 +9,15 @@
             <argument>%symfonyid.admin.translation_domain%</argument>
             <argument>%security.role_hierarchy.roles%</argument>
             <argument>%symfonyid.admin.upload_directory%</argument>
+
+            <tag name="form.type" />
         </service>
 
         <service id="symfonyid.admin.form.change_password_form" class="SymfonyId\AdminBundle\Form\Type\ChangePasswordType" >
             <argument>%symfonyid.admin.user.model_class%</argument>
             <argument>%symfonyid.admin.translation_domain%</argument>
+
+            <tag name="form.type" />
         </service>
     </services>
 </container>

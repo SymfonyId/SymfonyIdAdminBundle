@@ -5,11 +5,14 @@
 
     <services>
         <service id="symfonyid.admin.menu.symfonyid_menu_builder" class="SymfonyId\AdminBundle\Menu\SymfonyIdMenuBuilder" >
+            <argument type="service" id="knp_menu.factory" />
             <argument type="service" id="symfonyid.admin.menu.menu_loader_factory" />
             <argument type="service" id="security.authorization_checker" />
             <argument type="service" id="symfonyid.admin.cache.cache_handler" />
             <argument type="service" id="translator" />
             <argument>%symfonyid.admin.translation_domain%</argument>
+            
+            <tag name="knp_menu.menu_builder" method="createMenu" alias="symfonyid_menu" />
         </service>
 
         <service id="symfonyid.admin.menu.menu_loader_factory" class="SymfonyId\AdminBundle\Menu\MenuLoaderFactory" >
@@ -23,15 +26,6 @@
             <argument>%symfonyid.admin.translation_domain%</argument>
 
             <tag name="symfonyid.menu" />
-        </service>
-
-        <service id="symfonyid.admin.menu.symfonyid_menu" class="Knp\Menu\MenuItem" >
-            <factory service="symfonyid.admin.menu.symfonyid_menu_builder" method="createMenu" />
-
-            <argument type="service" id="knp_menu.factory" />
-            <argument type="collection" />
-
-            <tag name="knp_menu.menu" alias="symfonyid_menu" />
         </service>
     </services>
 </container>
