@@ -29,6 +29,11 @@ class DataExporter
     private $managerFactory;
 
     /**
+     * @var string
+     */
+    private $modelClass;
+
+    /**
      * @var int
      */
     private $maxRecords;
@@ -41,6 +46,14 @@ class DataExporter
     {
         $this->managerFactory = $managerFactory;
         $this->maxRecords = $maxRecords;
+    }
+
+    /**
+     * @param string $modelClass
+     */
+    public function setModelClass($modelClass)
+    {
+        $this->modelClass = $modelClass;
     }
 
     /**
@@ -78,6 +91,7 @@ class DataExporter
      */
     public function isAllowExport(Driver $driver, $requestRecords)
     {
+        $this->managerFactory->setModelClass($this->modelClass);
         $totalResult = $this->managerFactory->getManager($driver)->count();
         if ($requestRecords < $totalResult) {
             return false;
@@ -99,6 +113,7 @@ class DataExporter
         $columns = array_merge(array('id'), $columns);
         $output = array($columns);
 
+        $this->managerFactory->setModelClass($this->modelClass);
         /** @var ModelInterface $record */
         foreach ($this->managerFactory->getManager($driver)->paginate(0, $this->maxRecords) as $record) {
             $temp = array();
