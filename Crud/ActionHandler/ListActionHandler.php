@@ -49,6 +49,11 @@ class ListActionHandler extends AbstractActionHandler implements ContainerAwareI
     private $gridFields = array();
 
     /**
+     * @var string
+     */
+    private $modelClass;
+
+    /**
      * @var bool
      */
     private $allowCreate = true;
@@ -73,6 +78,14 @@ class ListActionHandler extends AbstractActionHandler implements ContainerAwareI
         $this->crudOperationHandler = $crudOperationHandler;
         $this->dataExporter = $dataExporter;
         $this->translator = $translator;
+    }
+
+    /**
+     * @param string $modelClass
+     */
+    public function setModelClass($modelClass)
+    {
+        $this->modelClass = $modelClass;
     }
 
     /**

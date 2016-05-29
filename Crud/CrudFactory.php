@@ -122,6 +122,7 @@ class CrudFactory
     {
         /** @var ListActionHandler $viewHandler */
         $viewHandler = $this->actionHandlers[ListActionHandler::class];
+        $viewHandler->setModelClass($crudConfigurator->getCrud()->getModelClass());
         $viewHandler->setView($this->view);
         $viewHandler->setRequest($this->request);
         $viewHandler->setGridFields($gridFields);
