@@ -57,6 +57,7 @@ class CrudOperationHandler
      */
     public function save(Driver $driver, ModelInterface $model)
     {
+        $this->managerFactory->setModelClass(get_class($model));
         $manager = $this->managerFactory->getManager($driver);
         $preSaveEvent = new FilterModelEvent();
         $preSaveEvent->setModel($model);
@@ -92,17 +93,19 @@ class CrudOperationHandler
 
     /**
      * @param Driver $driver
+     * @param string $modelClass
      * @param int    $page
      * @param int    $limit
      *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
-    public function paginateResult(Driver $driver, $page, $limit)
+    public function paginateResult(Driver $driver, $modelClass, $page, $limit)
     {
         if (100 < $limit) {
             $limit = 100;
         }
 
+        $this->managerFactory->setModelClass($modelClass);
         return $this->managerFactory->getManager($driver)->paginate($page, $limit);
     }
 
@@ -114,6 +117,7 @@ class CrudOperationHandler
      */
     public function remove(Driver $driver, ModelInterface $model)
     {
+        $this->managerFactory->setModelClass(get_class($model));
         $manager = $this->managerFactory->getManager($driver);
         $event = new FilterModelEvent();
         $event->setModel($model);

@@ -197,7 +197,7 @@ class ListActionHandler extends AbstractActionHandler implements ContainerAwareI
         $perPage = $this->container->getParameter('symfonyid.admin.per_page');
         $this->view->setParam('start', ($page - 1) * $perPage);
 
-        $pagination = $this->crudOperationHandler->paginateResult($driver, $page, $perPage);
+        $pagination = $this->crudOperationHandler->paginateResult($driver, $this->modelClass, $page, $perPage);
         $this->view->setParam('pagination', $pagination);
 
         $data = array();

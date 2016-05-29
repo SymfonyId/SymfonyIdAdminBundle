@@ -78,7 +78,7 @@ trait RestResourceControllerTrait
          * Convert from KnpPaginator to Pagerfanta.
          */
         /** @var \Knp\Component\Pager\Pagination\AbstractPagination $knpPaginator */
-        $knpPaginator = $crudOperationHandler->paginateResult($driver, $params['page'], $params['limit']);
+        $knpPaginator = $crudOperationHandler->paginateResult($driver, $reflectionModel->getName(), $params['page'], $params['limit']);
         $pagerAdapter = new ArrayAdapter($knpPaginator->getItems());
 
         $pager = new Pagerfanta($pagerAdapter);

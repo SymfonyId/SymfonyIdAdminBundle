@@ -165,9 +165,12 @@ final class ProfileController extends Controller implements ConfigurationAwareIn
                 /** @var ManagerFactory $managerFactory */
                 $managerFactory = $this->container->get('symfonyid.admin.manager.manager_factory');
 
+                $model = $form->getData();
+                $managerFactory->setModelClass(get_class($model));
+
                 $event = new FilterModelEvent();
                 $event->setManager($managerFactory->getManager($driver));
-                $event->setModel($form->getData());
+                $event->setModel($model);
 
                 $eventSubscriber = $this->get('symfonyid.admin.event.event_subscriber');
                 $eventSubscriber->subscribe(Constants::POST_SAVE, $event);

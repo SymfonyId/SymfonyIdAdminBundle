@@ -19,7 +19,23 @@ use SymfonyId\AdminBundle\Exception\DriverNotFoundException;
  */
 class ManagerFactory
 {
+    /**
+     * @var ManagerInterface[]
+     */
     private $managers;
+
+    /**
+     * @var string
+     */
+    private $modelClass;
+
+    /**
+     * @param string $modelClass
+     */
+    public function setModelClass($modelClass)
+    {
+        $this->modelClass = $modelClass;
+    }
 
     /**
      * @param ManagerInterface $manager
@@ -42,6 +58,9 @@ class ManagerFactory
             throw new DriverNotFoundException($driver->getDriver());
         }
 
-        return $this->managers[$driver->getDriver()];
+        $manager = $this->managers[$driver->getDriver()];
+        $manager->setModelClass($this->modelClass);
+
+        return $manager;
     }
 }
