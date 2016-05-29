@@ -106,6 +106,7 @@ class CrudOperationHandler
         }
 
         $this->managerFactory->setModelClass($modelClass);
+
         return $this->managerFactory->getManager($driver)->paginate($page, $limit);
     }
 
