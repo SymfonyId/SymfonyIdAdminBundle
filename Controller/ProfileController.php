@@ -154,7 +154,9 @@ final class ProfileController extends Controller implements ConfigurationAwareIn
      * @param View                $view
      * @param FormInterface       $form
      * @param TranslatorInterface $translator
-     * @param $translationDomain
+     * @param string              $translationDomain
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     private function handleRequest(Request $request, Driver $driver, View $view, FormInterface $form, TranslatorInterface $translator, $translationDomain)
     {
@@ -162,7 +164,9 @@ final class ProfileController extends Controller implements ConfigurationAwareIn
             if (!$form->isValid()) {
                 $view->setParam('errors', true);
             } elseif ($form->isValid()) {
-                $this->updateUser($form, $request);
+                if ($response = $this->updateUser($form, $request)) {
+                    return $response;
+                }
 
                 /** @var ManagerFactory $managerFactory */
                 $managerFactory = $this->container->get('symfonyid.admin.manager.manager_factory');

@@ -36,6 +36,19 @@ class ProfileControllerConfiguratorListener implements ConfigurationAwareInterfa
     private $formClass;
 
     /**
+     * @var string
+     */
+    private $modelClass;
+
+    /**
+     * @param array $showFields
+     */
+    public function setShowFields(array $showFields)
+    {
+        $this->showFields = $showFields;
+    }
+
+    /**
      * @param string $formClass
      */
     public function setFormClass($formClass)
@@ -44,11 +57,11 @@ class ProfileControllerConfiguratorListener implements ConfigurationAwareInterfa
     }
 
     /**
-     * @param array $showFields
+     * @param string $modelClass
      */
-    public function setShowFields(array $showFields)
+    public function setModelClass($modelClass)
     {
-        $this->showFields = $showFields;
+        $this->modelClass = $modelClass;
     }
 
     /**
@@ -76,10 +89,10 @@ class ProfileControllerConfiguratorListener implements ConfigurationAwareInterfa
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
         $crudConfiguration = $crudConfigurator->getCrud();
         $crud = new Crud(array(
-            'modelClass' => $crudConfiguration->getModelClass(),
-            'form' => $this->formClass ?: $crudConfiguration->getForm(),
+            'modelClass' => $this->modelClass,
+            'form' => $this->formClass,
             'menu' => $crudConfiguration->getMenu(),
-            'showFields' => empty($this->showFields) ? $crudConfiguration->getShowFields() : $this->showFields,
+            'showFields' => $this->showFields,
             'template' => $crudConfiguration->getTemplate(),
             'allowCreate' => $crudConfiguration->isAllowCreate(),
             'allowEdit' => $crudConfiguration->isAllowEdit(),
@@ -88,7 +101,7 @@ class ProfileControllerConfiguratorListener implements ConfigurationAwareInterfa
         ));
         $crudConfigurator->setCrud($crud);
         $configuratorFactory->addConfigurator($crudConfigurator);
-        
+
         $controller->setConfiguratorFactory($configuratorFactory);
         $controller->setCacheHandler($this->cacheHandler);
         $controller->setKernel($this->kernel);
