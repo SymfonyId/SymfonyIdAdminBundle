@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
         <service id="symfonyid.admin.listener.auto_enable_user" class="SymfonyId\AdminBundle\EventListener\AutoEnableUserListener" >
@@ -27,7 +27,7 @@
                 <argument type="service" id="kernel" />
             </call>
 
-            <tag name="kernel.event_listener" event="kernel.controller" priority="254" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="127" />
         </service>
 
         <service id="symfonyid.admin.listener.enable_fields_filter" class="SymfonyId\AdminBundle\EventListener\EnableFieldsFilterListener" >
@@ -70,6 +70,7 @@
             </call>
 
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="-127"/>
+            <tag name="kernel.event_listener" event="symfonyid.filter_query" method="onFilterQuery" />
         </service>
 
         <service id="symfonyid.admin.listener.enable_soft_delete_filter" class="SymfonyId\AdminBundle\EventListener\EnableSoftDeleteListener" >
@@ -131,7 +132,7 @@
                 <argument type="service" id="kernel" />
             </call>
 
-            <tag name="kernel.event_listener" event="kernel.controller" priority="-255" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
         </service>
 
         <service id="symfonyid.admin.listener.set_default_crud_configuration" class="SymfonyId\AdminBundle\EventListener\SetDefaultCrudConfigurationListener" >
@@ -148,7 +149,7 @@
                 <argument type="service" id="kernel" />
             </call>
 
-            <tag name="kernel.event_listener" event="kernel.controller" priority="255" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="255" />
         </service>
 
         <service id="symfonyid.admin.listener.set_default_grid_configuration" class="SymfonyId\AdminBundle\EventListener\SetDefaultGridConfigurationListener" >
@@ -165,7 +166,7 @@
                 <argument type="service" id="kernel" />
             </call>
 
-            <tag name="kernel.event_listener" event="kernel.controller" priority="255" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="255" />
         </service>
 
         <service id="symfonyid.admin.listener.set_timestamp" class="SymfonyId\AdminBundle\EventListener\SetTimestampListener" >
@@ -228,7 +229,7 @@
                 <argument>%symfonyid.admin.user.grid_filters%</argument>
             </call>
 
-            <tag name="kernel.event_listener" event="kernel.controller" priority="-255" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
         </service>
     </services>
 </container>

@@ -13,6 +13,7 @@ namespace SymfonyId\AdminBundle\Document\Filter;
 
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
+use SymfonyId\AdminBundle\Annotation\Filter;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
 use SymfonyId\AdminBundle\Filter\FieldsFilterAwareTrait;
 use SymfonyId\AdminBundle\Filter\FieldsFilterInterface;
@@ -37,7 +38,7 @@ class FieldsFilter extends BsonFilter implements FieldsFilterInterface
     {
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
-        $fields = $gridConfigurator->getFilters($targetDocument->getReflectionClass());
+        $fields = array_merge($this->fieldsFilter, $gridConfigurator->getFilters($targetDocument->getReflectionClass()));
 
         foreach ($fields as $key => $field) {
             $fields[$key] = $targetDocument->getFieldMapping($field);

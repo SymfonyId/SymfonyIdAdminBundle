@@ -35,21 +35,9 @@ class FieldsFilter extends SQLFilter implements FieldsFilterInterface
      */
     public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias)
     {
-        $fields = array();
-        $properties = $targetEntity->getReflectionProperties();
-        /** @var \ReflectionProperty $property */
-        foreach ($properties as $property) {
-            $this->extractorFactory->extract($property);
-            foreach ($this->extractorFactory->getPropertyAnnotations() as $annotation) {
-                if ($annotation instanceof Filter) {
-                    $fields[] = $property->getName();
-                }
-            }
-        }
-
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
-        $gridConfigurator->getFilters($targetEntity->getReflectionClass());
+        $fields = array_merge($this->fieldsFilter, $gridConfigurator->getFilters($targetEntity->getReflectionClass()));
 
         foreach ($fields as $key => $field) {
             $fields[$key] = $targetEntity->getFieldMapping($targetEntity->getFieldName($field));

@@ -44,4 +44,12 @@ class FieldSortFilter implements FieldSortInterface, ModelMetadataAwareInterface
             $metadata['fieldName'] => 'asc',
         ));
     }
+
+    /**
+     * @param string $key
+     * @param string $param
+     */
+    public function setParameter($key, $param)
+    {
+    }
 }
