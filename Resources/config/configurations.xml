@@ -6,6 +6,13 @@
     <services>
         <service id="symfonyid.admin.configuration.configuration_mapper" class="SymfonyId\AdminBundle\Configuration\ConfigurationMapper">
             <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
+
+            <call method="setTemplate">
+                <argument type="service" id="symfonyid.admin.annotation.template" />
+            </call>
+            <call method="setFieldsFilter">
+                <argument>%symfonyid.admin.filters%</argument>
+            </call>
         </service>
 
         <service id="symfonyid.admin.configuration.configurator_factory" class="SymfonyId\AdminBundle\Configuration\ConfiguratorFactory" />

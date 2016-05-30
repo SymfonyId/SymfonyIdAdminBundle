@@ -15,6 +15,7 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelInterface;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\ConfigurationMapper;
+use SymfonyId\AdminBundle\Controller\UserController;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -51,6 +52,10 @@ class ControllerAnnotationExtractorListener implements CrudControllerListenerAwa
         }
 
         if (!$this->isValidCrudListener($event)) {
+            return;
+        }
+
+        if ($this->controller instanceof UserController) {
             return;
         }
 
