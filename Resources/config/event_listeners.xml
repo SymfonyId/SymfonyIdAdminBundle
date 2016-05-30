@@ -49,7 +49,7 @@
                 <argument type="service" id="kernel" />
             </call>
 
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="-127" />
         </service>
 
         <service id="symfonyid.admin.listener.enable_field_sort_filter" class="SymfonyId\AdminBundle\EventListener\EnableFieldSorterListener" >
@@ -69,7 +69,7 @@
                 <argument type="service" id="kernel" />
             </call>
 
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="-127"/>
         </service>
 
         <service id="symfonyid.admin.listener.enable_soft_delete_filter" class="SymfonyId\AdminBundle\EventListener\EnableSoftDeleteListener" >
@@ -89,7 +89,7 @@
                 <argument type="service" id="kernel" />
             </call>
 
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="-127" />
         </service>
 
         <service id="symfonyid.admin.listener.file_upload" class="SymfonyId\AdminBundle\EventListener\FileUploadListener" >
@@ -109,7 +109,7 @@
                 <argument type="service" id="kernel" />
             </call>
 
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="-127" />
         </service>
 
         <service id="symfonyid.admin.listener.filter_delete_user" class="SymfonyId\AdminBundle\EventListener\FilterDeleteUserListener" >
@@ -117,7 +117,7 @@
             <argument type="service" id="translator" />
             <argument>%symfonyid.admin.translation_domain%</argument>
 
-            <tag name="kernel.event_listener" event="symfonyid.pre_delete" method="onDeleteUser" />
+            <tag name="kernel.event_listener" event="symfonyid.pre_delete" method="onDeleteUser" priority="-127" />
         </service>
 
         <service id="symfonyid.admin.listener.profile_controller_configurator" class="SymfonyId\AdminBundle\EventListener\ProfileControllerConfiguratorListener" >
@@ -131,7 +131,7 @@
                 <argument type="service" id="kernel" />
             </call>
 
-            <tag name="kernel.event_listener" event="kernel.controller" priority="253" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.controller" priority="-255" method="onKernelController" />
         </service>
 
         <service id="symfonyid.admin.listener.set_default_crud_configuration" class="SymfonyId\AdminBundle\EventListener\SetDefaultCrudConfigurationListener" >
@@ -228,7 +228,7 @@
                 <argument>%symfonyid.admin.user.grid_filters%</argument>
             </call>
 
-            <tag name="kernel.event_listener" event="kernel.controller" priority="253" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.controller" priority="-255" method="onKernelController" />
         </service>
     </services>
 </container>
