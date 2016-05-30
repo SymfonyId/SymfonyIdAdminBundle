@@ -16,6 +16,7 @@ use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
+use SymfonyId\AdminBundle\Controller\UserController;
 use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 use SymfonyId\AdminBundle\Filter\FieldsFilterInterface;
 use SymfonyId\AdminBundle\Manager\DriverFinder;
@@ -96,6 +97,12 @@ class EnableFieldsFilterListener implements ConfigurationAwareInterface
      */
     private function applyFilter(ConfiguratorFactory $configuratorFactory, FieldsFilterInterface $filter, $keyword)
     {
+        if ($this->controller instanceof UserController) {
+            $filter->setFieldsFilter($this->container->getParameter('symfonyid.admin.user.grid_filters'));
+        } else {
+            $filter->setFieldsFilter($this->container->getParameter('symfonyid.admin.filter'));
+        }
+
         $filter->setExtractorFactory($this->extractorFactory);
         $filter->setConfigurationFactory($configuratorFactory);
         $filter->setDateTimeFormat($this->dateTimeFormat);

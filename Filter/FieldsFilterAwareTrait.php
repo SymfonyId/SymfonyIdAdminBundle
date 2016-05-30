@@ -35,6 +35,11 @@ trait FieldsFilterAwareTrait
     protected $dateTimeFormat;
 
     /**
+     * @var array
+     */
+    protected $fieldsFilter;
+
+    /**
      * @param ExtractorFactory $extractorFactory
      */
     public function setExtractorFactory(ExtractorFactory $extractorFactory)
@@ -56,5 +61,13 @@ trait FieldsFilterAwareTrait
     public function setConfigurationFactory(ConfiguratorFactory $configuratorFactory)
     {
         $this->configuratorFactory = $configuratorFactory;
+    }
+
+    /**
+     * @param array $fieldsFilter
+     */
+    public function setFieldsFilter(array $fieldsFilter)
+    {
+        $this->fieldsFilter = $fieldsFilter;
     }
 }
