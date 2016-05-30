@@ -112,8 +112,11 @@ abstract class CrudController extends AbstractController
         /** @var ConfiguratorFactory $configuratorFactory */
         $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
         /** @var CrudConfigurator $crudConfigurator */
-        $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);/* @var PageConfigurator $pageConfigurator */
+        $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
+        /* @var PageConfigurator $pageConfigurator */
         $pageConfigurator = $configuratorFactory->getConfigurator(PageConfigurator::class);
+        /* @var GridConfigurator $gridConfigurator */
+        $gridConfigurator = $configuratorFactory->getConfigurator(GridConfigurator::class);
 
         $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_READ);
         $crud = $crudConfigurator->getCrud();
@@ -133,8 +136,9 @@ abstract class CrudController extends AbstractController
         $crudFactory->setDriver($driver);
         $crudFactory->setView($view);
         $crudFactory->setTemplate($crudConfigurator->getTemplate()->getShow());
+        $showFields = $crud->getShowFields() ?: $gridConfigurator->getColumns(new \ReflectionClass($crud->getModelClass()));
 
-        return $crudFactory->showDetail($model, $crud->getShowFields(), $crud->isAllowDelete());
+        return $crudFactory->showDetail($model, $showFields, $crud->isAllowDelete());
     }
 
     /**
