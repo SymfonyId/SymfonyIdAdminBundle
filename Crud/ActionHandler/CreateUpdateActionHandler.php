@@ -79,7 +79,7 @@ class CreateUpdateActionHandler extends AbstractActionHandler implements Contain
 
         $this->view->setParam('form', $this->form->createView());
         $this->view->setParam('form_theme', $this->container->getParameter('symfonyid.admin.themes.form_theme'));
-        $this->view->setParam('menu', $this->container->getParameter('symfonyid.admin.menu'));
+        $this->view->setParam('menu', $this->container->getParameter('symfonyid.admin.menu.menu_name'));
 
         $this->view->setParam('errors', false);
         if ($this->request->isMethod('POST')) {

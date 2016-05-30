@@ -16,7 +16,9 @@
 {%- endblock -%}
 
 {%- block date_picker -%}
-    {{- use_date_picker -}}
+    {% if use_data_picker is defined %}
+        {{- use_date_picker -}}
+    {% endif %}
 {%- endblock -%}
 
 {%- block date_picker_format -%}
@@ -36,7 +38,9 @@
 {%- endblock -%}
 
 {%- block autocomplete -%}
-    {{- autocomplete -}}
+    {% if autocomplete is defined %}
+        {{- autocomplete -}}
+    {% endif %}
 {%- endblock -%}
 
 {%- block menu -%}
@@ -45,50 +49,50 @@
 
 {%- block content -%}
     {% spaceless %}
-    {%- if success is defined -%}
-        <div class="modal modal-success success-message">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">{{- 'message.info' | trans({}, translation_domain) -}}</h4>
-                    </div>
-                    <div class="modal-body">
-                        {{- success -}}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary add_new pull-left" data-dismiss="modal">{{- 'action.add' | trans({}, translation_domain) -}}</button>
-                        <button type="button" class="btn btn-primary success-close pull-left" data-dismiss="modal">{{- 'action.close' | trans({}, translation_domain) -}}</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {%- endif -%}
-
-    {%- if errors is defined -%}
-        <div class="modal modal-warning error-message">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">{{- 'message.info' | trans({}, translation_domain) -}}</h4>
-                    </div>
-                    <div class="modal-body">
-                        {{- 'message.error' | trans({}, translation_domain) -}}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">{{- 'action.close' | trans({}, translation_domain) -}}</button>
+        {%- if success is defined and success -%}
+            <div class="modal modal-success success-message">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">{{- 'message.info' | trans({}, translation_domain) -}}</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{- success -}}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary add_new pull-left" data-dismiss="modal">{{- 'action.add' | trans({}, translation_domain) -}}</button>
+                            <button type="button" class="btn btn-primary success-close pull-left" data-dismiss="modal">{{- 'action.close' | trans({}, translation_domain) -}}</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {%- endif -%}
+        {%- endif -%}
 
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="box box-success box-solid">
-            <div class="box-header">
-                <a href="#" class="btn btn-primary pull-right back-to-list">{{- 'action.back_to_list' | trans({}, translation_domain) -}}</a>
+        {%- if errors is defined and errors -%}
+            <div class="modal modal-warning error-message">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">{{- 'message.info' | trans({}, translation_domain) -}}</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{- 'message.error' | trans({}, translation_domain) -}}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">{{- 'action.close' | trans({}, translation_domain) -}}</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="box-body">
-                {{- form_start(form, {attr: { role: 'form' }}) -}}
+        {%- endif -%}
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="box box-success box-solid">
+                <div class="box-header">
+                    <a href="#" class="btn btn-primary pull-right back-to-list">{{- 'action.back_to_list' | trans({}, translation_domain) -}}</a>
+                </div>
+                <div class="box-body">
+                    {{- form_start(form, {attr: { role: 'form' }}) -}}
                     <div class="box-body with-border">
                         {%- for field in form.children -%}
                             {{- form_row(field) -}}
@@ -98,15 +102,15 @@
                             <button type="submit" class="btn btn-primary">{{- 'action.submit' | trans({}, translation_domain) -}}</button>
                         </div>
                     </div>
-                {{- form_end(form) -}}
+                    {{- form_end(form) -}}
+                </div>
             </div>
         </div>
-    </div>
     {% endspaceless %}
 {%- endblock -%}
 
 {%- block javascript -%}
-    {%- if success is defined -%}
+    {%- if success is defined and success -%}
         <script type="text/javascript">
             jQuery(document).ready(function () {
                 jQuery('.success-message').modal({
@@ -116,7 +120,7 @@
         </script>
     {%- endif -%}
 
-    {%- if errors is defined -%}
+    {%- if errors is defined and errors -%}
         <script type="text/javascript">
             jQuery(document).ready(function () {
                 jQuery('.error-message').modal({
@@ -156,6 +160,7 @@
                 jQuery('.back-to-list').trigger('click');
             });
 
+            {% if date_picker is defined %}
             var target = jQuery('.datepicker');
             target.parent().css('position', 'relative');
             target.datetimepicker({
@@ -163,54 +168,55 @@
                 {% if date_picker['flatten'] %}sideBySide: true,{% endif %}
                 locale: '{{- locale -}}'
             });
+            {% endif %}
 
             {%- if use_file_style is same as(true) -%}
-                jQuery('input:file').fileinput({
-                    showUpload: false,
-                    showCaption: false,
-                    browseClass: 'btn btn-default',
-                    fileType: ['jpg', 'png'],
-                    allowedFileExtensions : ['jpg', 'png']
-                });
+            jQuery('input:file').fileinput({
+                showUpload: false,
+                showCaption: false,
+                browseClass: 'btn btn-default',
+                fileType: ['jpg', 'png'],
+                allowedFileExtensions : ['jpg', 'png']
+            });
             {%- endif -%}
 
             {%- if use_editor is same as(true) -%}
-                jQuery('.editor').summernote();
+            jQuery('.editor').summernote();
             {%- endif -%}
 
             {% if use_numeric is same as(true) %}
-                jQuery('.numeric').numeric();
-                jQuery('.positive').numeric({ negative: false });
+            jQuery('.numeric').numeric();
+            jQuery('.positive').numeric({ negative: false });
             {% endif %}
 
             {%- if autocomplete -%}
-                jQuery('.autocomplete').select2({
-                    minimumInputLength: 3,
-                    ajax: {
-                        url: Routing.generate('{{- ac_config['route'] -}}'),
-                        dataType: 'json',
-                        quietMillis: 250,
-                        data: function (term, page) {
-                            return {
-                                q: term
-                            };
-                        },
-                        results: function (data, page) {
-                            return { results: data };
-                        },
-                        cache: true
+            jQuery('.autocomplete').select2({
+                minimumInputLength: 3,
+                ajax: {
+                    url: Routing.generate('{{- ac_config['route'] -}}'),
+                    dataType: 'json',
+                    quietMillis: 250,
+                    data: function (term, page) {
+                        return {
+                            q: term
+                        };
                     },
-                    initSelection : function (element, callback) {
-                        jQuery.ajax(Routing.generate('{{- ac_config['route_callback'] -}}', {id:  jQuery(element).val()}), {
-                            dataType: 'json'
-                        }).done(function(data) {
-                            callback(data);
-                        });
-                    }
-                });
-                jQuery(document).on('select2:select', '.autocomplete', function (e) {
-                    jQuery('{{- ac_config['selector_storage']-}}').val(e.params.data.id);
-                });
+                    results: function (data, page) {
+                        return { results: data };
+                    },
+                    cache: true
+                },
+                initSelection : function (element, callback) {
+                    jQuery.ajax(Routing.generate('{{- ac_config['route_callback'] -}}', {id:  jQuery(element).val()}), {
+                        dataType: 'json'
+                    }).done(function(data) {
+                        callback(data);
+                    });
+                }
+            });
+            jQuery(document).on('select2:select', '.autocomplete', function (e) {
+                jQuery('{{- ac_config['selector_storage']-}}').val(e.params.data.id);
+            });
             {%- endif -%}
         });
     </script>

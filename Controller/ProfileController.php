@@ -69,7 +69,7 @@ final class ProfileController extends Controller implements ConfigurationAwareIn
 
         return $this->render($this->container->getParameter('symfonyid.admin.themes.profile'), array(
             'data' => $data,
-            'menu' => $this->container->getParameter('symfonyid.admin.menu'),
+            'menu' => $this->container->getParameter('symfonyid.admin.menu.menu_name'),
             'page_title' => $translator->trans('page.profile.title', array(), $translationDomain),
             'page_description' => $translator->trans('page.profile.description', array(), $translationDomain),
         ));
@@ -195,7 +195,7 @@ final class ProfileController extends Controller implements ConfigurationAwareIn
         $view->setParam('page_title', $translator->trans('page.change_password.title', array(), $translationDomain));
         $view->setParam('page_description', $translator->trans('page.change_password.description', array(), $translationDomain));
         $view->setParam('form_theme', $this->container->getParameter('symfonyid.admin.themes.form_theme'));
-        $view->setParam('menu', $this->container->getParameter('symfonyid.admin.menu'));
+        $view->setParam('menu', $this->container->getParameter('symfonyid.admin.menu.menu_name'));
 
         return $view;
     }

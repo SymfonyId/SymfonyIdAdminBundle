@@ -82,12 +82,14 @@ class CrudOperationHandler
 
     /**
      * @param Driver $driver
+     * @param string $modelClass
      * @param mixed  $id
      *
      * @return ModelInterface|null
      */
-    public function find(Driver $driver, $id)
+    public function find(Driver $driver, $modelClass, $id)
     {
+        $this->managerFactory->setModelClass($modelClass);
         return $this->managerFactory->getManager($driver)->find($id);
     }
 

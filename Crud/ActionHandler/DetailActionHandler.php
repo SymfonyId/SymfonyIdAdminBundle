@@ -128,7 +128,7 @@ class DetailActionHandler extends AbstractActionHandler implements ContainerAwar
         $translationDomain = $this->container->getParameter('symfonyid.admin.translation_domain');
 
         $this->view->setParam('data', $output);
-        $this->view->setParam('menu', $this->container->getParameter('symfonyid.admin.menu'));
+        $this->view->setParam('menu', $this->container->getParameter('symfonyid.admin.menu.menu_name'));
         $this->view->setParam('action_method', $this->translator->trans('page.show', array(), $translationDomain));
         $this->view->setParam('back', $referer);
         $this->view->setParam('action', $this->allowDelete);

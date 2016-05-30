@@ -112,15 +112,19 @@ abstract class CrudController extends AbstractController
         /** @var ConfiguratorFactory $configuratorFactory */
         $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
         /** @var CrudConfigurator $crudConfigurator */
-        $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
+        $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);/* @var PageConfigurator $pageConfigurator */
+        $pageConfigurator = $configuratorFactory->getConfigurator(PageConfigurator::class);
 
         $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_READ);
-
         $crud = $crudConfigurator->getCrud();
+
+        $translator = $this->get('translator');
+        $translationDomain = $this->getParameter('symfonyid.admin.translation_domain');
         /** @var ModelInterface $model */
         $model = $this->findOr404Error($id);
         /** @var View $view */
-        $view = $this->get('symfonyid.admin.view.view');
+        $view = $this->get('symfonyid.admin.view.view');$view->setParam('page_title', $translator->trans($pageConfigurator->getTitle(), array(), $translationDomain));
+        $view->setParam('page_description', $translator->trans($pageConfigurator->getDescription(), array(), $translationDomain));
 
         $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crud->getModelClass());
         $crudFactory = $this->get('symfonyid.admin.crud.crud_factory');
@@ -295,7 +299,7 @@ abstract class CrudController extends AbstractController
         $view->setParam('autocomplete', false);
         $view->setParam('include_javascript', false);
         //Auto complete
-        if ($autoComplete->getRouteResource()) {
+        if ($autoComplete) {
             $view->setParam('autocomplete', true);
             $view->setParam('ac_config', array(
                 'route' => $autoComplete->getRouteResource(),
@@ -304,13 +308,15 @@ abstract class CrudController extends AbstractController
             ));
         }
         //Date picker
-        $view->setParam('use_date_picker', true);
-        $view->setParam('date_picker', array(
-            'date_format' => $datePicker->getDateFormat(),
-            'flatten' => $datePicker->isFlatten(),
-        ));
+        if ($datePicker) {
+            $view->setParam('use_date_picker', true);
+            $view->setParam('date_picker', array(
+                'date_format' => $datePicker->getDateFormat(),
+                'flatten' => $datePicker->isFlatten(),
+            ));
+        }
         //External Javascript
-        if (!empty($externalJavascript->getIncludFiles())) {
+        if ($externalJavascript) {
             $view->setParam('include_javascript', true);
             $view->setParam('js_include', array(
                 'files' => $externalJavascript->getIncludFiles(),
@@ -379,11 +385,12 @@ abstract class CrudController extends AbstractController
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
-        $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
+        $modelClass = $crudConfigurator->getCrud()->getModelClass();
+        $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($modelClass);
         $crudOperationHandler = $this->get('symfonyid.admin.crud.crud_operation_handler');
 
         /** @var ModelInterface $model */
-        $model = $crudOperationHandler->find($driver, $id);
+        $model = $crudOperationHandler->find($driver, $modelClass, $id);
         if (!$model) {
             throw new NotFoundHttpException($translator->trans('message.data_not_found', array('%id%' => $id), $translationDomain));
         }
