@@ -123,7 +123,8 @@ abstract class CrudController extends AbstractController
         /** @var ModelInterface $model */
         $model = $this->findOr404Error($id);
         /** @var View $view */
-        $view = $this->get('symfonyid.admin.view.view');$view->setParam('page_title', $translator->trans($pageConfigurator->getTitle(), array(), $translationDomain));
+        $view = $this->get('symfonyid.admin.view.view');
+        $view->setParam('page_title', $translator->trans($pageConfigurator->getTitle(), array(), $translationDomain));
         $view->setParam('page_description', $translator->trans($pageConfigurator->getDescription(), array(), $translationDomain));
 
         $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crud->getModelClass());
