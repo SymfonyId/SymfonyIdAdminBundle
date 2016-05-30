@@ -16,7 +16,6 @@ use Knp\Menu\ItemInterface;
 use Knp\Menu\MenuFactory;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use SymfonyId\AdminBundle\Annotation\Menu;
 use SymfonyId\AdminBundle\Cache\CacheHandler;
 
 /**

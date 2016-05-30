@@ -33,12 +33,6 @@ class UserControllerCacheWarmer implements CacheWarmerInterface
      * @var ConfiguratorFactory
      */
     private $configuratorFactory;
-
-    /**
-     * @var ExtractorFactory
-     */
-    private $extractorFactory;
-
     /**
      * @var ConfigurationCacheWriter
      */
@@ -79,7 +73,6 @@ class UserControllerCacheWarmer implements CacheWarmerInterface
     public function __construct(ConfiguratorFactory $configuratorFactory, ExtractorFactory $extractorFactory, ConfigurationCacheWriter $configurationCacheWriter, DefaultConfigurationFactory $defaultConfigurationFactory)
     {
         $this->configuratorFactory = $configuratorFactory;
-        $this->extractorFactory = $extractorFactory;
         $this->cacheWriter = $configurationCacheWriter;
         $defaultConfigurationFactory->build($configuratorFactory);
     }
