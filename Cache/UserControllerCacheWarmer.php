@@ -17,6 +17,7 @@ use SymfonyId\AdminBundle\Annotation\Crud;
 use SymfonyId\AdminBundle\Annotation\Filter;
 use SymfonyId\AdminBundle\Annotation\Grid;
 use SymfonyId\AdminBundle\Annotation\Sort;
+use SymfonyId\AdminBundle\Annotation\Template;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
@@ -42,6 +43,11 @@ class UserControllerCacheWarmer implements CacheWarmerInterface
      * @var ConfigurationCacheWriter
      */
     private $cacheWriter;
+
+    /**
+     * @var Template
+     */
+    private $template;
 
     /**
      * @var string
@@ -76,6 +82,14 @@ class UserControllerCacheWarmer implements CacheWarmerInterface
         $this->extractorFactory = $extractorFactory;
         $this->cacheWriter = $configurationCacheWriter;
         $defaultConfigurationFactory->build($configuratorFactory);
+    }
+
+    /**
+     * @param Template $template
+     */
+    public function setTemplate(Template $template)
+    {
+        $this->template = $template;
     }
 
     /**
@@ -143,23 +157,11 @@ class UserControllerCacheWarmer implements CacheWarmerInterface
 
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $this->configuratorFactory->getConfigurator(CrudConfigurator::class);
-        $crudConfiguration = $crudConfigurator->getCrud();
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
-        $gridConfiguration = $gridConfigurator->getGrid();
 
-        $this->extractorFactory->extract(new \ReflectionClass(UserController::class));
-        foreach ($this->extractorFactory->getClassAnnotations() as $annotation) {
-            if ($annotation instanceof Crud) {
-                $crudConfiguration = $annotation;
-            }
-            if ($annotation instanceof Grid) {
-                $gridConfiguration = $annotation;
-            }
-        }
-
-        $this->overrideCrudConfiguration($configuratorFactory, $crudConfigurator, $crudConfiguration);
-        $this->overrideGridConfiguration($configuratorFactory, $gridConfigurator, $gridConfiguration);
+        $this->overrideCrudConfiguration($configuratorFactory, $crudConfigurator);
+        $this->overrideGridConfiguration($configuratorFactory, $gridConfigurator);
 
         $this->cacheWriter->writeCache(new \ReflectionClass(UserController::class), $configuratorFactory);
     }
@@ -167,16 +169,16 @@ class UserControllerCacheWarmer implements CacheWarmerInterface
     /**
      * @param ConfiguratorFactory $configuratorFactory
      * @param CrudConfigurator    $crudConfigurator
-     * @param Crud                $crudConfiguration
      */
-    private function overrideCrudConfiguration(ConfiguratorFactory $configuratorFactory, CrudConfigurator $crudConfigurator, Crud $crudConfiguration)
+    private function overrideCrudConfiguration(ConfiguratorFactory $configuratorFactory, CrudConfigurator $crudConfigurator)
     {
+        $crudConfiguration = $crudConfigurator->getCrud();
         $crud = new Crud(array(
             'modelClass' => $this->modelClass ?: $crudConfiguration->getModelClass(),
             'form' => $this->form ?: $crudConfiguration->getForm(),
             'menu' => $crudConfiguration->getMenu(),
             'showFields' => empty($this->showFields) ? $crudConfiguration->getShowFields() : $this->showFields,
-            'template' => $crudConfiguration->getTemplate(),
+            'template' => $this->template,
             'allowCreate' => $crudConfiguration->isAllowCreate(),
             'allowEdit' => $crudConfiguration->isAllowEdit(),
             'allowShow' => $crudConfiguration->isAllowShow(),
@@ -189,9 +191,8 @@ class UserControllerCacheWarmer implements CacheWarmerInterface
     /**
      * @param ConfiguratorFactory $configuratorFactory
      * @param GridConfigurator    $gridConfigurator
-     * @param Grid                $gridConfiguration
      */
-    private function overrideGridConfiguration(ConfiguratorFactory $configuratorFactory, GridConfigurator $gridConfigurator, Grid $gridConfiguration)
+    private function overrideGridConfiguration(ConfiguratorFactory $configuratorFactory, GridConfigurator $gridConfigurator)
     {
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $configuratorFactory->getConfigurator(GridConfigurator::class);

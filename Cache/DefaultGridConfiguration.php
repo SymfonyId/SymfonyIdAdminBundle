@@ -48,5 +48,6 @@ class DefaultGridConfiguration implements DefaultConfigurationInterface
             'sort' => $gridConfiguration->getColumn(),
         ));
         $gridConfigurator->setGrid($grid);
+        $configuratorFactory->addConfigurator($gridConfigurator);
     }
 }

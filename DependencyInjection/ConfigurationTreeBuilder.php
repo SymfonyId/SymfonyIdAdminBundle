@@ -59,7 +59,7 @@ class ConfigurationTreeBuilder
                     ->cannotBeEmpty()
                     ->prototype('scalar')->end()
                 ->end()
-                ->arrayNode('filter')
+                ->arrayNode('filters')
                     ->isRequired()
                     ->cannotBeEmpty()
                     ->prototype('scalar')->end()

@@ -54,5 +54,6 @@ class DefaultCrudConfiguration implements DefaultConfigurationInterface
             'allowDelete' => $crudConfiguration->isAllowDelete(),
         ));
         $crudConfigurator->setCrud($crud);
+        $configuratorFactory->addConfigurator($crudConfigurator);
     }
 }

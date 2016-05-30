@@ -165,6 +165,9 @@
             <call method="setKernel">
                 <argument type="service" id="kernel" />
             </call>
+            <call method="setGridFilters">
+                <argument>%symfonyid.admin.filters%</argument>
+            </call>
 
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="255" />
         </service>

@@ -58,7 +58,7 @@ class ParameterBuilder
         $this->containerBuilder->setParameter($alias.'.admin.profile_fields', $config['profile_fields']);
         $this->containerBuilder->setParameter($alias.'.admin.identifier', $config['identifier']);
         $this->containerBuilder->setParameter($alias.'.admin.max_records', $config['max_records']);
-        $this->containerBuilder->setParameter($alias.'.admin.filter', $config['filter']);
+        $this->containerBuilder->setParameter($alias.'.admin.filters', $config['filters']);
         $this->containerBuilder->setParameter($alias.'.admin.date_time_format', $config['date_time_format']);
         $this->containerBuilder->setParameter($alias.'.admin.translation_domain', $config['translation_domain']);
 

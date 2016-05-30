@@ -13,7 +13,7 @@ symfonyid_admin:
     driver: 'orm' #odm or both
     translation_domain: 'SymfonyIdAdminBundle'
     profile_fields: ['full_name', 'username', 'email', 'roles', 'enabled']
-    filter: ['name']
+    filters: ['name']
     number_format:
         decimal_precision: 0
         decimal_separator: ','

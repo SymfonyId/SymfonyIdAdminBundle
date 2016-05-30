@@ -32,12 +32,16 @@
             <call method="setTemplate">
                 <argument type="service" id="symfonyid.admin.annotation.template" />
             </call>
+
+            <tag name="symfonyid.default" />
         </service>
 
         <service id="symfonyid.admin.cache.default_grid_configuration" class="SymfonyId\AdminBundle\Cache\DefaultGridConfiguration">
             <call method="setGridFilters">
-                <argument>%symfonyid.admin.filter%</argument>
+                <argument>%symfonyid.admin.filters%</argument>
             </call>
+
+            <tag name="symfonyid.default" />
         </service>
 
         <service id="symfonyid.admin.cache.profile_controller_cache_warmer" class="SymfonyId\AdminBundle\Cache\ProfileControllerCacheWarmer">
@@ -61,6 +65,9 @@
             <argument type="service" id="symfonyid.admin.cache.configuration_cache_writer" />
             <argument type="service" id="symfonyid.admin.cache.default_configuration_factory" />
 
+            <call method="setTemplate">
+                <argument type="service" id="symfonyid.admin.annotation.template" />
+            </call>
             <call method="setForm">
                 <argument>%symfonyid.admin.user.user_form%</argument>
             </call>
