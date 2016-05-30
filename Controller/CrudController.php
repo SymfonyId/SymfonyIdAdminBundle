@@ -250,14 +250,16 @@ abstract class CrudController extends AbstractController
 
         $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_READ);
 
-        $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
-        $this->isGrantedDownloadOr404Error($driver);
+        $modelClass = $crudConfigurator->getCrud()->getModelClass();
+        $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($modelClass);
+        $this->isGrantedDownloadOr404Error($driver, $modelClass);
 
         $dataExporter = $this->get('symfonyid.admin.export.data_exporter');
+        $dataExporter->setModelClass($modelClass);
 
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $configuratorFactory->getConfigurator(GridConfigurator::class);
-        $reflectionModel = new \ReflectionClass($crudConfigurator->getCrud()->getModelClass());
+        $reflectionModel = new \ReflectionClass($modelClass);
 
         return $dataExporter->exportToExcel($driver, $gridConfigurator->getColumns($reflectionModel));
     }
@@ -418,12 +420,14 @@ abstract class CrudController extends AbstractController
 
     /**
      * @param Driver $driver
+     * @param string $modelClass
      *
      * @return bool
      */
-    private function isGrantedDownloadOr404Error(Driver $driver)
+    private function isGrantedDownloadOr404Error(Driver $driver, $modelClass)
     {
         $dataExporter = $this->get('symfonyid.admin.export.data_exporter');
+        $dataExporter->setModelClass($modelClass);
         $translator = $this->get('translator');
         $translationDomain = $this->getParameter('symfonyid.admin.translation_domain');
 

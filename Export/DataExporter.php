@@ -115,7 +115,7 @@ class DataExporter
 
         $this->managerFactory->setModelClass($this->modelClass);
         /** @var ModelInterface $record */
-        foreach ($this->managerFactory->getManager($driver)->paginate(0, $this->maxRecords) as $record) {
+        foreach ($this->managerFactory->getManager($driver)->paginate(1, $this->maxRecords) as $record) {
             $temp = array();
             foreach ($columns as $column) {
                 $temp[] = MethodInvoker::invokeGet($record, $column);
