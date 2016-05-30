@@ -12,7 +12,6 @@ symfonyid_admin:
     upload_dir: 'uploads'
     driver: 'orm' #odm or both
     translation_domain: 'SymfonyIdAdminBundle'
-    profile_fields: ['full_name', 'username', 'email', 'roles', 'enabled']
     filters: ['name']
     number_format:
         decimal_precision: 0
@@ -22,9 +21,10 @@ symfonyid_admin:
         form_class: 'symfonyid.admin.form.user_form'
         model_class: 'AppBundle\Entity\User'
         auto_enable: true
-        show_fields: ['full_name', 'username', 'email', 'roles', 'enabled']
-        grid_columns: ['full_name', 'username', 'email', 'roles', 'enabled']
-        filters: ['full_name', 'username']
+        show_fields: ['fullName', 'username', 'email', 'roles', 'enabled']
+        grid_columns: ['fullName', 'username', 'email', 'roles', 'enabled']
+        profile_fields: ['fullName', 'username', 'email', 'roles', 'enabled']
+        filters: ['fullName', 'username']
         password_form: 'symfonyid.admin.form.change_password_form'
     themes:
         dashboard: 'SymfonyIdAdminBundle:Index:index.html.twig'
