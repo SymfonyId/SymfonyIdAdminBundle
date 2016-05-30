@@ -24,19 +24,6 @@ class MenuLoaderFactory
     private $menuLoaders = array();
 
     /**
-     * @var string
-     */
-    private $menu;
-
-    /**
-     * @param string $menu
-     */
-    public function __construct($menu)
-    {
-        $this->menu = $menu;
-    }
-
-    /**
      * @param string              $serviceId
      * @param MenuLoaderInterface $menuLoader
      */
@@ -46,14 +33,16 @@ class MenuLoaderFactory
     }
 
     /**
+     * @param string $menu
+     *
      * @return array
      */
-    public function getMenuItems()
+    public function getMenuItems($menu)
     {
-        if (!in_array($this->menu, $this->menuLoaders)) {
-            throw new MenuNotFoundException($this->menu);
+        if (!in_array($menu, array_keys($this->menuLoaders))) {
+            throw new MenuNotFoundException($menu);
         }
-        $loader = $this->menuLoaders[$this->menu];
+        $loader = $this->menuLoaders[$menu];
 
         return $loader->getMenuItems();
     }

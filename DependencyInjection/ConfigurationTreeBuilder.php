@@ -68,6 +68,21 @@ class ConfigurationTreeBuilder
         ;
     }
 
+    private function buildMenuConfiguration(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+                ->arrayNode('menu')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('name')->defaultValue('symfonyid_menu')->end()
+                        ->scalarNode('loader')->defaultValue('symfonyid.admin.menu.menu_loader')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
     /**
      * @param ArrayNodeDefinition $rootNode
      */

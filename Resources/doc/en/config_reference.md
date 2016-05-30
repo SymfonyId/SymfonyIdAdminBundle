@@ -6,7 +6,9 @@ symfonyid_admin:
     identifier: 'id'
     max_records: 1000
     date_time_format: 'd-m-Y'
-    menu: 'symfonyid_menu'
+    menu:
+        name: 'symfonyid_menu'
+        loader: 'symfonyid.admin.menu.menu_loader'
     upload_dir: 'uploads'
     driver: 'orm' #odm or both
     translation_domain: 'SymfonyIdAdminBundle'

@@ -55,6 +55,11 @@ class SymfonyIdMenuBuilder
     private $translationDomain;
 
     /**
+     * @var string
+     */
+    private $menu;
+
+    /**
      * @param MenuFactory                   $menuFactory
      * @param MenuLoaderFactory             $menuLoaderFactory
      * @param AuthorizationCheckerInterface $authorizationChecker
@@ -70,6 +75,14 @@ class SymfonyIdMenuBuilder
         $this->cacheHandler = $cacheHandler;
         $this->translator = $translator;
         $this->translationDomain = $translationDomain;
+    }
+
+    /**
+     * @param string $menu
+     */
+    public function setMenu($menu)
+    {
+        $this->menu = $menu;
     }
 
     /**
@@ -89,7 +102,7 @@ class SymfonyIdMenuBuilder
         if ($this->cacheHandler->hasCache($reflectionClass)) {
             $menuItems = require $this->cacheHandler->loadCache($reflectionClass);
         } else {
-            $menuItems = $this->menuLoaderFactory->getMenuItems();
+            $menuItems = $this->menuLoaderFactory->getMenuItems($this->menu);
             $this->cacheHandler->writeCache($reflectionClass, $menuItems);
         }
 

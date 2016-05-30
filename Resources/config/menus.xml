@@ -11,21 +11,23 @@
             <argument type="service" id="symfonyid.admin.cache.cache_handler" />
             <argument type="service" id="translator" />
             <argument>%symfonyid.admin.translation_domain%</argument>
+
+            <call method="setMenu">
+                <argument>%symfonyid.admin.menu.menu_loader%</argument>
+            </call>
             
             <tag name="knp_menu.menu_builder" method="createMenu" alias="symfonyid_menu" />
         </service>
 
-        <service id="symfonyid.admin.menu.menu_loader_factory" class="SymfonyId\AdminBundle\Menu\MenuLoaderFactory" >
-            <argument>%symfonyid.admin.menu%</argument>
-        </service>
+        <service id="symfonyid.admin.menu.menu_loader_factory" class="SymfonyId\AdminBundle\Menu\MenuLoaderFactory" />
 
-        <service id="symfonyid.admin.menu.default_menu_loader" class="SymfonyId\AdminBundle\Menu\DefaultMenuLoader" >
+        <service id="symfonyid.admin.menu.default_menu_loader" class="SymfonyId\AdminBundle\Menu\DefaultMenuLoader" alias="symfonyid.admin.menu.menu_loader">
             <argument type="service" id="router" />
             <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
             <argument type="service" id="translator" />
             <argument>%symfonyid.admin.translation_domain%</argument>
 
-            <tag name="symfonyid.menu" />
+            <tag name="symfonyid.menu"/>
         </service>
     </services>
 </container>
