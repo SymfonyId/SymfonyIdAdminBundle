@@ -131,6 +131,12 @@
             <call method="setKernel">
                 <argument type="service" id="kernel" />
             </call>
+            <call method="setFormClass">
+                <argument>%symfonyid.admin.user.password_form%</argument>
+            </call>
+            <call method="setShowFields">
+                <argument>%symfonyid.admin.user.profile_fields%</argument>
+            </call>
 
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
         </service>

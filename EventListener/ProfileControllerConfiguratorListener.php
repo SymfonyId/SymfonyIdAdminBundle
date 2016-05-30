@@ -86,7 +86,11 @@ class ProfileControllerConfiguratorListener implements ConfigurationAwareInterfa
             'allowShow' => $crudConfiguration->isAllowShow(),
             'allowDelete' => $crudConfiguration->isAllowDelete(),
         ));
-
         $crudConfigurator->setCrud($crud);
+        $configuratorFactory->addConfigurator($crudConfigurator);
+        
+        $controller->setConfiguratorFactory($configuratorFactory);
+        $controller->setCacheHandler($this->cacheHandler);
+        $controller->setKernel($this->kernel);
     }
 }

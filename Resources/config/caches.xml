@@ -53,7 +53,7 @@
                 <argument>%symfonyid.admin.themes.change_password%</argument>
             </call>
             <call method="setShowFields">
-                <argument>%symfonyid.admin.profile_fields%</argument>
+                <argument>%symfonyid.admin.user.profile_fields%</argument>
             </call>
 
             <tag name="kernel.cache_warmer" />

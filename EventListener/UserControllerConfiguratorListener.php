@@ -139,5 +139,6 @@ class UserControllerConfiguratorListener implements CrudControllerListenerAwareI
             'sort' => empty($this->gridSorters) ? $gridConfiguration->getColumn() : new Sort(array('value' => $this->gridSorters)),
         ));
         $gridConfigurator->setGrid($grid);
+        $configuratorFactory->addConfigurator($gridConfigurator);
     }
 }

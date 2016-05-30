@@ -55,7 +55,6 @@ class ParameterBuilder
         $this->containerBuilder->setParameter($alias.'.admin.per_page', $config['per_page']);
         $this->containerBuilder->setParameter($alias.'.admin.menu.menu_name', $config['menu']['name']);
         $this->containerBuilder->setParameter($alias.'.admin.menu.menu_loader', $config['menu']['loader']);
-        $this->containerBuilder->setParameter($alias.'.admin.profile_fields', $config['profile_fields']);
         $this->containerBuilder->setParameter($alias.'.admin.identifier', $config['identifier']);
         $this->containerBuilder->setParameter($alias.'.admin.max_records', $config['max_records']);
         $this->containerBuilder->setParameter($alias.'.admin.filters', $config['filters']);
@@ -112,6 +111,7 @@ class ParameterBuilder
         $this->containerBuilder->setParameter($alias.'.admin.user.grid_columns', $config['user']['grid_columns']);
         $this->containerBuilder->setParameter($alias.'.admin.user.grid_filters', $config['user']['filters']);
         $this->containerBuilder->setParameter($alias.'.admin.user.password_form', $config['user']['password_form']);
+        $this->containerBuilder->setParameter($alias.'.admin.user.profile_fields', $config['user']['profile_fields']);
         $this->containerBuilder->setParameter($alias.'.admin.user.default_avatar', 'bundles/symfonianindonesiaadmin/img/apple-icon-114x114.png');
     }
 }
