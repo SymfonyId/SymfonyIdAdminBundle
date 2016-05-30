@@ -68,6 +68,7 @@ trait ConfigurationAwareTrait
         if (!$this->isProduction()) {
             return $this->configuratorFactory;
         }
+
         $this->configuratorFactory = $this->fetchFromCache($controllerClass);
 
         return $this->configuratorFactory;
@@ -86,7 +87,61 @@ trait ConfigurationAwareTrait
             return $this->configuratorFactory;
         }
 
-        return require $this->cacheHandler->loadCache($reflectionController);
+        return $this->bind(require $this->cacheHandler->loadCache($reflectionController));
+    }
+
+    /**
+     * @param ConfiguratorInterface[] $configurations
+     *
+     * @return ConfiguratorFactory
+     */
+    private function bind(array $configurations)
+    {
+        $configuratorFactory = clone $this->configuratorFactory;
+
+        if (isset($configurations['crud'])) {
+            /** @var CrudConfigurator $crudConfigurator */
+            $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
+            $crudConfigurator->setCrud($configurations['crud']);
+            $configuratorFactory->addConfigurator($crudConfigurator);
+        }
+
+        if (isset($configurations['driver'])) {
+            /** @var DriverConfigurator $driverConfigurator */
+            $driverConfigurator = $configuratorFactory->getConfigurator(DriverConfigurator::class);
+            $driverConfigurator->setDriver($configurations['driver']);
+            $configuratorFactory->addConfigurator($driverConfigurator);
+        }
+
+        if (isset($configurations['grid'])) {
+            /** @var GridConfigurator $gridConfigurator */
+            $gridConfigurator = $configuratorFactory->getConfigurator(GridConfigurator::class);
+            $gridConfigurator->setGrid($configurations['grid']);
+            $configuratorFactory->addConfigurator($gridConfigurator);
+        }
+
+        if (isset($configurations['page'])) {
+            /** @var PageConfigurator $pageConfigurator */
+            $pageConfigurator = $configuratorFactory->getConfigurator(PageConfigurator::class);
+            $pageConfigurator->setPage($configurations['page']);
+            $configuratorFactory->addConfigurator($pageConfigurator);
+        }
+
+        if (isset($configurations['plugin'])) {
+            /** @var PluginConfigurator $pluginConfigurator */
+            $pluginConfigurator = $configuratorFactory->getConfigurator(PluginConfigurator::class);
+            $pluginConfigurator->setPlugin($configurations['plugin']);
+            $configuratorFactory->addConfigurator($pluginConfigurator);
+        }
+
+        if (isset($configurations['util'])) {
+            /** @var UtilConfigurator $utilConfigurator */
+            $utilConfigurator = $configuratorFactory->getConfigurator(UtilConfigurator::class);
+            $utilConfigurator->setUtil($configurations['util']);
+            $configuratorFactory->addConfigurator($utilConfigurator);
+        }
+
+        return $configuratorFactory;
     }
 
     /**
