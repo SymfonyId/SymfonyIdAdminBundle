@@ -8,7 +8,7 @@ symfonyid_admin:
     date_time_format: 'd-m-Y'
     menu:
         name: 'symfonyid_menu'
-        loader: 'symfonyid.admin.menu.menu_loader'
+        loader: 'symfonyid.admin.menu.default_menu_loader'
     upload_dir: 'uploads'
     driver: 'orm' #odm or both
     translation_domain: 'SymfonyIdAdminBundle'

@@ -187,7 +187,7 @@
                 <argument>%symfonyid.admin.date_time_format%</argument>
             </call>
             <call method="setMenu">
-                <argument>%symfonyid.admin.menu%</argument>
+                <argument>%symfonyid.admin.menu.menu_name%</argument>
             </call>
             <call method="setLocale">
                 <argument>%locale%</argument>

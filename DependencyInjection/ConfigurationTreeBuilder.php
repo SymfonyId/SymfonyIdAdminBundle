@@ -26,6 +26,7 @@ class ConfigurationTreeBuilder
     public function build(ArrayNodeDefinition $rootNode)
     {
         $this->buildRootConfiguration($rootNode);
+        $this->buildMenuConfiguration($rootNode);
         $this->buildNumberFormatConfiguration($rootNode);
         $this->buildUserConfiguration($rootNode);
         $this->buildThemeConfiguration($rootNode);
@@ -44,7 +45,6 @@ class ConfigurationTreeBuilder
                 ->scalarNode('identifier')->defaultValue('id')->end()
                 ->integerNode('max_records')->defaultValue(1000)->end()
                 ->scalarNode('date_time_format')->defaultValue('d-m-Y')->end()
-                ->scalarNode('menu')->defaultValue('symfonyid_menu')->end()
                 ->scalarNode('upload_dir')->defaultValue('uploads')->end()
                 ->enumNode('driver')
                     ->values(array(Driver::ORM, Driver::ODM, Driver::BOTH))
