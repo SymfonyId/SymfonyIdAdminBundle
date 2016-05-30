@@ -133,12 +133,12 @@ final class ProfileController extends Controller implements ConfigurationAwareIn
         $user = $this->getUser();
         /** @var \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface $encoder */
         $encoder = $encoderFactory->getEncoder($user);
-        $password = $encoder->encodePassword($form->get('current_password')->getData(), $user->getSalt());
 
-        if ($password !== $user->getPassword()) {
+        if (!$encoder->isPasswordValid($user->getPassword(), $form->get('current_password')->getData(), $user->getSalt())) {
             /** @var View $view */
             $view = $this->get('symfonyid.admin.view.view');
             $view->setParam('current_password_invalid', true);
+            $view->setParam('form', $form->createView());
 
             return $this->render('SymfonyIdAdminBundle:Index:change_password.html.twig', $view->getParams());
         }
