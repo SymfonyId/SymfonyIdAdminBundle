@@ -61,7 +61,7 @@ class ControllerGenerator extends AbstractGenerator
             'entity' => $entity,
             'entity_class' => strtolower($entityClass),
             'title' => ucwords($entityClass),
-            'form_class' => str_replace('Entity', 'Form', $entity),
+            'form_class' => str_replace('Entity', 'Form\\Type', $entity),
             'controller_class' => $this->className,
         ));
     }
