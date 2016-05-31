@@ -60,8 +60,8 @@ class YamlMenuLoader implements MenuLoaderInterface
             } else {
                 $menuItems[$config['route']] = array(
                     'name' => $name,
-                    'icon' => $config['icon'],
-                    'extra' => $config['extra'],
+                    'icon' => isset($config['icon']) ? $config['icon'] : 'fa-bars',
+                    'extra' => isset($config['extra']) ? $config['extra'] : '',
                 );
             }
         }

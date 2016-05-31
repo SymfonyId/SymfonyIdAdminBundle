@@ -136,13 +136,15 @@ class SymfonyIdMenuBuilder
      */
     private function addChildMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', array $options = array())
     {
-        $options = array_merge($options, array('class' => 'treeview'));
+        $options = $options.' treeview';
 
         return $parentMenu->addChild($menuLabel, array(
             'route' => $routeName,
             'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
             'extras' => array('safe_label' => true),
-            'attributes' => $options,
+            'attributes' => array(
+                'class' => $options,
+            ),
         ));
     }
 
