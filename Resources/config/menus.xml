@@ -16,7 +16,7 @@
             <argument>%symfonyid.admin.menu.menu_loader%</argument>
         </call>
         <call method="setYmlPath">
-            <argument>%symfonyid.admin.menu.menu_loader%</argument>
+            <argument>%symfonyid.admin.menu.menu_path%</argument>
         </call>
 
         <tag name="knp_menu.menu_builder" method="createMenu" alias="symfonyid_menu" />

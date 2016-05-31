@@ -56,14 +56,11 @@ class YamlMenuLoader implements MenuLoaderInterface
         $menuItems = array();
         foreach ($menus as $name => $config) {
             if (array_key_exists('child', $config)) {
-                $this->parseMenu($config['child']);
-            } else {
-                $menuItems[$config['route']] = array(
-                    'name' => $name,
-                    'icon' => isset($config['icon']) ? $config['icon'] : 'fa-bars',
-                    'extra' => isset($config['extra']) ? $config['extra'] : '',
-                );
+                $menuItems[$config['route']]['child'] = $this->parseMenu($config['child']);
             }
+            $menuItems[$config['route']]['name'] = $name;
+            $menuItems[$config['route']]['icon'] = array_key_exists('icon', $config) ? $config['icon'] : 'fa-bars';
+            $menuItems[$config['route']]['extra'] = array_key_exists('extra', $config) ? $config['extra'] : '';
         }
 
         return $menuItems;

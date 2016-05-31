@@ -130,20 +130,20 @@ class SymfonyIdMenuBuilder
      * @param string        $routeName
      * @param string        $menuLabel
      * @param string        $icon
-     * @param array         $options
+     * @param string        $classCss
      *
      * @return ItemInterface
      */
-    private function addChildMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', array $options = array())
+    private function addChildMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', $classCss = '')
     {
-        $options = $options.' treeview';
+        $classCss = $classCss.' treeview';
 
         return $parentMenu->addChild($menuLabel, array(
             'route' => $routeName,
             'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
             'extras' => array('safe_label' => true),
             'attributes' => array(
-                'class' => $options,
+                'class' => $classCss,
             ),
         ));
     }
@@ -200,10 +200,10 @@ class SymfonyIdMenuBuilder
     {
         foreach ($menuItems as $route => $item) {
             if (array_key_exists('child', $item)) {
-                $menu = $this->addChildMenu($parentMenu, $route, $item['name'], $item['icon'], $item['extra_css']);
+                $menu = $this->addChildMenu($parentMenu, $route, $item['name'], $item['icon'], $item['extra']);
                 $this->generateMenu($menu, $item['child']);
             } else {
-                $this->addChildMenu($parentMenu, $route, $item['name'], $item['icon'], $item['extra_css']);
+                $this->addChildMenu($parentMenu, $route, $item['name'], $item['icon'], $item['extra']);
             }
         }
     }
