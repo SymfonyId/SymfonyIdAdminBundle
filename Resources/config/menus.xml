@@ -34,6 +34,7 @@
     </service>
 
     <service id="symfonyid.admin.menu.yaml_menu_loader" class="SymfonyId\AdminBundle\Menu\YamlMenuLoader">
+        <argument type="service" id="kernel" />
 
         <tag name="symfonyid.menu"/>
     </service>
