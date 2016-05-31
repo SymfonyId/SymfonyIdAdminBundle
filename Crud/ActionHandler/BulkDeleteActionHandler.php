@@ -78,27 +78,28 @@ class BulkDeleteActionHandler extends AbstractActionHandler
             $message = 'message.delete_bulk';
         }
 
-        return new JsonResponse(array(
-            'status' => empty($output['data']) ? false : true,
-            'message' => $this->translator->trans($message, array(
-                '%count%' => count($output['data']),
-                '%deleted%' => $output['count'],
-                '%data%' => implode(', ', $output['data']),
-            ), $this->translationDomain),
-        ));
+        $this->view->setParam('status', empty($output['data']) ? false : true);
+        $this->view->setParam('message', $this->translator->trans($message, array(
+            '%count%' => count($output['data']),
+            '%deleted%' => $output['count'],
+            '%data%' => implode(', ', $output['data']),
+        ), $this->translationDomain));
+
+        return $this->view;
     }
 
     /**
      * @param Driver $driver
+     * @param $modelClass
      *
      * @return array
      */
-    private function doBulkDelete(Driver $driver)
+    private function doBulkDelete(Driver $driver, $modelClass)
     {
         $isDeleted = array();
         $countData = 0;
         foreach ($this->request->get('id', array()) as $id) {
-            $model = $this->crudOperationHandler->find($driver, $id);
+            $model = $this->crudOperationHandler->find($driver, $modelClass, $id);
             if (!$model instanceof BulkDeletableInterface) {
                 return;
             }
