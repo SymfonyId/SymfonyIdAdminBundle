@@ -32,7 +32,27 @@ class Menu
     /**
      * @var string
      */
-    private $extraCss;
+    private $extra;
+
+    /**
+     * @param array $data
+     */
+    public function __construct(array $data = array())
+    {
+        if (isset($data['value'])) {
+            $this->icon = $data['value'];
+        }
+
+        if (isset($data['icon'])) {
+            $this->icon = $data['icon'];
+        }
+
+        if (isset($data['extra'])) {
+            $this->extra = $data['extra'];
+        }
+
+        unset($data);
+    }
 
     /**
      * @return string
@@ -45,8 +65,8 @@ class Menu
     /**
      * @return string
      */
-    public function getExtraCss()
+    public function getExtra()
     {
-        return $this->extraCss;
+        return $this->extra;
     }
 }

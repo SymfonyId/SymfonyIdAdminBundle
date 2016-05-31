@@ -88,7 +88,7 @@ class DefaultMenuLoader implements MenuLoaderInterface
                         $menuItems[$name] = array(
                             'name' => $this->translator->trans(sprintf('menu.label.%s', strtolower(str_replace('Controller', '', $reflectionController->getShortName()))), array(), $this->translationDomain),
                             'icon' => $menu->getIcon(),
-                            'extra_css' => $menu->getExtraCss(),
+                            'extra' => $menu->getExtra(),
                         );
                     }
                 }

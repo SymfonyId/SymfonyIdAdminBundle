@@ -52,6 +52,9 @@ class Grid
      */
     private $formatNumber = true;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data = array())
     {
         if (isset($data['value'])) {

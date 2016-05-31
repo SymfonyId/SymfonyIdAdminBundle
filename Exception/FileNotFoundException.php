@@ -14,10 +14,10 @@ namespace SymfonyId\AdminBundle\Exception;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class MenuNotFoundException extends \InvalidArgumentException
+class FileNotFoundException extends \InvalidArgumentException
 {
-    public function __construct($menu, $code = 0, \Exception $previous = null)
+    public function __construct($fileName, $code = 0, \Exception $previous = null)
     {
-        parent::__construct(sprintf('Menu with name "%s" not found.', $menu), $code, $previous);
+        parent::__construct(sprintf('File "%s" not found', $fileName), $code, $previous);
     }
 }

@@ -12,7 +12,10 @@
         <argument type="service" id="translator" />
         <argument>%symfonyid.admin.translation_domain%</argument>
 
-        <call method="setMenu">
+        <call method="setMenuLoader">
+            <argument>%symfonyid.admin.menu.menu_loader%</argument>
+        </call>
+        <call method="setYmlPath">
             <argument>%symfonyid.admin.menu.menu_loader%</argument>
         </call>
 
@@ -26,6 +29,11 @@
         <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
         <argument type="service" id="translator" />
         <argument>%symfonyid.admin.translation_domain%</argument>
+
+        <tag name="symfonyid.menu"/>
+    </service>
+
+    <service id="symfonyid.admin.menu.yaml_menu_loader" class="SymfonyId\AdminBundle\Menu\YamlMenuLoader">
 
         <tag name="symfonyid.menu"/>
     </service>

@@ -9,6 +9,7 @@ symfonyid_admin:
     menu:
         name: 'symfonyid_menu'
         loader: 'symfonyid.admin.menu.default_menu_loader'
+        yaml_path: ~
     upload_dir: 'uploads'
     driver: 'orm' #odm or both
     translation_domain: 'SymfonyIdAdminBundle'

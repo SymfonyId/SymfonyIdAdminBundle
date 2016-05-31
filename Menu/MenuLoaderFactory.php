@@ -11,7 +11,7 @@
 
 namespace SymfonyId\AdminBundle\Menu;
 
-use SymfonyId\AdminBundle\Exception\MenuNotFoundException;
+use SymfonyId\AdminBundle\Exception\MenuLoaderNotFoundException;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -34,15 +34,19 @@ class MenuLoaderFactory
 
     /**
      * @param string $menu
+     * @param string $ymlPath
      *
      * @return array
      */
-    public function getMenuItems($menu)
+    public function getMenuItems($menu, $ymlPath = null)
     {
         if (!in_array($menu, array_keys($this->menuLoaders))) {
-            throw new MenuNotFoundException($menu);
+            throw new MenuLoaderNotFoundException($menu);
         }
         $loader = $this->menuLoaders[$menu];
+        if ($loader instanceof YamlMenuLoader) {
+            $loader->setYmlPath($ymlPath);
+        }
 
         return $loader->getMenuItems();
     }

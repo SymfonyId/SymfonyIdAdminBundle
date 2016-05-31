@@ -11,7 +11,6 @@
 
 namespace SymfonyId\AdminBundle\Crud\ActionHandler;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Translation\TranslatorInterface;
 use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Crud\CrudOperationHandler;
