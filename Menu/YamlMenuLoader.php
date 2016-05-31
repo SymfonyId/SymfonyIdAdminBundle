@@ -11,6 +11,7 @@
 
 namespace SymfonyId\AdminBundle\Menu;
 
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Yaml\Yaml;
 use SymfonyId\AdminBundle\Exception\FileNotFoundException;
 
@@ -20,9 +21,22 @@ use SymfonyId\AdminBundle\Exception\FileNotFoundException;
 class YamlMenuLoader implements MenuLoaderInterface
 {
     /**
+     * @var KernelInterface
+     */
+    private $kernel;
+
+    /**
      * @var string
      */
     private $ymlPath;
+
+    /**
+     * @param KernelInterface $kernel
+     */
+    public function __construct(KernelInterface $kernel)
+    {
+        $this->kernel = $kernel;
+    }
 
     /**
      * @param string $ymlPath
@@ -41,7 +55,7 @@ class YamlMenuLoader implements MenuLoaderInterface
             new FileNotFoundException($this->ymlPath);
         }
 
-        $menus = Yaml::parse(file_get_contents($this->ymlPath));
+        $menus = Yaml::parse(file_get_contents($this->kernel->locateResource($this->ymlPath)));
 
         return $this->parseMenu($menus);
     }
