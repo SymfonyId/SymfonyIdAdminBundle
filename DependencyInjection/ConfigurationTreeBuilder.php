@@ -72,6 +72,7 @@ class ConfigurationTreeBuilder
                     ->children()
                         ->scalarNode('name')->defaultValue('symfonyid_menu')->end()
                         ->scalarNode('loader')->defaultValue('symfonyid.admin.menu.menu_loader')->end()
+                        ->scalarNode('path')->defaultValue(null)->end()
                     ->end()
                 ->end()
             ->end()

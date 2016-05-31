@@ -55,6 +55,7 @@ class ParameterBuilder
         $this->containerBuilder->setParameter($alias.'.admin.per_page', $config['per_page']);
         $this->containerBuilder->setParameter($alias.'.admin.menu.menu_name', $config['menu']['name']);
         $this->containerBuilder->setParameter($alias.'.admin.menu.menu_loader', $config['menu']['loader']);
+        $this->containerBuilder->setParameter($alias.'.admin.menu.menu_path', $config['menu']['path']);
         $this->containerBuilder->setParameter($alias.'.admin.identifier', $config['identifier']);
         $this->containerBuilder->setParameter($alias.'.admin.max_records', $config['max_records']);
         $this->containerBuilder->setParameter($alias.'.admin.filters', $config['filters']);
