@@ -39,6 +39,11 @@ class BulkDeleteActionHandler extends AbstractActionHandler
     private $translationDomain;
 
     /**
+     * @var string
+     */
+    private $modelClass;
+
+    /**
      * @param CrudOperationHandler $crudOperationHandler
      * @param TranslatorInterface  $translator
      * @param string               $translationDomain
@@ -51,13 +56,21 @@ class BulkDeleteActionHandler extends AbstractActionHandler
     }
 
     /**
+     * @param string $modelClass
+     */
+    public function setModelClass($modelClass)
+    {
+        $this->modelClass = $modelClass;
+    }
+
+    /**
      * @param Driver $driver
      *
      * @return View
      */
     public function getView(Driver $driver)
     {
-        $output = $this->doBulkDelete($driver);
+        $output = $this->doBulkDelete($driver, $this->modelClass);
 
         if (0 === count($output['data'])) {
             $message = 'message.delete_bulk_failed';

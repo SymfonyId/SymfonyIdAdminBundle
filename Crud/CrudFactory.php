@@ -217,16 +217,19 @@ class CrudFactory
     }
 
     /**
+     * @param string $modelClass
+     *
      * @return JsonResponse
      *
      * @throws \SymfonyId\AdminBundle\Exception\RuntimeException
      */
-    public function bulkDelete()
+    public function bulkDelete($modelClass)
     {
         /** @var BulkDeleteActionHandler $viewHandler */
         $viewHandler = $this->actionHandlers[BulkDeleteActionHandler::class];
         $viewHandler->setView($this->view);
         $viewHandler->setRequest($this->request);
+        $viewHandler->setModelClass($modelClass);
 
         $view = $viewHandler->getView($this->driver);
 

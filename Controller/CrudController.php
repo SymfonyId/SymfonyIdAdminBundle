@@ -74,6 +74,7 @@ abstract class CrudController extends AbstractController
 
         $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
         $crudFactory = $this->get('symfonyid.admin.crud.crud_factory');
+        $crudFactory->setView($this->get('symfonyid.admin.view.view'));
         $crudFactory->setDriver($driver);
         $crudFactory->setRequest($request);
 
@@ -186,10 +187,11 @@ abstract class CrudController extends AbstractController
 
         $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
         $crudFactory = $this->get('symfonyid.admin.crud.crud_factory');
+        $crudFactory->setView($this->get('symfonyid.admin.view.view'));
         $crudFactory->setDriver($driver);
         $crudFactory->setRequest($request);
 
-        return $crudFactory->bulkDelete();
+        return $crudFactory->bulkDelete($crudConfigurator->getCrud()->getModelClass());
     }
 
     /**

@@ -126,7 +126,7 @@
                         url = temp.join('/');
                     }
 
-                    url = window.location.protocol + '//' + window.location.host + url;
+                    url = window.location.protocol + '//' + window.location.host + '/' + url + '/';
                     jQuery.ajax({
                         url: url,
                         type: 'DELETE',
