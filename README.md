@@ -32,7 +32,7 @@
 
 #### Installation####
 
-Read: Documentation [English version](Resources/doc/en/instalation.md)
+Read: Documentation [English version](Resources/doc/en/installation.md)
 
 #### Contributors####
  
