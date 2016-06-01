@@ -49,7 +49,7 @@ class YamlMenuLoader implements MenuLoaderInterface
     /**
      * @return array
      */
-    public function getMenuItems()
+    public function getMenu()
     {
         if (!file_exists($this->ymlPath)) {
             new FileNotFoundException($this->ymlPath);

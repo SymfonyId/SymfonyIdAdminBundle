@@ -17,7 +17,7 @@ namespace SymfonyId\AdminBundle\Menu;
 interface MenuLoaderInterface
 {
     /**
-     * @return array
+     * @return \Knp\Menu\ItemInterface
      */
-    public function getMenuItems();
+    public function getMenu();
 }
