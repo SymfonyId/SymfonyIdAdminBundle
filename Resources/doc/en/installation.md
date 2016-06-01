@@ -19,11 +19,11 @@ The essiest way to install is use [SymfonyIdSkeleton](https://github.com/ihsanud
 + Add dependencies
 
 ```lang=php
-        "knplabs/knp-paginator-bundle": "^2.5@dev",
-        "knplabs/knp-menu-bundle": "^2.1@dev",
-        "friendsofsymfony/user-bundle": "^2.0@dev",
-        "friendsofsymfony/jsrouting-bundle": "^2.0@dev"
-        "symfonyid/symfonyid-admin-bundle": "^0.7"
+    "knplabs/knp-paginator-bundle": "^2.5@dev",
+    "knplabs/knp-menu-bundle": "^2.1@dev",
+    "friendsofsymfony/user-bundle": "^2.0@dev",
+    "friendsofsymfony/jsrouting-bundle": "^2.0@dev"
+    "symfonyid/symfonyid-admin-bundle": "^0.7"
 ````
 
 + Run composer update
