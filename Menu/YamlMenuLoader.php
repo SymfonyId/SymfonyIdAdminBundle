@@ -19,6 +19,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Yaml\Yaml;
 use SymfonyId\AdminBundle\Cache\CacheHandler;
 use SymfonyId\AdminBundle\Exception\FileNotFoundException;
+use SymfonyId\AdminBundle\Exception\RuntimeException;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -113,15 +114,24 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
      * @param array $menus
      *
      * @return array
+     *
+     * @throws RuntimeException
      */
     private function parseMenu($menus)
     {
         $menuItems = array();
         foreach ($menus as $name => $config) {
+            if (array_key_exists('route', $config['route'])) {
+                throw new RuntimeException('Key "route" is required.');
+            }
+
+            $menuItems[$config['route']] = $config['route'];
             if (array_key_exists('child', $config)) {
                 $menuItems[$config['route']]['child'] = $this->parseMenu($config['child']);
             }
+            
             $menuItems[$config['route']]['name'] = $name;
+            $menuItems[$config['route']]['role'] = array_key_exists('role', $config) ? $config['role'] : 'ROLE_USER';
             $menuItems[$config['route']]['icon'] = array_key_exists('icon', $config) ? $config['icon'] : 'fa-bars';
             $menuItems[$config['route']]['extra'] = array_key_exists('extra', $config) ? $config['extra'] : '';
         }
@@ -159,11 +169,13 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
     private function generateMenu(ItemInterface $parentMenu, array $menuItems)
     {
         foreach ($menuItems as $route => $item) {
-            if (array_key_exists('child', $item)) {
-                $menu = $this->addChildMenu($parentMenu, $route, $item['name'], $item['icon'], $item['extra']);
-                $this->generateMenu($menu, $item['child']);
-            } else {
-                $this->addMenu($parentMenu, $route, $item['name'], $item['icon'], $item['extra']);
+            if ($this->authorizationChecker->isGranted($item['role'])) {
+                if (array_key_exists('child', $item)) {
+                    $menu = $this->addChildMenu($parentMenu, $route, $item['name'], $item['icon'], $item['extra']);
+                    $this->generateMenu($menu, $item['child']);
+                } else {
+                    $this->addMenu($parentMenu, $route, $item['name'], $item['icon'], $item['extra']);
+                }
             }
         }
     }
