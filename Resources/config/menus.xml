@@ -34,6 +34,11 @@
 
     <service id="symfonyid.admin.menu.yaml_menu_loader" class="SymfonyId\AdminBundle\Menu\YamlMenuLoader">
         <argument type="service" id="kernel" />
+        <argument type="service" id="knp_menu.factory" />
+        <argument type="service" id="symfonyid.admin.cache.cache_handler" />
+        <argument type="service" id="security.authorization_checker" />
+        <argument type="service" id="translator" />
+        <argument>%symfonyid.admin.translation_domain%</argument>
 
         <tag name="symfonyid.menu"/>
     </service>
