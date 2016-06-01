@@ -16,6 +16,7 @@ use Knp\Menu\MenuFactory;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Component\Yaml\Yaml;
 use SymfonyId\AdminBundle\Cache\CacheHandler;
 use SymfonyId\AdminBundle\Exception\FileNotFoundException;
@@ -121,20 +122,22 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
     {
         $menuItems = array();
         foreach ($menus as $name => $config) {
-            if (array_key_exists('route', $config['route'])) {
+            if (!array_key_exists('route', $config)) {
                 throw new RuntimeException('Key "route" is required.');
             }
 
-            $menuItems[$config['route']] = $config['route'];
+            $menuItems[$config['route']] = array();
             if (array_key_exists('child', $config)) {
                 $menuItems[$config['route']]['child'] = $this->parseMenu($config['child']);
             }
-            
-            $menuItems[$config['route']]['name'] = $name;
+
+            $menuItems[$config['route']]['label'] = $name;
             $menuItems[$config['route']]['role'] = array_key_exists('role', $config) ? $config['role'] : 'ROLE_USER';
             $menuItems[$config['route']]['icon'] = array_key_exists('icon', $config) ? $config['icon'] : 'fa-bars';
             $menuItems[$config['route']]['extra'] = array_key_exists('extra', $config) ? $config['extra'] : '';
         }
+
+        VarDumper::dump($menuItems);
 
         return $menuItems;
     }
@@ -150,8 +153,6 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
      */
     protected function addMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', $classCss = '')
     {
-        $classCss = $classCss.' treeview';
-
         return $parentMenu->addChild($menuLabel, array(
             'route' => $routeName,
             'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
@@ -171,10 +172,10 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
         foreach ($menuItems as $route => $item) {
             if ($this->authorizationChecker->isGranted($item['role'])) {
                 if (array_key_exists('child', $item)) {
-                    $menu = $this->addChildMenu($parentMenu, $route, $item['name'], $item['icon'], $item['extra']);
+                    $menu = $this->addParentMenu($parentMenu, $route, $item['label'], $item['icon'], $item['extra']);
                     $this->generateMenu($menu, $item['child']);
                 } else {
-                    $this->addMenu($parentMenu, $route, $item['name'], $item['icon'], $item['extra']);
+                    $this->addMenu($parentMenu, $route, $item['label'], $item['icon'], $item['extra']);
                 }
             }
         }
@@ -189,7 +190,18 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
      *
      * @return ItemInterface
      */
-    protected function addChildMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', $classCss = '')
+    private function addParentMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', $classCss = '')
     {
+        return $parentMenu->addChild($menuLabel, array(
+            'route' => $routeName,
+            'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span><i class="fa fa-angle-left pull-right"></i>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
+            'extras' => array('safe_label' => true),
+            'attributes' => array(
+                'class' => $classCss,
+            ),
+            'childrenAttributes' => array(
+                'class' => 'treeview-menu',
+            ),
+        ));
     }
 }

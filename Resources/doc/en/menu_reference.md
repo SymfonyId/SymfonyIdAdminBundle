@@ -9,5 +9,11 @@ menu_label:
             route: route_name_1
             icon: fa-bars
             role: ROLE_SUPER_ADMIN
-            extra:
+            extra: ~
+            child:
+                child_label_2:
+                    route: route_name_2
+                    icon: fa-bars
+                    role: ROLE_SUPER_ADMIN
+                    extra: ~
 ```
