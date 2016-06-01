@@ -16,7 +16,6 @@ use Knp\Menu\MenuFactory;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Component\Yaml\Yaml;
 use SymfonyId\AdminBundle\Cache\CacheHandler;
 use SymfonyId\AdminBundle\Exception\FileNotFoundException;
@@ -104,6 +103,7 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
             $menuItems = $this->cacheHandler->loadCache($reflection);
         } else {
             $menuItems = $this->parseMenu($menus);
+            $this->cacheHandler->writeCache($reflection, $menuItems);
         }
 
         $this->generateMenu($rootMenu, $menuItems);
@@ -136,8 +136,6 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
             $menuItems[$config['route']]['icon'] = array_key_exists('icon', $config) ? $config['icon'] : 'fa-bars';
             $menuItems[$config['route']]['extra'] = array_key_exists('extra', $config) ? $config['extra'] : '';
         }
-
-        VarDumper::dump($menuItems);
 
         return $menuItems;
     }

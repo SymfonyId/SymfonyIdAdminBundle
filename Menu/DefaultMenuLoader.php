@@ -124,6 +124,8 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
                     }
                 }
             }
+
+            $this->cacheHandler->writeCache($reflection, $menuItems);
         }
 
         $this->generateMenu($rootMenu, $menuItems);
