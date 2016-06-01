@@ -192,7 +192,7 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
     {
         return $parentMenu->addChild($menuLabel, array(
             'route' => $routeName,
-            'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span><i class="fa fa-angle-left pull-right"></i>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
+            'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span><i class="fa fa-angle-double-left pull-right"></i>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
             'extras' => array('safe_label' => true),
             'attributes' => array(
                 'class' => $classCss,
