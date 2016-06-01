@@ -38,7 +38,7 @@ class MenuLoaderFactory
      *
      * @return array
      */
-    public function getMenuItems($menu, $ymlPath = null)
+    public function getMenu($menu, $ymlPath = null)
     {
         if (!in_array($menu, array_keys($this->menuLoaders))) {
             throw new MenuLoaderNotFoundException($menu);
@@ -48,6 +48,6 @@ class MenuLoaderFactory
             $loader->setYmlPath($ymlPath);
         }
 
-        return $loader->getMenuItems();
+        return $loader->getMenu();
     }
 }

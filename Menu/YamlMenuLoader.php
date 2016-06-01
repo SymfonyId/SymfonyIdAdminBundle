@@ -11,14 +11,19 @@
 
 namespace SymfonyId\AdminBundle\Menu;
 
+use Knp\Menu\ItemInterface;
+use Knp\Menu\MenuFactory;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Yaml\Yaml;
+use SymfonyId\AdminBundle\Cache\CacheHandler;
 use SymfonyId\AdminBundle\Exception\FileNotFoundException;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class YamlMenuLoader implements MenuLoaderInterface
+class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
 {
     /**
      * @var KernelInterface
@@ -26,16 +31,46 @@ class YamlMenuLoader implements MenuLoaderInterface
     private $kernel;
 
     /**
+     * @var MenuFactory
+     */
+    private $menuFactory;
+
+    /**
+     * @var CacheHandler
+     */
+    private $cacheHandler;
+
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
+     * @var string
+     */
+    private $translationDomain;
+
+    /**
      * @var string
      */
     private $ymlPath;
 
     /**
-     * @param KernelInterface $kernel
+     * @param KernelInterface               $kernel
+     * @param MenuFactory                   $menuFactory
+     * @param CacheHandler                  $cacheHandler
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param TranslatorInterface           $translator
+     * @param string                        $translationDomain
      */
-    public function __construct(KernelInterface $kernel)
+    public function __construct(KernelInterface $kernel, MenuFactory $menuFactory, CacheHandler $cacheHandler, AuthorizationCheckerInterface $authorizationChecker, TranslatorInterface $translator, $translationDomain)
     {
         $this->kernel = $kernel;
+        $this->menuFactory = $menuFactory;
+        $this->cacheHandler = $cacheHandler;
+        $this->translator = $translator;
+        $this->translationDomain = $translationDomain;
+        parent::__construct($authorizationChecker);
     }
 
     /**
@@ -55,9 +90,23 @@ class YamlMenuLoader implements MenuLoaderInterface
             new FileNotFoundException($this->ymlPath);
         }
 
-        $menus = Yaml::parse(file_get_contents($this->kernel->locateResource($this->ymlPath)));
+        $rootMenu = $this->createRootMenu($this->menuFactory);
+        $this->addDefaultMenu($rootMenu);
+        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
+            $this->addAdminMenu($rootMenu);
+        }
 
-        return $this->parseMenu($menus);
+        $menus = Yaml::parse(file_get_contents($this->kernel->locateResource($this->ymlPath)));
+        $reflection = new \ReflectionObject($this);
+        if ($this->cacheHandler->hasCache($reflection)) {
+            $menuItems = $this->cacheHandler->loadCache($reflection);
+        } else {
+            $menuItems = $this->parseMenu($menus);
+        }
+
+        $this->generateMenu($rootMenu, $menuItems);
+
+        return $rootMenu;
     }
 
     /**
@@ -78,5 +127,57 @@ class YamlMenuLoader implements MenuLoaderInterface
         }
 
         return $menuItems;
+    }
+
+    /**
+     * @param ItemInterface $parentMenu
+     * @param string        $routeName
+     * @param string        $menuLabel
+     * @param string        $icon
+     * @param string        $classCss
+     *
+     * @return ItemInterface
+     */
+    protected function addMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', $classCss = '')
+    {
+        $classCss = $classCss.' treeview';
+
+        return $parentMenu->addChild($menuLabel, array(
+            'route' => $routeName,
+            'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
+            'extras' => array('safe_label' => true),
+            'attributes' => array(
+                'class' => $classCss,
+            ),
+        ));
+    }
+
+    /**
+     * @param ItemInterface $parentMenu
+     * @param array         $menuItems
+     */
+    private function generateMenu(ItemInterface $parentMenu, array $menuItems)
+    {
+        foreach ($menuItems as $route => $item) {
+            if (array_key_exists('child', $item)) {
+                $menu = $this->addChildMenu($parentMenu, $route, $item['name'], $item['icon'], $item['extra']);
+                $this->generateMenu($menu, $item['child']);
+            } else {
+                $this->addMenu($parentMenu, $route, $item['name'], $item['icon'], $item['extra']);
+            }
+        }
+    }
+
+    /**
+     * @param ItemInterface $parentMenu
+     * @param string        $routeName
+     * @param string        $menuLabel
+     * @param string        $icon
+     * @param string        $classCss
+     *
+     * @return ItemInterface
+     */
+    protected function addChildMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', $classCss = '')
+    {
     }
 }
