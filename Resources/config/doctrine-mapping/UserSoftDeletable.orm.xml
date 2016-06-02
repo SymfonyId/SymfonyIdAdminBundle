@@ -5,7 +5,7 @@
 
     <mapped-superclass name="SymfonyId\AdminBundle\User\UserSoftDeletable">
         <field name="isDeleted" column="is_deleted" type="boolean" />
-        <field name="deletedAt" column="deleted_at" type="timestamp" />
+        <field name="deletedAt" column="deleted_at" type="datetime" />
         <field name="deletedBy" column="deleted_by" type="string" />
     </mapped-superclass>
 </doctrine-mapping>
