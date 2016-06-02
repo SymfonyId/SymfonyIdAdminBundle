@@ -31,32 +31,32 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
     /**
      * @var MenuFactory
      */
-    private $menuFactory;
+    protected $menuFactory;
 
     /**
      * @var Router
      */
-    private $router;
+    protected $router;
 
     /**
      * @var CacheHandler
      */
-    private $cacheHandler;
+    protected $cacheHandler;
 
     /**
      * @var ExtractorFactory
      */
-    private $extractorFactory;
+    protected $extractorFactory;
 
     /**
      * @var TranslatorInterface
      */
-    private $translator;
+    protected $translator;
 
     /**
      * @var string
      */
-    private $translationDomain;
+    protected $translationDomain;
 
     /**
      * @param MenuFactory                   $menuFactory
@@ -160,7 +160,7 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
      * @param ItemInterface $parentMenu
      * @param array         $menuItems
      */
-    private function generateMenu(ItemInterface $parentMenu, array $menuItems)
+    protected function generateMenu(ItemInterface $parentMenu, array $menuItems)
     {
         foreach ($menuItems as $route => $item) {
             $this->addMenu($parentMenu, $route, $item['name'], $item['icon'], $item['extra']);

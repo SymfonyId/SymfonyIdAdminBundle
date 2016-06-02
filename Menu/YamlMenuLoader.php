@@ -29,32 +29,32 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
     /**
      * @var KernelInterface
      */
-    private $kernel;
+    protected $kernel;
 
     /**
      * @var MenuFactory
      */
-    private $menuFactory;
+    protected $menuFactory;
 
     /**
      * @var CacheHandler
      */
-    private $cacheHandler;
+    protected $cacheHandler;
 
     /**
      * @var TranslatorInterface
      */
-    private $translator;
+    protected $translator;
 
     /**
      * @var string
      */
-    private $translationDomain;
+    protected $translationDomain;
 
     /**
      * @var string
      */
-    private $yamlPath;
+    protected $yamlPath;
 
     /**
      * @param KernelInterface               $kernel
@@ -126,7 +126,7 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
      *
      * @throws RuntimeException
      */
-    private function parseMenu($menus)
+    protected function parseMenu($menus)
     {
         $menuItems = array();
         foreach ($menus as $name => $config) {
@@ -173,7 +173,7 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
      * @param ItemInterface $parentMenu
      * @param array         $menuItems
      */
-    private function generateMenu(ItemInterface $parentMenu, array $menuItems)
+    protected function generateMenu(ItemInterface $parentMenu, array $menuItems)
     {
         foreach ($menuItems as $route => $item) {
             if ($this->authorizationChecker->isGranted($item['role'])) {
@@ -196,7 +196,7 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
      *
      * @return ItemInterface
      */
-    private function addParentMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', $classCss = '')
+    protected function addParentMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', $classCss = '')
     {
         return $parentMenu->addChild($menuLabel, array(
             'route' => $routeName,
