@@ -54,7 +54,7 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
     /**
      * @var string
      */
-    private $ymlPath;
+    private $yamlPath;
 
     /**
      * @param KernelInterface               $kernel
@@ -75,11 +75,19 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
     }
 
     /**
-     * @param string $ymlPath
+     * @param string $yamlPath
      */
-    public function setYmlPath($ymlPath)
+    public function setYamlPath($yamlPath)
     {
-        $this->ymlPath = $ymlPath;
+        $this->yamlPath = $yamlPath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getYamlPath()
+    {
+        return $this->yamlPath;
     }
 
     /**
@@ -87,8 +95,8 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
      */
     public function getMenu()
     {
-        if (!file_exists($this->ymlPath)) {
-            new FileNotFoundException($this->ymlPath);
+        if (!file_exists($this->yamlPath)) {
+            new FileNotFoundException($this->yamlPath);
         }
 
         $rootMenu = $this->createRootMenu($this->menuFactory);
@@ -97,7 +105,7 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
             $this->addAdminMenu($rootMenu);
         }
 
-        $menus = Yaml::parse(file_get_contents($this->kernel->locateResource($this->ymlPath)));
+        $menus = Yaml::parse(file_get_contents($this->kernel->locateResource($this->yamlPath)));
         $reflection = new \ReflectionObject($this);
         if ($this->cacheHandler->hasCache($reflection)) {
             $menuItems = $this->cacheHandler->loadCache($reflection);

@@ -45,7 +45,7 @@ class MenuLoaderFactory
         }
         $loader = $this->menuLoaders[$menu];
         if ($loader instanceof YamlMenuLoader) {
-            $loader->setYmlPath($ymlPath);
+            $loader->setYamlPath($ymlPath);
         }
 
         return $loader->getMenu();
