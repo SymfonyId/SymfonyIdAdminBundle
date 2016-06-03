@@ -18,6 +18,7 @@ use SymfonyId\AdminBundle\Annotation\Filter;
 use SymfonyId\AdminBundle\Annotation\Grid;
 use SymfonyId\AdminBundle\Annotation\Sort;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
+use SymfonyId\AdminBundle\Configuration\ConfigurationMapper;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
 use SymfonyId\AdminBundle\Controller\UserController;
@@ -29,6 +30,11 @@ class UserControllerConfiguratorListener implements CrudControllerListenerAwareI
 {
     use CrudControllerListenerAwareTrait;
     use ConfigurationAwareTrait;
+
+    /**
+     * @var ConfigurationMapper
+     */
+    private $configurationMapper;
 
     /**
      * @var string
@@ -54,6 +60,14 @@ class UserControllerConfiguratorListener implements CrudControllerListenerAwareI
      * @var array
      */
     private $gridFilters = array();
+
+    /**
+     * @param ConfigurationMapper $configurationMapper
+     */
+    public function __construct(ConfigurationMapper $configurationMapper)
+    {
+        $this->configurationMapper = $configurationMapper;
+    }
 
     /**
      * @param string $formClass
@@ -140,5 +154,7 @@ class UserControllerConfiguratorListener implements CrudControllerListenerAwareI
         ));
         $gridConfigurator->setGrid($grid);
         $configuratorFactory->addConfigurator($gridConfigurator);
+
+        $this->configurationMapper->map($configuratorFactory, $reflectionController);
     }
 }
