@@ -160,7 +160,7 @@
                 jQuery('.back-to-list').trigger('click');
             });
 
-            {% if date_picker is defined %}
+            {% if date_picker is defined and date_picker %}
             var target = jQuery('.datepicker');
             target.parent().css('position', 'relative');
             target.datetimepicker({

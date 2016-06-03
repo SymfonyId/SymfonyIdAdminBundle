@@ -1,54 +1,54 @@
 {% spaceless %}
-<footer class="main-footer">
-    <div class="pull-right">
-        <b>Powered by: <i class="fa fa-github"></i> <a href="https://github.com/SymfonyId/AdminBundle" target="_blank">AdminBundle</a> <i class="fa fa-github"></i></b>
-    </div>
-    <strong>Copyright &copy; 2015 {{ title }}.</strong> All rights reserved.
-</footer>
+    <footer class="main-footer">
+        <div class="pull-right">
+            <b>Powered by: <i class="fa fa-github"></i> <a href="https://github.com/SymfonyId/AdminBundle" target="_blank">AdminBundle</a> <i class="fa fa-github"></i></b>
+        </div>
+        <strong>Copyright &copy; 2015 {{ title }}.</strong> All rights reserved.
+    </footer>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-{%- javascripts
-    '@SymfonyIdAdminBundle/Resources/public/js/fastclick.js'
-    '@SymfonyIdAdminBundle/Resources/public/js/jquery.slimscroll.min.js'
-    '@SymfonyIdAdminBundle/Resources/public/js/app.min.js'
-    'bundles/fosjsrouting/js/router.js'
-    'js/fos_js_routes.js'
--%}
+    {%- javascripts
+        '@SymfonyIdAdminBundle/Resources/public/js/fastclick.js'
+        '@SymfonyIdAdminBundle/Resources/public/js/jquery.slimscroll.min.js'
+        '@SymfonyIdAdminBundle/Resources/public/js/app.min.js'
+        'bundles/fosjsrouting/js/router.js'
+        'js/fos_js_routes.js'
+    -%}
     <script src="{{- asset_url -}}" type="text/javascript"></script>
-{%- endjavascripts -%}
+    {%- endjavascripts -%}
 
-{%- if use_date_picker is not empty -%}
-    <script src="{{- asset('bundles/symfonyidadmin/plugins/bootstrap-datetimepicker/js/moment.js') -}}" type="text/javascript"></script>
-    <script src="{{- asset('bundles/symfonyidadmin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') -}}" type="text/javascript"></script>
-{%- endif -%}
+    {%- if date_picker is defined -%}
+        <script src="{{- asset('bundles/symfonyidadmin/plugins/bootstrap-datetimepicker/js/moment.js') -}}" type="text/javascript"></script>
+        <script src="{{- asset('bundles/symfonyidadmin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') -}}" type="text/javascript"></script>
+    {%- endif -%}
 
-{%- if use_file_style is not empty -%}
-    <script src="{{- asset('bundles/symfonyidadmin/plugins/bootstrap-fileinput/js/fileinput.min.js') -}}" type="text/javascript"></script>
-    <script src="{{- asset('bundles/symfonyidadmin/plugins/bootstrap-fileinput/js/fileinput_locale_' ~ locale ~ '.js') -}}" type="text/javascript"></script>
-{%- endif -%}
+    {%- if use_file_style is defined -%}
+        <script src="{{- asset('bundles/symfonyidadmin/plugins/bootstrap-fileinput/js/fileinput.min.js') -}}" type="text/javascript"></script>
+        <script src="{{- asset('bundles/symfonyidadmin/plugins/bootstrap-fileinput/js/fileinput_locale_' ~ locale ~ '.js') -}}" type="text/javascript"></script>
+    {%- endif -%}
 
-{%- if use_editor is not empty -%}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
-{%- endif -%}
+    {%- if use_editor is defined -%}
+        <script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
+    {%- endif -%}
 
-{%- if use_autocomplete is not empty -%}
-    <script src="{{- asset('bundles/symfonyidadmin/plugins/select2/select2.min.js') -}}" type="text/javascript"></script>
-    <script src="{{- asset('bundles/symfonyidadmin/plugins/select2/select2_locale_' ~ locale ~ '.js') -}}" type="text/javascript"></script>
-{%- endif -%}
+    {%- if use_autocomplete is defined -%}
+        <script src="{{- asset('bundles/symfonyidadmin/plugins/select2/select2.min.js') -}}" type="text/javascript"></script>
+        <script src="{{- asset('bundles/symfonyidadmin/plugins/select2/select2_locale_' ~ locale ~ '.js') -}}" type="text/javascript"></script>
+    {%- endif -%}
 
-{%- if use_numeric is not empty -%}
-    <script src="{{- asset('bundles/symfonyidadmin/js/jquery.numeric.min.js') -}}" type="text/javascript"></script>
-{%- endif -%}
+    {%- if use_numeric is defined -%}
+        <script src="{{- asset('bundles/symfonyidadmin/js/jquery.numeric.min.js') -}}" type="text/javascript"></script>
+    {%- endif -%}
 
-{%- if javascript is not empty -%}
-    {{- javascript | raw -}}
-{%- endif -%}
+    {%- if javascript is not empty -%}
+        {{- javascript | raw -}}
+    {%- endif -%}
 
-<!--[if IE 8]>
+    <!--[if IE 8]>
 
-<h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
+    <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
 
-<![endif]-->
+    <![endif]-->
 {% endspaceless %}
