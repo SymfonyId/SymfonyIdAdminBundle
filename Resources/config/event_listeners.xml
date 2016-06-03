@@ -213,6 +213,8 @@
         </service>
 
         <service id="symfonyid.admin.listener.user_controller_configurator" class="SymfonyId\AdminBundle\EventListener\UserControllerConfiguratorListener" >
+            <argument type="service" id="symfonyid.admin.configuration.configuration_mapper" />
+
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
