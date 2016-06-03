@@ -308,7 +308,7 @@ abstract class CrudController extends AbstractController
         $view->setParam('autocomplete', false);
         $view->setParam('include_javascript', false);
         //Auto complete
-        if ($autoComplete->getRouteResource()) {
+        if ($autoComplete) {
             $view->setParam('autocomplete', true);
             $view->setParam('ac_config', array(
                 'route' => $autoComplete->getRouteResource(),
@@ -317,7 +317,7 @@ abstract class CrudController extends AbstractController
             ));
         }
         //Date picker
-        if ($datePicker->getDateFormat()) {
+        if ($datePicker) {
             $view->setParam('use_date_picker', true);
             $view->setParam('date_picker', array(
                 'date_format' => $datePicker->getDateFormat(),
@@ -325,7 +325,7 @@ abstract class CrudController extends AbstractController
             ));
         }
         //External Javascript
-        if (!empty($externalJavascript->getIncludeRoutes()) || !empty($externalJavascript->getIncludFiles())) {
+        if ($externalJavascript) {
             $view->setParam('include_javascript', true);
             $view->setParam('js_include', array(
                 'files' => $externalJavascript->getIncludFiles(),
