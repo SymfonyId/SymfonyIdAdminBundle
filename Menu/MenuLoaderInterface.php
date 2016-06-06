@@ -20,4 +20,11 @@ interface MenuLoaderInterface
      * @return \Knp\Menu\ItemInterface
      */
     public function getMenu();
+
+    /**
+     * @param bool $include
+     *
+     * @return bool
+     */
+    public function isIncludeDefault($include = true);
 }

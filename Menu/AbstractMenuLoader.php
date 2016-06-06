@@ -26,6 +26,21 @@ abstract class AbstractMenuLoader
     protected $authorizationChecker;
 
     /**
+     * @var bool
+     */
+    protected $includeDefaultMenu = true;
+
+    /**
+     * @param ItemInterface $parentMenu
+     * @param string $routeName
+     * @param string $menuLabel
+     * @param string $icon
+     * @param string $classCss
+     * @return mixed
+     */
+    abstract protected function addMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', $classCss = '');
+
+    /**
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker)
@@ -33,7 +48,13 @@ abstract class AbstractMenuLoader
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    abstract protected function addMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', $classCss = '');
+    /**
+     * @param bool $include
+     */
+    public function setIncludeDefault($include)
+    {
+        $this->includeDefaultMenu = $include;
+    }
 
     /**
      * @param FactoryInterface $menuFactory

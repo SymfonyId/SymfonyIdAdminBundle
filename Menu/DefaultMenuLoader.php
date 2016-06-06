@@ -85,7 +85,7 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
     {
         $rootMenu = $this->createRootMenu($this->menuFactory);
         $this->addDefaultMenu($rootMenu);
-        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
+        if ($this->isGranted('ROLE_SUPER_ADMIN') && $this->includeDefaultMenu) {
             $this->addAdminMenu($rootMenu);
         }
 
