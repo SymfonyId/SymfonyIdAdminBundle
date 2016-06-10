@@ -100,4 +100,12 @@ abstract class AbstractMenuLoader
     {
         $this->addMenu($parentMenu, 'symfonyid_admin_user_list', 'menu.user.title');
     }
+
+    /**
+     * @return bool
+     */
+    public function isIncludeDefault()
+    {
+        return $this->includeDefaultMenu;
+    }
 }
