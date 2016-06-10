@@ -32,10 +32,11 @@ abstract class AbstractMenuLoader
 
     /**
      * @param ItemInterface $parentMenu
-     * @param string $routeName
-     * @param string $menuLabel
-     * @param string $icon
-     * @param string $classCss
+     * @param string        $routeName
+     * @param string        $menuLabel
+     * @param string        $icon
+     * @param string        $classCss
+     *
      * @return mixed
      */
     abstract protected function addMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', $classCss = '');

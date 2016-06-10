@@ -41,4 +41,4 @@
 + [Kontributor](https://github.com/SymfonyId/SymfonyIdAdminBundle/graphs/contributors)
 
 #### LICENSE####
-[LICENSE](LISENCE)
+[LICENSE](LICENSE)

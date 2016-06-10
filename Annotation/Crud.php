@@ -85,6 +85,11 @@ class Crud
     private $allowDelete = true;
 
     /**
+     * @var bool
+     */
+    private $allowDownload = true;
+
+    /**
      * @param array $data
      */
     public function __construct(array $data = array())
@@ -127,6 +132,10 @@ class Crud
 
         if (isset($data['allowDelete'])) {
             $this->allowDelete = (bool) $data['allowDelete'];
+        }
+
+        if (isset($data['allowDownload'])) {
+            $this->allowDownload = (bool) $data['allowDownload'];
         }
 
         unset($data);
@@ -218,5 +227,13 @@ class Crud
     public function isAllowDelete()
     {
         return $this->allowDelete;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAllowDownload()
+    {
+        return $this->allowDownload;
     }
 }

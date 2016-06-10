@@ -50,7 +50,7 @@ class AuthorizationChecker
      *
      * @return true
      */
-    public function isGrantedOr403Error(UserInterface $user)
+    public function isValidUserOr403Error(UserInterface $user)
     {
         if (!is_object($user) || !$user instanceof User) {
             throw new AccessDeniedException($this->translator->trans('message.access_denied', array(), $this->translationDomain));
@@ -61,13 +61,14 @@ class AuthorizationChecker
 
     /**
      * @param CrudConfigurator $crudConfigurator
-     * @param $action
+     * @param string           $action
+     * @param bool             $default
      *
      * @throws NotFoundHttpException
      *
      * @return bool
      */
-    public function isGrantedOr404Error(CrudConfigurator $crudConfigurator, $action)
+    public function isGrantedOr404Error(CrudConfigurator $crudConfigurator, $action, $default = true)
     {
         $crud = $crudConfigurator->getCrud();
         $granted = false;
@@ -85,9 +86,12 @@ class AuthorizationChecker
             case Constants::ACTION_DELETE:
                 $granted = $crud->isAllowDelete();
                 break;
+            case Constants::ACTION_DOWNLOAD:
+                $granted = $crud->isAllowDownload();
+                break;
         }
 
-        if (!$granted) {
+        if (!($granted && $default)) {
             throw new NotFoundHttpException($this->translator->trans('message.request_not_found', array(), $this->translationDomain));
         }
 

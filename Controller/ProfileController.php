@@ -213,6 +213,6 @@ final class ProfileController extends Controller implements ConfigurationAwareIn
     {
         $authorizationChecker = $this->get('symfonyid.admin.security.authorization_checker');
 
-        return $authorizationChecker->isGrantedOr403Error($user);
+        return $authorizationChecker->isValidUserOr403Error($user);
     }
 }

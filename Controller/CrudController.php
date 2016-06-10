@@ -23,6 +23,7 @@ use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
 use SymfonyId\AdminBundle\Configuration\PageConfigurator;
 use SymfonyId\AdminBundle\Configuration\PluginConfigurator;
+use SymfonyId\AdminBundle\Configuration\SecurityConfigurator;
 use SymfonyId\AdminBundle\Configuration\UtilConfigurator;
 use SymfonyId\AdminBundle\Model\ModelInterface;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
@@ -67,6 +68,13 @@ abstract class CrudController extends AbstractController
     {
         /** @var ConfiguratorFactory $configuratorFactory */
         $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
+        /** @var PluginConfigurator $pluginConfigurator */
+        $pluginConfigurator = $configuratorFactory->getConfigurator(PluginConfigurator::class);
+
+        if (!$pluginConfigurator->isBulkInsertEnabled()) {
+            throw new NotFoundHttpException($this->get('translator')->trans('message.request_not_found', array(), $this->getParameter('symfonyid.admin.translation_domain')));
+        }
+
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
@@ -250,7 +258,7 @@ abstract class CrudController extends AbstractController
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
-        $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_READ);
+        $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_DOWNLOAD);
 
         $modelClass = $crudConfigurator->getCrud()->getModelClass();
         $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($modelClass);
@@ -416,8 +424,12 @@ abstract class CrudController extends AbstractController
     private function isGrantedOr404Error(CrudConfigurator $crudConfigurator, $action)
     {
         $authorizationChecker = $this->get('symfonyid.admin.security.authorization_checker');
+        /** @var ConfiguratorFactory $configuratorFactory */
+        $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
+        /** @var SecurityConfigurator $securityConfigurator */
+        $securityConfigurator = $configuratorFactory->getConfigurator(SecurityConfigurator::class);
 
-        return $authorizationChecker->isGrantedOr404Error($crudConfigurator, $action);
+        return $authorizationChecker->isGrantedOr404Error($crudConfigurator, $action, $securityConfigurator->isGranted($action));
     }
 
     /**
