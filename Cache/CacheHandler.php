@@ -74,6 +74,8 @@ class CacheHandler
         if (file_exists($this->loadCache($reflectionClass)) && 'prod' === strtolower($this->kernel->getEnvironment())) {
             return true;
         }
+
+        return false;
     }
 
     /**
