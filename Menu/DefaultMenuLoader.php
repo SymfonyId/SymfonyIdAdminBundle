@@ -19,6 +19,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use SymfonyId\AdminBundle\Annotation\Crud;
 use SymfonyId\AdminBundle\Annotation\Menu;
+use SymfonyId\AdminBundle\Annotation\Security;
 use SymfonyId\AdminBundle\Cache\CacheHandler;
 use SymfonyId\AdminBundle\Controller\CrudController;
 use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
@@ -112,9 +113,17 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
                     $reflectionController = new \ReflectionClass($controller[0]);
                     $this->extractorFactory->extract($reflectionController);
                     foreach ($this->extractorFactory->getClassAnnotations() as $annotation) {
+                        $menu = new Menu();
                         if ($annotation instanceof Crud && $reflectionController->isSubclassOf(CrudController::class)) {
-                            $menu = $annotation->getMenu() ?: new Menu();
+                            $menu = $annotation->getMenu();
+                        }
 
+                        $security = new Security();
+                        if ($annotation instanceof Security) {
+                            $security = $annotation;
+                        }
+
+                        if ($this->isGranted($security->getRead())) {
                             $menuItems[$name] = array(
                                 'name' => $this->translator->trans(sprintf('menu.label.%s', strtolower(str_replace('Controller', '', $reflectionController->getShortName()))), array(), $this->translationDomain),
                                 'icon' => $menu->getIcon(),
