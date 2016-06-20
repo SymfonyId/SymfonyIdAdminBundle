@@ -34,7 +34,7 @@ class UserController extends CrudController
     use ChangePasswordTrait;
 
     /**
-     * @Route("{id}/change_password/")
+     * @Route("{id}/change-password/")
      * @Method({"GET", "POST"})
      *
      * @param Request $request

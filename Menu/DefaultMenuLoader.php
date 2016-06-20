@@ -114,7 +114,7 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
                     $this->extractorFactory->extract($reflectionController);
                     foreach ($this->extractorFactory->getClassAnnotations() as $annotation) {
                         $menu = new Menu();
-                        if ($annotation instanceof Crud && $reflectionController->isSubclassOf(CrudController::class)) {
+                        if ($annotation instanceof Crud && $annotation->getMenu() && $reflectionController->isSubclassOf(CrudController::class)) {
                             $menu = $annotation->getMenu();
                         }
 
