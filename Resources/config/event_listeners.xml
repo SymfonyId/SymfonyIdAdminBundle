@@ -111,6 +111,7 @@
             </call>
 
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="-127" />
+            <tag name="kernel.event_listener" event="symfonyid.pre_save" method="onPreSave" />
         </service>
 
         <service id="symfonyid.admin.listener.filter_delete_user" class="SymfonyId\AdminBundle\EventListener\FilterDeleteUserListener" >
