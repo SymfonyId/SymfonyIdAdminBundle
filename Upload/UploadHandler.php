@@ -76,6 +76,10 @@ class UploadHandler
      */
     public function upload(ModelInterface $model)
     {
+        if (!$this->isUploadable()) {
+            return;
+        }
+
         if (!is_dir($this->dirPath)) {
             mkdir($this->dirPath);
         }

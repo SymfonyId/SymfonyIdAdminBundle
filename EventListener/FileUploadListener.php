@@ -61,13 +61,13 @@ class FileUploadListener implements ConfigurationAwareInterface, CrudControllerL
      */
     public function onPreSave(FilterModelEvent $event)
     {
-        if ($this->uploadHandler->isUploadable()) {
-            $configurationFactory = $this->getConfiguratorFactory(new \ReflectionObject($this->controller));
+        $configurationFactory = $this->getConfiguratorFactory(new \ReflectionObject($this->controller));
 
-            /** @var UtilConfigurator $utilConfigurator */
-            $utilConfigurator = $configurationFactory->getConfigurator(UtilConfigurator::class);
-            $upload = $utilConfigurator->getUpload();
+        /** @var UtilConfigurator $utilConfigurator */
+        $utilConfigurator = $configurationFactory->getConfigurator(UtilConfigurator::class);
+        $upload = $utilConfigurator->getUpload();
 
+        if ($upload->getUploadable()) {
             $this->uploadHandler->setFields(array($upload->getUploadable()), array($upload->getTargetField()));
             $this->uploadHandler->setUploadDir($this->uploadDirectory['server_path']);
 
