@@ -21,6 +21,7 @@ use SymfonyId\AdminBundle\Annotation\Crud;
 use SymfonyId\AdminBundle\Annotation\Menu;
 use SymfonyId\AdminBundle\Cache\CacheHandler;
 use SymfonyId\AdminBundle\Controller\CrudController;
+use SymfonyId\AdminBundle\Controller\UserController;
 use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 
 /**
@@ -112,7 +113,7 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
                     $reflectionController = new \ReflectionClass($controller[0]);
                     $this->extractorFactory->extract($reflectionController);
                     foreach ($this->extractorFactory->getClassAnnotations() as $annotation) {
-                        if ($annotation instanceof Crud && $reflectionController->isSubclassOf(CrudController::class)) {
+                        if ($annotation instanceof Crud && $reflectionController->isSubclassOf(CrudController::class) && UserController::class !== $reflectionController->getName()) {
                             $menu = $annotation->getMenu() ?: new Menu();
 
                             $menuItems[$name] = array(
