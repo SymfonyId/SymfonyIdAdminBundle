@@ -40,6 +40,7 @@ class SymfonyIdAdminConstrants
     const ACTION_UPDATE = 'ACTION_UPDATE';
     const ACTION_DELETE = 'ACTION_DELETE';
     const ACTION_READ = 'ACTION_READ';
+    const ACTION_DOWNLOAD = 'ACTION_DOWNLOAD';
 
     /**
      * Grid Actions.

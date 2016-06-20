@@ -43,6 +43,8 @@
 
         <service id="symfonyid.admin.annotation.plugin" class="SymfonyId\AdminBundle\Annotation\Plugin" />
 
+        <service id="symfonyid.admin.annotation.security" class="SymfonyId\AdminBundle\Annotation\Security" />
+
         <service id="symfonyid.admin.annotation.sort" class="SymfonyId\AdminBundle\Annotation\Sort" />
 
         <service id="symfonyid.admin.annotation.template" class="SymfonyId\AdminBundle\Annotation\Template">

@@ -14,7 +14,7 @@ namespace SymfonyId\AdminBundle\Util;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class CamelCaser
+final class CamelCaser
 {
     /**
      * @param $string

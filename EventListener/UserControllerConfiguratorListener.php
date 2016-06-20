@@ -16,7 +16,9 @@ use SymfonyId\AdminBundle\Annotation\Column;
 use SymfonyId\AdminBundle\Annotation\Crud;
 use SymfonyId\AdminBundle\Annotation\Filter;
 use SymfonyId\AdminBundle\Annotation\Grid;
+use SymfonyId\AdminBundle\Annotation\Menu;
 use SymfonyId\AdminBundle\Annotation\Sort;
+use SymfonyId\AdminBundle\Annotation\Template;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\ConfigurationMapper;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
@@ -134,7 +136,7 @@ class UserControllerConfiguratorListener implements CrudControllerListenerAwareI
         $crud = new Crud(array(
             'modelClass' => $this->modelClass ?: $crudConfiguration->getModelClass(),
             'form' => $this->formClass ?: $crudConfiguration->getForm(),
-            'menu' => $crudConfiguration->getMenu(),
+            'menu' => $crudConfiguration->getMenu() ?: new Menu(),
             'showFields' => empty($this->showFields) ? $crudConfiguration->getShowFields() : $this->showFields,
             'template' => $crudConfiguration->getTemplate(),
             'allowCreate' => $crudConfiguration->isAllowCreate(),

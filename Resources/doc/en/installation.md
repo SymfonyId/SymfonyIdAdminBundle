@@ -53,7 +53,7 @@ symfonyid_admin:
     translation_domain: 'SymfonyIdAdminBundle'
     filters: ['name']
     user:
-        form_class: 'symfonyid.admin.form.user_form'
-        model_class: 'AppBundle\Entity\User'
+        form_class: 'symfonyid.admin.form.user_form' #your user form
+        model_class: 'AppBundle\Entity\User' #your user entity
         auto_enable: true
 ```

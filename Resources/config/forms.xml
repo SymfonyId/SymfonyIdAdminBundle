@@ -19,5 +19,12 @@
 
             <tag name="form.type" />
         </service>
+
+        <service id="symfonyid.admin.form.admin_change_password_form" class="SymfonyId\AdminBundle\Form\Type\AdminChangePasswordType" >
+            <argument>%symfonyid.admin.user.model_class%</argument>
+            <argument>%symfonyid.admin.translation_domain%</argument>
+
+            <tag name="form.type" />
+        </service>
     </services>
 </container>

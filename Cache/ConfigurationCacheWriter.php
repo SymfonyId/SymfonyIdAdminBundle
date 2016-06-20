@@ -17,6 +17,7 @@ use SymfonyId\AdminBundle\Configuration\DriverConfigurator;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
 use SymfonyId\AdminBundle\Configuration\PageConfigurator;
 use SymfonyId\AdminBundle\Configuration\PluginConfigurator;
+use SymfonyId\AdminBundle\Configuration\SecurityConfigurator;
 use SymfonyId\AdminBundle\Configuration\UtilConfigurator;
 
 /**
@@ -51,6 +52,8 @@ class ConfigurationCacheWriter
         $pageConfigurator = $configuratorFactory->getConfigurator(PageConfigurator::class);
         /** @var PluginConfigurator $pluginConfigurator */
         $pluginConfigurator = $configuratorFactory->getConfigurator(PluginConfigurator::class);
+        /** @var SecurityConfigurator $securityConfigurator */
+        $securityConfigurator = $configuratorFactory->getConfigurator(SecurityConfigurator::class);
         /** @var UtilConfigurator $utilConfigurator */
         $utilConfigurator = $configuratorFactory->getConfigurator(UtilConfigurator::class);
 
@@ -60,6 +63,7 @@ class ConfigurationCacheWriter
         $cache['grid'] = $gridConfigurator->getGrid();
         $cache['page'] = $pageConfigurator->getPage();
         $cache['plugin'] = $pluginConfigurator->getPlugin();
+        $cache['security'] = $securityConfigurator->getSecurity();
         $cache['util'] = $utilConfigurator->getUtil();
 
         $this->cacheHandler->writeCache($reflectionClass, $cache);

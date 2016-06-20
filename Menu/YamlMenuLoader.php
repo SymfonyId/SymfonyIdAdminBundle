@@ -83,14 +83,6 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
     }
 
     /**
-     * @return string
-     */
-    public function getYamlPath()
-    {
-        return $this->yamlPath;
-    }
-
-    /**
      * @return array
      */
     public function getMenu()
@@ -101,7 +93,7 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
 
         $rootMenu = $this->createRootMenu($this->menuFactory);
         $this->addDefaultMenu($rootMenu);
-        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
+        if ($this->isGranted('ROLE_SUPER_ADMIN') && $this->includeDefaultMenu) {
             $this->addAdminMenu($rootMenu);
         }
 

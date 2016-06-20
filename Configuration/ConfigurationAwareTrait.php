@@ -134,6 +134,13 @@ trait ConfigurationAwareTrait
             $configuratorFactory->addConfigurator($pluginConfigurator);
         }
 
+        if (isset($configurations['security'])) {
+            /** @var SecurityConfigurator $securityConfigurator */
+            $securityConfigurator = $configuratorFactory->getConfigurator(SecurityConfigurator::class);
+            $securityConfigurator->setSecurity($configurations['security']);
+            $configuratorFactory->addConfigurator($securityConfigurator);
+        }
+
         if (isset($configurations['util'])) {
             /** @var UtilConfigurator $utilConfigurator */
             $utilConfigurator = $configuratorFactory->getConfigurator(UtilConfigurator::class);

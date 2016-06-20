@@ -16,7 +16,7 @@ use SymfonyId\AdminBundle\Exception\RuntimeException;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class MethodInvoker
+final class MethodInvoker
 {
     /**
      * @param mixed  $object   Object

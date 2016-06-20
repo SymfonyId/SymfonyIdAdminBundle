@@ -15,6 +15,7 @@ use SymfonyId\AdminBundle\Annotation\Crud;
 use SymfonyId\AdminBundle\Annotation\Grid;
 use SymfonyId\AdminBundle\Annotation\Page;
 use SymfonyId\AdminBundle\Annotation\Plugin;
+use SymfonyId\AdminBundle\Annotation\Security;
 use SymfonyId\AdminBundle\Annotation\Template;
 use SymfonyId\AdminBundle\Annotation\Util;
 use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
@@ -79,6 +80,8 @@ class ConfigurationMapper
         $gridConfigurator = $configuratorFactory->getConfigurator(GridConfigurator::class);
         /** @var PluginConfigurator $pluginConfigurator */
         $pluginConfigurator = $configuratorFactory->getConfigurator(PluginConfigurator::class);
+        /** @var SecurityConfigurator $securityConfigurator */
+        $securityConfigurator = $configuratorFactory->getConfigurator(SecurityConfigurator::class);
         /** @var UtilConfigurator $utilConfigurator */
         $utilConfigurator = $configuratorFactory->getConfigurator(UtilConfigurator::class);
 
@@ -102,6 +105,11 @@ class ConfigurationMapper
             if ($annotation instanceof Plugin) {
                 $pluginConfigurator->setPlugin($annotation);
                 $configuratorFactory->addConfigurator($pluginConfigurator);
+            }
+
+            if ($annotation instanceof Security) {
+                $securityConfigurator->setSecurity($annotation);
+                $configuratorFactory->addConfigurator($utilConfigurator);
             }
 
             if ($annotation instanceof Util) {

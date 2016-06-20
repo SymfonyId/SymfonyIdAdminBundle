@@ -65,6 +65,16 @@
             <tag name="symfonyid.config" />
         </service>
 
+        <service id="symfonyid.admin.configuration.security_configurator" class="SymfonyId\AdminBundle\Configuration\SecurityConfigurator">
+            <argument type="service" id="security.authorization_checker" />
+
+            <call method="setSecurity">
+                <argument type="service" id="symfonyid.admin.annotation.security" />
+            </call>
+
+            <tag name="symfonyid.config" />
+        </service>
+
         <service id="symfonyid.admin.configuration.util_configurator" class="SymfonyId\AdminBundle\Configuration\UtilConfigurator">
             <call method="setUtil">
                 <argument type="service" id="symfonyid.admin.annotation.util" />

@@ -40,6 +40,7 @@ class ParameterBuilder
     public function build($alias, array $config)
     {
         $this->buildGlobalParameter($alias, $config);
+        $this->buildMenuParameter($alias, $config);
         $this->buildThemeParameter($alias, $config);
         $this->buildUserParameter($alias, $config);
     }
@@ -53,9 +54,6 @@ class ParameterBuilder
         $this->containerBuilder->setParameter($alias.'.admin.app_title', $config['app_title']);
         $this->containerBuilder->setParameter($alias.'.admin.app_short_title', $config['app_short_title']);
         $this->containerBuilder->setParameter($alias.'.admin.per_page', $config['per_page']);
-        $this->containerBuilder->setParameter($alias.'.admin.menu.menu_name', $config['menu']['name']);
-        $this->containerBuilder->setParameter($alias.'.admin.menu.menu_loader', $config['menu']['loader']);
-        $this->containerBuilder->setParameter($alias.'.admin.menu.menu_path', $config['menu']['path']);
         $this->containerBuilder->setParameter($alias.'.admin.identifier', $config['identifier']);
         $this->containerBuilder->setParameter($alias.'.admin.max_records', $config['max_records']);
         $this->containerBuilder->setParameter($alias.'.admin.filters', $config['filters']);
@@ -79,6 +77,18 @@ class ParameterBuilder
             'server_path' => $this->containerBuilder->getParameter('kernel.root_dir').'/../web/'.$config['upload_dir'],
             'web_path' => '/'.$config['upload_dir'].'/',
         ));
+    }
+
+    /**
+     * @param string $alias
+     * @param array  $config
+     */
+    private function buildMenuParameter($alias, array $config)
+    {
+        $this->containerBuilder->setParameter($alias.'.admin.menu.menu_name', $config['menu']['name']);
+        $this->containerBuilder->setParameter($alias.'.admin.menu.menu_loader', $config['menu']['loader']);
+        $this->containerBuilder->setParameter($alias.'.admin.menu.menu_path', $config['menu']['path']);
+        $this->containerBuilder->setParameter($alias.'.admin.menu.include_default', $config['menu']['include_default']);
     }
 
     /**

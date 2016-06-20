@@ -38,6 +38,7 @@ action:
     submit: 'Simpan'
     submit_all: 'Simpan Semua'
     download: 'Export Csv'
+    change_password: 'Ubah Password'
 
 link:
     home: 'DASHBOARD'
