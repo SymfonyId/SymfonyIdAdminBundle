@@ -30,13 +30,15 @@ trait ChangePasswordTrait
         /** @var \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface $encoder */
         $encoder = $encoderFactory->getEncoder($user);
 
-        if (!$encoder->isPasswordValid($user->getPassword(), $form->get('current_password')->getData(), $user->getSalt())) {
-            /** @var View $view */
-            $view = $this->container->get('symfonyid.admin.view.view');
-            $view->setParam('current_password_invalid', true);
-            $view->setParam('form', $form->createView());
+        if ($form->has('current_password')) {
+            if (!$encoder->isPasswordValid($user->getPassword(), $form->get('current_password')->getData(), $user->getSalt())) {
+                /** @var View $view */
+                $view = $this->container->get('symfonyid.admin.view.view');
+                $view->setParam('current_password_invalid', true);
+                $view->setParam('form', $form->createView());
 
-            return $this->container->get('templating')->renderResponse('SymfonyIdAdminBundle:Index:change_password.html.twig', $view->getParams());
+                return $this->container->get('templating')->renderResponse('SymfonyIdAdminBundle:Index:change_password.html.twig', $view->getParams());
+            }
         }
 
         /** @var UserManager $userManager */
