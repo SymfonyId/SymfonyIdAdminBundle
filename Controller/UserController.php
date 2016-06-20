@@ -18,6 +18,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 use SymfonyId\AdminBundle\Annotation as Siab;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
+use SymfonyId\AdminBundle\Form\Type\AdminChangePasswordType;
 
 /**
  * @Route("/user")
@@ -34,7 +35,7 @@ class UserController extends CrudController
     use ChangePasswordTrait;
 
     /**
-     * @Route("{id}/change-password/")
+     * @Route("/{id}/change-password/")
      * @Method({"GET", "POST"})
      *
      * @param Request $request
@@ -59,7 +60,8 @@ class UserController extends CrudController
 
         $driver = $this->get('symfonyid.admin.manager.driver_finder')->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
 
-        $form = $crudConfigurator->getForm($this->getUser());
+        $form = $this->container->get('form.factory')->create(AdminChangePasswordType::class);
+        $form->setData($user);
         $form->handleRequest($request);
 
         /** @var \SymfonyId\AdminBundle\View\View $view */
