@@ -62,8 +62,8 @@ class Util
             $this->externalJavascript = $data['externalJavascript'];
         }
 
-        if (isset($data['autoComplete'])) {
-            $this->autoComplete = $data['autoComplete'];
+        if (isset($data['upload'])) {
+            $this->upload = $data['upload'];
         }
 
         unset($data);
