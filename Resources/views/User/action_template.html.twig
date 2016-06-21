@@ -13,8 +13,8 @@
                 </button>
             {%- endif -%}
             {%- if v is same as('GRID_ACTION_EDIT') -%}
-                <button data-record="{{- identifier[key] -}}" class="btn btn-labeled btn-warning change-password">
-                    <span class="btn-label"><i class="fa fa-pencil"></i></span>&nbsp;{{- 'action.change_password' | trans({}, translation_domain) -}}
+                <button data-record="{{- identifier[key] -}}" class="btn btn-labeled btn-info change-password">
+                    <span class="btn-label"><i class="fa fa-lock"></i></span>&nbsp;{{- 'action.change_password' | trans({}, translation_domain) -}}
                 </button>
             {%- endif -%}
             {%- if v is same as('GRID_ACTION_DELETE') -%}
