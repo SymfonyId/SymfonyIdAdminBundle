@@ -100,7 +100,7 @@ class EnableFieldsFilterListener implements ConfigurationAwareInterface
         if ($this->controller instanceof UserController) {
             $filter->setFieldsFilter($this->container->getParameter('symfonyid.admin.user.grid_filters'));
         } else {
-            $filter->setFieldsFilter($this->container->getParameter('symfonyid.admin.filter'));
+            $filter->setFieldsFilter($this->container->getParameter('symfonyid.admin.filters'));
         }
 
         $filter->setExtractorFactory($this->extractorFactory);

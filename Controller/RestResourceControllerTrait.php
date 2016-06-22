@@ -19,6 +19,7 @@ use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
+use SymfonyId\AdminBundle\Request\RequestParameter;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -58,7 +59,7 @@ trait RestResourceControllerTrait
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function searchAction(Request $request)
+    public function getCollection(Request $request)
     {
         /** @var \SymfonyId\AdminBundle\Configuration\ConfiguratorFactory $configuratorFactory */
         $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
@@ -72,50 +73,27 @@ trait RestResourceControllerTrait
         /** @var \SymfonyId\AdminBundle\Crud\CrudOperationHandler $crudOperationHandler */
         $crudOperationHandler = $this->get('symfonyid.admin.crud.crud_operation_handler');
 
-        $params = $this->getRequestParam($request);
+        $requestParam = new RequestParameter($request);
 
         /*
          * Convert from KnpPaginator to Pagerfanta.
          */
         /** @var \Knp\Component\Pager\Pagination\AbstractPagination $knpPaginator */
-        $knpPaginator = $crudOperationHandler->paginateResult($driver, $reflectionModel->getName(), $params['page'], $params['limit']);
+        $knpPaginator = $crudOperationHandler->paginateResult($driver, $reflectionModel->getName(), $requestParam->getPage(), $requestParam->getLimit());
         $pagerAdapter = new ArrayAdapter($knpPaginator->getItems());
 
         $pager = new Pagerfanta($pagerAdapter);
-        $pager->setCurrentPage($params['page']);
-        $pager->setMaxPerPage($params['limit']);
+        $pager->setCurrentPage($requestParam->getPage());
+        $pager->setMaxPerPage($requestParam->getLimit());
 
         $embed = strtolower($reflectionModel->getShortName().'s');
         $pagerFactory = new PagerfantaFactory();
         $representation = $pagerFactory->createRepresentation(
             $pager,
-            new Route($request->get('_route'), $params),
+            new Route($request->get('_route'), $requestParam->toArray()),
             new CollectionRepresentation($pager->getCurrentPageResults(), $embed, $embed)
         );
 
         return $this->handleView(new View($representation));
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
-    private function getRequestParam(Request $request)
-    {
-        $params = array(
-            'page' => $request->query->get('page', 1),
-            'limit' => $request->query->get('limit', $this->getParameter('symfonyid.admin.per_page')),
-        );
-
-        if ($filter = $request->query->get('q')) {
-            $params['q'] = $filter;
-        }
-
-        if ($sortBy = $request->query->get('sort_by')) {
-            $params['sort_by'] = $sortBy;
-        }
-
-        return $params;
     }
 }
