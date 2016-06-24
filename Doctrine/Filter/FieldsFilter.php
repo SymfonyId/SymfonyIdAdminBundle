@@ -39,9 +39,10 @@ class FieldsFilter extends SQLFilter implements FieldsFilterInterface
         $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
         $fields = $gridConfigurator->getFilters($targetEntity->getReflectionClass()) ?: $this->fieldsFilter;
 
+        $fixFields = array();
         foreach ($fields as $key => $field) {
             if ($targetEntity->hasField($field)) {
-                $fields[$key] = $targetEntity->getFieldMapping($targetEntity->getFieldName($field));
+                $fixFields[] = $targetEntity->getFieldMapping($targetEntity->getFieldName($field));
             }
         }
 
@@ -50,7 +51,7 @@ class FieldsFilter extends SQLFilter implements FieldsFilterInterface
         /*
          * Filter is low level query so you can't use property name as field filter, use column name instead
          */
-        foreach ($fields as $field) {
+        foreach ($fixFields as $field) {
             if (in_array($field['type'], array('date', 'datetime', 'time'))) {
                 $date = \DateTime::createFromFormat($this->dateTimeFormat, $parameter);
                 if ($date) {

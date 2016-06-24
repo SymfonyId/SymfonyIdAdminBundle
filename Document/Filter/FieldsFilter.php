@@ -40,14 +40,15 @@ class FieldsFilter extends BsonFilter implements FieldsFilterInterface
         $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
         $fields = array_merge($this->fieldsFilter, $gridConfigurator->getFilters($targetDocument->getReflectionClass()));
 
+        $fixFields = array();
         foreach ($fields as $key => $field) {
             if ($targetDocument->hasField($field)) {
-                $fields[$key] = $targetDocument->getFieldMapping($field);
+                $fixFields[] = $targetDocument->getFieldMapping($field);
             }
         }
 
         $output = array();
-        foreach ($fields as $field) {
+        foreach ($fixFields as $field) {
             if (in_array($field['type'], array('date', 'datetime', 'time'))) {
                 $date = \DateTime::createFromFormat($this->dateTimeFormat, $this->getParameter('filter'));
                 if ($date) {
