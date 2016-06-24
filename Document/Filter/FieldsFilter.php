@@ -41,7 +41,9 @@ class FieldsFilter extends BsonFilter implements FieldsFilterInterface
         $fields = array_merge($this->fieldsFilter, $gridConfigurator->getFilters($targetDocument->getReflectionClass()));
 
         foreach ($fields as $key => $field) {
-            $fields[$key] = $targetDocument->getFieldMapping($field);
+            if ($targetDocument->hasField($field)) {
+                $fields[$key] = $targetDocument->getFieldMapping($field);
+            }
         }
 
         $output = array();
