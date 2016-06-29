@@ -11,29 +11,35 @@
 
 namespace SymfonyId\AdminBundle\EventListener;
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class ControllerInjectionListener implements CrudControllerListenerAwareInterface
+class ControllerInjectionListener implements ContainerAwareInterface
 {
-    use CrudControllerListenerAwareTrait;
+    use ContainerAwareTrait;
 
     /**
      * @param FilterControllerEvent $event
+     * @return bool
      */
     public function onKernelController(FilterControllerEvent $event)
     {
-        if (!$this->isValidCrudListener($event)) {
-            return;
+        $controller = $event->getController();
+        if (!is_array($controller)) {
+            return false;
         }
 
-        if ($this->controller instanceof ConfigurationAwareInterface) {
-            $this->controller->setKernel($this->container->get('kernel'));
-            $this->controller->setCacheHandler($this->container->get('symfonyid.admin.cache.cache_handler'));
-            $this->controller->setConfiguratorFactory($this->container->get('symfonyid.admin.configuration.configurator_factory'));
+        $controller = $controller[0];
+
+        if ($controller instanceof ConfigurationAwareInterface) {
+            $controller->setKernel($this->container->get('kernel'));
+            $controller->setCacheHandler($this->container->get('symfonyid.admin.cache.cache_handler'));
+            $controller->setConfiguratorFactory($this->container->get('symfonyid.admin.configuration.configurator_factory'));
         }
     }
 
