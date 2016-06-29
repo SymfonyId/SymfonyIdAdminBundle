@@ -50,7 +50,7 @@
             <argument type="service" id="symfonyid.admin.cache.default_configuration_factory" />
 
             <call method="setForm">
-                <argument>%symfonyid.admin.themes.change_password%</argument>
+                <argument>%symfonyid.admin.user.password_form%</argument>
             </call>
             <call method="setShowFields">
                 <argument>%symfonyid.admin.user.profile_fields%</argument>
