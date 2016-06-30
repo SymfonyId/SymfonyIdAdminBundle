@@ -67,7 +67,7 @@ class FileUploadListener implements ConfigurationAwareInterface, CrudControllerL
         $utilConfigurator = $configurationFactory->getConfigurator(UtilConfigurator::class);
         $upload = $utilConfigurator->getUpload();
 
-        if ($upload->getUploadable()) {
+        if ($upload && $upload->getUploadable()) {
             $this->uploadHandler->setFields(array($upload->getUploadable()), array($upload->getTargetField()));
             $this->uploadHandler->setUploadDir($this->uploadDirectory['server_path']);
 
