@@ -30,6 +30,14 @@
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="127" />
         </service>
 
+        <service id="symfonyid.admin.listener.controller_injector" class="SymfonyId\AdminBundle\EventListener\ControllerInjectionListener" >
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
+        </service>
+
         <service id="symfonyid.admin.listener.enable_fields_filter" class="SymfonyId\AdminBundle\EventListener\EnableFieldsFilterListener" >
             <argument type="service" id="symfonyid.admin.manager.manager_factory" />
             <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />

@@ -104,7 +104,7 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
         $reflection = new \ReflectionObject($this);
         $menuItems = array();
         if ($this->cacheHandler->hasCache($reflection)) {
-            $menuItems = $this->cacheHandler->loadCache($reflection);
+            $menuItems = require $this->cacheHandler->loadCache($reflection);
         } else {
             /** @var Route $route */
             foreach ($matches as $name => $route) {
