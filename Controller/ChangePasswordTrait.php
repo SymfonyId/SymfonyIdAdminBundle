@@ -17,12 +17,11 @@ trait ChangePasswordTrait
 {
     /**
      * @param FormInterface $form
-     * @param Request       $request
      * @param UserInterface $user
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function updateUser(FormInterface $form, Request $request, UserInterface $user)
+    protected function updateUser(FormInterface $form, UserInterface $user)
     {
         /** @var \Symfony\Component\Security\Core\Encoder\EncoderFactory $encoderFactory */
         $encoderFactory = $this->container->get('security.encoder_factory');
@@ -63,7 +62,7 @@ trait ChangePasswordTrait
             if (!$form->isValid()) {
                 $view->setParam('errors', true);
             } elseif ($form->isValid()) {
-                if ($response = $this->updateUser($form, $request, $user)) {
+                if ($response = $this->updateUser($form, $user)) {
                     return $response;
                 }
 
@@ -108,7 +107,7 @@ trait ChangePasswordTrait
      *
      * @return bool
      */
-    protected  function isGrantedOr403Error(UserInterface $user)
+    protected function isGrantedOr403Error(UserInterface $user)
     {
         /** @var \SymfonyId\AdminBundle\Security\AuthorizationChecker $authorizationChecker */
         $authorizationChecker = $this->container->get('symfonyid.admin.security.authorization_checker');
