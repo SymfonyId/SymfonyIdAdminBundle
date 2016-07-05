@@ -2,14 +2,12 @@
 
 namespace SymfonyId\AdminBundle\Controller;
 
-use FOS\UserBundle\Model\UserManager;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Event\FilterModelEvent;
-use SymfonyId\AdminBundle\Manager\ManagerFactory;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 use SymfonyId\AdminBundle\View\View;
 
@@ -40,7 +38,7 @@ trait ChangePasswordTrait
             }
         }
 
-        /** @var UserManager $userManager */
+        /** @var \FOS\UserBundle\Model\UserManager $userManager */
         $userManager = $this->container->get('fos_user.user_manager');
         $userManager->updateUser($form->getData());
     }
@@ -66,7 +64,7 @@ trait ChangePasswordTrait
                     return $response;
                 }
 
-                /** @var ManagerFactory $managerFactory */
+                /** @var \SymfonyId\AdminBundle\Manager\ManagerFactory $managerFactory */
                 $managerFactory = $this->container->get('symfonyid.admin.manager.manager_factory');
 
                 $model = $form->getData();
