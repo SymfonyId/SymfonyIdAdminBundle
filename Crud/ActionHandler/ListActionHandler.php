@@ -179,10 +179,15 @@ class ListActionHandler extends AbstractActionHandler implements ContainerAwareI
         $translationDomain = $this->container->getParameter('symfonyid.admin.translation_domain');
 
         $header = array_map(function ($value) use ($translator, $translationDomain) {
+            $field = $value;
+            if (is_array($value)) {
+                $field = $value['field'];
+            }
+
             return array(
-                'title' => $translator->trans(sprintf('entity.fields.%s', $value), array(), $translationDomain),
-                'field' => $value,
-                'sortable' => $value === 'action' ? false : true,
+                'title' => $translator->trans(sprintf('entity.fields.%s', $field), array(), $translationDomain),
+                'field' => $field,
+                'sortable' => $field === 'action' ? false : true,
             );
         }, array_merge($this->gridFields, array('action')));
 

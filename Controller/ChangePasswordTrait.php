@@ -2,14 +2,12 @@
 
 namespace SymfonyId\AdminBundle\Controller;
 
-use FOS\UserBundle\Model\UserManager;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Event\FilterModelEvent;
-use SymfonyId\AdminBundle\Manager\ManagerFactory;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 use SymfonyId\AdminBundle\View\View;
 
@@ -17,12 +15,11 @@ trait ChangePasswordTrait
 {
     /**
      * @param FormInterface $form
-     * @param Request       $request
      * @param UserInterface $user
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function updateUser(FormInterface $form, Request $request, UserInterface $user)
+    protected function updateUser(FormInterface $form, UserInterface $user)
     {
         /** @var \Symfony\Component\Security\Core\Encoder\EncoderFactory $encoderFactory */
         $encoderFactory = $this->container->get('security.encoder_factory');
@@ -41,7 +38,7 @@ trait ChangePasswordTrait
             }
         }
 
-        /** @var UserManager $userManager */
+        /** @var \FOS\UserBundle\Model\UserManager $userManager */
         $userManager = $this->container->get('fos_user.user_manager');
         $userManager->updateUser($form->getData());
     }
@@ -63,11 +60,11 @@ trait ChangePasswordTrait
             if (!$form->isValid()) {
                 $view->setParam('errors', true);
             } elseif ($form->isValid()) {
-                if ($response = $this->updateUser($form, $request, $user)) {
+                if ($response = $this->updateUser($form, $user)) {
                     return $response;
                 }
 
-                /** @var ManagerFactory $managerFactory */
+                /** @var \SymfonyId\AdminBundle\Manager\ManagerFactory $managerFactory */
                 $managerFactory = $this->container->get('symfonyid.admin.manager.manager_factory');
 
                 $model = $form->getData();
@@ -108,7 +105,7 @@ trait ChangePasswordTrait
      *
      * @return bool
      */
-    protected  function isGrantedOr403Error(UserInterface $user)
+    protected function isGrantedOr403Error(UserInterface $user)
     {
         /** @var \SymfonyId\AdminBundle\Security\AuthorizationChecker $authorizationChecker */
         $authorizationChecker = $this->container->get('symfonyid.admin.security.authorization_checker');

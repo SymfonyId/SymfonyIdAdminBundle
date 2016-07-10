@@ -40,8 +40,8 @@ class RequestParameter
 
     /**
      * @param Request $request
-     * @param int $limit
-     * @param int $page
+     * @param int     $limit
+     * @param int     $page
      */
     public function __construct(Request $request, $limit = 17, $page = 1)
     {

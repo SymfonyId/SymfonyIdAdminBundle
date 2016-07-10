@@ -25,6 +25,7 @@ class ControllerInjectionListener implements ContainerAwareInterface
 
     /**
      * @param FilterControllerEvent $event
+     *
      * @return bool
      */
     public function onKernelController(FilterControllerEvent $event)
@@ -42,5 +43,4 @@ class ControllerInjectionListener implements ContainerAwareInterface
             $controller->setConfiguratorFactory($this->container->get('symfonyid.admin.configuration.configurator_factory'));
         }
     }
-
 }
