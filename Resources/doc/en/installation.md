@@ -2,11 +2,11 @@
 
 #### New Project ####
 
-The essiest way to install is use [SymfonyIdSkeleton](https://github.com/ihsanudin/SymfonyIdSkeleton)
+The essiest way to install is use [PlatformLite](https://github.com/ad3n/PlatformLite)
 
 + Create an empty database
 
-+ Clone [SymfonyIdSkeleton](https://github.com/ihsanudin/SymfonyIdSkeleton)
++ Clone [PlatformLite](https://github.com/ad3n/PlatformLite)
 
 + Run composer update
 
