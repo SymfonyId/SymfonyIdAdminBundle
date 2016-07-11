@@ -101,9 +101,7 @@
                             {{- form_row(field) -}}
                         {%- endfor -%}
 
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">{{- 'action.submit' | trans({}, translation_domain) -}}</button>
-                        </div>
+                        <button type="submit" class="btn btn-success pull-left">{{- 'action.submit' | trans({}, translation_domain) -}}</button>
                     </div>
                     {{- form_end(form) -}}
                 </div>
