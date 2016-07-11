@@ -73,45 +73,73 @@ class UserType extends AbstractType
         $builder
             ->add('fullName', TextType::class, array(
                 'label' => 'form.label.fullname',
-                'attr' => array(
-                    'class' => 'form-control',
+                'widget_form_group_attr' => array(
+                    'class' => 'form-group override-group-form-margin override-group-form-padding col-lg-6 col-sm-12 col-xs-12',
                 ),
+                'label_attr' => array(
+                    'class' => 'col-lg-4 col-sm-4 col-xs-4 control-label',
+                ),
+                'horizontal_input_wrapper_class' => 'col-lg-8 col-sm-8 col-xs-8',
             ))
             ->add('username', TextType::class, array(
                 'label' => 'form.label.username',
+                'widget_form_group_attr' => array(
+                    'class' => 'form-group override-group-form-right-margin override-group-form-right-padding col-lg-6 col-sm-12 col-xs-12',
+                ),
+                'label_attr' => array(
+                    'class' => 'col-lg-4 col-sm-4 col-xs-4 control-label',
+                ),
+                'horizontal_input_wrapper_class' => 'col-lg-8 col-sm-8 col-xs-8',
                 'attr' => array(
-                    'class' => 'form-control username',
+                    'class' => 'username',
                 ),
             ))
             ->add('email', EmailType::class, array(
                 'label' => 'form.label.email',
-                'attr' => array(
-                    'class' => 'form-control',
+                'widget_form_group_attr' => array(
+                    'class' => 'form-group override-group-form-margin override-group-form-padding col-lg-6 col-sm-12 col-xs-12',
                 ),
+                'label_attr' => array(
+                    'class' => 'col-lg-4 col-sm-4 col-xs-4 control-label',
+                ),
+                'horizontal_input_wrapper_class' => 'col-lg-8 col-sm-8 col-xs-8',
             ))
             ->add($builder->create('roles', ChoiceType::class, array(
                 'label' => 'form.label.role',
                 'choices' => RoleHierarchyListBuilder::buildArrayForChoiceType($this->roleHierarchy),
                 'placeholder' => 'message.select_empty',
-                'attr' => array(
-                    'class' => 'form-control',
+                'widget_form_group_attr' => array(
+                    'class' => 'form-group override-group-form-right-margin override-group-form-right-padding col-lg-6 col-sm-12 col-xs-12',
                 ),
+                'label_attr' => array(
+                    'class' => 'col-lg-4 col-sm-4 col-xs-4 control-label',
+                ),
+                'horizontal_input_wrapper_class' => 'col-lg-8 col-sm-8 col-xs-8',
             ))->addModelTransformer(new RoleToArrayTransformer()))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'invalid_message' => 'message.password_must_match',
-                'options' => array(
-                    'attr' => array(
-                        'class' => 'form-control',
-                    ),
-                ),
-                'required' => true,
                 'first_options' => array(
+                    'widget_form_group_attr' => array(
+                        'class' => 'form-group override-group-form-margin override-group-form-padding col-lg-6 col-sm-12 col-xs-12',
+                    ),
+                    'label_attr' => array(
+                        'class' => 'col-lg-4 col-sm-4 col-xs-4 control-label',
+                    ),
+                    'horizontal_input_wrapper_class' => 'col-lg-8 col-sm-8 col-xs-8',
                     'label' => 'form.label.password',
                 ),
                 'second_options' => array(
+                    'widget_form_group_attr' => array(
+                        'class' => 'form-group override-group-form-right-margin override-group-form-right-padding col-lg-6 col-sm-12 col-xs-12',
+                    ),
+                    'label_attr' => array(
+                        'class' => 'col-lg-4 col-sm-4 col-xs-4 control-label',
+                    ),
+                    'horizontal_input_wrapper_class' => 'col-lg-8 col-sm-8 col-xs-8',
                     'label' => 'form.label.repeat_password',
                 ),
+                'required' => true,
             ))
             ->add($builder->create('file', FileType::class, array(
                 'label' => 'form.label.avatar',

@@ -91,9 +91,9 @@
                 </div>
                 <div class="box-body">
                     {% if inline_form %}
-                        {% set attr = { role: 'form' } %}
-                    {% else %}
                         {% set attr = { role: 'form', class: 'form-inline' } %}
+                    {% else %}
+                        {% set attr = { role: 'form' } %}
                     {% endif %}
                     {{- form_start(form, {attr: attr}) -}}
                     <div class="box-body with-border">
