@@ -17,6 +17,7 @@ namespace SymfonyId\AdminBundle\Annotation;
  * @Attributes({
  *   @Attribute("htmlEditor", type = "boolean"),
  *   @Attribute("fileChooser", type = "boolean"),
+ *   @Attribute("inlineForm", type = "boolean"),
  *   @Attribute("numeric", type = "boolean"),
  *   @Attribute("bulkInsert", type = "boolean"),
  * })
@@ -34,6 +35,11 @@ class Plugin
      * @var bool
      */
     private $fileChooser = false;
+
+    /**
+     * @var bool
+     */
+    private $inlineForm = false;
 
     /**
      * @var bool
@@ -56,6 +62,10 @@ class Plugin
 
         if (isset($data['fileChooser'])) {
             $this->fileChooser = (bool) $data['fileChooser'];
+        }
+
+        if (isset($data['inlineForm'])) {
+            $this->inlineForm = (bool) $data['inlineForm'];
         }
 
         if (isset($data['numeric'])) {
@@ -83,6 +93,14 @@ class Plugin
     public function isFileChooserEnabled()
     {
         return $this->fileChooser;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInlineFormEnabled()
+    {
+        return $this->inlineForm;
     }
 
     /**

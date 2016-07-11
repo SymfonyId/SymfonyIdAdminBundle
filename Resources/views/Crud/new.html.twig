@@ -1,7 +1,5 @@
 {%- extends 'SymfonyIdAdminBundle::layout.html.twig' -%}
 
-{%- form_theme form form_theme -%}
-
 {%- block breadcrumb -%}
     <li><a href="#" class="active">{{- page_title | upper -}}</a></li>
     <li><a href="#" class="active">{{- (action_method ~ ' ' ~ page_title) | upper -}}</a></li>
@@ -92,7 +90,12 @@
                     <a href="#" class="btn btn-primary pull-right back-to-list">{{- 'action.back_to_list' | trans({}, translation_domain) -}}</a>
                 </div>
                 <div class="box-body">
-                    {{- form_start(form, {attr: { role: 'form' }}) -}}
+                    {% if inline_form %}
+                        {% set attr = { role: 'form' } %}
+                    {% else %}
+                        {% set attr = { role: 'form', class: 'form-inline' } %}
+                    {% endif %}
+                    {{- form_start(form, {attr: attr}) -}}
                     <div class="box-body with-border">
                         {%- for field in form.children -%}
                             {{- form_row(field) -}}

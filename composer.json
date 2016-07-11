@@ -24,6 +24,8 @@
         "symfony/monolog-bundle": "^2.8",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
+        "mopa/bootstrap-bundle": "~3.0",
+        "twbs/bootstrap": "~3.3.0",
         "knplabs/knp-paginator-bundle": "^2.5@dev",
         "knplabs/knp-menu-bundle": "^2.1@dev",
         "friendsofsymfony/user-bundle": "^2.0@dev",
@@ -54,5 +56,13 @@
             "SymfonyId\\AdminBundle\\": "",
             "Tests\\SymfonyId\\AdminBundle\\": "Tests"
         }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Mopa\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::postInstallSymlinkTwitterBootstrap"
+        ],
+        "post-update-cmd": [
+            "Mopa\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::postInstallSymlinkTwitterBootstrap"
+        ]
     }
 }

@@ -73,6 +73,20 @@ class PluginConfigurator implements ConfiguratorInterface
      *
      * @throws CallMethodBeforeException
      */
+    public function isInlineFormEnabled()
+    {
+        if (!$this->plugin) {
+            throw new CallMethodBeforeException('setPlugin');
+        }
+
+        return $this->plugin->isInlineFormEnabled();
+    }
+
+    /**
+     * @return bool
+     *
+     * @throws CallMethodBeforeException
+     */
     public function isNumericEnabled()
     {
         if (!$this->plugin) {

@@ -32,7 +32,6 @@ symfonyid_admin:
         dashboard: 'SymfonyIdAdminBundle:Index:index.html.twig'
         profile: 'SymfonyIdAdminBundle:Index:profile.html.twig'
         change_password: 'SymfonyIdAdminBundle:Index:change_password.html.twig'
-        form_theme: 'SymfonyIdAdminBundle:Form:fields.html.twig'
         new_view: 'SymfonyIdAdminBundle:Crud:new.html.twig'
         bulk_new_view: 'SymfonyIdAdminBundle:Crud:bulk-new.html.twig'
         edit_view: 'SymfonyIdAdminBundle:Crud:new.html.twig'

@@ -24,7 +24,7 @@ use SymfonyId\AdminBundle\Form\Type\AdminChangePasswordType;
  * @Route("/user")
  *
  * @Siab\Page(title="page.user.title", description="page.user.description")
- * @Siab\Plugin(fileChooser=true)
+ * @Siab\Plugin(fileChooser=true, inlineForm=true)
  * @Siab\Util(upload=@Siab\Upload(uploadable="file", targetField="avatar"))
  * @Siab\Crud(template=@Siab\Template(list="SymfonyIdAdminBundle:User:list.html.twig"))
  *

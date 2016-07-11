@@ -83,6 +83,12 @@ class UserType extends AbstractType
                     'class' => 'form-control username',
                 ),
             ))
+            ->add('email', EmailType::class, array(
+                'label' => 'form.label.email',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
             ->add($builder->create('roles', ChoiceType::class, array(
                 'label' => 'form.label.role',
                 'choices' => RoleHierarchyListBuilder::buildArrayForChoiceType($this->roleHierarchy),
@@ -91,12 +97,6 @@ class UserType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))->addModelTransformer(new RoleToArrayTransformer()))
-            ->add('email', EmailType::class, array(
-                'label' => 'form.label.email',
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'invalid_message' => 'message.password_must_match',

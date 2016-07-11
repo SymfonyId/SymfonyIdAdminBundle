@@ -67,7 +67,6 @@ class SymfonyIdAdminConstrants
     const TEMPLATE_DASHBOARD = 'SymfonyIdAdminBundle:Index:index.html.twig';
     const TEMPLATE_PROFILE = 'SymfonyIdAdminBundle:Index:profile.html.twig';
     const TEMPLATE_CHANGE_PASSWORD = 'SymfonyIdAdminBundle:Index:change_password.html.twig';
-    const TEMPLATE_FORM = 'SymfonyIdAdminBundle:Form:fields.html.twig';
     const TEMPLATE_PAGINATION = 'SymfonyIdAdminBundle:Layout:pagination.html.twig';
 
     /**

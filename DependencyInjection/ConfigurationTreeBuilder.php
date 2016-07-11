@@ -153,7 +153,6 @@ class ConfigurationTreeBuilder
                         ->scalarNode('dashboard')->defaultValue(Constants::TEMPLATE_DASHBOARD)->end()
                         ->scalarNode('profile')->defaultValue(Constants::TEMPLATE_PROFILE)->end()
                         ->scalarNode('change_password')->defaultValue(Constants::TEMPLATE_CHANGE_PASSWORD)->end()
-                        ->scalarNode('form_theme')->defaultValue(Constants::TEMPLATE_FORM)->end()
                         ->scalarNode('new_view')->defaultValue(Constants::TEMPLATE_CREATE)->end()
                         ->scalarNode('bulk_new_view')->defaultValue(Constants::TEMPLATE_BULK_CREATE)->end()
                         ->scalarNode('edit_view')->defaultValue(Constants::TEMPLATE_EDIT)->end()

@@ -94,7 +94,6 @@ trait ChangePasswordTrait
         $view = $this->container->get('symfonyid.admin.view.view');
         $view->setParam('page_title', $translator->trans('page.change_password.title', array(), $translationDomain));
         $view->setParam('page_description', $translator->trans('page.change_password.description', array(), $translationDomain));
-        $view->setParam('form_theme', $this->container->getParameter('symfonyid.admin.themes.form_theme'));
         $view->setParam('menu', $this->container->getParameter('symfonyid.admin.menu.menu_name'));
 
         return $view;

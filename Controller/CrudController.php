@@ -313,6 +313,7 @@ abstract class CrudController extends AbstractController
         $view->setParam('use_file_style', $pluginConfigurator->isFileChooserEnabled());
         $view->setParam('use_editor', $pluginConfigurator->isHtmlEditorEnabled());
         $view->setParam('use_numeric', $pluginConfigurator->isNumericEnabled());
+        $view->setParam('inline_form', $pluginConfigurator->isInlineFormEnabled());
         $view->setParam('autocomplete', false);
         $view->setParam('include_javascript', false);
         //Auto complete

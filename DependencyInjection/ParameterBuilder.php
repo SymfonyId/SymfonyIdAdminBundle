@@ -100,7 +100,6 @@ class ParameterBuilder
         $this->containerBuilder->setParameter($alias.'.admin.themes.dashboard', $config['themes']['dashboard']);
         $this->containerBuilder->setParameter($alias.'.admin.themes.profile', $config['themes']['profile']);
         $this->containerBuilder->setParameter($alias.'.admin.themes.change_password', $config['themes']['change_password']);
-        $this->containerBuilder->setParameter($alias.'.admin.themes.form_theme', $config['themes']['form_theme']);
         $this->containerBuilder->setParameter($alias.'.admin.themes.new_view', $config['themes']['new_view']);
         $this->containerBuilder->setParameter($alias.'.admin.themes.bulk_new', $config['themes']['bulk_new_view']);
         $this->containerBuilder->setParameter($alias.'.admin.themes.edit_view', $config['themes']['edit_view']);
