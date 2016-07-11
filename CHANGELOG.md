@@ -1,12 +1,44 @@
 # Change Log
 
-## [Unreleased](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/HEAD)
+## [0.22](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.22) (2016-07-11)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.21...0.22)
 
-[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.10...HEAD)
+## [0.21](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.21) (2016-07-11)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.20...0.21)
+
+## [0.20](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.20) (2016-07-11)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.19...0.20)
+
+## [0.19](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.19) (2016-07-10)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.17...0.19)
+
+## [0.17](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.17) (2016-07-05)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.18...0.17)
+
+## [0.18](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.18) (2016-06-30)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.16...0.18)
+
+## [0.16](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.16) (2016-06-29)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.15...0.16)
+
+## [0.15](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.15) (2016-06-29)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.14...0.15)
+
+## [0.14](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.14) (2016-06-28)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.13...0.14)
+
+## [0.13](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.13) (2016-06-27)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.12...0.13)
+
+## [0.12](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.12) (2016-06-10)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.11...0.12)
 
 **Closed issues:**
 
 - Add Security Annotation [\#3](https://github.com/SymfonyId/SymfonyIdAdminBundle/issues/3)
+
+## [0.11](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.11) (2016-06-03)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.10...0.11)
 
 ## [0.10](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.10) (2016-06-03)
 [Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.9...0.10)
