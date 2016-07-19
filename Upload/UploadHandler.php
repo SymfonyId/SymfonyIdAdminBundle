@@ -55,6 +55,7 @@ class UploadHandler
         if (count($fields) !== count($targetFields)) {
             throw new KeyNotMatchException(count($fields), count($targetFields));
         }
+
         $this->fields = array_values($fields);
         $this->targetFields = array_values($targetFields);
     }
@@ -81,12 +82,13 @@ class UploadHandler
         }
 
         if (!is_dir($this->dirPath)) {
-            mkdir($this->dirPath);
+            mkdir($this->dirPath, 0777, true);
         }
 
         $file = null;
         foreach ($this->fields as $key => $field) {
             $getter = CamelCaser::underScoresToCamelCase('get_'.$field);
+            
             if (method_exists($model, $getter)) {
                 /** @var UploadedFile $file */
                 $file = call_user_func_array(array($model, $getter), array());
