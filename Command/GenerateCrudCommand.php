@@ -42,10 +42,10 @@ class GenerateCrudCommand extends GenerateDoctrineCommand
     protected function configure()
     {
         $this
-            ->addArgument('model', InputArgument::OPTIONAL, 'The entity class name to initialize (shortcut notation)')
-            ->addOption('overwrite', null, InputOption::VALUE_NONE, 'Overwrite any existing controller or form class when generating the CRUD contents')
             ->setName('symfonyid:generate:crud')
             ->setAliases(array('symfonyid:generate', 'symfonyid:crud:generate'))
+            ->addArgument('model', InputArgument::OPTIONAL, 'The entity class name to initialize (shortcut notation)')
+            ->addOption('overwrite', null, InputOption::VALUE_NONE, 'Overwrite any existing controller or form class when generating the CRUD contents')
             ->setDescription('Generate CRUD from Model using SymfonyId Admin Bundle style')
             ->setHelp(<<<'EOT'
 The <info>siab:generate:crud</info> command generates a CRUD based on a Doctrine ORM or ODM using SymfonyId Admin Bundle style.
