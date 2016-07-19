@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.24](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.24) (2016-07-19)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.23...0.24)
+
+## [0.23](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.23) (2016-07-11)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.22...0.23)
+
 ## [0.22](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.22) (2016-07-11)
 [Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.21...0.22)
 

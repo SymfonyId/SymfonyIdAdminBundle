@@ -88,7 +88,7 @@ class UploadHandler
         $file = null;
         foreach ($this->fields as $key => $field) {
             $getter = CamelCaser::underScoresToCamelCase('get_'.$field);
-            
+
             if (method_exists($model, $getter)) {
                 /** @var UploadedFile $file */
                 $file = call_user_func_array(array($model, $getter), array());
