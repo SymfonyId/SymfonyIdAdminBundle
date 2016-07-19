@@ -53,6 +53,7 @@ class ParameterBuilder
     {
         $this->containerBuilder->setParameter($alias.'.admin.app_title', $config['app_title']);
         $this->containerBuilder->setParameter($alias.'.admin.app_short_title', $config['app_short_title']);
+        $this->containerBuilder->setParameter($alias.'.admin.bundles', $config['bundles']);
         $this->containerBuilder->setParameter($alias.'.admin.per_page', $config['per_page']);
         $this->containerBuilder->setParameter($alias.'.admin.identifier', $config['identifier']);
         $this->containerBuilder->setParameter($alias.'.admin.max_records', $config['max_records']);

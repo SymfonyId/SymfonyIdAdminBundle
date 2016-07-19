@@ -19,12 +19,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use SymfonyId\AdminBundle\Annotation\Driver;
+use SymfonyId\AdminBundle\Exception\RuntimeException;
 use SymfonyId\AdminBundle\Generator\ControllerGenerator;
 use SymfonyId\AdminBundle\Generator\FormGenerator;
-use SymfonyId\AdminBundle\Exception\RuntimeException;
 use SymfonyId\AdminBundle\Generator\GeneratorInterface;
 use SymfonyId\AdminBundle\Model\ModelMetadataAwareTrait;
 
@@ -41,7 +42,7 @@ class GenerateCrudCommand extends GenerateDoctrineCommand
     protected function configure()
     {
         $this
-            ->addArgument('model', InputArgument::REQUIRED, 'The entity class name to initialize (shortcut notation)')
+            ->addArgument('model', InputArgument::OPTIONAL, 'The entity class name to initialize (shortcut notation)')
             ->addOption('overwrite', null, InputOption::VALUE_NONE, 'Overwrite any existing controller or form class when generating the CRUD contents')
             ->setName('symfonyid:generate:crud')
             ->setAliases(array('symfonyid:generate', 'symfonyid:crud:generate'))
@@ -84,39 +85,20 @@ EOT
             }
         }
 
-        $model = Validators::validateEntityName($input->getArgument('model'));
         $forceOverwrite = $input->getOption('overwrite');
-        list($bundle, $model) = $this->parseShortcutNotation($model);
+        if ($model = $input->getArgument('model')) {
+            $this->generate($model, $forceOverwrite, $output);
+        } else {
+            $bundles = $this->getContainer()->getParameter('symfonyid.admin.bundles');
+            foreach ($bundles as $bundle) {
+                $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
 
-        $driver = new Driver(array('value' => Driver::ORM));
-        try {
-            $modelClass = $this->getAliasNamespace($driver, $bundle).'\\'.$model;
-        } catch (\Exception $exception) {
-            echo $exception->getTraceAsString();
-            $driver = new Driver(array('value' => Driver::ODM));
-            $modelClass = $this->getAliasNamespace($driver, $bundle).'\\'.$model;
+                $finder = new Finder();
+                $finder->in(array($bundle->getPath().'/Entity', $bundle->getPath().'/Document'));
+
+                $this->findModelAndGenerate($finder, $bundle, $output, $forceOverwrite);
+            }
         }
-
-        $metadata = $this->getClassMetadata($driver, $modelClass);
-        $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
-
-        /** @var GeneratorInterface $formGenerator */
-        $formGenerator = $this->getFormGenerator($bundle);
-        $formGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
-
-        $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $modelClass));
-
-        $controllerGenerator = $this->getControllerGenerator($bundle);
-        $controllerGenerator->generate($bundle, $modelClass, $metadata, $forceOverwrite);
-
-        $output->writeln(sprintf('<info>Controller for entity %s has been generated</info>', $modelClass));
-
-        /** @var KernelInterface $kernel */
-        $kernel = $this->getContainer()->get('kernel');
-        $cacheClearCommand = $this->getApplication()->find('cache:clear');
-        $cacheClearCommand->run(new ArrayInput(array('--env' => $kernel->getEnvironment())), $output);
-
-        $output->writeln(sprintf('<info>CRUD Generation is successfully!</info>', $modelClass));
     }
 
     /**
@@ -176,7 +158,7 @@ EOT
     /**
      * @param null|string $bundle
      *
-     * @return ControllerGenerator
+     * @return FormGenerator
      */
     private function getFormGenerator($bundle = null)
     {
@@ -184,5 +166,70 @@ EOT
         $generator->setSkeletonDirs($this->getSkeletonDirs($bundle));
 
         return $generator;
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param string          $model
+     * @param bool            $forceOverwrite
+     */
+    private function generate(OutputInterface $output, $model, $forceOverwrite = false)
+    {
+        $model = Validators::validateEntityName($model);
+        list($bundle, $model) = $this->parseShortcutNotation($model);
+
+        $driver = new Driver(array('value' => Driver::ORM));
+        try {
+            $modelClass = $this->getAliasNamespace($driver, $bundle).'\\'.$model;
+        } catch (\Exception $exception) {
+            echo $exception->getTraceAsString();
+            $driver = new Driver(array('value' => Driver::ODM));
+            $modelClass = $this->getAliasNamespace($driver, $bundle).'\\'.$model;
+        }
+
+        $metadata = $this->getClassMetadata($driver, $modelClass);
+        $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
+
+        /** @var GeneratorInterface $formGenerator */
+        $formGenerator = $this->getFormGenerator($bundle);
+        $formGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
+
+        $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $modelClass));
+
+        $controllerGenerator = $this->getControllerGenerator($bundle);
+        $controllerGenerator->generate($bundle, $modelClass, $metadata, $forceOverwrite);
+
+        $output->writeln(sprintf('<info>Controller for entity %s has been generated</info>', $modelClass));
+
+        /** @var KernelInterface $kernel */
+        $kernel = $this->getContainer()->get('kernel');
+        $cacheClearCommand = $this->getApplication()->find('cache:clear');
+        $cacheClearCommand->run(new ArrayInput(array('--env' => $kernel->getEnvironment())), $output);
+
+        $output->writeln(sprintf('<info>CRUD Generation is successfully!</info>', $modelClass));
+    }
+
+    /**
+     * @param Finder          $finder
+     * @param BundleInterface $bundle
+     * @param OutputInterface $output
+     * @param bool            $forceOverwrite
+     */
+    private function findModelAndGenerate(Finder $finder, BundleInterface $bundle, OutputInterface $output, $forceOverwrite = false)
+    {
+        $count = 0;
+        foreach ($finder as $file) {
+            if ('User.php' === $file->getFilename()) {
+                continue;
+            }
+
+            $model = sprintf('%s:%s', $bundle->getName(), str_replace('.php', '', $file->getFilename()));
+            $this->generate($output, $model, $forceOverwrite);
+            ++$count;
+        }
+
+        if (0 === $count) {
+            $output->writeln('<comment>No model is exist.</comment>');
+        }
     }
 }
