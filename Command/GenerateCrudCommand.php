@@ -89,6 +89,15 @@ EOT
         if ($model = $input->getArgument('model')) {
             $this->generate($model, $forceOverwrite, $output);
         } else {
+            if ($input->isInteractive()) {
+                $question = new ConfirmationQuestion($questionHelper->getQuestion('Are you sure generate crud from all models', 'yes', '?'), true);
+                if (!$questionHelper->ask($input, $output, $question)) {
+                    $output->writeln('<error>Command aborted</error>');
+
+                    return 1;
+                }
+            }
+
             $bundles = $this->getContainer()->getParameter('symfonyid.admin.bundles');
             foreach ($bundles as $bundle) {
                 $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
