@@ -94,7 +94,7 @@ EOT
                 $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
 
                 $finder = new Finder();
-                $finder->in(array($bundle->getPath().'/Entity', $bundle->getPath().'/Document'));
+                $finder->name('*.php')->in(array($bundle->getPath().'/Entity', $bundle->getPath().'/Document'));
 
                 $this->findModelAndGenerate($finder, $bundle, $output, $forceOverwrite);
             }
