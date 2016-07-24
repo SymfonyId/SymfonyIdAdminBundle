@@ -36,15 +36,11 @@ class {{ form_class }} extends AbstractType
             ->add('{{ field }}', DateType::class, array(
                 'widget' => 'single_text',
                 'attr' => array(
-                    'class' => 'form-control datepicker',
+                    'class' => 'datepicker',
                 ),
             ))
             {%- else -%}
-            ->add('{{ field }}', null, array(
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
+            ->add('{{ field }}', null)
             {%- endif -%}
         {%- endfor -%}
         ;
