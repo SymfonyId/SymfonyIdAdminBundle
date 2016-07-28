@@ -12,7 +12,7 @@
 namespace SymfonyId\AdminBundle\Filter;
 
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
-use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
+use SymfonyId\AdminBundle\Extractor\Extractor;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -20,7 +20,7 @@ use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 trait FieldsFilterAwareTrait
 {
     /**
-     * @var ExtractorFactory
+     * @var Extractor
      */
     protected $extractorFactory;
 
@@ -40,9 +40,9 @@ trait FieldsFilterAwareTrait
     protected $fieldsFilter;
 
     /**
-     * @param ExtractorFactory $extractorFactory
+     * @param Extractor $extractorFactory
      */
-    public function setExtractorFactory(ExtractorFactory $extractorFactory)
+    public function setExtractorFactory(Extractor $extractorFactory)
     {
         $this->extractorFactory = $extractorFactory;
     }

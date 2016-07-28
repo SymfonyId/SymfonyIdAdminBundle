@@ -18,7 +18,7 @@ use SymfonyId\AdminBundle\Annotation\Plugin;
 use SymfonyId\AdminBundle\Annotation\Security;
 use SymfonyId\AdminBundle\Annotation\Template;
 use SymfonyId\AdminBundle\Annotation\Util;
-use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
+use SymfonyId\AdminBundle\Extractor\Extractor;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -26,7 +26,7 @@ use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 class ConfigurationMapper
 {
     /**
-     * @var ExtractorFactory
+     * @var Extractor
      */
     private $extractorFactory;
 
@@ -41,9 +41,9 @@ class ConfigurationMapper
     private $fieldsFilter;
 
     /**
-     * @param ExtractorFactory $extractorFactory
+     * @param Extractor $extractorFactory
      */
-    public function __construct(ExtractorFactory $extractorFactory)
+    public function __construct(Extractor $extractorFactory)
     {
         $this->extractorFactory = $extractorFactory;
     }
@@ -85,8 +85,8 @@ class ConfigurationMapper
         /** @var UtilConfigurator $utilConfigurator */
         $utilConfigurator = $configuratorFactory->getConfigurator(UtilConfigurator::class);
 
-        $this->extractorFactory->extract($reflectionClass);
-        foreach ($this->extractorFactory->getClassAnnotations() as $annotation) {
+        $classAnnotations = $this->extractorFactory->extract($reflectionClass, Extractor::CLASS_ANNOTATION);
+        foreach ($classAnnotations as $annotation) {
             if ($annotation instanceof Crud) {
                 $crudConfigurator->setCrud($this->mergeCrudConfiguration($crudConfigurator->getCrud(), $annotation));
                 $configuratorFactory->addConfigurator($crudConfigurator);

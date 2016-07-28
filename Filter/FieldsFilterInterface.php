@@ -12,7 +12,7 @@
 namespace SymfonyId\AdminBundle\Filter;
 
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
-use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
+use SymfonyId\AdminBundle\Extractor\Extractor;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -20,9 +20,9 @@ use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 interface FieldsFilterInterface
 {
     /**
-     * @param ExtractorFactory $extractor
+     * @param Extractor $extractor
      */
-    public function setExtractorFactory(ExtractorFactory $extractor);
+    public function setExtractorFactory(Extractor $extractor);
 
     /**
      * @param ConfiguratorFactory $configuratorFactory

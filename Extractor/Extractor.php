@@ -16,8 +16,12 @@ use SymfonyId\AdminBundle\Exception\FreezeStateException;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class ExtractorFactory
+class Extractor
 {
+    const CLASS_ANNOTATION = 0;
+    const METHOD_ANNOTATAION = 1;
+    const PROPERTY_ANNOTATION = 2;
+
     /**
      * @var \Reflector
      */
@@ -49,16 +53,33 @@ class ExtractorFactory
 
     /**
      * @param \Reflector $reflector
+     * @param int        $type
+     *
+     * @return array
      */
-    public function extract(\Reflector $reflector)
+    public function extract(\Reflector $reflector, $type = self::CLASS_ANNOTATION)
     {
         $this->object = $reflector;
+
+        switch ($type) {
+            case self::CLASS_ANNOTATION:
+                return $this->getClassAnnotations();
+            break;
+            case self::METHOD_ANNOTATAION:
+                return $this->getMethodAnnotations();
+            break;
+            case self::PROPERTY_ANNOTATION:
+                return $this->getPropertyAnnotations();
+            break;
+        }
+
+        return array();
     }
 
     /**
      * @return array
      */
-    public function getClassAnnotations()
+    private function getClassAnnotations()
     {
         $annotations = array();
 
@@ -74,7 +95,7 @@ class ExtractorFactory
     /**
      * @return array
      */
-    public function getMethodAnnotations()
+    private function getMethodAnnotations()
     {
         $annotations = array();
 
@@ -96,7 +117,7 @@ class ExtractorFactory
     /**
      * @return array
      */
-    public function getPropertyAnnotations()
+    private function getPropertyAnnotations()
     {
         $annotations = array();
 

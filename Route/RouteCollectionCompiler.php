@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Routing\Route as SymfonyRoute;
 use Symfony\Component\Routing\RouteCollection;
 use SymfonyId\AdminBundle\Exception\RuntimeException;
-use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
+use SymfonyId\AdminBundle\Extractor\Extractor;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -24,14 +24,14 @@ use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 class RouteCollectionCompiler
 {
     /**
-     * @var ExtractorFactory
+     * @var Extractor
      */
     private $extractorFactory;
 
     /**
-     * @param ExtractorFactory $extractorFactory
+     * @param Extractor $extractorFactory
      */
-    public function __construct(ExtractorFactory $extractorFactory)
+    public function __construct(Extractor $extractorFactory)
     {
         $this->extractorFactory = $extractorFactory;
     }
@@ -48,14 +48,14 @@ class RouteCollectionCompiler
     {
         $collection = new RouteCollection();
 
-        $this->extractorFactory->extract($method);
         $routeAnnotations = array();
         $methodAnnotaion = null;
 
         /*
          * Parse method annotation
          */
-        foreach ($this->extractorFactory->getMethodAnnotations() as $key => $annoation) {
+        $methodAnnotaions = $this->extractorFactory->extract($method, Extractor::METHOD_ANNOTATAION);
+        foreach ($methodAnnotaions as $key => $annoation) {
             if ($annoation instanceof Route) {
                 $routeAnnotations[] = $annoation;
             }
@@ -86,8 +86,8 @@ class RouteCollectionCompiler
      */
     public function extractRouteFromController(\ReflectionClass $reflectionController)
     {
-        $this->extractorFactory->extract($reflectionController);
-        foreach ($this->extractorFactory->getClassAnnotations() as $annotation) {
+        $classAnnotations = $this->extractorFactory->extract($reflectionController, Extractor::CLASS_ANNOTATION);
+        foreach ($classAnnotations as $annotation) {
             if ($annotation instanceof Route) {
                 return $annotation;
             }

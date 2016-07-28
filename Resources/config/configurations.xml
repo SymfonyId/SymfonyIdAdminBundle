@@ -5,7 +5,7 @@
 
     <services>
         <service id="symfonyid.admin.configuration.configuration_mapper" class="SymfonyId\AdminBundle\Configuration\ConfigurationMapper">
-            <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
+            <argument type="service" id="symfonyid.admin.extractor.extractor" />
 
             <call method="setTemplate">
                 <argument type="service" id="symfonyid.admin.annotation.template" />
@@ -39,7 +39,7 @@
         </service>
 
         <service id="symfonyid.admin.configuration.grid_configurator" class="SymfonyId\AdminBundle\Configuration\GridConfigurator">
-            <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
+            <argument type="service" id="symfonyid.admin.extractor.extractor" />
             <argument type="service" id="kernel" />
 
             <call method="setGrid">

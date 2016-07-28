@@ -23,7 +23,7 @@ use SymfonyId\AdminBundle\Annotation\Security;
 use SymfonyId\AdminBundle\Cache\CacheHandler;
 use SymfonyId\AdminBundle\Controller\CrudController;
 use SymfonyId\AdminBundle\Controller\UserController;
-use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
+use SymfonyId\AdminBundle\Extractor\Extractor;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -46,7 +46,7 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
     protected $cacheHandler;
 
     /**
-     * @var ExtractorFactory
+     * @var Extractor
      */
     protected $extractorFactory;
 
@@ -65,11 +65,11 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
      * @param Router                        $router
      * @param CacheHandler                  $cacheHandler
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param ExtractorFactory              $extractorFactory
+     * @param Extractor              $extractorFactory
      * @param TranslatorInterface           $translator
      * @param string                        $translationDomain
      */
-    public function __construct(MenuFactory $menuFactory, Router $router, CacheHandler $cacheHandler, AuthorizationCheckerInterface $authorizationChecker, ExtractorFactory $extractorFactory, TranslatorInterface $translator, $translationDomain)
+    public function __construct(MenuFactory $menuFactory, Router $router, CacheHandler $cacheHandler, AuthorizationCheckerInterface $authorizationChecker, Extractor $extractorFactory, TranslatorInterface $translator, $translationDomain)
     {
         $this->menuFactory = $menuFactory;
         $this->router = $router;
@@ -112,8 +112,8 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
                     $controller = explode('::', $temp);
 
                     $reflectionController = new \ReflectionClass($controller[0]);
-                    $this->extractorFactory->extract($reflectionController);
-                    foreach ($this->extractorFactory->getClassAnnotations() as $annotation) {
+                    $classAnnotations = $this->extractorFactory->extract($reflectionController, Extractor::CLASS_ANNOTATION);
+                    foreach ($classAnnotations as $annotation) {
                         if (!($reflectionController->isSubclassOf(CrudController::class) && $reflectionController->getName() !== UserController::class)) {
                             continue;
                         }

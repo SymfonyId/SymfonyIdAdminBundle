@@ -40,7 +40,7 @@
 
         <service id="symfonyid.admin.listener.enable_fields_filter" class="SymfonyId\AdminBundle\EventListener\EnableFieldsFilterListener" >
             <argument type="service" id="symfonyid.admin.manager.manager_factory" />
-            <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
+            <argument type="service" id="symfonyid.admin.extractor.extractor" />
             <argument type="service" id="symfonyid.admin.manager.driver_finder" />
             <argument>%symfonyid.admin.date_time_format%</argument>
 

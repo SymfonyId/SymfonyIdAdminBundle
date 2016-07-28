@@ -16,7 +16,7 @@ use SymfonyId\AdminBundle\Annotation\Column;
 use SymfonyId\AdminBundle\Annotation\Filter;
 use SymfonyId\AdminBundle\Annotation\Grid;
 use SymfonyId\AdminBundle\Annotation\Sort;
-use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
+use SymfonyId\AdminBundle\Extractor\Extractor;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -24,7 +24,7 @@ use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 class GridConfigurator implements ConfiguratorInterface
 {
     /**
-     * @var ExtractorFactory
+     * @var Extractor
      */
     private $extractorFactory;
 
@@ -34,10 +34,10 @@ class GridConfigurator implements ConfiguratorInterface
     private $kernel;
 
     /**
-     * @param ExtractorFactory $extractorFactory
+     * @param Extractor $extractorFactory
      * @param KernelInterface  $kernel
      */
-    public function __construct(ExtractorFactory $extractorFactory, KernelInterface $kernel)
+    public function __construct(Extractor $extractorFactory, KernelInterface $kernel)
     {
         $this->extractorFactory = $extractorFactory;
         $this->kernel = $kernel;
@@ -76,8 +76,8 @@ class GridConfigurator implements ConfiguratorInterface
         }
 
         foreach ($reflectionClass->getProperties(\ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PROTECTED) as $property) {
-            $this->extractorFactory->extract($property);
-            foreach ($this->extractorFactory->getPropertyAnnotations() as $annotation) {
+            $propertyAnnotations = $this->extractorFactory->extract($property, Extractor::PROPERTY_ANNOTATION);
+            foreach ($propertyAnnotations as $annotation) {
                 if ($annotation instanceof Column) {
                     $fields[] = $property->getName();
                 }
@@ -100,8 +100,8 @@ class GridConfigurator implements ConfiguratorInterface
 
         /** @var \ReflectionProperty $property */
         foreach ($reflectionClass->getProperties(\ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PROTECTED) as $property) {
-            $this->extractorFactory->extract($property);
-            foreach ($this->extractorFactory->getPropertyAnnotations() as $annotation) {
+            $propertyAnnotations = $this->extractorFactory->extract($property, Extractor::PROPERTY_ANNOTATION);
+            foreach ($propertyAnnotations as $annotation) {
                 if ($annotation instanceof Filter) {
                     $fields[] = $property->getName();
                 }
@@ -124,8 +124,8 @@ class GridConfigurator implements ConfiguratorInterface
 
         /** @var \ReflectionProperty $property */
         foreach ($reflectionClass->getProperties(\ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PROTECTED) as $property) {
-            $this->extractorFactory->extract($property);
-            foreach ($this->extractorFactory->getPropertyAnnotations() as $annotation) {
+            $propertyAnnotations = $this->extractorFactory->extract($property, Extractor::PROPERTY_ANNOTATION);
+            foreach ($propertyAnnotations as $annotation) {
                 if ($annotation instanceof Sort) {
                     $fields[] = $property->getName();
                 }

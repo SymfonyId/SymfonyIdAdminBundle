@@ -7,7 +7,7 @@
         <service id="symfonyid.admin.manager.manager_factory" class="SymfonyId\AdminBundle\Manager\ManagerFactory" />
 
         <service id="symfonyid.admin.manager.driver_finder" class="SymfonyId\AdminBundle\Manager\DriverFinder" >
-            <argument type="service" id="symfonyid.admin.extractor.extractor_factory"/>
+            <argument type="service" id="symfonyid.admin.extractor.extractor"/>
             <argument>%symfonyid.admin.driver%</argument>
         </service>
     </services>

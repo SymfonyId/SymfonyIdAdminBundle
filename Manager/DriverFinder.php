@@ -12,7 +12,7 @@
 namespace SymfonyId\AdminBundle\Manager;
 
 use SymfonyId\AdminBundle\Annotation\Driver;
-use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
+use SymfonyId\AdminBundle\Extractor\Extractor;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -20,7 +20,7 @@ use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
 class DriverFinder
 {
     /**
-     * @var ExtractorFactory
+     * @var Extractor
      */
     private $extractorFactory;
 
@@ -30,10 +30,10 @@ class DriverFinder
     private $defaultDriver;
 
     /**
-     * @param ExtractorFactory $extractorFactory
+     * @param Extractor $extractorFactory
      * @param string           $defaultDriver
      */
-    public function __construct(ExtractorFactory $extractorFactory, $defaultDriver)
+    public function __construct(Extractor $extractorFactory, $defaultDriver)
     {
         $this->extractorFactory = $extractorFactory;
         $this->defaultDriver = $defaultDriver;
@@ -46,8 +46,8 @@ class DriverFinder
      */
     public function findDriverForClass($class)
     {
-        $this->extractorFactory->extract(new \ReflectionClass($class));
-        foreach ($this->extractorFactory->getClassAnnotations() as $annotation) {
+        $classAnnotations = $this->extractorFactory->extract(new \ReflectionClass($class), Extractor::CLASS_ANNOTATION);
+        foreach ($classAnnotations as $annotation) {
             if ($annotation instanceof Driver) {
                 return $annotation;
             }

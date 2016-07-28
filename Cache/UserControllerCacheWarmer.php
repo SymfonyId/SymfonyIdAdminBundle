@@ -22,7 +22,7 @@ use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
 use SymfonyId\AdminBundle\Controller\UserController;
-use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
+use SymfonyId\AdminBundle\Extractor\Extractor;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -66,11 +66,11 @@ class UserControllerCacheWarmer implements CacheWarmerInterface
 
     /**
      * @param ConfiguratorFactory         $configuratorFactory
-     * @param ExtractorFactory            $extractorFactory
+     * @param Extractor            $extractorFactory
      * @param ConfigurationCacheWriter    $configurationCacheWriter
      * @param DefaultConfigurationFactory $defaultConfigurationFactory
      */
-    public function __construct(ConfiguratorFactory $configuratorFactory, ExtractorFactory $extractorFactory, ConfigurationCacheWriter $configurationCacheWriter, DefaultConfigurationFactory $defaultConfigurationFactory)
+    public function __construct(ConfiguratorFactory $configuratorFactory, Extractor $extractorFactory, ConfigurationCacheWriter $configurationCacheWriter, DefaultConfigurationFactory $defaultConfigurationFactory)
     {
         $this->configuratorFactory = $configuratorFactory;
         $this->cacheWriter = $configurationCacheWriter;

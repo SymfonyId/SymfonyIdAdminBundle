@@ -14,7 +14,7 @@
         </service>
 
         <service id="symfonyid.admin.route.route_compiler" class="SymfonyId\AdminBundle\Route\RouteCollectionCompiler" >
-            <argument type="service" id="symfonyid.admin.extractor.extractor_factory"/>
+            <argument type="service" id="symfonyid.admin.extractor.extractor"/>
         </service>
     </services>
 </container>

@@ -17,7 +17,7 @@ use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Controller\UserController;
-use SymfonyId\AdminBundle\Extractor\ExtractorFactory;
+use SymfonyId\AdminBundle\Extractor\Extractor;
 use SymfonyId\AdminBundle\Filter\FieldsFilterInterface;
 use SymfonyId\AdminBundle\Manager\DriverFinder;
 use SymfonyId\AdminBundle\Manager\ManagerFactory;
@@ -36,7 +36,7 @@ class EnableFieldsFilterListener implements ConfigurationAwareInterface
     private $managerFactory;
 
     /**
-     * @var ExtractorFactory
+     * @var Extractor
      */
     private $extractorFactory;
 
@@ -52,11 +52,11 @@ class EnableFieldsFilterListener implements ConfigurationAwareInterface
 
     /**
      * @param ManagerFactory   $managerFactory
-     * @param ExtractorFactory $extractorFactory
+     * @param Extractor $extractorFactory
      * @param DriverFinder     $driverFinder
      * @param string           $dateTimeFormat
      */
-    public function __construct(ManagerFactory $managerFactory, ExtractorFactory $extractorFactory, DriverFinder $driverFinder, $dateTimeFormat)
+    public function __construct(ManagerFactory $managerFactory, Extractor $extractorFactory, DriverFinder $driverFinder, $dateTimeFormat)
     {
         $this->managerFactory = $managerFactory;
         $this->extractorFactory = $extractorFactory;

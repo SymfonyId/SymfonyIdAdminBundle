@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="symfonyid.admin.extractor.extractor_factory" class="SymfonyId\AdminBundle\Extractor\ExtractorFactory" />
+        <service id="symfonyid.admin.extractor.extractor" class="SymfonyId\AdminBundle\Extractor\Extractor" />
 
         <service id="symfonyid.admin.extractor.class_extractor" class="SymfonyId\AdminBundle\Extractor\ClassExtractor">
             <argument type="service" id="annotations.cached_reader" />

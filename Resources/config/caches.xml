@@ -61,7 +61,7 @@
 
         <service id="symfonyid.admin.cache.user_controller_cache_warmer" class="SymfonyId\AdminBundle\Cache\UserControllerCacheWarmer">
             <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
-            <argument type="service" id="symfonyid.admin.extractor.extractor_factory" />
+            <argument type="service" id="symfonyid.admin.extractor.extractor" />
             <argument type="service" id="symfonyid.admin.cache.configuration_cache_writer" />
             <argument type="service" id="symfonyid.admin.cache.default_configuration_factory" />
 
