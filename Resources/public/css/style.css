@@ -28,7 +28,7 @@ label.required:after {
     font-weight: normal !important;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1024px) {
     .override-group-form-right-margin {
         margin-right: -15px !important;
         margin-left: 7px !important;
@@ -50,7 +50,7 @@ label.required:after {
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
     .override-group-form-right-margin {
     }
 
