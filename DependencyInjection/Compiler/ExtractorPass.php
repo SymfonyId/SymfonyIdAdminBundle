@@ -20,21 +20,21 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class ExtractorPass implements CompilerPassInterface
 {
-    const EXTRACTOR_FACTORY = 'symfonyid.admin.extractor.extractor_factory';
+    const EXTRACTOR = 'symfonyid.admin.extractor.extractor';
 
     /**
      * @param ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has(self::EXTRACTOR_FACTORY)) {
+        if (!$container->has(self::EXTRACTOR)) {
             return;
         }
 
         /*
          * Add all service with tag name symfonyid.extractor
          */
-        $definition = $container->findDefinition(self::EXTRACTOR_FACTORY);
+        $definition = $container->findDefinition(self::EXTRACTOR);
         $taggedServices = $container->findTaggedServiceIds('symfonyid.extractor');
         foreach ($taggedServices as $id => $tags) {
             $definition->addMethodCall('addExtractor', array(new Reference($id)));
