@@ -87,7 +87,7 @@ EOT
 
         $forceOverwrite = $input->getOption('overwrite');
         if ($model = $input->getArgument('model')) {
-            $this->generate($model, $forceOverwrite, $output);
+            $this->generate($output, $model, $forceOverwrite);
         } else {
             if ($input->isInteractive()) {
                 $question = new ConfirmationQuestion($questionHelper->getQuestion('Are you sure generate crud from all models', 'yes', '?'), true);
