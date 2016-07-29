@@ -36,7 +36,7 @@
 
 #### Contributors####
  
-+ [Muhammad Surya Ihsanuddin](https://github.com/ihsanudin)
++ [Muhammad Surya Ihsanuddin](https://github.com/ad3n)
 
 + [Kontributor](https://github.com/SymfonyId/SymfonyIdAdminBundle/graphs/contributors)
 
