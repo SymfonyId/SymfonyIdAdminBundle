@@ -4,11 +4,11 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="symfonyid.admin.listener.auto_enable_user" class="SymfonyId\AdminBundle\EventListener\AutoEnableUserListener" >
-            <argument>%symfonyid.admin.user.auto_enable%</argument>
+        <!--<service id="symfonyid.admin.listener.auto_enable_user" class="SymfonyId\AdminBundle\EventListener\AutoEnableUserListener" >-->
+            <!--<argument>%symfonyid.admin.user.auto_enable%</argument>-->
 
-            <tag name="kernel.event_listener" event="symfonyid.pre_save" method="onPreSaveUser" />
-        </service>
+            <!--<tag name="kernel.event_listener" event="symfonyid.pre_save" method="onPreSaveUser" />-->
+        <!--</service>-->
 
         <service id="symfonyid.admin.listener.controller_annotation_extractor" class="SymfonyId\AdminBundle\EventListener\ControllerAnnotationExtractorListener" >
             <argument type="service" id="kernel" />
