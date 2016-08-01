@@ -81,25 +81,25 @@
             <!--<tag name="kernel.event_listener" event="symfonyid.filter_query" method="onFilterQuery" />-->
         <!--</service>-->
 
-        <service id="symfonyid.admin.listener.enable_soft_delete_filter" class="SymfonyId\AdminBundle\EventListener\EnableSoftDeleteListener" >
-            <argument type="service" id="symfonyid.admin.manager.manager_factory" />
-            <argument type="service" id="symfonyid.admin.manager.driver_finder" />
+        <!--<service id="symfonyid.admin.listener.enable_soft_delete_filter" class="SymfonyId\AdminBundle\EventListener\EnableSoftDeleteListener" >-->
+            <!--<argument type="service" id="symfonyid.admin.manager.manager_factory" />-->
+            <!--<argument type="service" id="symfonyid.admin.manager.driver_finder" />-->
 
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
-            </call>
-            <call method="setConfiguratorFactory">
-                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
-            </call>
-            <call method="setCacheHandler">
-                <argument type="service" id="symfonyid.admin.cache.cache_handler" />
-            </call>
-            <call method="setKernel">
-                <argument type="service" id="kernel" />
-            </call>
+            <!--<call method="setContainer">-->
+                <!--<argument type="service" id="service_container" />-->
+            <!--</call>-->
+            <!--<call method="setConfiguratorFactory">-->
+                <!--<argument type="service" id="symfonyid.admin.configuration.configurator_factory" />-->
+            <!--</call>-->
+            <!--<call method="setCacheHandler">-->
+                <!--<argument type="service" id="symfonyid.admin.cache.cache_handler" />-->
+            <!--</call>-->
+            <!--<call method="setKernel">-->
+                <!--<argument type="service" id="kernel" />-->
+            <!--</call>-->
 
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="-127" />
-        </service>
+            <!--<tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="-127" />-->
+        <!--</service>-->
 
         <service id="symfonyid.admin.listener.file_upload" class="SymfonyId\AdminBundle\EventListener\FileUploadListener" >
             <argument type="service" id="symfonyid.admin.upload.upload_handler" />

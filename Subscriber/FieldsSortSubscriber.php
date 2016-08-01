@@ -75,7 +75,7 @@ class FieldsSortSubscriber implements CrudControllerEventAwareInterface, EventSu
     /**
      * @param FilterQueryEvent $event
      */
-    public function filter(FilterQueryEvent $event)
+    public function sort(FilterQueryEvent $event)
     {
         if (!$this->sortBy) {
             return;
@@ -116,7 +116,7 @@ class FieldsSortSubscriber implements CrudControllerEventAwareInterface, EventSu
                 array('setSortParameter', -127),
             ),
             Constants::FILTER_LIST => array(
-                array('filter', 0),
+                array('sort', 0),
             ),
         );
     }

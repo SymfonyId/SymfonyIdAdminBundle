@@ -72,5 +72,25 @@
 
             <tag name="kernel.event_subscriber"/>
         </service>
+
+        <service id="symfonyid.admin.subscriber.soft_delete_subscriber" class="SymfonyId\AdminBundle\Subscriber\SoftDeleteSubscriber" >
+            <argument type="service" id="symfonyid.admin.manager.manager_factory" />
+            <argument type="service" id="symfonyid.admin.manager.driver_finder" />
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <call method="setConfiguratorFactory">
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
+            </call>
+            <call method="setCacheHandler">
+                <argument type="service" id="symfonyid.admin.cache.cache_handler" />
+            </call>
+            <call method="setKernel">
+                <argument type="service" id="kernel" />
+            </call>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
     </services>
 </container>
