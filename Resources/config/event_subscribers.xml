@@ -5,15 +5,57 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="symfonyid.admin.subscriber.auto_enable_user" class="SymfonyId\AdminBundle\Subscriber\AutoEnableUserSubscriber" >
+        <service id="symfonyid.admin.subscriber.auto_enable_user_subscriber" class="SymfonyId\AdminBundle\Subscriber\AutoEnableUserSubscriber" >
             <argument>%symfonyid.admin.user.auto_enable%</argument>
 
             <tag name="kernel.event_subscriber"/>
         </service>
 
-        <service id="symfonyid.admin.subscriber.controller_annotation_extractor" class="SymfonyId\AdminBundle\Subscriber\CrudControllerAwareSubscriber" >
+        <service id="symfonyid.admin.subscriber.crud_controller_aware_subscriber" class="SymfonyId\AdminBundle\Subscriber\CrudControllerAwareSubscriber" >
             <argument type="service" id="kernel" />
             <argument type="service" id="symfonyid.admin.configuration.configuration_mapper" />
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <call method="setConfiguratorFactory">
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
+            </call>
+            <call method="setCacheHandler">
+                <argument type="service" id="symfonyid.admin.cache.cache_handler" />
+            </call>
+            <call method="setKernel">
+                <argument type="service" id="kernel" />
+            </call>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="symfonyid.admin.subscriber.fields_filter_subscriber" class="SymfonyId\AdminBundle\Subscriber\FieldsFilterSubscriber" >
+            <argument type="service" id="symfonyid.admin.manager.manager_factory" />
+            <argument type="service" id="symfonyid.admin.extractor.extractor" />
+            <argument type="service" id="symfonyid.admin.manager.driver_finder" />
+            <argument>%symfonyid.admin.date_time_format%</argument>
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <call method="setConfiguratorFactory">
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
+            </call>
+            <call method="setCacheHandler">
+                <argument type="service" id="symfonyid.admin.cache.cache_handler" />
+            </call>
+            <call method="setKernel">
+                <argument type="service" id="kernel" />
+            </call>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="symfonyid.admin.subscriber.field_sort_subscriber" class="SymfonyId\AdminBundle\Subscriber\FieldsSortSubscriber" >
+            <argument type="service" id="session" />
+            <argument type="service" id="symfonyid.admin.manager.driver_finder" />
 
             <call method="setContainer">
                 <argument type="service" id="service_container" />

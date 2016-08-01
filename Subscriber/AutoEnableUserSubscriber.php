@@ -61,7 +61,9 @@ class AutoEnableUserSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            Constants::PRE_SAVE => array('onPreSaveUser'),
+            Constants::PRE_SAVE => array(
+                array('onPreSaveUser', 0),
+            ),
         );
     }
 }
