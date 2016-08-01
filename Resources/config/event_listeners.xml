@@ -10,33 +10,33 @@
             <!--<tag name="kernel.event_listener" event="symfonyid.pre_save" method="onPreSaveUser" />-->
         <!--</service>-->
 
-        <service id="symfonyid.admin.listener.controller_annotation_extractor" class="SymfonyId\AdminBundle\EventListener\ControllerAnnotationExtractorListener" >
-            <argument type="service" id="kernel" />
-            <argument type="service" id="symfonyid.admin.configuration.configuration_mapper" />
+        <!--<service id="symfonyid.admin.listener.controller_annotation_extractor" class="SymfonyId\AdminBundle\EventListener\ControllerAnnotationExtractorListener" >-->
+            <!--<argument type="service" id="kernel" />-->
+            <!--<argument type="service" id="symfonyid.admin.configuration.configuration_mapper" />-->
 
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
-            </call>
-            <call method="setConfiguratorFactory">
-                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
-            </call>
-            <call method="setCacheHandler">
-                <argument type="service" id="symfonyid.admin.cache.cache_handler" />
-            </call>
-            <call method="setKernel">
-                <argument type="service" id="kernel" />
-            </call>
+            <!--<call method="setContainer">-->
+                <!--<argument type="service" id="service_container" />-->
+            <!--</call>-->
+            <!--<call method="setConfiguratorFactory">-->
+                <!--<argument type="service" id="symfonyid.admin.configuration.configurator_factory" />-->
+            <!--</call>-->
+            <!--<call method="setCacheHandler">-->
+                <!--<argument type="service" id="symfonyid.admin.cache.cache_handler" />-->
+            <!--</call>-->
+            <!--<call method="setKernel">-->
+                <!--<argument type="service" id="kernel" />-->
+            <!--</call>-->
 
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="127" />
-        </service>
+            <!--<tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="127" />-->
+        <!--</service>-->
 
-        <service id="symfonyid.admin.listener.controller_injector" class="SymfonyId\AdminBundle\EventListener\ControllerInjectionListener" >
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
-            </call>
+        <!--<service id="symfonyid.admin.listener.controller_injector" class="SymfonyId\AdminBundle\EventListener\ControllerInjectionListener" >-->
+            <!--<call method="setContainer">-->
+                <!--<argument type="service" id="service_container" />-->
+            <!--</call>-->
 
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
-        </service>
+            <!--<tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>-->
+        <!--</service>-->
 
         <service id="symfonyid.admin.listener.enable_fields_filter" class="SymfonyId\AdminBundle\EventListener\EnableFieldsFilterListener" >
             <argument type="service" id="symfonyid.admin.manager.manager_factory" />
