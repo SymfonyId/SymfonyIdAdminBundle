@@ -66,7 +66,7 @@ class UserControllerCacheWarmer implements CacheWarmerInterface
 
     /**
      * @param ConfiguratorFactory         $configuratorFactory
-     * @param Extractor            $extractorFactory
+     * @param Extractor                   $extractorFactory
      * @param ConfigurationCacheWriter    $configurationCacheWriter
      * @param DefaultConfigurationFactory $defaultConfigurationFactory
      */

@@ -34,8 +34,8 @@ class GridConfigurator implements ConfiguratorInterface
     private $kernel;
 
     /**
-     * @param Extractor $extractorFactory
-     * @param KernelInterface  $kernel
+     * @param Extractor       $extractorFactory
+     * @param KernelInterface $kernel
      */
     public function __construct(Extractor $extractorFactory, KernelInterface $kernel)
     {

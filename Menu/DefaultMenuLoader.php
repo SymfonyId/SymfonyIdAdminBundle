@@ -65,7 +65,7 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
      * @param Router                        $router
      * @param CacheHandler                  $cacheHandler
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param Extractor              $extractorFactory
+     * @param Extractor                     $extractorFactory
      * @param TranslatorInterface           $translator
      * @param string                        $translationDomain
      */

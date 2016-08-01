@@ -51,10 +51,10 @@ class EnableFieldsFilterListener implements ConfigurationAwareInterface
     private $dateTimeFormat;
 
     /**
-     * @param ManagerFactory   $managerFactory
-     * @param Extractor $extractorFactory
-     * @param DriverFinder     $driverFinder
-     * @param string           $dateTimeFormat
+     * @param ManagerFactory $managerFactory
+     * @param Extractor      $extractorFactory
+     * @param DriverFinder   $driverFinder
+     * @param string         $dateTimeFormat
      */
     public function __construct(ManagerFactory $managerFactory, Extractor $extractorFactory, DriverFinder $driverFinder, $dateTimeFormat)
     {

@@ -31,7 +31,7 @@ class DriverFinder
 
     /**
      * @param Extractor $extractorFactory
-     * @param string           $defaultDriver
+     * @param string    $defaultDriver
      */
     public function __construct(Extractor $extractorFactory, $defaultDriver)
     {
