@@ -128,8 +128,12 @@ class CrudOperationHandler
         $event->setManager($manager);
         $this->eventSubscriber->subscribe(Constants::PRE_DELETE, $event);
 
-        if ($event->getResponse() instanceof JsonResponse) {
-            return $event->getResponse();
+        /** @var JsonResponse $response */
+        if ($response = $event->getResponse() instanceof JsonResponse) {
+            $content = json_decode($event->getResponse()->getContent(), true);
+            $this->errorMessage = isset($content['message']) ?: 'message.delete_failed';
+
+            return false;
         }
 
         try {

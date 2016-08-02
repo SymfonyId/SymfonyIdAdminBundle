@@ -72,7 +72,7 @@ class DeleteActionHandler extends AbstractActionHandler
         $this->view->setParam('errors', false);
         $this->view->setParam('message', 'ok');
 
-        if (!$this->crudOperationHandler->remove($driver, $this->model)) {
+        if (false === $this->crudOperationHandler->remove($driver, $this->model)) {
             $this->view->setParam('errors', true);
             $this->view->setParam('message', $this->translator->trans($this->crudOperationHandler->getErrorMessage(), array(), $this->translationDomain));
         }

@@ -188,7 +188,7 @@ class CrudFactory
         $view = $viewHandler->getView($this->driver);
 
         return new JsonResponse(array(
-            'status' => $view->getParam('errors'),
+            'status' => !$view->getParam('errors'),
             'message' => $view->getParam('message'),
         ));
     }
