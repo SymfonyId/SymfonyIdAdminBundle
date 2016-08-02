@@ -1,5 +1,22 @@
 # Change Log
 
+## [Unreleased](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/HEAD)
+
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.27...HEAD)
+
+**Closed issues:**
+
+- Change from Event Listener to Event Subscriber [\#4](https://github.com/SymfonyId/SymfonyIdAdminBundle/issues/4)
+
+## [0.27](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.27) (2016-07-29)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.26...0.27)
+
+## [0.26](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.26) (2016-07-29)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.25...0.26)
+
+## [0.25](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.25) (2016-07-29)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.24...0.25)
+
 ## [0.24](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.24) (2016-07-19)
 [Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.23...0.24)
 
