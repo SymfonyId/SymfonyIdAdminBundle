@@ -27,6 +27,9 @@
             <call method="setKernel">
                 <argument type="service" id="kernel" />
             </call>
+            <call method="setGridFilters">
+                <argument>%symfonyid.admin.filters%</argument>
+            </call>
 
             <tag name="kernel.event_subscriber"/>
         </service>
@@ -88,6 +91,122 @@
             </call>
             <call method="setKernel">
                 <argument type="service" id="kernel" />
+            </call>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="symfonyid.admin.subscriber.file_upload_subscriber" class="SymfonyId\AdminBundle\Subscriber\UploadFileSubscriber" >
+            <argument type="service" id="symfonyid.admin.upload.upload_handler" />
+            <argument>%symfonyid.admin.upload_directory%</argument>
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <call method="setConfiguratorFactory">
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
+            </call>
+            <call method="setCacheHandler">
+                <argument type="service" id="symfonyid.admin.cache.cache_handler" />
+            </call>
+            <call method="setKernel">
+                <argument type="service" id="kernel" />
+            </call>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="symfonyid.admin.subscriber.delete_user_subscriber" class="SymfonyId\AdminBundle\Subscriber\DeleteUserSubscriber" >
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="translator" />
+            <argument>%symfonyid.admin.translation_domain%</argument>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="symfonyid.admin.subscriber.profile_controller_subscriber" class="SymfonyId\AdminBundle\Subscriber\ProfileControllerAwareSubscriber" >
+            <call method="setConfiguratorFactory">
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
+            </call>
+            <call method="setCacheHandler">
+                <argument type="service" id="symfonyid.admin.cache.cache_handler" />
+            </call>
+            <call method="setKernel">
+                <argument type="service" id="kernel" />
+            </call>
+            <call method="setShowFields">
+                <argument>%symfonyid.admin.user.profile_fields%</argument>
+            </call>
+            <call method="setFormClass">
+                <argument>%symfonyid.admin.user.password_form%</argument>
+            </call>
+            <call method="setModelClass">
+                <argument>%symfonyid.admin.user.model_class%</argument>
+            </call>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="symfonyid.admin.subscriber.set_timestamp_subscriber" class="SymfonyId\AdminBundle\Subscriber\TimestampAwareSubscriber" >
+            <argument type="service" id="security.token_storage" />
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="symfonyid.admin.subscriber.global_variable_subscriber" class="SymfonyId\AdminBundle\Subscriber\GlobalVariableSubscriber" >
+            <argument type="service" id="twig" />
+
+            <call method="setTitle">
+                <argument>%symfonyid.admin.app_title%</argument>
+            </call>
+            <call method="setShortTitle">
+                <argument>%symfonyid.admin.app_short_title%</argument>
+            </call>
+            <call method="setDateTimeFormat">
+                <argument>%symfonyid.admin.date_time_format%</argument>
+            </call>
+            <call method="setMenu">
+                <argument>%symfonyid.admin.menu.menu_name%</argument>
+            </call>
+            <call method="setLocale">
+                <argument>%locale%</argument>
+            </call>
+            <call method="setTranslationDomain">
+                <argument>%symfonyid.admin.translation_domain%</argument>
+            </call>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="symfonyid.admin.subscriber.user_controller_subscriber" class="SymfonyId\AdminBundle\Subscriber\UserControllerAwareSubscriber" >
+            <argument type="service" id="symfonyid.admin.configuration.configuration_mapper" />
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <call method="setConfiguratorFactory">
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
+            </call>
+            <call method="setCacheHandler">
+                <argument type="service" id="symfonyid.admin.cache.cache_handler" />
+            </call>
+            <call method="setKernel">
+                <argument type="service" id="kernel" />
+            </call>
+            <call method="setFormClass">
+                <argument>%symfonyid.admin.user.user_form%</argument>
+            </call>
+            <call method="setModelClass">
+                <argument>%symfonyid.admin.user.model_class%</argument>
+            </call>
+            <call method="setShowFields">
+                <argument>%symfonyid.admin.user.show_fields%</argument>
+            </call>
+            <call method="setGridColumns">
+                <argument>%symfonyid.admin.user.grid_columns%</argument>
+            </call>
+            <call method="setGridFilters">
+                <argument>%symfonyid.admin.user.grid_filters%</argument>
             </call>
 
             <tag name="kernel.event_subscriber"/>
