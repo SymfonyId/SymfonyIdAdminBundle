@@ -93,7 +93,7 @@ class SymfonyIdAdminExtension extends Extension
         $loader->load('caches.xml');
         $loader->load('configurations.xml');
         $loader->load('cruds.xml');
-        $loader->load('event_subscriber.xml');
+        $loader->load('event_subscribers.xml');
         $loader->load('extractors.xml');
         $loader->load('forms.xml');
         $loader->load('managers.xml');
