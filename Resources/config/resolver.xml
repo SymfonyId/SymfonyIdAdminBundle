@@ -4,11 +4,6 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="symfonyid.admin.controller.resolver.kernel_value_resolver" class="SymfonyId\AdminBundle\Controller\Resolver\KernelValueResolver" >
-            <argument type="service" id="kernel"/>
-
-            <tag name="controller.argument_value_resolver" priority="27" />
-        </service>
         <service id="symfonyid.admin.controller.resolver.cache_handler_value_resolver" class="SymfonyId\AdminBundle\Controller\Resolver\CacheHandlerValueResolver" >
             <argument type="service" id="symfonyid.admin.cache.cache_handler"/>
 

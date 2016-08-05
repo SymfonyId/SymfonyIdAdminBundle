@@ -12,13 +12,14 @@
 namespace SymfonyId\AdminBundle\Controller\Resolver;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class ConfiguratorFactoryValueResolver extends AbstractValueResolver
+class ConfiguratorFactoryValueResolver implements ArgumentValueResolverInterface
 {
     /**
      * @var ConfiguratorFactory
@@ -31,6 +32,23 @@ class ConfiguratorFactoryValueResolver extends AbstractValueResolver
     public function __construct(ConfiguratorFactory $configuratorFactory)
     {
         $this->configuratorFactory = $configuratorFactory;
+    }
+
+    /**
+     * Whether this resolver can resolve the value for the given ArgumentMetadata.
+     *
+     * @param Request          $request
+     * @param ArgumentMetadata $argument
+     *
+     * @return bool
+     */
+    public function supports(Request $request, ArgumentMetadata $argument)
+    {
+        if (ConfiguratorFactory::class !== $argument->getType()) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
