@@ -98,6 +98,7 @@ class SymfonyIdAdminExtension extends Extension
         $loader->load('forms.xml');
         $loader->load('managers.xml');
         $loader->load('menus.xml');
+        $loader->load('resolver.xml');
         $loader->load('routes.xml');
         $loader->load('services.xml');
         $loader->load('twig_extensions.xml');

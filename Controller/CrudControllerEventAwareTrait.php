@@ -43,10 +43,6 @@ trait CrudControllerEventAwareTrait
             return false;
         }
 
-        $controller->setCacheHandler($this->container->get('symfonyid.admin.cache.cache_handler'));
-        $controller->setConfiguratorFactory($this->container->get('symfonyid.admin.configuration.configurator_factory'));
-        $controller->setKernel($this->container->get('kernel'));
-
         $this->controller = $controller;
 
         return true;

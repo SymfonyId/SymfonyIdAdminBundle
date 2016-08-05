@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="symfonyid.admin.controller.resolver.kernel_value_resolver" class="SymfonyId\AdminBundle\Controller\Resolver\KernelValueResolver" >
+            <argument type="service" id="kernel"/>
+
+            <tag name="controller.argument_value_resolver" priority="27" />
+        </service>
+        <service id="symfonyid.admin.controller.resolver.cache_handler_value_resolver" class="SymfonyId\AdminBundle\Controller\Resolver\CacheHandlerValueResolver" >
+            <argument type="service" id="symfonyid.admin.cache.cache_handler"/>
+
+            <tag name="controller.argument_value_resolver" priority="27" />
+        </service>
+        <service id="symfonyid.admin.controller.resolver.configurator_factory_value_resolver" class="SymfonyId\AdminBundle\Controller\Resolver\ConfiguratorFactoryValueResolver" >
+            <argument type="service" id="symfonyid.admin.configuration.configurator_factory"/>
+
+            <tag name="controller.argument_value_resolver" priority="27" />
+        </service>
+    </services>
+</container>
