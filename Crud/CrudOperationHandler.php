@@ -130,7 +130,7 @@ class CrudOperationHandler
 
         /** @var JsonResponse $response */
         if ($response = $event->getResponse() instanceof JsonResponse) {
-            $content = json_decode($event->getResponse()->getContent(), true);
+            $content = json_decode($response->getContent(), true);
             $this->errorMessage = isset($content['message']) ? $content['message'] : 'message.delete_failed';
 
             return false;
