@@ -167,7 +167,7 @@ class CrudControllerAwareSubscriber implements CrudControllerEventAwareInterface
         return array(
             KernelEvents::CONTROLLER => array(
                 array('extractUserController', 127),
-//                array('setControllerDependencies', 0),
+                array('setControllerDependencies', 0),
                 array('setDefaultCrudConfiguration', 255),
                 array('setDefaultCrudConfiguration', 255),
             ),
