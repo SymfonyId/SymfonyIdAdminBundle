@@ -12,9 +12,13 @@
 namespace SymfonyId\AdminBundle\Upload;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use SymfonyId\AdminBundle\Event\EventSubscriber;
+use SymfonyId\AdminBundle\Event\FilterUploadEvent;
 use SymfonyId\AdminBundle\Exception\KeyNotMatchException;
+use SymfonyId\AdminBundle\Exception\RuntimeException;
 use SymfonyId\AdminBundle\Model\ModelInterface;
 use SymfonyId\AdminBundle\Util\CamelCaser;
+use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -35,6 +39,19 @@ class UploadHandler
      * @var array
      */
     private $targetFields = array();
+
+    /**
+     * @var EventSubscriber
+     */
+    private $eventSubscriber;
+
+    /**
+     * @param EventSubscriber $eventSubscriber
+     */
+    public function __construct(EventSubscriber $eventSubscriber)
+    {
+        $this->eventSubscriber = $eventSubscriber;
+    }
 
     /**
      * @param string $dirPath
@@ -74,6 +91,7 @@ class UploadHandler
 
     /**
      * @param ModelInterface $model
+     * @throws RuntimeException
      */
     public function upload(ModelInterface $model)
     {
@@ -95,11 +113,20 @@ class UploadHandler
             }
 
             if ($file instanceof UploadedFile) {
-                $fileName = sha1(uniqid('SIAB_', true)).'.'.$file->getClientOriginalExtension();
-
-                if (!$file->isExecutable()) {
-                    $file->move($this->dirPath, $fileName);
+                if ($file->isExecutable()) {
+                    throw new RuntimeException(sprintf('message.upload_executable'));
                 }
+
+                $filterUpload = new FilterUploadEvent();
+                $filterUpload->setFileUploaded($file);
+
+                $this->eventSubscriber->subscribe(Constants::PRE_UPLOAD, $filterUpload);
+
+                $file = $filterUpload->getFileUploaded();
+                $fileName = sha1(uniqid('SIAB_', true)).'.'.$file->getClientOriginalExtension();
+                $file->move($this->dirPath, $fileName);
+
+                $this->eventSubscriber->subscribe(Constants::POST_UPLOAD, $filterUpload);
 
                 $setter = CamelCaser::underScoresToCamelCase('set_'.$this->targetFields[$key]);
                 if (method_exists($model, $setter)) {

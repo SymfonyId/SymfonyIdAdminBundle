@@ -27,11 +27,13 @@ class SymfonyIdAdminConstrants
     /**
      * Crud Events.
      */
+    const PRE_UPLOAD = self::ROOT_PARAMETER.'.pre_upload';
     const PRE_SAVE = self::ROOT_PARAMETER.'.pre_save';
     const POST_SAVE = self::ROOT_PARAMETER.'.post_save';
     const FILTER_LIST = self::ROOT_PARAMETER.'.filter_query';
     const PRE_DELETE = self::ROOT_PARAMETER.'.pre_delete';
     const PRE_SHOW = self::ROOT_PARAMETER.'.pre_show';
+    const POST_UPLOAD = self::ROOT_PARAMETER.'.post_upload';
 
     /**
      * Crud Actions.

@@ -6,7 +6,9 @@
     <services>
         <service id="symfonyid.admin.view.view" class="SymfonyId\AdminBundle\View\View" />
 
-        <service id="symfonyid.admin.upload.upload_handler" class="SymfonyId\AdminBundle\Upload\UploadHandler" />
+        <service id="symfonyid.admin.upload.upload_handler" class="SymfonyId\AdminBundle\Upload\UploadHandler">
+            <argument type="service" id="symfonyid.admin.event.event_subscriber"/>
+        </service>
 
         <service id="symfonyid.admin.security.authorization_checker" class="SymfonyId\AdminBundle\Security\AuthorizationChecker" >
             <argument type="service" id="translator"/>
