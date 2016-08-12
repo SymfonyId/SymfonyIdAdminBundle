@@ -14,6 +14,7 @@ namespace SymfonyId\AdminBundle\Document\Filter;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
 use SymfonyId\AdminBundle\Annotation\Filter;
+use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
 use SymfonyId\AdminBundle\Filter\FieldsFilterAwareTrait;
 use SymfonyId\AdminBundle\Filter\FieldsFilterInterface;
@@ -36,9 +37,17 @@ class FieldsFilter extends BsonFilter implements FieldsFilterInterface
      */
     public function addFilterCriteria(ClassMetadata $targetDocument)
     {
+        $output = array();
+        
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
         $fields = array_merge($this->fieldsFilter, $gridConfigurator->getFilters($targetDocument->getReflectionClass()));
+
+        /** @var CrudConfigurator $crudConfiguration */
+        $crudConfiguration = $this->configuratorFactory->getConfigurator(CrudConfigurator::class);
+        if ($crudConfiguration->getCrud()->getModelClass() !== $targetDocument->getName()) {
+            return $output;
+        }
 
         $fixFields = array();
         foreach ($fields as $key => $field) {
@@ -47,7 +56,6 @@ class FieldsFilter extends BsonFilter implements FieldsFilterInterface
             }
         }
 
-        $output = array();
         foreach ($fixFields as $field) {
             if (in_array($field['type'], array('date', 'datetime', 'time'))) {
                 $date = \DateTime::createFromFormat($this->dateTimeFormat, $this->getParameter('filter'));

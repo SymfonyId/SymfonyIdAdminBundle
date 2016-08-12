@@ -70,20 +70,9 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->setManagerFactory($this->getContainer()->get('symfonyid.admin.manager.manager_factory'));
-
         $questionHelper = $this->getQuestionHelper();
 
-        /*
-         * Question helper
-         */
-        if ($input->isInteractive()) {
-            $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you confirm generation', 'yes', '?'), true);
-            if (!$questionHelper->ask($input, $output, $question)) {
-                $output->writeln('<error>Command aborted</error>');
-
-                return 1;
-            }
-        }
+        $this->interactive($input, $output);
 
         $forceOverwrite = $input->getOption('overwrite');
         if ($model = $input->getArgument('model')) {
@@ -239,6 +228,38 @@ EOT
 
         if (0 === $count) {
             $output->writeln('<comment>No model is exist.</comment>');
+        }
+    }
+
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
+    private function interactive(InputInterface $input, OutputInterface $output)
+    {
+        $questionHelper = $this->getQuestionHelper();
+
+        if ($this->getApplication()->has('doctrine:schema:update') && $input->isInteractive()) {
+            $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you want to update your database schemas', 'yes', '?'), true);
+
+            if ($questionHelper->ask($input, $output, $question)) {
+                $schemaUpdaterCommand = $this->getApplication()->find('doctrine:schema:update');
+                $schemaUpdaterCommand->run(new ArrayInput(array('--force' => true)), $output);
+            }
+        }
+
+        /*
+         * Question helper
+         */
+        if ($input->isInteractive()) {
+            $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you confirm generation', 'yes', '?'), true);
+            if (!$questionHelper->ask($input, $output, $question)) {
+                $output->writeln('<error>Command aborted</error>');
+
+                return 1;
+            }
         }
     }
 }
