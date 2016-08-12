@@ -73,6 +73,15 @@ EOT
 
         $questionHelper = $this->getQuestionHelper();
 
+        if ($this->getApplication()->has('doctrine:schema:update') && $input->isInteractive()) {
+            $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you want to update your database schemas', 'yes', '?'), true);
+
+            if ($questionHelper->ask($input, $output, $question)) {
+                $schemaUpdaterCommand = $this->getApplication()->find('doctrine:schema:update');
+                $schemaUpdaterCommand->run(new ArrayInput(array('--force' => true)), $output);
+            }
+        }
+
         /*
          * Question helper
          */
