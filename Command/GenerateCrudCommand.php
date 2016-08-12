@@ -73,15 +73,6 @@ EOT
 
         $questionHelper = $this->getQuestionHelper();
 
-        if ($this->getApplication()->has('doctrine:schema:update') && $input->isInteractive()) {
-            $question = new ConfirmationQuestion($questionHelper->getQuestion('Do you want to update your database schemas', 'yes', '?'), true);
-
-            if ($questionHelper->ask($input, $output, $question)) {
-                $schemaUpdaterCommand = $this->getApplication()->find('doctrine:schema:update');
-                $schemaUpdaterCommand->run(new ArrayInput(array('--force' => true)), $output);
-            }
-        }
-
         /*
          * Question helper
          */
@@ -117,6 +108,13 @@ EOT
                 $this->findModelAndGenerate($finder, $bundle, $output, $forceOverwrite);
             }
         }
+
+        /** @var KernelInterface $kernel */
+        $kernel = $this->getContainer()->get('kernel');
+        $cacheClearCommand = $this->getApplication()->find('cache:clear');
+        $cacheClearCommand->run(new ArrayInput(array('--env' => $kernel->getEnvironment())), $output);
+
+        $output->writeln('<info>CRUD Generation is successfully!</info>');
     }
 
     /**
@@ -218,13 +216,6 @@ EOT
         $controllerGenerator->generate($bundle, $modelClass, $metadata, $forceOverwrite);
 
         $output->writeln(sprintf('<info>Controller for entity %s has been generated</info>', $modelClass));
-
-        /** @var KernelInterface $kernel */
-        $kernel = $this->getContainer()->get('kernel');
-        $cacheClearCommand = $this->getApplication()->find('cache:clear');
-        $cacheClearCommand->run(new ArrayInput(array('--env' => $kernel->getEnvironment())), $output);
-
-        $output->writeln(sprintf('<info>CRUD Generation is successfully!</info>', $modelClass));
     }
 
     /**
