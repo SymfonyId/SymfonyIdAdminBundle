@@ -11,6 +11,7 @@
 
 namespace SymfonyId\AdminBundle\Manager;
 
+use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -57,6 +58,11 @@ abstract class AbstractManager implements ManagerInterface
     private $modelClass;
 
     /**
+     * @var \Doctrine\Common\Cache\Cache
+     */
+    private $cacheHandler;
+
+    /**
      * @param ManagerRegistry       $managerRegistry
      * @param ObjectManager         $manager
      * @param PaginatorInterface    $paginator
@@ -65,8 +71,11 @@ abstract class AbstractManager implements ManagerInterface
      */
     public function __construct(ManagerRegistry $managerRegistry, ObjectManager $manager, PaginatorInterface $paginator, TokenStorageInterface $tokenStorage, EventSubscriber $eventSubscriber)
     {
+        /** @var \Symfony\Bridge\Doctrine\ManagerRegistry $managerRegistry */
         $this->managerRegistry = $managerRegistry;
         $this->manager = $manager;
+        $cache = $managerRegistry->getManager()->getConfiguration()->getHydrationCacheImpl();
+        $this->cacheHandler = $cache ?: new ArrayCache();
         $this->paginator = $paginator;
         $this->tokenStorage = $tokenStorage;
         $this->eventSubscriber = $eventSubscriber;
@@ -163,7 +172,7 @@ abstract class AbstractManager implements ManagerInterface
     }
 
     /**
-     * @return \Doctrine\ODM\MongoDB\DocumentManager|\Doctrine\ORM\EntityManager
+     * @return \Doctrine\ODM\MongoDB\DocumentManager|\Doctrine\ORM\EntityManager|ObjectManager
      */
     protected function getManager()
     {
@@ -184,5 +193,10 @@ abstract class AbstractManager implements ManagerInterface
     protected function getModelClass()
     {
         return $this->modelClass;
+    }
+
+    protected function getCacheHandler()
+    {
+        return $this->cacheHandler;
     }
 }

@@ -153,6 +153,12 @@
             <tag name="kernel.event_subscriber"/>
         </service>
 
+        <service id="symfonyid.admin.subscriber.set_response_cache" class="SymfonyId\AdminBundle\Subscriber\ResponseCacheSubscriber" >
+            <argument>%symfonyid.admin.cache_lifetime%</argument>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
         <service id="symfonyid.admin.subscriber.global_variable_subscriber" class="SymfonyId\AdminBundle\Subscriber\GlobalVariableSubscriber" >
             <argument type="service" id="twig" />
 

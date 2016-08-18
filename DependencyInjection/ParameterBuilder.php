@@ -60,6 +60,7 @@ class ParameterBuilder
         $this->containerBuilder->setParameter($alias.'.admin.filters', $config['filters']);
         $this->containerBuilder->setParameter($alias.'.admin.date_time_format', $config['date_time_format']);
         $this->containerBuilder->setParameter($alias.'.admin.translation_domain', $config['translation_domain']);
+        $this->containerBuilder->setParameter($alias.'.admin.cache_lifetime', $config['cache_lifetime']);
 
         if (!in_array($config['driver'], array(Driver::ORM, Driver::ODM))) {
             throw new DriverNotFoundException($config['value']);

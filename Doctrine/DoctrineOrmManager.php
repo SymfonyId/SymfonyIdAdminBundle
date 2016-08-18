@@ -28,16 +28,20 @@ use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
  */
 class DoctrineOrmManager extends AbstractManager
 {
+    private $cacheLifetime;
+
     /**
      * @param ManagerRegistry       $managerRegistry
      * @param EntityManager         $manager
      * @param PaginatorInterface    $paginator
      * @param TokenStorageInterface $tokenStorage
      * @param EventSubscriber       $eventSubscriber
+     * @param int                   $cacheLifetime
      */
-    public function __construct(ManagerRegistry $managerRegistry, EntityManager $manager, PaginatorInterface $paginator, TokenStorageInterface $tokenStorage, EventSubscriber $eventSubscriber)
+    public function __construct(ManagerRegistry $managerRegistry, EntityManager $manager, PaginatorInterface $paginator, TokenStorageInterface $tokenStorage, EventSubscriber $eventSubscriber, $cacheLifetime)
     {
         parent::__construct($managerRegistry, $manager, $paginator, $tokenStorage, $eventSubscriber);
+        $this->cacheLifetime = $cacheLifetime;
     }
 
     /**
@@ -62,6 +66,8 @@ class DoctrineOrmManager extends AbstractManager
         $this->getEventSubscriber()->subscribe(Constants::FILTER_LIST, $filterList);
 
         $query = $queryBuilder->getQuery();
+        $query->useQueryCache(true);
+        $query->useResultCache(true, $this->cacheLifetime, sprintf('%s_%s', $this->getModelClass(), serialize($query->getParameters()->toArray())));
 
         return $this->getPaginator()->paginate($query, $page, $limit);
     }
@@ -76,7 +82,11 @@ class DoctrineOrmManager extends AbstractManager
         $queryBuilder = $repository->createQueryBuilder(Constants::MODEL_ALIAS);
         $queryBuilder->select(sprintf('COUNT(%s.id)', Constants::MODEL_ALIAS));
 
-        return $queryBuilder->getQuery()->getSingleScalarResult();
+        $query = $queryBuilder->getQuery();
+        $query->useQueryCache(true);
+        $query->useResultCache(true, $this->cacheLifetime, sprintf('%s_%s', $this->getModelClass(), serialize($query->getParameters()->toArray())));
+
+        return $query->getSingleScalarResult();
     }
 
     /**
