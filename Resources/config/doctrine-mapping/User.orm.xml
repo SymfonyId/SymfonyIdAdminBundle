@@ -4,6 +4,7 @@
     xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <mapped-superclass name="SymfonyId\AdminBundle\User\User">
+        <cache usage="NONSTRICT_READ_WRITE" />
         <field name="fullName" column="fullname" type="string" length="99" />
         <field name="avatar" column="avatar" type="string" length="255" nullable="true" />
     </mapped-superclass>
