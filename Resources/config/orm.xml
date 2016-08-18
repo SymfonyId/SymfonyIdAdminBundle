@@ -10,6 +10,7 @@
             <argument type="service" id="knp_paginator"/>
             <argument type="service" id="security.token_storage"/>
             <argument type="service" id="symfonyid.admin.event.event_subscriber"/>
+            <argument>%symfonyid.admin.cache_lifetime%</argument>
 
             <tag name="symfonyid.manager" />
         </service>
