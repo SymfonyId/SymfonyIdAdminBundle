@@ -57,7 +57,7 @@ class ResponseCacheSubscriber implements EventSubscriberInterface
     {
         return array(
             KernelEvents::REQUEST => array(
-                array('validateCache', -127),
+                array('validateCache', 255),
             ),
             KernelEvents::RESPONSE => array(
                 array('cacheResponse', -127),
