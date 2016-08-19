@@ -71,7 +71,7 @@ abstract class AbstractManager implements ManagerInterface
      */
     public function __construct(ManagerRegistry $managerRegistry, ObjectManager $manager, PaginatorInterface $paginator, TokenStorageInterface $tokenStorage, EventSubscriber $eventSubscriber)
     {
-        /** @var \Symfony\Bridge\Doctrine\ManagerRegistry $managerRegistry */
+        /* @var \Symfony\Bridge\Doctrine\ManagerRegistry $managerRegistry */
         $this->managerRegistry = $managerRegistry;
         $this->manager = $manager;
         $cache = $managerRegistry->getManager()->getConfiguration()->getHydrationCacheImpl();

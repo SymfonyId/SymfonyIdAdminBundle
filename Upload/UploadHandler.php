@@ -91,6 +91,7 @@ class UploadHandler
 
     /**
      * @param ModelInterface $model
+     *
      * @throws RuntimeException
      */
     public function upload(ModelInterface $model)

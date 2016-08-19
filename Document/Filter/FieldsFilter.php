@@ -38,7 +38,7 @@ class FieldsFilter extends BsonFilter implements FieldsFilterInterface
     public function addFilterCriteria(ClassMetadata $targetDocument)
     {
         $output = array();
-        
+
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
         $fields = array_merge($this->fieldsFilter, $gridConfigurator->getFilters($targetDocument->getReflectionClass()));
