@@ -12,7 +12,7 @@ The essiest way to install is use [PlatformLite](https://github.com/ad3n/Platfor
 
 + Follow the instructions and then
 
-+ Run `php bin/console symfonyid:skeleton:setup`
++ Run `php bin/console platform:setup`
 
 #### Existing Project ####
 
