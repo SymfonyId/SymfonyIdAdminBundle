@@ -48,6 +48,11 @@ class FieldsSortSubscriber implements CrudControllerEventAwareInterface, EventSu
     private $sortBy;
 
     /**
+     * @var string
+     */
+    private $direction;
+
+    /**
      * @param Session      $session
      * @param DriverFinder $driverFinder
      */
@@ -55,6 +60,7 @@ class FieldsSortSubscriber implements CrudControllerEventAwareInterface, EventSu
     {
         $this->session = $session;
         $this->driverFinder = $driverFinder;
+        $this->direction = 'ASC';
     }
 
     /**
@@ -79,6 +85,7 @@ class FieldsSortSubscriber implements CrudControllerEventAwareInterface, EventSu
     {
         if (!$this->sortBy) {
             $this->sortBy = 'id';
+            $this->direction = 'DESC';
         }
 
         $this->session->set(Constants::SESSION_SORTED_ID, $this->sortBy);

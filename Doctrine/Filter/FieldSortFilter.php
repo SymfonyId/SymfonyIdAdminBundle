@@ -36,12 +36,13 @@ class FieldSortFilter implements FieldSortInterface, ModelMetadataAwareInterface
      * @param string                     $modelClass
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string                     $sortBy
+     * @param string                     $direction
      */
-    public function sort($modelClass, $queryBuilder, $sortBy)
+    public function sort($modelClass, $queryBuilder, $sortBy, $direction = 'ASC')
     {
         $classMetadata = $this->getClassMetadata(new Driver(array('value' => self::DRIVER)), $modelClass);
         $metadata = $classMetadata->getFieldMapping($classMetadata->getFieldName($sortBy));
-        $queryBuilder->addOrderBy(sprintf('%s.%s', Constants::MODEL_ALIAS, $metadata['fieldName']));
+        $queryBuilder->addOrderBy(sprintf('%s.%s', Constants::MODEL_ALIAS, $metadata['fieldName']), $direction);
     }
 
     /**

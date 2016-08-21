@@ -26,7 +26,7 @@ class SoftDeletableFilter extends SQLFilter
      * @param ClassMetadata $targetEntity
      * @param string        $targetTableAlias
      *
-     * @return string The constraint SQL if there is available, empty string otherwise.
+     * @return string The constraint SQL if there is available, empty string otherwise
      */
     public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias)
     {
