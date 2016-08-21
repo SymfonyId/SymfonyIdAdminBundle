@@ -98,13 +98,13 @@ class FieldsSortSubscriber implements CrudControllerEventAwareInterface, EventSu
         if (Driver::ORM === $driver->getDriver()) {
             /** @var \SymfonyId\AdminBundle\Doctrine\Filter\FieldSortFilter $filter */
             $filter = $this->container->get('symfonyid.admin.filter.orm.sort');
-            $filter->sort($event->getModelClass(), $event->getQueryBuilder(), $this->sortBy);
+            $filter->sort($event->getModelClass(), $event->getQueryBuilder(), $this->sortBy, $this->direction);
         }
 
         if (Driver::ODM === $driver->getDriver()) {
             /** @var \SymfonyId\AdminBundle\Document\Filter\FieldSortFilter $filter */
             $filter = $this->container->get('symfonyid.admin.filter.odm.sort');
-            $filter->sort($event->getModelClass(), $event->getQueryBuilder(), $this->sortBy);
+            $filter->sort($event->getModelClass(), $event->getQueryBuilder(), $this->sortBy, $this->direction);
         }
     }
 
