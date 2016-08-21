@@ -59,10 +59,12 @@ class DoctrineOrmManager extends AbstractManager
         /** @var EntityRepository $repository */
         $repository = $this->getManager()->getRepository($this->getModelClass());
         $queryBuilder = $repository->createQueryBuilder(Constants::MODEL_ALIAS);
+
         $filterList = new FilterQueryEvent();
         $filterList->setQueryBuilder($queryBuilder);
         $filterList->setAlias(Constants::MODEL_ALIAS);
         $filterList->setModelClass($this->getModelClass());
+
         $this->getEventSubscriber()->subscribe(Constants::FILTER_LIST, $filterList);
 
         $query = $queryBuilder->getQuery();

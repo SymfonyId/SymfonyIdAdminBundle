@@ -54,6 +54,7 @@ class DoctrineMongoDbManager extends AbstractManager
         /** @var DocumentManager $manager */
         $manager = $this->getManager();
         $queryBuilder = $manager->createQueryBuilder($this->getModelClass());
+
         $filterList = new FilterQueryEvent();
         $filterList->setQueryBuilder($queryBuilder);
         $filterList->setModelClass($this->getModelClass());

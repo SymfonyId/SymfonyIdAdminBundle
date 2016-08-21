@@ -78,14 +78,9 @@ class FieldsSortSubscriber implements CrudControllerEventAwareInterface, EventSu
     public function sort(FilterQueryEvent $event)
     {
         if (!$this->sortBy) {
-            return;
+            $this->sortBy = 'id';
         }
 
-        if (!$this->sortBy) {
-            $this->session->set(Constants::SESSION_SORTED_ID, null);
-
-            return;
-        }
         $this->session->set(Constants::SESSION_SORTED_ID, $this->sortBy);
 
         $configuratorFactory = $this->getConfiguratorFactory(new \ReflectionObject($this->controller));
