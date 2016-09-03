@@ -19,21 +19,29 @@
     <script src="{{- asset_url -}}" type="text/javascript"></script>
     {%- endjavascripts -%}
 
-    {%- if date_picker is defined -%}
-        <script src="{{- asset('bundles/symfonyidadmin/plugins/bootstrap-datetimepicker/js/moment.js') -}}" type="text/javascript"></script>
-        <script src="{{- asset('bundles/symfonyidadmin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') -}}" type="text/javascript"></script>
+    {%- if date_picker is not empty -%}
+        {%- javascripts
+            'bundles/symfonyidadmin/plugins/bootstrap-datetimepicker/js/moment.js'
+            'bundles/symfonyidadmin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js'
+        -%}
+        <script src="{{- asset_url -}}" type="text/javascript"></script>
+        {%- endjavascripts -%}
     {%- endif -%}
 
-    {%- if use_file_style is defined -%}
-        <script src="{{- asset('bundles/symfonyidadmin/plugins/bootstrap-fileinput/js/fileinput.min.js') -}}" type="text/javascript"></script>
-        <script src="{{- asset('bundles/symfonyidadmin/plugins/bootstrap-fileinput/js/fileinput_locale_' ~ locale ~ '.js') -}}" type="text/javascript"></script>
+    {%- if use_file_style is not empty -%}
+        {%- javascripts
+            'bundles/symfonyidadmin/plugins/bootstrap-fileinput/js/fileinput.min.js'
+            'bundles/symfonyidadmin/plugins/bootstrap-fileinput/js/fileinput_locale_' ~ locale ~ '.js'
+        -%}
+        <script src="{{- asset_url -}}" type="text/javascript"></script>
+        {%- endjavascripts -%}
     {%- endif -%}
 
-    {%- if use_editor is defined -%}
+    {%- if use_editor is not empty -%}
         <script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
     {%- endif -%}
 
-    {%- if use_autocomplete is defined -%}
+    {%- if use_autocomplete is not empty -%}
         {%- javascripts
             'bundles/symfonyidadmin/plugins/select2/select2.min.js'
             'bundles/symfonyidadmin/plugins/select2/select2_locale_' ~ locale ~ '.js'
@@ -42,7 +50,7 @@
         {%- endjavascripts -%}
     {%- endif -%}
 
-    {%- if use_numeric is defined -%}
+    {%- if use_numeric is not empty -%}
         <script src="{{- asset('bundles/symfonyidadmin/js/jquery.numeric.min.js') -}}" type="text/javascript"></script>
     {%- endif -%}
 
