@@ -20,20 +20,20 @@ class SymfonyIdAdminConstrants
      * Configuration.
      */
     const ROOT_PARAMETER = 'symfonyid';
-    const CONFIGURATION_ALIAS = self::ROOT_PARAMETER.'_admin';
+    const CONFIGURATION_ALIAS = 'symfonyid_admin';
     const APP_TITLE = 'SIAB';
     const APP_DESCRIPTION = 'SymfonyId Admin Bundle';
 
     /**
      * Crud Events.
      */
-    const PRE_UPLOAD = self::ROOT_PARAMETER.'.pre_upload';
-    const PRE_SAVE = self::ROOT_PARAMETER.'.pre_save';
-    const POST_SAVE = self::ROOT_PARAMETER.'.post_save';
-    const FILTER_LIST = self::ROOT_PARAMETER.'.filter_query';
-    const PRE_DELETE = self::ROOT_PARAMETER.'.pre_delete';
-    const PRE_SHOW = self::ROOT_PARAMETER.'.pre_show';
-    const POST_UPLOAD = self::ROOT_PARAMETER.'.post_upload';
+    const PRE_UPLOAD = 'symfonyid.pre_upload';
+    const PRE_SAVE = 'symfonyid.pre_save';
+    const POST_SAVE = 'symfonyid.post_save';
+    const FILTER_LIST = 'symfonyid.filter_query';
+    const PRE_DELETE = 'symfonyid.pre_delete';
+    const PRE_SHOW = 'symfonyid.pre_show';
+    const POST_UPLOAD = 'symfonyid.post_upload';
 
     /**
      * Crud Actions.
@@ -55,7 +55,7 @@ class SymfonyIdAdminConstrants
      * Model Utilities.
      */
     const MODEL_ALIAS = 'e';
-    const SESSION_SORTED_ID = self::ROOT_PARAMETER.'_sorted';
+    const SESSION_SORTED_ID = 'symfonyid_sorted';
 
     /**
      * Templating.
