@@ -45,8 +45,12 @@
 {%- endif -%}
 
 {%- if use_autocomplete is not empty -%}
-    <link rel="stylesheet" href="{{- asset('bundles/symfonyidadmin/plugins/select2/select2.css') -}}" />
-    <link rel="stylesheet" href="{{- asset('bundles/symfonyidadmin/plugins/select2/select2-bootstrap.css') -}}" />
+    {%- stylesheets
+        'bundles/symfonyidadmin/plugins/select2/select2.css'
+        'bundles/symfonyidadmin/plugins/select2/select2-bootstrap.css'
+    -%}
+    <link rel="stylesheet" href="{{- asset_url -}}" />
+    {%- endstylesheets -%}
 {%- endif -%}
 
 {%- if use_file_style is not empty -%}
