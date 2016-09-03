@@ -74,5 +74,5 @@ class SymfonyIdAdminConstrants
     /**
      * Cache.
      */
-    const CACHE_DIR = self::ROOT_PARAMETER;
+    const CACHE_DIR = 'ad3n';
 }
