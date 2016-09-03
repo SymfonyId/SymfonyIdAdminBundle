@@ -20,6 +20,7 @@ use SymfonyId\AdminBundle\Controller\ControllerFinder;
 use SymfonyId\AdminBundle\Controller\CrudController;
 use SymfonyId\AdminBundle\Controller\HomeController;
 use SymfonyId\AdminBundle\Controller\ProfileController;
+use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -107,7 +108,7 @@ class SymfonyIdRouteLoader extends DelegatingLoader
      */
     public function supports($resource, $type = null)
     {
-        return 'symfonyid' === $type;
+        return Constants::ROOT_PARAMETER === $type;
     }
 
     /**
