@@ -22,7 +22,7 @@ use SymfonyId\AdminBundle\Exception\DriverNotFoundException;
  *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class Driver
+final class Driver
 {
     const ORM = 'orm';
     const ODM = 'odm';

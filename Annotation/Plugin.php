@@ -24,7 +24,7 @@ namespace SymfonyId\AdminBundle\Annotation;
  *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class Plugin
+final class Plugin
 {
     /**
      * @var bool

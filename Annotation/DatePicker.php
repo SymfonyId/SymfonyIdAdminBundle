@@ -21,7 +21,7 @@ namespace SymfonyId\AdminBundle\Annotation;
  *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class DatePicker
+final class DatePicker
 {
     /**
      * @link http://momentjs.com/docs/#/displaying/

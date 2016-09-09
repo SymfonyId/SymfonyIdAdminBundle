@@ -25,7 +25,7 @@ namespace SymfonyId\AdminBundle\Annotation;
  *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class Security
+final class Security
 {
     const DEFAULT_ROLE = 'ROLE_USER';
 

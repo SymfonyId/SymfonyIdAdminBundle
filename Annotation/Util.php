@@ -23,7 +23,7 @@ namespace SymfonyId\AdminBundle\Annotation;
  *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class Util
+final class Util
 {
     /**
      * @var AutoComplete

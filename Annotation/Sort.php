@@ -20,7 +20,7 @@ namespace SymfonyId\AdminBundle\Annotation;
  *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class Sort
+final class Sort
 {
     /**
      * @var array

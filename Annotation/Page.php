@@ -24,7 +24,7 @@ use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
  *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class Page
+final class Page
 {
     /**
      * @var string

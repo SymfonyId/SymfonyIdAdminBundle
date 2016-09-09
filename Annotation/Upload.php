@@ -21,7 +21,7 @@ namespace SymfonyId\AdminBundle\Annotation;
  *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class Upload
+final class Upload
 {
     /**
      * - Model field to be uploadable

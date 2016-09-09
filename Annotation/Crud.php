@@ -29,7 +29,7 @@ namespace SymfonyId\AdminBundle\Annotation;
  *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class Crud
+final class Crud
 {
     /**
      * @var Template

@@ -28,7 +28,7 @@ use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
  *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class Template
+final class Template
 {
     /**
      * @var string

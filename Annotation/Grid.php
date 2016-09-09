@@ -25,7 +25,7 @@ namespace SymfonyId\AdminBundle\Annotation;
  *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class Grid
+final class Grid
 {
     /**
      * @var Column

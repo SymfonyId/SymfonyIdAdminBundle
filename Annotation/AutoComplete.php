@@ -22,7 +22,7 @@ namespace SymfonyId\AdminBundle\Annotation;
  *
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class AutoComplete
+final class AutoComplete
 {
     /**
      * Route to search action.
