@@ -17,6 +17,7 @@ use Hateoas\Representation\CollectionRepresentation;
 use Hateoas\Representation\Factory\PagerfantaFactory;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Request\RequestParameter;
@@ -95,5 +96,28 @@ trait RestResourceControllerTrait
         );
 
         return $this->handleView(new View($representation));
+    }
+
+    /**
+     * @param FormInterface $form
+     *
+     * @return array
+     */
+    public function getNormalizedForm(FormInterface $form)
+    {
+        /** @var \SymfonyId\AdminBundle\Form\FormNormalizer $formNormalizer */
+        $formNormalizer = $this->get('symfonyid.admin.form.form_normalizer');
+
+        return $formNormalizer->normalize($form);
+    }
+
+    /**
+     * @param View $view
+     */
+    protected function checkDepth(View $view)
+    {
+        $context = $view->getSerializationContext();
+        $context->enableMaxDepthChecks();
+        $view->setSerializationContext($context);
     }
 }

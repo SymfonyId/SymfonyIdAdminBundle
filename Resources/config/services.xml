@@ -27,5 +27,9 @@
         <service id="symfonyid.admin.controller.controller_finder" class="SymfonyId\AdminBundle\Controller\ControllerFinder" >
             <argument type="service" id="kernel"/>
         </service>
+
+        <service id="symfonyid.admin.form.form_normalizer" class="SymfonyId\AdminBundle\Form\FormNormalizer" >
+            <argument type="service" id="router"/>
+        </service>
     </services>
 </container>
