@@ -186,13 +186,13 @@ EOT
         $driver = new Driver(array('value' => Driver::ORM));
         try {
             $modelClass = $this->getAliasNamespace($driver, $bundle).'\\'.$model;
+            $metadata = $this->getClassMetadata($driver, $modelClass);
         } catch (\Exception $exception) {
-            echo $exception->getTraceAsString();
             $driver = new Driver(array('value' => Driver::ODM));
             $modelClass = $this->getAliasNamespace($driver, $bundle).'\\'.$model;
+            $metadata = $this->getClassMetadata($driver, $modelClass);
         }
 
-        $metadata = $this->getClassMetadata($driver, $modelClass);
         $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
 
         /** @var GeneratorInterface $formGenerator */

@@ -68,7 +68,7 @@ abstract class AbstractGenerator extends Generator implements GeneratorInterface
         );
 
         // Remove the primary key field if it's not managed manually
-        if (!$metadata->isIdentifierNatural()) {
+        if (method_exists($metadata, 'isIdentifierNatural') && !$metadata->isIdentifierNatural()) {
             $fields = array_diff($fields, $metadata->identifier);
         }
 

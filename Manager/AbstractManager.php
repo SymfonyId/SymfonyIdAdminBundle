@@ -16,6 +16,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Debug\Exception\UndefinedMethodException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use SymfonyId\AdminBundle\Event\EventSubscriber;
 use SymfonyId\AdminBundle\Exception\ModelNotFoundException;
@@ -74,8 +75,13 @@ abstract class AbstractManager implements ManagerInterface
         /* @var \Symfony\Bridge\Doctrine\ManagerRegistry $managerRegistry */
         $this->managerRegistry = $managerRegistry;
         $this->manager = $manager;
-        $cache = $managerRegistry->getManager()->getConfiguration()->getHydrationCacheImpl();
-        $this->cacheHandler = $cache ?: new ArrayCache();
+        $configuration = $managerRegistry->getManager()->getConfiguration();
+        if (method_exists($configuration, 'getHydrationCacheImpl')) {
+            $cache = $managerRegistry->getManager()->getConfiguration()->getHydrationCacheImpl();
+        } else {
+            $cache = new ArrayCache();
+        }
+        $this->cacheHandler = $cache;
         $this->paginator = $paginator;
         $this->tokenStorage = $tokenStorage;
         $this->eventSubscriber = $eventSubscriber;

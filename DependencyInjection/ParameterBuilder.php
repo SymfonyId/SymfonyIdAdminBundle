@@ -62,7 +62,7 @@ class ParameterBuilder
         $this->containerBuilder->setParameter($alias.'.admin.translation_domain', $config['translation_domain']);
         $this->containerBuilder->setParameter($alias.'.admin.cache_lifetime', $config['cache_lifetime']);
 
-        if (!in_array($config['driver'], array(Driver::ORM, Driver::ODM))) {
+        if (!in_array($config['driver'], array(Driver::ORM, Driver::ODM, Driver::BOTH))) {
             throw new DriverNotFoundException($config['value']);
         }
 

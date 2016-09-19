@@ -61,6 +61,7 @@ class FormGenerator extends AbstractGenerator
             'namespace' => $bundle->getNamespace(),
             'entity_namespace' => implode('\\', $parts),
             'has_datetime_field' => $this->hasDateTimeField($metadata),
+            'data_class' => $metadata->getReflectionClass()->getName(),
             'entity_class' => $entityClass,
             'bundle' => $bundle->getName(),
             'form_class' => $this->className,
