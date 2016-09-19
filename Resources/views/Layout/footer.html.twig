@@ -19,18 +19,10 @@
     <script src="{{- asset_url -}}" type="text/javascript"></script>
     {%- endjavascripts -%}
 
-    {%- if date_picker is not empty -%}
+    {%- if use_date_picker is not empty -%}
         {%- javascripts
             'bundles/symfonyidadmin/plugins/bootstrap-datetimepicker/js/moment.js'
             'bundles/symfonyidadmin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js'
-        -%}
-        <script src="{{- asset_url -}}" type="text/javascript"></script>
-        {%- endjavascripts -%}
-    {%- endif -%}
-
-    {%- if use_file_style is not empty -%}
-        {%- javascripts
-            'bundles/symfonyidadmin/plugins/bootstrap-fileinput/js/fileinput.min.js'
         -%}
         <script src="{{- asset_url -}}" type="text/javascript"></script>
         {%- endjavascripts -%}
@@ -42,7 +34,15 @@
 
     {%- if use_autocomplete is not empty -%}
         {%- javascripts
-            'bundles/symfonyidadmin/plugins/select2/select2.min.js'
+        'bundles/symfonyidadmin/plugins/select2/select2.min.js'
+        -%}
+        <script src="{{- asset_url -}}" type="text/javascript"></script>
+        {%- endjavascripts -%}
+    {%- endif -%}
+
+    {%- if use_file_style is not empty -%}
+        {%- javascripts
+            'bundles/symfonyidadmin/plugins/bootstrap-fileinput/js/fileinput.min.js'
         -%}
         <script src="{{- asset_url -}}" type="text/javascript"></script>
         {%- endjavascripts -%}
