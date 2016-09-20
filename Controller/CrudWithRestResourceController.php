@@ -11,23 +11,10 @@
 
 namespace SymfonyId\AdminBundle\Controller;
 
-use FOS\RestBundle\View\View;
-use Symfony\Component\HttpFoundation\Response;
-
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-abstract class CrudWithRestResourceController extends CrudController
+abstract class CrudWithRestResourceController extends CrudController implements RestResourceAwareInterface
 {
     use RestResourceControllerTrait;
-
-    /**
-     * @param View $view
-     *
-     * @return Response
-     */
-    protected function handleView(View $view)
-    {
-        return $this->get('fos_rest.view_handler')->handle($view);
-    }
 }

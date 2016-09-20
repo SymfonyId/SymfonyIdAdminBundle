@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\KernelInterface;
 use SymfonyId\AdminBundle\Annotation\Serialize;
 use SymfonyId\AdminBundle\Cache\CacheHandler;
-use SymfonyId\AdminBundle\Controller\RestResourceControllerTrait;
+use SymfonyId\AdminBundle\Controller\RestResourceAwareInterface;
 use SymfonyId\AdminBundle\Extractor\Extractor;
 
 /**
@@ -63,7 +63,7 @@ class SerializationAwareSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if (!$controller[0] instanceof RestResourceControllerTrait) {
+        if (!$controller[0] instanceof RestResourceAwareInterface) {
             return;
         }
 

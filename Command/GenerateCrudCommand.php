@@ -11,6 +11,7 @@
 
 namespace SymfonyId\AdminBundle\Command;
 
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -46,6 +47,8 @@ class GenerateCrudCommand extends GenerateDoctrineCommand
             ->setAliases(array('symfonyid:generate', 'symfonyid:crud:generate'))
             ->addArgument('model', InputArgument::OPTIONAL, 'The entity class name to initialize (shortcut notation)')
             ->addOption('overwrite', null, InputOption::VALUE_NONE, 'Overwrite any existing controller or form class when generating the CRUD contents')
+            ->addOption('only-form', null, InputOption::VALUE_NONE, 'Only generate form')
+            ->addOption('only-controller', null, InputOption::VALUE_NONE, 'Only generate controller')
             ->setDescription('Generate CRUD from Model using SymfonyId Admin Bundle style')
             ->setHelp(<<<'EOT'
 The <info>siab:generate:crud</info> command generates a CRUD based on a Doctrine ORM or ODM using SymfonyId Admin Bundle style.
@@ -75,6 +78,8 @@ EOT
         $this->interactive($input, $output);
 
         $forceOverwrite = $input->getOption('overwrite');
+        $onlyForm = $input->getOption('only-form');
+        $onlyController = $input->getOption('only-controller');
         if ($model = $input->getArgument('model')) {
             $this->generate($output, $model, $forceOverwrite);
         } else {
@@ -94,7 +99,7 @@ EOT
                 $finder = new Finder();
                 $finder->name('*.php')->in(array($bundle->getPath().'/Entity', $bundle->getPath().'/Document'));
 
-                $this->findModelAndGenerate($finder, $bundle, $output, $forceOverwrite);
+                $this->findModelAndGenerate($finder, $bundle, $output, $forceOverwrite, $onlyForm, $onlyController);
             }
         }
 
@@ -177,8 +182,10 @@ EOT
      * @param OutputInterface $output
      * @param string          $model
      * @param bool            $forceOverwrite
+     * @param bool            $onlyForm
+     * @param bool            $onlyController
      */
-    private function generate(OutputInterface $output, $model, $forceOverwrite = false)
+    private function generate(OutputInterface $output, $model, $forceOverwrite = false, $onlyForm = false, $onlyController = false)
     {
         $model = Validators::validateEntityName($model);
         list($bundle, $model) = $this->parseShortcutNotation($model);
@@ -195,16 +202,7 @@ EOT
 
         $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
 
-        /** @var GeneratorInterface $formGenerator */
-        $formGenerator = $this->getFormGenerator($bundle);
-        $formGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
-
-        $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $modelClass));
-
-        $controllerGenerator = $this->getControllerGenerator($bundle);
-        $controllerGenerator->generate($bundle, $modelClass, $metadata, $forceOverwrite);
-
-        $output->writeln(sprintf('<info>Controller for entity %s has been generated</info>', $modelClass));
+        $this->doGenerate($output, $bundle, $metadata, $model, $forceOverwrite, $onlyForm, $onlyController);
     }
 
     /**
@@ -212,8 +210,10 @@ EOT
      * @param BundleInterface $bundle
      * @param OutputInterface $output
      * @param bool            $forceOverwrite
+     * @param bool            $onlyForm
+     * @param bool            $onlyController
      */
-    private function findModelAndGenerate(Finder $finder, BundleInterface $bundle, OutputInterface $output, $forceOverwrite = false)
+    private function findModelAndGenerate(Finder $finder, BundleInterface $bundle, OutputInterface $output, $forceOverwrite = false, $onlyForm = false, $onlyController = false)
     {
         $count = 0;
         foreach ($finder as $file) {
@@ -222,7 +222,7 @@ EOT
             }
 
             $model = sprintf('%s:%s', $bundle->getName(), str_replace('.php', '', $file->getFilename()));
-            $this->generate($output, $model, $forceOverwrite);
+            $this->generate($output, $model, $forceOverwrite, $onlyForm, $onlyController);
             ++$count;
         }
 
@@ -260,6 +260,33 @@ EOT
 
                 return 1;
             }
+        }
+    }
+
+    private function doGenerate(OutputInterface $output, BundleInterface $bundle, ClassMetadata $metadata, $model, $forceOverwrite = false, $onlyForm = false, $onlyController = false)
+    {
+        if ($onlyForm) {
+            /** @var GeneratorInterface $formGenerator */
+            $formGenerator = $this->getFormGenerator($bundle);
+            $formGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
+
+            $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $model));
+        } else if ($onlyController) {
+            $controllerGenerator = $this->getControllerGenerator($bundle);
+            $controllerGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
+
+            $output->writeln(sprintf('<info>Controller for entity %s has been generated</info>', $model));
+        } else {
+            /** @var GeneratorInterface $formGenerator */
+            $formGenerator = $this->getFormGenerator($bundle);
+            $formGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
+
+            $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $model));
+
+            $controllerGenerator = $this->getControllerGenerator($bundle);
+            $controllerGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
+
+            $output->writeln(sprintf('<info>Controller for entity %s has been generated</info>', $model));
         }
     }
 }

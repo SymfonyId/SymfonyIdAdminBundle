@@ -60,13 +60,6 @@ trait RestResourceControllerTrait
     abstract protected function getParameter($parameter);
 
     /**
-     * @param View $view
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    abstract protected function handleView(View $view);
-
-    /**
      * @param Request       $request
      * @param FormInterface $form
      *
@@ -253,24 +246,24 @@ trait RestResourceControllerTrait
     }
 
     /**
-     * @param FormInterface $form
-     *
-     * @return array
-     */
-    public function getNormalizedForm(FormInterface $form)
-    {
-        /** @var \SymfonyId\AdminBundle\Form\FormNormalizer $formNormalizer */
-        $formNormalizer = $this->get('symfonyid.admin.form.form_normalizer');
-
-        return $formNormalizer->normalize($form);
-    }
-
-    /**
      * @param Serialize $serialize
      */
     public function setSerialization(Serialize $serialize)
     {
         $this->serialization = $serialize;
+    }
+
+    /**
+     * @param FormInterface $form
+     *
+     * @return array
+     */
+    protected function getNormalizedForm(FormInterface $form)
+    {
+        /** @var \SymfonyId\AdminBundle\Form\FormNormalizer $formNormalizer */
+        $formNormalizer = $this->get('symfonyid.admin.form.form_normalizer');
+
+        return $formNormalizer->normalize($form);
     }
 
     /**
@@ -337,6 +330,16 @@ trait RestResourceControllerTrait
         $view->setSerializationContext($context);
 
         return $this->handleView($view);
+    }
+
+    /**
+     * @param View $view
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function handleView(View $view)
+    {
+        return $this->get('fos_rest.view_handler')->handle($view);
     }
 
     /**
