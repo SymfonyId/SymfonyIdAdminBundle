@@ -202,7 +202,7 @@ EOT
 
         $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
 
-        $this->doGenerate($output, $bundle, $metadata, $model, $forceOverwrite, $onlyForm, $onlyController);
+        $this->doGenerate($output, $bundle, $metadata, $modelClass, $forceOverwrite, $onlyForm, $onlyController);
     }
 
     /**
