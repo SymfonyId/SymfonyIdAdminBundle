@@ -2,7 +2,94 @@
 
 ## [Unreleased](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/HEAD)
 
-[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.27...HEAD)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.3.1...HEAD)
+
+**Closed issues:**
+
+- \[Feature\] Add support RehatBundle [\#8](https://github.com/SymfonyId/SymfonyIdAdminBundle/issues/8)
+
+## [1.3.1](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.3.1) (2016-09-20)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.3.0...1.3.1)
+
+## [1.3.0](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.3.0) (2016-09-20)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.15...1.3.0)
+
+## [1.2.15](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.15) (2016-09-19)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.14...1.2.15)
+
+**Closed issues:**
+
+- \[Generator\] Error when generate crud using odm driver [\#7](https://github.com/SymfonyId/SymfonyIdAdminBundle/issues/7)
+
+## [1.2.14](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.14) (2016-09-19)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.13...1.2.14)
+
+## [1.2.13](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.13) (2016-09-19)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.12...1.2.13)
+
+## [1.2.12](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.12) (2016-09-17)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.11...1.2.12)
+
+## [1.2.11](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.11) (2016-09-17)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.10...1.2.11)
+
+## [1.2.10](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.10) (2016-09-03)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.9...1.2.10)
+
+## [1.2.9](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.9) (2016-09-03)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.8...1.2.9)
+
+## [1.2.8](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.8) (2016-08-23)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.7...1.2.8)
+
+## [1.2.7](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.7) (2016-08-23)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.6...1.2.7)
+
+## [1.2.6](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.6) (2016-08-21)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.5...1.2.6)
+
+## [1.2.5](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.5) (2016-08-21)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.4...1.2.5)
+
+## [1.2.4](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.4) (2016-08-18)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.3...1.2.4)
+
+**Closed issues:**
+
+- The file "resolver.xml" does not exist [\#5](https://github.com/SymfonyId/SymfonyIdAdminBundle/issues/5)
+
+## [1.2.3](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.3) (2016-08-17)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.2...1.2.3)
+
+## [1.2.2](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.2) (2016-08-15)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2.1...1.2.2)
+
+## [1.2.1](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2.1) (2016-08-12)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.2...1.2.1)
+
+## [1.2](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.2) (2016-08-12)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.1...1.2)
+
+## [1.1](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.1) (2016-08-12)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/1.0...1.1)
+
+## [1.0](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/1.0) (2016-08-05)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.32...1.0)
+
+## [0.32](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.32) (2016-08-02)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.31...0.32)
+
+## [0.31](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.31) (2016-08-02)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.30...0.31)
+
+## [0.30](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.30) (2016-08-02)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.29...0.30)
+
+## [0.29](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.29) (2016-08-02)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.28...0.29)
+
+## [0.28](https://github.com/SymfonyId/SymfonyIdAdminBundle/tree/0.28) (2016-08-02)
+[Full Changelog](https://github.com/SymfonyId/SymfonyIdAdminBundle/compare/0.27...0.28)
 
 **Closed issues:**
 
