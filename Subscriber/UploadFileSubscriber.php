@@ -56,7 +56,7 @@ class UploadFileSubscriber implements ConfigurationAwareInterface, CrudControlle
      */
     public function setController(FilterControllerEvent $event)
     {
-        if (!$this->isValidCrudListener($event)) {
+        if (!$this->isValidCrudListener($event) || !$event->isMasterRequest()) {
             return;
         }
     }

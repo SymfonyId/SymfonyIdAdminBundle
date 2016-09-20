@@ -119,7 +119,7 @@ class UserControllerAwareSubscriber implements CrudControllerEventAwareInterface
      */
     public function setConfiguration(FilterControllerEvent $event)
     {
-        if ($this->isProduction()) {
+        if ($this->isProduction() || !$event->isMasterRequest()) {
             return;
         }
 

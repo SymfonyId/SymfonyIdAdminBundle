@@ -75,7 +75,8 @@ class GridConfigurator implements ConfiguratorInterface
             $this->grid->getColumn()->getFields();
         }
 
-        foreach ($reflectionClass->getProperties(\ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PROTECTED) as $property) {
+        $properties = $reflectionClass->getProperties(\ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PROTECTED);
+        foreach ($properties as $property) {
             $propertyAnnotations = $this->extractorFactory->extract($property, Extractor::PROPERTY_ANNOTATION);
             foreach ($propertyAnnotations as $annotation) {
                 if ($annotation instanceof Column) {
@@ -98,8 +99,9 @@ class GridConfigurator implements ConfiguratorInterface
             $this->grid->getFilter()->getFields();
         }
 
+        $properties = $reflectionClass->getProperties(\ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PROTECTED);
         /** @var \ReflectionProperty $property */
-        foreach ($reflectionClass->getProperties(\ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PROTECTED) as $property) {
+        foreach ($properties as $property) {
             $propertyAnnotations = $this->extractorFactory->extract($property, Extractor::PROPERTY_ANNOTATION);
             foreach ($propertyAnnotations as $annotation) {
                 if ($annotation instanceof Filter) {
@@ -122,8 +124,9 @@ class GridConfigurator implements ConfiguratorInterface
             $this->grid->getSort()->getFields();
         }
 
+        $properties = $reflectionClass->getProperties(\ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PROTECTED);
         /** @var \ReflectionProperty $property */
-        foreach ($reflectionClass->getProperties(\ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PROTECTED) as $property) {
+        foreach ($properties as $property) {
             $propertyAnnotations = $this->extractorFactory->extract($property, Extractor::PROPERTY_ANNOTATION);
             foreach ($propertyAnnotations as $annotation) {
                 if ($annotation instanceof Sort) {

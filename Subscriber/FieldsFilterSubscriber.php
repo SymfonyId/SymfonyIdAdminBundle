@@ -72,7 +72,7 @@ class FieldsFilterSubscriber implements ConfigurationAwareInterface, EventSubscr
      */
     public function filter(FilterControllerEvent $event)
     {
-        if (!$this->isValidCrudListener($event)) {
+        if (!$this->isValidCrudListener($event) || !$event->isMasterRequest()) {
             return;
         }
 

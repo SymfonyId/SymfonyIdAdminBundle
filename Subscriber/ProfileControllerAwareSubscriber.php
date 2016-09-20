@@ -71,7 +71,7 @@ class ProfileControllerAwareSubscriber implements ConfigurationAwareInterface, E
      */
     public function setConfiguration(FilterControllerEvent $event)
     {
-        if ($this->isProduction()) {
+        if ($this->isProduction() || !$event->isMasterRequest()) {
             return;
         }
 

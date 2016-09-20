@@ -31,7 +31,7 @@ class ResponseCacheSubscriber implements EventSubscriberInterface
 
     public function cacheResponse(FilterResponseEvent $event)
     {
-        if ($event->getRequest()->isMethod('GET')) {
+        if ($event->getRequest()->isMethod('GET') && $event->isMasterRequest()) {
             $response = $event->getResponse();
 
             $response->setPublic();
@@ -44,7 +44,7 @@ class ResponseCacheSubscriber implements EventSubscriberInterface
     public function validateCache(GetResponseEvent $event)
     {
         $request = $event->getRequest();
-        if ($request->isMethod('GET')) {
+        if ($request->isMethod('GET') && $event->isMasterRequest()) {
             $response = new Response();
 
             if ($response->isNotModified($request)) {

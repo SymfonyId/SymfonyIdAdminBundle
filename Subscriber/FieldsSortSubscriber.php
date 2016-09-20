@@ -68,7 +68,7 @@ class FieldsSortSubscriber implements CrudControllerEventAwareInterface, EventSu
      */
     public function setSortParameter(FilterControllerEvent $event)
     {
-        if (!$this->isValidCrudListener($event)) {
+        if (!$this->isValidCrudListener($event) || !$event->isMasterRequest()) {
             return;
         }
 

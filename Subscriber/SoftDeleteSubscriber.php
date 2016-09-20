@@ -51,7 +51,7 @@ class SoftDeleteSubscriber implements ConfigurationAwareInterface, CrudControlle
      */
     public function enableSoftDelete(FilterControllerEvent $event)
     {
-        if (!$this->isValidCrudListener($event)) {
+        if (!$this->isValidCrudListener($event) || !$event->isMasterRequest()) {
             return;
         }
 

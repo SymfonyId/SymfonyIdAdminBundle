@@ -12,6 +12,7 @@
 namespace SymfonyId\AdminBundle\Subscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -85,8 +86,11 @@ class GlobalVariableSubscriber implements EventSubscriberInterface
         $this->variables['translation_domain'] = $translationDomain;
     }
 
-    public function setGlobalVariable()
+    public function setGlobalVariable(GetResponseEvent $event)
     {
+        if (!$event->isMasterRequest()) {
+            return;
+        }
         $needToMerge = array(
             'title' => $this->variables['title'],
             'short_title' => $this->variables['short_title'],

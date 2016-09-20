@@ -76,6 +76,14 @@
             <tag name="kernel.event_subscriber"/>
         </service>
 
+        <service id="symfonyid.admin.subscriber.serialization_aware_subscriber" class="SymfonyId\AdminBundle\Subscriber\SerializationAwareSubscriber" >
+            <argument type="service" id="kernel" />
+            <argument type="service" id="symfonyid.admin.cache.cache_handler" />
+            <argument type="service" id="symfonyid.admin.extractor.extractor" />
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
         <service id="symfonyid.admin.subscriber.soft_delete_subscriber" class="SymfonyId\AdminBundle\Subscriber\SoftDeleteSubscriber" >
             <argument type="service" id="symfonyid.admin.manager.manager_factory" />
             <argument type="service" id="symfonyid.admin.manager.driver_finder" />
@@ -156,6 +164,10 @@
         <service id="symfonyid.admin.subscriber.set_response_cache" class="SymfonyId\AdminBundle\Subscriber\ResponseCacheSubscriber" >
             <argument>%symfonyid.admin.cache_lifetime%</argument>
 
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="symfonyid.admin.subscriber.covert_exception_to_json" class="SymfonyId\AdminBundle\Subscriber\ExceptionToJsonSubscriber" >
             <tag name="kernel.event_subscriber"/>
         </service>
 

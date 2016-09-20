@@ -16,7 +16,6 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Debug\Exception\UndefinedMethodException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use SymfonyId\AdminBundle\Event\EventSubscriber;
 use SymfonyId\AdminBundle\Exception\ModelNotFoundException;

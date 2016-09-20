@@ -70,7 +70,7 @@ class CrudControllerAwareSubscriber implements CrudControllerEventAwareInterface
      */
     public function extractUserController(FilterControllerEvent $event)
     {
-        if ($this->isProduction()) {
+        if ($this->isProduction() || !$event->isMasterRequest()) {
             return;
         }
 
