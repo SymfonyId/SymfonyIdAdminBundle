@@ -202,7 +202,7 @@ EOT
 
         $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
 
-        $this->doGenerate($output, $bundle, $metadata, $modelClass, $forceOverwrite, $onlyForm, $onlyController);
+        $this->doGenerate($output, $bundle, $metadata, $modelClass, $model, $forceOverwrite, $onlyForm, $onlyController);
     }
 
     /**
@@ -263,30 +263,30 @@ EOT
         }
     }
 
-    private function doGenerate(OutputInterface $output, BundleInterface $bundle, ClassMetadata $metadata, $model, $forceOverwrite = false, $onlyForm = false, $onlyController = false)
+    private function doGenerate(OutputInterface $output, BundleInterface $bundle, ClassMetadata $metadata, $modelClass, $modelShort, $forceOverwrite = false, $onlyForm = false, $onlyController = false)
     {
         if ($onlyForm) {
             /** @var GeneratorInterface $formGenerator */
             $formGenerator = $this->getFormGenerator($bundle);
-            $formGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
+            $formGenerator->generate($bundle, $modelShort, $metadata, $forceOverwrite);
 
-            $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $model));
+            $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $modelClass));
         } else if ($onlyController) {
             $controllerGenerator = $this->getControllerGenerator($bundle);
-            $controllerGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
+            $controllerGenerator->generate($bundle, $modelClass, $metadata, $forceOverwrite);
 
-            $output->writeln(sprintf('<info>Controller for entity %s has been generated</info>', $model));
+            $output->writeln(sprintf('<info>Controller for entity %s has been generated</info>', $modelClass));
         } else {
             /** @var GeneratorInterface $formGenerator */
             $formGenerator = $this->getFormGenerator($bundle);
-            $formGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
+            $formGenerator->generate($bundle, $modelShort, $metadata, $forceOverwrite);
 
-            $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $model));
+            $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $modelClass));
 
             $controllerGenerator = $this->getControllerGenerator($bundle);
-            $controllerGenerator->generate($bundle, $model, $metadata, $forceOverwrite);
+            $controllerGenerator->generate($bundle, $modelClass, $metadata, $forceOverwrite);
 
-            $output->writeln(sprintf('<info>Controller for entity %s has been generated</info>', $model));
+            $output->writeln(sprintf('<info>Controller for entity %s has been generated</info>', $modelClass));
         }
     }
 }
