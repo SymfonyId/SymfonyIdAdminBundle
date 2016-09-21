@@ -21,9 +21,16 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use SymfonyId\AdminBundle\Annotation\Serialize;
+use SymfonyId\AdminBundle\Cache\CacheHandler;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
+use SymfonyId\AdminBundle\Configuration\ConfiguratorInterface;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
+use SymfonyId\AdminBundle\Configuration\DriverConfigurator;
+use SymfonyId\AdminBundle\Configuration\GridConfigurator;
+use SymfonyId\AdminBundle\Configuration\PageConfigurator;
+use SymfonyId\AdminBundle\Configuration\PluginConfigurator;
 use SymfonyId\AdminBundle\Configuration\SecurityConfigurator;
+use SymfonyId\AdminBundle\Configuration\UtilConfigurator;
 use SymfonyId\AdminBundle\Model\ModelInterface;
 use SymfonyId\AdminBundle\Request\RequestParameter;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
@@ -33,6 +40,11 @@ use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
  */
 trait RestResourceControllerTrait
 {
+    /**
+     * @var ConfiguratorFactory
+     */
+    private $configurationFactory;
+
     /**
      * @var Serialize
      */
@@ -377,5 +389,113 @@ trait RestResourceControllerTrait
         }
 
         return $this->createResponse($model);
+    }
+
+    /**
+     * @param string $controllerClass
+     *
+     * @return ConfiguratorFactory
+     */
+    private function getConfiguratorFactory($controllerClass)
+    {
+        if (!$this->configurationFactory) {
+            $this->configurationFactory = $this->get('symfonyid.admin.configuration.configurator_factory');
+        }
+
+        if ($this->isProduction()) {
+            $this->configurationFactory = $this->fetchFromCache($controllerClass);
+        }
+
+        return $this->configurationFactory;
+    }
+
+    /**
+     * @param string $controllerClass
+     *
+     * @return ConfiguratorFactory
+     */
+    private function fetchFromCache($controllerClass)
+    {
+        $reflectionController = new \ReflectionClass($controllerClass);
+
+        /** @var CacheHandler $cacheHandler */
+        $cacheHandler = $this->get('symfonyid.admin.cache.cache_handler');
+        if (!$cacheHandler->hasCache($reflectionController)) {
+            //It's impossible but we need to prevent and make sure it is not throwing an exception
+            return $this->configurationFactory;
+        }
+
+        return $this->bind(require $cacheHandler->loadCache($reflectionController));
+    }
+
+    /**
+     * @param ConfiguratorInterface[] $configurations
+     *
+     * @return ConfiguratorFactory
+     */
+    private function bind(array $configurations)
+    {
+        /** @var ConfiguratorFactory $configuratorFactory */
+        $configuratorFactory = clone $this->configurationFactory;
+
+        if (isset($configurations['crud'])) {
+            /** @var CrudConfigurator $crudConfigurator */
+            $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
+            $crudConfigurator->setCrud($configurations['crud']);
+            $configuratorFactory->addConfigurator($crudConfigurator);
+        }
+
+        if (isset($configurations['driver'])) {
+            /** @var DriverConfigurator $driverConfigurator */
+            $driverConfigurator = $configuratorFactory->getConfigurator(DriverConfigurator::class);
+            $driverConfigurator->setDriver($configurations['driver']);
+            $configuratorFactory->addConfigurator($driverConfigurator);
+        }
+
+        if (isset($configurations['grid'])) {
+            /** @var GridConfigurator $gridConfigurator */
+            $gridConfigurator = $configuratorFactory->getConfigurator(GridConfigurator::class);
+            $gridConfigurator->setGrid($configurations['grid']);
+            $configuratorFactory->addConfigurator($gridConfigurator);
+        }
+
+        if (isset($configurations['page'])) {
+            /** @var PageConfigurator $pageConfigurator */
+            $pageConfigurator = $configuratorFactory->getConfigurator(PageConfigurator::class);
+            $pageConfigurator->setPage($configurations['page']);
+            $configuratorFactory->addConfigurator($pageConfigurator);
+        }
+
+        if (isset($configurations['plugin'])) {
+            /** @var PluginConfigurator $pluginConfigurator */
+            $pluginConfigurator = $configuratorFactory->getConfigurator(PluginConfigurator::class);
+            $pluginConfigurator->setPlugin($configurations['plugin']);
+            $configuratorFactory->addConfigurator($pluginConfigurator);
+        }
+
+        if (isset($configurations['security'])) {
+            /** @var SecurityConfigurator $securityConfigurator */
+            $securityConfigurator = $configuratorFactory->getConfigurator(SecurityConfigurator::class);
+            $securityConfigurator->setSecurity($configurations['security']);
+            $configuratorFactory->addConfigurator($securityConfigurator);
+        }
+
+        if (isset($configurations['util'])) {
+            /** @var UtilConfigurator $utilConfigurator */
+            $utilConfigurator = $configuratorFactory->getConfigurator(UtilConfigurator::class);
+            $utilConfigurator->setUtil($configurations['util']);
+            $configuratorFactory->addConfigurator($utilConfigurator);
+        }
+
+        return $configuratorFactory;
+    }
+
+    private function isProduction()
+    {
+        if ('prod' === strtolower($this->get('kernel')->getEnvironment())) {
+            return true;
+        }
+
+        return false;
     }
 }
