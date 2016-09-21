@@ -42,7 +42,7 @@ class FormGenerator extends AbstractGenerator
 
         $this->className = $entityClass.'Type';
         $dirPath = $bundle->getPath().'/Form/Type';
-        $this->classPath = $dirPath.'/'.str_replace('\\', '/', $entity).'Type.php';
+        $this->classPath = $dirPath.'/'.str_replace('\\', '/', $entityClass).'Type.php';
 
         if (!$forceOverwrite && file_exists($this->classPath)) {
             throw new RuntimeException(sprintf('Unable to generate the %s form class as it already exists under the %s file', $this->className, $this->classPath));
