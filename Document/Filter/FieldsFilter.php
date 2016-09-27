@@ -60,7 +60,7 @@ class FieldsFilter extends BsonFilter implements FieldsFilterInterface
             if (in_array($field['type'], array('date', 'datetime', 'time'))) {
                 $date = \DateTime::createFromFormat($this->dateTimeFormat, $this->getParameter('filter'));
                 if ($date) {
-                    $output[$field['fieldName']] = $date->format($this->dateTimeFormat);
+                    $output[$field['fieldName']] = $date->format('Y-m-d');
                 }
             } else {
                 $output[$field['fieldName']] = new \MongoRegex(sprintf('/.*%s.*/i', $this->getParameter('filter')));
