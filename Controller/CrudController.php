@@ -317,30 +317,24 @@ abstract class CrudController extends AbstractController
         $view->setParam('autocomplete', false);
         $view->setParam('include_javascript', false);
         //Auto complete
-        if ($autoComplete) {
-            $view->setParam('autocomplete', true);
-            $view->setParam('ac_config', array(
-                'route' => $autoComplete->getRouteResource(),
-                'route_callback' => $autoComplete->getRouteCallback(),
-                'selector_storage' => $autoComplete->getTargetSelector(),
-            ));
-        }
+        $view->setParam('autocomplete', true);
+        $view->setParam('ac_config', array(
+            'route' => $autoComplete->getRouteResource(),
+            'route_callback' => $autoComplete->getRouteCallback(),
+            'selector_storage' => $autoComplete->getTargetSelector(),
+        ));
         //Date picker
-        if ($datePicker) {
-            $view->setParam('use_date_picker', true);
-            $view->setParam('date_picker', array(
-                'date_format' => $datePicker->getDateFormat(),
-                'flatten' => $datePicker->isFlatten(),
-            ));
-        }
+        $view->setParam('use_date_picker', true);
+        $view->setParam('date_picker', array(
+            'date_format' => $datePicker->getDateFormat(),
+            'flatten' => $datePicker->isFlatten(),
+        ));
         //External Javascript
-        if ($externalJavascript) {
-            $view->setParam('include_javascript', true);
-            $view->setParam('js_include', array(
-                'files' => $externalJavascript->getIncludFiles(),
-                'route' => $externalJavascript->getIncludeRoutes(),
-            ));
-        }
+        $view->setParam('include_javascript', true);
+        $view->setParam('js_include', array(
+            'files' => $externalJavascript->getIncludFiles(),
+            'route' => $externalJavascript->getIncludeRoutes(),
+        ));
 
         return $this->doCreateOrUpdate($model, $request, $view, $form, $template);
     }

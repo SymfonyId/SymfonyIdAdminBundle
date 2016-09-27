@@ -19,14 +19,12 @@
     <script src="{{- asset_url -}}" type="text/javascript"></script>
     {%- endjavascripts -%}
 
-    {%- if use_date_picker is not empty -%}
-        {%- javascripts
-            'bundles/symfonyidadmin/plugins/bootstrap-datetimepicker/js/moment.js'
-            'bundles/symfonyidadmin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js'
-        -%}
-        <script src="{{- asset_url -}}" type="text/javascript"></script>
-        {%- endjavascripts -%}
-    {%- endif -%}
+    {%- javascripts
+        'bundles/symfonyidadmin/plugins/bootstrap-datetimepicker/js/moment.js'
+        'bundles/symfonyidadmin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js'
+    -%}
+    <script src="{{- asset_url -}}" type="text/javascript"></script>
+    {%- endjavascripts -%}
 
     {%- if use_editor is not empty -%}
         <script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
@@ -34,7 +32,7 @@
 
     {%- if use_autocomplete is not empty -%}
         {%- javascripts
-        'bundles/symfonyidadmin/plugins/select2/select2.min.js'
+            'bundles/symfonyidadmin/plugins/select2/select2.min.js'
         -%}
         <script src="{{- asset_url -}}" type="text/javascript"></script>
         {%- endjavascripts -%}

@@ -19,10 +19,6 @@
     {% endif %}
 {%- endblock -%}
 
-{%- block date_picker_format -%}
-    {{- date_picker_format -}}
-{%- endblock -%}
-
 {%- block file_style -%}
     {{- use_file_style -}}
 {%- endblock -%}
@@ -37,7 +33,7 @@
 
 {%- block autocomplete -%}
     {% if autocomplete is defined %}
-        {{- autocomplete -}}
+        {{- ac_config['route'] -}}
     {% endif %}
 {%- endblock -%}
 
@@ -161,7 +157,6 @@
                 jQuery('.back-to-list').trigger('click');
             });
 
-            {% if date_picker is defined and date_picker %}
             var target = jQuery('.datepicker');
             target.parent().css('position', 'relative');
             target.datetimepicker({
@@ -169,7 +164,6 @@
                 {% if date_picker['flatten'] %}sideBySide: true,{% endif %}
                 locale: '{{- locale -}}'
             });
-            {% endif %}
 
             {%- if use_file_style is same as(true) -%}
             jQuery('input:file').fileinput({
@@ -190,7 +184,7 @@
             jQuery('.positive').numeric({ negative: false });
             {% endif %}
 
-            {%- if autocomplete -%}
+            {%- if ac_config['route'] is same as('') -%}
             jQuery('.autocomplete').select2({
                 minimumInputLength: 3,
                 ajax: {
