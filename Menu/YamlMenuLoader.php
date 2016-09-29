@@ -122,19 +122,21 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
     {
         $menuItems = array();
         foreach ($menus as $name => $config) {
-            if (!array_key_exists('route', $config)) {
-                throw new RuntimeException('Key "route" is required.');
+            if (!array_key_exists('route', $config) && !array_key_exists('uri', $config)) {
+                throw new RuntimeException('"route" key must be set.');
             }
 
-            $menuItems[$config['route']] = array();
+            $route = array_key_exists('route', $config) ? $config['route'] : $config['uri'];
+
+            $menuItems[$route] = array();
             if (array_key_exists('child', $config)) {
-                $menuItems[$config['route']]['child'] = $this->parseMenu($config['child']);
+                $menuItems[$route]['child'] = $this->parseMenu($config['child']);
             }
 
-            $menuItems[$config['route']]['label'] = $name;
-            $menuItems[$config['route']]['role'] = array_key_exists('role', $config) ? $config['role'] : 'ROLE_USER';
-            $menuItems[$config['route']]['icon'] = array_key_exists('icon', $config) ? $config['icon'] : 'fa-bars';
-            $menuItems[$config['route']]['extra'] = array_key_exists('extra', $config) ? $config['extra'] : '';
+            $menuItems[$route]['label'] = $name;
+            $menuItems[$route]['role'] = array_key_exists('role', $config) ? $config['role'] : 'ROLE_USER';
+            $menuItems[$route]['icon'] = array_key_exists('icon', $config) ? $config['icon'] : 'fa-bars';
+            $menuItems[$route]['extra'] = array_key_exists('extra', $config) ? $config['extra'] : '';
         }
 
         return $menuItems;
@@ -151,14 +153,25 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
      */
     protected function addMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', $classCss = '')
     {
-        return $parentMenu->addChild($menuLabel, array(
-            'route' => $routeName,
-            'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
-            'extras' => array('safe_label' => true),
-            'attributes' => array(
-                'class' => $classCss,
-            ),
-        ));
+        try {
+            return $parentMenu->addChild($menuLabel, array(
+                'route' => $routeName,
+                'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
+                'extras' => array('safe_label' => true),
+                'attributes' => array(
+                    'class' => $classCss,
+                ),
+            ));
+        } catch (\Exception $exception) {
+            return $parentMenu->addChild($menuLabel, array(
+                'uri' => $routeName,
+                'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
+                'extras' => array('safe_label' => true),
+                'attributes' => array(
+                    'class' => $classCss,
+                ),
+            ));
+        }
     }
 
     /**
@@ -190,16 +203,30 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
      */
     protected function addParentMenu(ItemInterface $parentMenu, $routeName, $menuLabel, $icon = 'fa-bars', $classCss = '')
     {
-        return $parentMenu->addChild($menuLabel, array(
-            'route' => $routeName,
-            'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span><i class="fa fa-angle-double-left pull-right"></i>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
-            'extras' => array('safe_label' => true),
-            'attributes' => array(
-                'class' => $classCss,
-            ),
-            'childrenAttributes' => array(
-                'class' => 'treeview-menu',
-            ),
-        ));
+        try {
+            return $parentMenu->addChild($menuLabel, array(
+                'route' => $routeName,
+                'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span><i class="fa fa-angle-double-left pull-right"></i>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
+                'extras' => array('safe_label' => true),
+                'attributes' => array(
+                    'class' => $classCss,
+                ),
+                'childrenAttributes' => array(
+                    'class' => 'treeview-menu',
+                ),
+            ));
+        } catch (\Exception $exception) {
+            return $parentMenu->addChild($menuLabel, array(
+                'uri' => $routeName,
+                'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span><i class="fa fa-angle-double-left pull-right"></i>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
+                'extras' => array('safe_label' => true),
+                'attributes' => array(
+                    'class' => $classCss,
+                ),
+                'childrenAttributes' => array(
+                    'class' => 'treeview-menu',
+                ),
+            ));
+        }
     }
 }
