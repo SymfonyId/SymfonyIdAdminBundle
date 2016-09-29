@@ -53,7 +53,7 @@ class OrmJoinFieldFilterSubscriber implements CrudControllerEventAwareInterface 
     /**
      * @var array
      */
-    private $aliases;
+    private $aliases = array();
 
     /**
      * @var string
