@@ -157,7 +157,10 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
             return $parentMenu->addChild($menuLabel, array(
                 'route' => $routeName,
                 'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
-                'extras' => array('safe_label' => true),
+                'extras' => array(
+                    'safe_label' => true,
+                    'translation_domain' => false,
+                ),
                 'attributes' => array(
                     'class' => $classCss,
                 ),
@@ -166,7 +169,10 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
             return $parentMenu->addChild($menuLabel, array(
                 'uri' => $routeName,
                 'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
-                'extras' => array('safe_label' => true),
+                'extras' => array(
+                    'safe_label' => true,
+                    'translation_domain' => false,
+                ),
                 'attributes' => array(
                     'class' => $classCss,
                 ),
@@ -207,7 +213,10 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
             return $parentMenu->addChild($menuLabel, array(
                 'route' => $routeName,
                 'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span><i class="fa fa-angle-double-left pull-right"></i>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
-                'extras' => array('safe_label' => true),
+                'extras' => array(
+                    'safe_label' => true,
+                    'translation_domain' => false,
+                ),
                 'attributes' => array(
                     'class' => $classCss,
                 ),
@@ -219,7 +228,10 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
             return $parentMenu->addChild($menuLabel, array(
                 'uri' => $routeName,
                 'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span><i class="fa fa-angle-double-left pull-right"></i>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
-                'extras' => array('safe_label' => true),
+                'extras' => array(
+                    'safe_label' => true,
+                    'translation_domain' => false,
+                ),
                 'attributes' => array(
                     'class' => $classCss,
                 ),
