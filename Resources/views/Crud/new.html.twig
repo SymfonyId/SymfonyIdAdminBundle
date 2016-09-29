@@ -13,12 +13,6 @@
     {{- page_description -}}
 {%- endblock -%}
 
-{%- block date_picker -%}
-    {% if use_data_picker is defined %}
-        {{- use_date_picker -}}
-    {% endif %}
-{%- endblock -%}
-
 {%- block file_style -%}
     {{- use_file_style -}}
 {%- endblock -%}
@@ -32,9 +26,7 @@
 {%- endblock -%}
 
 {%- block autocomplete -%}
-    {% if autocomplete is defined %}
-        {{- ac_config['route'] -}}
-    {% endif %}
+    {{- ac_config['route'] -}}
 {%- endblock -%}
 
 {%- block menu -%}
@@ -215,9 +207,7 @@
             {%- endif -%}
         });
     </script>
-    {%- if include_javascript -%}
-        {% for file in js_include['files'] %}
-            {%- include file with { route: route } -%}
-        {% endfor %}
-    {%- endif -%}
+    {% for file in js_include['files'] %}
+        {%- include file with { route: route } -%}
+    {% endfor %}
 {%- endblock -%}

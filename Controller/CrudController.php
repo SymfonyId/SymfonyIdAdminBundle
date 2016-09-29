@@ -319,21 +319,20 @@ abstract class CrudController extends AbstractController
         //Auto complete
         $view->setParam('autocomplete', true);
         $view->setParam('ac_config', array(
-            'route' => $autoComplete->getRouteResource(),
-            'route_callback' => $autoComplete->getRouteCallback(),
-            'selector_storage' => $autoComplete->getTargetSelector(),
+            'route' => $autoComplete ? $autoComplete->getRouteResource() : '',
+            'route_callback' => $autoComplete ? $autoComplete->getRouteCallback() : '',
+            'selector_storage' => $autoComplete ? $autoComplete->getTargetSelector() : '',
         ));
         //Date picker
         $view->setParam('use_date_picker', true);
         $view->setParam('date_picker', array(
-            'date_format' => $datePicker->getDateFormat(),
-            'flatten' => $datePicker->isFlatten(),
+            'date_format' => $datePicker ? $datePicker->getDateFormat() : $this->container->getParameter('symfonyid.admin.date_time_format'),
+            'flatten' => $datePicker ? $datePicker->isFlatten() : false,
         ));
         //External Javascript
-        $view->setParam('include_javascript', true);
         $view->setParam('js_include', array(
-            'files' => $externalJavascript->getIncludFiles(),
-            'route' => $externalJavascript->getIncludeRoutes(),
+            'files' => $externalJavascript ? $externalJavascript->getIncludFiles() : array(),
+            'route' => $externalJavascript ? $externalJavascript->getIncludeRoutes() : array(),
         ));
 
         return $this->doCreateOrUpdate($model, $request, $view, $form, $template);
