@@ -100,7 +100,7 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
         $menus = Yaml::parse(file_get_contents($this->kernel->locateResource($this->yamlPath)));
         $reflection = new \ReflectionObject($this);
         if ($this->cacheHandler->hasCache($reflection)) {
-            $menuItems = $this->cacheHandler->loadCache($reflection);
+            $menuItems = require $this->cacheHandler->loadCache($reflection);
         } else {
             $menuItems = $this->parseMenu($menus);
             $this->cacheHandler->writeCache($reflection, $menuItems);
