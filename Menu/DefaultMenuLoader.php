@@ -130,7 +130,7 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
 
                         if ($this->isGranted($security->getRead())) {
                             $menuItems[$name] = array(
-                                'name' => $this->translator->trans(sprintf('menu.label.%s', strtolower(str_replace('Controller', '', $reflectionController->getShortName()))), array(), $this->translationDomain),
+                                'name' => sprintf('menu.label.%s', strtolower(str_replace('Controller', '', $reflectionController->getShortName()))),
                                 'icon' => $menu->getIcon(),
                                 'extra' => $menu->getExtra(),
                             );
