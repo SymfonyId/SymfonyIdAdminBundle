@@ -69,7 +69,7 @@ class SerializationAwareSubscriber implements EventSubscriberInterface
 
         $reflectionClass = new \ReflectionClass(Serialize::class);
         if ($this->isProduction() && $this->cacheHandler->hasCache($reflectionClass)) {
-            $controller[0]->setSerialization($this->cacheHandler->loadCache($reflectionClass));
+            $controller[0]->setSerialization(require $this->cacheHandler->loadCache($reflectionClass));
         }
 
         $reflectionObject = new \ReflectionObject($controller[0]);
