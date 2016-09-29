@@ -39,7 +39,7 @@ class FieldsFilter extends SQLFilter implements FieldsFilterInterface
 
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
-        $fields = array_merge($this->fieldsFilter, $gridConfigurator->getFilters($targetEntity->getReflectionClass()));
+        $fields = $gridConfigurator->getFilters($targetEntity->getReflectionClass()) ?: $this->fieldsFilter;
 
         /** @var CrudConfigurator $crudConfiguration */
         $crudConfiguration = $this->configuratorFactory->getConfigurator(CrudConfigurator::class);

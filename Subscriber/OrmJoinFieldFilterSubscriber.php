@@ -105,6 +105,7 @@ class OrmJoinFieldFilterSubscriber implements CrudControllerEventAwareInterface 
         if (Driver::ORM !== $driver->getDriver()) {
             return;
         }
+        $this->entityManager->getFilters()->disable(sprintf('symfonyid.admin.filter.%s.fields', $driver->getDriver()));
         $metadata = $this->entityManager->getClassMetadata($event->getModelClass());
 
         /** @var GridConfigurator $gridConfigurator */
@@ -205,7 +206,7 @@ class OrmJoinFieldFilterSubscriber implements CrudControllerEventAwareInterface 
      */
     private function getAlias()
     {
-        $alias = rand(0, 100);
+        $alias = uniqid('ad3n');
         if (in_array($alias, $this->aliases)) {
             $alias = $this->getAlias();
         }

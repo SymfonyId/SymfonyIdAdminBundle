@@ -89,7 +89,7 @@ class FieldsFilterSubscriber implements ConfigurationAwareInterface, EventSubscr
         $manager = $this->managerFactory->getManager($driver);
 
         /* @var FieldsFilterInterface $filter */
-        $filter = $manager->getFilters()->enable('symfonyid.admin.filter.'.$driver->getDriver().'.fields');
+        $filter = $manager->getFilters()->enable(sprintf('symfonyid.admin.filter.%s.fields', $driver->getDriver()));
         $this->doFilter($configurationFactory, $filter, $keyword);
     }
 
