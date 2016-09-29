@@ -169,7 +169,7 @@ class CrudControllerAwareSubscriber implements CrudControllerEventAwareInterface
                 array('extractUserController', 127),
                 array('setControllerDependencies', 0),
                 array('setDefaultCrudConfiguration', 255),
-                array('setDefaultCrudConfiguration', 255),
+                array('setDefaultGridConfiguration', 255),
             ),
         );
     }

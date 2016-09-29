@@ -50,7 +50,7 @@ class ConfigurationTreeBuilder
                 ->integerNode('max_records')->defaultValue(1000)->end()
                 ->scalarNode('date_time_format')->defaultValue('d-m-Y')->end()
                 ->scalarNode('upload_dir')->defaultValue('uploads')->end()
-                ->integerNode('cache_lifetime')->defaultValue(0)->end()
+                ->integerNode('cache_lifetime')->defaultValue(7)->end()
                 ->enumNode('driver')
                     ->values(array(Driver::ORM, Driver::ODM, Driver::BOTH))
                     ->isRequired()
