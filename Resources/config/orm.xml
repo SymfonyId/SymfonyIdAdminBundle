@@ -27,6 +27,9 @@
             <call method="setDateTimeFormat">
                 <argument>%symfonyid.admin.date_time_format%</argument>
             </call>
+            <call method="setFieldsFilter">
+                <argument>%symfonyid.admin.filters%</argument>
+            </call>
 
             <tag name="symfonyid.orm.filter" />
         </service>

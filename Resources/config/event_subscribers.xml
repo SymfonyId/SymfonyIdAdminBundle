@@ -196,6 +196,23 @@
             <tag name="kernel.event_subscriber"/>
         </service>
 
+        <service id="symfonyid.admin.subscriber.orm.join_field_filter_subscriber" class="SymfonyId\AdminBundle\Subscriber\OrmJoinFieldFilterSubscriber" >
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="symfonyid.admin.manager.driver_finder" />
+
+            <call method="setConfiguratorFactory">
+                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
+            </call>
+            <call method="setCacheHandler">
+                <argument type="service" id="symfonyid.admin.cache.cache_handler" />
+            </call>
+            <call method="setKernel">
+                <argument type="service" id="kernel" />
+            </call>
+
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
         <service id="symfonyid.admin.subscriber.user_controller_subscriber" class="SymfonyId\AdminBundle\Subscriber\UserControllerAwareSubscriber" >
             <argument type="service" id="symfonyid.admin.configuration.configuration_mapper" />
 

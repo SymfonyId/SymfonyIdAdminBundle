@@ -32,12 +32,12 @@ trait FieldsFilterAwareTrait
     /**
      * @var string
      */
-    protected $dateTimeFormat;
+    protected $dateTimeFormat = 'Y-m-d';
 
     /**
      * @var array
      */
-    protected $fieldsFilter;
+    protected $fieldsFilter = array();
 
     /**
      * @param Extractor $extractorFactory
