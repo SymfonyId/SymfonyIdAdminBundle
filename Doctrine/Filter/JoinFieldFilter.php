@@ -135,6 +135,9 @@ class JoinFieldFilter implements FieldsFilterInterface
             try {
                 $filters[] = $metadata->getFieldMapping($fieldName);
             } catch (\Exception $ex) {
+                /**
+                 * TODO: Use @Filter on relation entity
+                 */
                 $mapping = $metadata->getAssociationMapping($fieldName);
                 $associationMatadata = $this->entityManager->getClassMetadata($mapping['targetEntity']);
                 $associationFields = $associationMatadata->getFieldNames();

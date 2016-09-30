@@ -103,6 +103,9 @@ class JoinFieldFilterSubscriber implements CrudControllerEventAwareInterface , E
         /** @var CrudConfigurator $crudConfigurator */
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
+        /**
+         * TODO: Add ODM support
+         */
         $driver = $this->driverFinder->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
         if (Driver::ORM !== $driver->getDriver()) {
             return;
