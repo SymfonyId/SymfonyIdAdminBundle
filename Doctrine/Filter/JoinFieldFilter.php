@@ -9,31 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace SymfonyId\AdminBundle\Subscriber;
+namespace SymfonyId\AdminBundle\Doctrine\Filter;
 
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
-use SymfonyId\AdminBundle\Annotation\Driver;
-use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
-use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
-use SymfonyId\AdminBundle\Controller\CrudControllerEventAwareInterface;
-use SymfonyId\AdminBundle\Controller\CrudControllerEventAwareTrait;
-use SymfonyId\AdminBundle\Event\FilterQueryEvent;
-use SymfonyId\AdminBundle\Manager\DriverFinder;
+use SymfonyId\AdminBundle\Filter\FieldsFilterAwareTrait;
+use SymfonyId\AdminBundle\Filter\FieldsFilterInterface;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class OrmJoinFieldFilterSubscriber implements CrudControllerEventAwareInterface , EventSubscriberInterface
+class JoinFieldFilter implements FieldsFilterInterface
 {
-    use CrudControllerEventAwareTrait;
-    use ConfigurationAwareTrait;
+    use FieldsFilterAwareTrait;
 
     /**
      * @var EntityManager
@@ -41,14 +32,9 @@ class OrmJoinFieldFilterSubscriber implements CrudControllerEventAwareInterface 
     private $entityManager;
 
     /**
-     * @var DriverFinder
+     * @var QueryBuilder
      */
-    private $driverFinder;
-
-    /**
-     * @var bool
-     */
-    private $validListener;
+    private $queryBuilder;
 
     /**
      * @var array
@@ -62,87 +48,68 @@ class OrmJoinFieldFilterSubscriber implements CrudControllerEventAwareInterface 
 
     /**
      * @param EntityManager $entityManager
-     * @param DriverFinder  $driverFinder
      */
-    public function __construct(EntityManager $entityManager, DriverFinder $driverFinder)
+    public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->driverFinder = $driverFinder;
-        $this->validListener = false;
     }
 
     /**
-     * @param FilterControllerEvent $event
+     * @param QueryBuilder $queryBuilder
      */
-    public function checkValidListener(FilterControllerEvent $event)
+    public function setQueryBuilder(QueryBuilder $queryBuilder)
     {
-        if (!$this->isValidCrudListener($event) || !$event->isMasterRequest()) {
-            return;
-        }
-
-        $request = $event->getRequest();
-        if (!$this->keyword = $request->query->get('filter')) {
-            return;
-        }
-
-        $this->validListener = true;
+        $this->queryBuilder = $queryBuilder;
     }
 
     /**
-     * @param FilterQueryEvent $event
+     * @param string $keyword
      */
-    public function filter(FilterQueryEvent $event)
+    public function setKeyword($keyword)
     {
-        if (!$this->validListener) {
-            return;
-        }
+        $this->keyword = $keyword;
+    }
 
-        $configuratorFactory = $this->getConfiguratorFactory(new \ReflectionObject($this->controller));
-        /** @var CrudConfigurator $crudConfigurator */
-        $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
+    /**
+     * @param string $key
+     * @param string $param
+     */
+    public function setParameter($key, $param)
+    {
+        throw new \InvalidArgumentException(sprintf('Method %s not used. Use setKeyword instead.', __METHOD__));
+    }
 
-        $driver = $this->driverFinder->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
-        if (Driver::ORM !== $driver->getDriver()) {
-            return;
-        }
-        $this->entityManager->getFilters()->disable(sprintf('symfonyid.admin.filter.%s.fields', $driver->getDriver()));
-        $metadata = $this->entityManager->getClassMetadata($event->getModelClass());
-
+    /**
+     * @param ClassMetadata $metadata
+     * @param string $alias
+     */
+    public function filter(ClassMetadata $metadata, $alias)
+    {
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
-        $fields = $this->getFieldFilter($metadata, $gridConfigurator->getFilters($metadata->getReflectionClass()));
+        $fields = $this->getFieldFilter($metadata, $gridConfigurator->getFilters($metadata->getReflectionClass()) ?: $this->fieldsFilter);
 
-        $queryBuilder = $event->getQueryBuilder();
-
-        foreach ($fields as $key => $value) {
-            if (array_key_exists('join', $value)) {
-                $queryBuilder->leftJoin(sprintf('%s.%s', Constants::MODEL_ALIAS, $value['join_field']), $value['join_alias'], 'WITH');
-                $this->buildFilter($queryBuilder, $value, $value['join_alias'], $key, $this->keyword);
+        foreach ($fields as $key => $field) {
+            if (array_key_exists('join', $field)) {
+                $this->queryBuilder->leftJoin(sprintf('%s.%s', Constants::MODEL_ALIAS, $field['join_field']), $field['join_alias'], 'WITH');
+                $this->buildFilter($this->queryBuilder, $field, $field['join_alias'], $key, $this->keyword);
             } else {
-                $this->buildFilter($queryBuilder, $value, Constants::MODEL_ALIAS, $key, $this->keyword);
+                $this->buildFilter($this->queryBuilder, $field, Constants::MODEL_ALIAS, $key, $this->keyword);
             }
         }
     }
 
     /**
-     * @return array
+     * @param QueryBuilder $queryBuilder
+     * @param array $metadata
+     * @param string $alias
+     * @param string $parameter
+     * @param string $filter
      */
-    public static function getSubscribedEvents()
-    {
-        return array(
-            KernelEvents::CONTROLLER => array(
-                array('checkValidListener', -127),
-            ),
-            Constants::FILTER_LIST => array(
-                array('filter', 0),
-            ),
-        );
-    }
-
     private function buildFilter(QueryBuilder $queryBuilder, array $metadata, $alias, $parameter, $filter)
     {
         if (in_array($metadata['type'], array('date', 'datetime', 'time'))) {
-            $date = \DateTime::createFromFormat($this->container->getParameter('symfonyid.admin.date_time_format'), $filter);
+            $date = \DateTime::createFromFormat($this->dateTimeFormat, $filter);
             if ($date) {
                 $queryBuilder->orWhere(sprintf('%s.%s = ?%d', $alias, $metadata['fieldName'], $parameter));
                 $queryBuilder->setParameter($parameter, $date->format('Y-m-d'));
@@ -161,6 +128,7 @@ class OrmJoinFieldFilterSubscriber implements CrudControllerEventAwareInterface 
      */
     private function getFieldFilter(ClassMetadata $metadata, array $fields)
     {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $filters = array();
         foreach ($fields as $field) {
             $fieldName = $this->getFieldName($metadata, $field);
@@ -198,11 +166,12 @@ class OrmJoinFieldFilterSubscriber implements CrudControllerEventAwareInterface 
      */
     private function getFieldName(ClassMetadata $metadata, $field)
     {
+        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         return $metadata->getFieldName($field) ?: $metadata->getFieldForColumn($field);
     }
 
     /**
-     * @return int
+     * @return string
      */
     private function getAlias()
     {

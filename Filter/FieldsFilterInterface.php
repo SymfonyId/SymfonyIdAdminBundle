@@ -11,6 +11,7 @@
 
 namespace SymfonyId\AdminBundle\Filter;
 
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
 use SymfonyId\AdminBundle\Extractor\Extractor;
 
@@ -38,6 +39,12 @@ interface FieldsFilterInterface
      * @param array $fieldsFilter
      */
     public function setFieldsFilter(array $fieldsFilter);
+
+    /**
+     * @param ClassMetadata $metadata
+     * @param string $alias
+     */
+    public function filter(ClassMetadata $metadata, $alias);
 
     /**
      * @param string $key

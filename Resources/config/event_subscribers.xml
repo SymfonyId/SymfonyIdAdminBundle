@@ -196,9 +196,10 @@
             <tag name="kernel.event_subscriber"/>
         </service>
 
-        <service id="symfonyid.admin.subscriber.orm.join_field_filter_subscriber" class="SymfonyId\AdminBundle\Subscriber\OrmJoinFieldFilterSubscriber" >
+        <service id="symfonyid.admin.subscriber.orm.join_field_filter_subscriber" class="SymfonyId\AdminBundle\Subscriber\JoinFieldFilterSubscriber" >
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="symfonyid.admin.manager.driver_finder" />
+            <argument type="service" id="symfonyid.admin.filter.orm.join" />
 
             <call method="setConfiguratorFactory">
                 <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
