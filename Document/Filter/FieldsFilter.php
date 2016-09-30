@@ -17,6 +17,7 @@ use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
 use SymfonyId\AdminBundle\Filter\FieldsFilterAwareTrait;
 use SymfonyId\AdminBundle\Filter\FieldsFilterInterface;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata as Metadata;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -36,22 +37,28 @@ class FieldsFilter extends BsonFilter implements FieldsFilterInterface
      */
     public function addFilterCriteria(ClassMetadata $targetDocument)
     {
+        $this->filter($targetDocument, null);
+    }
+
+    public function filter(Metadata $metadata, $alias)
+    {
         $output = array();
 
+        /** @var ClassMetadata $metadata */
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
-        $fields = array_merge($this->fieldsFilter, $gridConfigurator->getFilters($targetDocument->getReflectionClass()));
+        $fields = array_merge($this->fieldsFilter, $gridConfigurator->getFilters($metadata->getReflectionClass()));
 
         /** @var CrudConfigurator $crudConfiguration */
         $crudConfiguration = $this->configuratorFactory->getConfigurator(CrudConfigurator::class);
-        if ($crudConfiguration->getCrud()->getModelClass() !== $targetDocument->getName()) {
+        if ($crudConfiguration->getCrud()->getModelClass() !== $metadata->getName()) {
             return $output;
         }
 
         $fixFields = array();
         foreach ($fields as $key => $field) {
-            if ($targetDocument->hasField($field)) {
-                $fixFields[] = $targetDocument->getFieldMapping($field);
+            if ($metadata->hasField($field)) {
+                $fixFields[] = $metadata->getFieldMapping($field);
             }
         }
 
