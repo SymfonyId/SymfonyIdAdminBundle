@@ -167,7 +167,7 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
             ));
         } catch (\Exception $exception) {
             return $parentMenu->addChild($menuLabel, array(
-                'uri' => $routeName,
+                'uri' => sprintf('#%s', $routeName),
                 'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
                 'extras' => array(
                     'safe_label' => true,
@@ -226,7 +226,7 @@ class YamlMenuLoader extends AbstractMenuLoader implements MenuLoaderInterface
             ));
         } catch (\Exception $exception) {
             return $parentMenu->addChild($menuLabel, array(
-                'uri' => $routeName,
+                'uri' => sprintf('#%s', $routeName),
                 'label' => sprintf('<i class="fa %s" aria-hidden="true"></i> <span>%s</span><i class="fa fa-angle-double-left pull-right"></i>', $icon, $this->translator->trans($menuLabel, array(), $this->translationDomain)),
                 'extras' => array(
                     'safe_label' => true,
