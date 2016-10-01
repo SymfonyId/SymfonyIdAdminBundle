@@ -15,7 +15,7 @@
             <tag name="symfonyid.manager" />
         </service>
 
-        <service id="symfonyid.admin.filter.orm.join" class="SymfonyId\AdminBundle\Doctrine\Filter\FieldsFilter" >
+        <service id="symfonyid.admin.filter.orm.fields" class="SymfonyId\AdminBundle\Doctrine\Filter\FieldsFilter" >
             <argument type="service" id="doctrine.orm.entity_manager" on-invalid="ignore"/>
 
             <call method="setConfigurationFactory">

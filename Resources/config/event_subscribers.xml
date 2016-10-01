@@ -175,9 +175,10 @@
         </service>
 
         <service id="symfonyid.admin.subscriber.orm.fields_filter_subscriber" class="SymfonyId\AdminBundle\Subscriber\FieldsFilterSubscriber" >
-            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="symfonyid.admin.manager.manager_factory"/>
             <argument type="service" id="symfonyid.admin.manager.driver_finder" />
-            <argument type="service" id="symfonyid.admin.filter.orm.join" />
+            <argument type="service" id="symfonyid.admin.filter.orm.fields" />
+            <argument type="service" id="symfonyid.admin.filter.odm.fields" />
 
             <tag name="kernel.event_subscriber"/>
         </service>
