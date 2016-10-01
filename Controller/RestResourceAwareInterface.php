@@ -11,7 +11,6 @@
 
 namespace SymfonyId\AdminBundle\Controller;
 
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SymfonyId\AdminBundle\Annotation\Serialize;
 
@@ -21,36 +20,31 @@ use SymfonyId\AdminBundle\Annotation\Serialize;
 interface RestResourceAwareInterface
 {
     /**
-     * @param Request       $request
-     * @param FormInterface $form
+     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function create(Request $request, FormInterface $form);
+    public function create(Request $request);
 
     /**
-     * @param FormInterface $form
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getCreateForm(FormInterface $form);
+    public function getCreateForm();
 
     /**
-     * @param Request       $request
-     * @param FormInterface $form
-     * @param int           $id
+     * @param Request $request
+     * @param int     $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function update(Request $request, FormInterface $form, $id);
+    public function update(Request $request, $id);
 
     /**
-     * @param FormInterface $form
-     * @param int           $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getUpdateForm(FormInterface $form, $id);
+    public function getUpdateForm($id);
 
     /**
      * @param int $id
