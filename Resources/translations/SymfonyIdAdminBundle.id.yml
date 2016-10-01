@@ -10,6 +10,7 @@ message:
     password: 'Masukkan password'
     remember_me: 'Ingat saya selalu'
     delete_confirmation: 'Apakah Anda yakin akan menghapus data ini?'
+    form_not_valid: 'Data yang dikirim tidak valid. Silahkan mengulang request'
     data_saved: 'Data berhasil disimpan'
     data_not_found: 'Data dengan id %id% tidak ditemukan'
     request_not_found: 'Halaman yang Anda minta tidak ditemukan'

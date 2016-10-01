@@ -27,7 +27,7 @@ final class Serialize
     /**
      * @var array
      */
-    private $groups = array();
+    private $groups = array('Default');
 
     /**
      * @var int
@@ -44,7 +44,7 @@ final class Serialize
         }
 
         if (isset($data['groups'])) {
-            $this->groups = (array) $data['groups'];
+            $this->groups = array_merge($this->groups, (array) $data['groups']);
         }
 
         if (isset($data['checkDepth'])) {
