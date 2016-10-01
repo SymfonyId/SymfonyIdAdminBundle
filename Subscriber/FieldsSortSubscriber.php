@@ -15,11 +15,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
-use SymfonyId\AdminBundle\Controller\CrudControllerEventAwareInterface;
-use SymfonyId\AdminBundle\Controller\CrudControllerEventAwareTrait;
+use SymfonyId\AdminBundle\Controller\AnnotationConfigurationAwareInterface;
+use SymfonyId\AdminBundle\Controller\AnnotationConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Event\FilterQueryEvent;
 use SymfonyId\AdminBundle\Manager\DriverFinder;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
@@ -27,9 +26,9 @@ use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class FieldsSortSubscriber implements CrudControllerEventAwareInterface, EventSubscriberInterface
+class FieldsSortSubscriber implements AnnotationConfigurationAwareInterface, EventSubscriberInterface
 {
-    use CrudControllerEventAwareTrait;
+    use AnnotationConfigurationAwareTrait;
     use ConfigurationAwareTrait;
 
     /**
@@ -68,7 +67,7 @@ class FieldsSortSubscriber implements CrudControllerEventAwareInterface, EventSu
      */
     public function setSortParameter(FilterControllerEvent $event)
     {
-        if (!$this->isValidCrudListener($event) || !$event->isMasterRequest()) {
+        if (!$this->isValidListener($event) || !$event->isMasterRequest()) {
             return;
         }
 

@@ -271,7 +271,7 @@ EOT
             $formGenerator->generate($bundle, $modelShort, $metadata, $forceOverwrite);
 
             $output->writeln(sprintf('<info>Form type for entity %s has been generated</info>', $modelClass));
-        } else if ($onlyController) {
+        } elseif ($onlyController) {
             $controllerGenerator = $this->getControllerGenerator($bundle);
             $controllerGenerator->generate($bundle, $modelClass, $metadata, $forceOverwrite);
 

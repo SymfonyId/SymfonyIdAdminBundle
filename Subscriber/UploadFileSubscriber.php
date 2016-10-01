@@ -17,8 +17,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\UtilConfigurator;
-use SymfonyId\AdminBundle\Controller\CrudControllerEventAwareInterface;
-use SymfonyId\AdminBundle\Controller\CrudControllerEventAwareTrait;
+use SymfonyId\AdminBundle\Controller\AnnotationConfigurationAwareInterface;
+use SymfonyId\AdminBundle\Controller\AnnotationConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Event\FilterModelEvent;
 use SymfonyId\AdminBundle\Upload\UploadHandler;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
@@ -26,9 +26,9 @@ use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class UploadFileSubscriber implements ConfigurationAwareInterface, CrudControllerEventAwareInterface, EventSubscriberInterface
+class UploadFileSubscriber implements ConfigurationAwareInterface, AnnotationConfigurationAwareInterface, EventSubscriberInterface
 {
-    use CrudControllerEventAwareTrait;
+    use AnnotationConfigurationAwareTrait;
     use ConfigurationAwareTrait;
 
     /**
@@ -56,7 +56,7 @@ class UploadFileSubscriber implements ConfigurationAwareInterface, CrudControlle
      */
     public function setController(FilterControllerEvent $event)
     {
-        if (!$this->isValidCrudListener($event) || !$event->isMasterRequest()) {
+        if (!$this->isValidListener($event) || !$event->isMasterRequest()) {
             return;
         }
     }

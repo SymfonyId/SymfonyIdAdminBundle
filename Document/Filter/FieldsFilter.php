@@ -57,7 +57,7 @@ class FieldsFilter implements FieldsFilterInterface
 
     public function filter(Metadata $metadata, $alias)
     {
-        /** @var ClassMetadata $metadata */
+        /* @var ClassMetadata $metadata */
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
         $fields = array_merge($this->fieldsFilter, $gridConfigurator->getFilters($metadata->getReflectionClass()));

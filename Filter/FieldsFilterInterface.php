@@ -42,7 +42,7 @@ interface FieldsFilterInterface
 
     /**
      * @param ClassMetadata $metadata
-     * @param string $alias
+     * @param string        $alias
      */
     public function filter(ClassMetadata $metadata, $alias);
 

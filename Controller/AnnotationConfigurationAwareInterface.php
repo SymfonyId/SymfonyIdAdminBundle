@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-interface CrudControllerEventAwareInterface extends ContainerAwareInterface
+interface AnnotationConfigurationAwareInterface extends ContainerAwareInterface
 {
-    public function isValidCrudListener(FilterControllerEvent $event);
+    public function isValidListener(FilterControllerEvent $event);
 }

@@ -13,11 +13,12 @@ namespace SymfonyId\AdminBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-trait CrudControllerEventAwareTrait
+trait AnnotationConfigurationAwareTrait
 {
     use ContainerAwareTrait;
 
@@ -31,7 +32,7 @@ trait CrudControllerEventAwareTrait
      *
      * @return bool
      */
-    public function isValidCrudListener(FilterControllerEvent $event)
+    public function isValidListener(FilterControllerEvent $event)
     {
         $controller = $event->getController();
         if (!is_array($controller)) {
@@ -39,7 +40,7 @@ trait CrudControllerEventAwareTrait
         }
 
         $controller = $controller[0];
-        if (!$controller instanceof CrudController) {
+        if (!$controller instanceof ConfigurationAwareInterface) {
             return false;
         }
 

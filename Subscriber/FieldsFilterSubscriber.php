@@ -15,8 +15,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use SymfonyId\AdminBundle\Annotation\Driver;
-use SymfonyId\AdminBundle\Controller\CrudControllerEventAwareInterface;
-use SymfonyId\AdminBundle\Controller\CrudControllerEventAwareTrait;
+use SymfonyId\AdminBundle\Controller\AnnotationConfigurationAwareInterface;
+use SymfonyId\AdminBundle\Controller\AnnotationConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Doctrine\Filter\FieldsFilter as OrmFilter;
 use SymfonyId\AdminBundle\Document\Filter\FieldsFilter as OdmFilter;
 use SymfonyId\AdminBundle\Event\FilterQueryEvent;
@@ -27,9 +27,9 @@ use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class FieldsFilterSubscriber implements CrudControllerEventAwareInterface , EventSubscriberInterface
+class FieldsFilterSubscriber implements AnnotationConfigurationAwareInterface , EventSubscriberInterface
 {
-    use CrudControllerEventAwareTrait;
+    use AnnotationConfigurationAwareTrait;
 
     /**
      * @var ManagerFactory
@@ -63,9 +63,9 @@ class FieldsFilterSubscriber implements CrudControllerEventAwareInterface , Even
 
     /**
      * @param ManagerFactory $managerFactory
-     * @param DriverFinder  $driverFinder
-     * @param OrmFilter $ormFilter
-     * @param OdmFilter $odmFilter
+     * @param DriverFinder   $driverFinder
+     * @param OrmFilter      $ormFilter
+     * @param OdmFilter      $odmFilter
      */
     public function __construct(ManagerFactory $managerFactory, DriverFinder $driverFinder, OrmFilter $ormFilter, OdmFilter $odmFilter)
     {
@@ -81,7 +81,7 @@ class FieldsFilterSubscriber implements CrudControllerEventAwareInterface , Even
      */
     public function checkValidListener(FilterControllerEvent $event)
     {
-        if (!$this->isValidCrudListener($event) || !$event->isMasterRequest()) {
+        if (!$this->isValidListener($event) || !$event->isMasterRequest()) {
             return;
         }
 

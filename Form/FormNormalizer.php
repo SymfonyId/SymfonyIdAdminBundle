@@ -31,7 +31,7 @@ final class FormNormalizer
     private $csrfTokenManager;
 
     /**
-     * @param Router $router
+     * @param Router                    $router
      * @param CsrfTokenManagerInterface $csrfTokenManager
      */
     public function __construct(Router $router, CsrfTokenManagerInterface $csrfTokenManager)
@@ -42,6 +42,7 @@ final class FormNormalizer
 
     /**
      * @param FormInterface $form
+     *
      * @return array
      */
     public function normalize(FormInterface $form)

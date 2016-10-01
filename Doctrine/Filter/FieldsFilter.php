@@ -81,7 +81,7 @@ class FieldsFilter implements FieldsFilterInterface
 
     /**
      * @param ClassMetadata $metadata
-     * @param string $alias
+     * @param string        $alias
      */
     public function filter(ClassMetadata $metadata, $alias)
     {
@@ -101,10 +101,10 @@ class FieldsFilter implements FieldsFilterInterface
 
     /**
      * @param QueryBuilder $queryBuilder
-     * @param array $metadata
-     * @param string $alias
-     * @param string $parameter
-     * @param string $filter
+     * @param array        $metadata
+     * @param string       $alias
+     * @param string       $parameter
+     * @param string       $filter
      */
     private function buildFilter(QueryBuilder $queryBuilder, array $metadata, $alias, $parameter, $filter)
     {
@@ -128,14 +128,14 @@ class FieldsFilter implements FieldsFilterInterface
      */
     private function getFieldFilter(ClassMetadata $metadata, array $fields)
     {
-        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        /* @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         $filters = array();
         foreach ($fields as $field) {
             $fieldName = $this->getFieldName($metadata, $field);
             try {
                 $filters[] = $metadata->getFieldMapping($fieldName);
             } catch (\Exception $ex) {
-                /**
+                /*
                  * TODO: Use @Filter on relation entity
                  */
                 $mapping = $metadata->getAssociationMapping($fieldName);
@@ -169,7 +169,7 @@ class FieldsFilter implements FieldsFilterInterface
      */
     private function getFieldName(ClassMetadata $metadata, $field)
     {
-        /** @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
+        /* @var \Doctrine\ORM\Mapping\ClassMetadata $metadata */
         return $metadata->getFieldName($field) ?: $metadata->getFieldForColumn($field);
     }
 

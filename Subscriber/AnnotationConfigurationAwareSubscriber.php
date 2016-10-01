@@ -23,16 +23,16 @@ use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\ConfigurationMapper;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
-use SymfonyId\AdminBundle\Controller\CrudControllerEventAwareInterface;
-use SymfonyId\AdminBundle\Controller\CrudControllerEventAwareTrait;
+use SymfonyId\AdminBundle\Controller\AnnotationConfigurationAwareInterface;
+use SymfonyId\AdminBundle\Controller\AnnotationConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Controller\UserController;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class CrudControllerAwareSubscriber implements CrudControllerEventAwareInterface, EventSubscriberInterface
+class AnnotationConfigurationAwareSubscriber implements AnnotationConfigurationAwareInterface, EventSubscriberInterface
 {
-    use CrudControllerEventAwareTrait;
+    use AnnotationConfigurationAwareTrait;
     use ConfigurationAwareTrait;
 
     /**
@@ -74,7 +74,7 @@ class CrudControllerAwareSubscriber implements CrudControllerEventAwareInterface
             return;
         }
 
-        if (!$this->isValidCrudListener($event)) {
+        if (!$this->isValidListener($event)) {
             return;
         }
 
@@ -113,7 +113,7 @@ class CrudControllerAwareSubscriber implements CrudControllerEventAwareInterface
      */
     public function setDefaultCrudConfiguration(FilterControllerEvent $event)
     {
-        if (!$this->isValidCrudListener($event)) {
+        if (!$this->isValidListener($event)) {
             return;
         }
 
@@ -141,7 +141,7 @@ class CrudControllerAwareSubscriber implements CrudControllerEventAwareInterface
      */
     public function setDefaultGridConfiguration(FilterControllerEvent $event)
     {
-        if (!$this->isValidCrudListener($event)) {
+        if (!$this->isValidListener($event)) {
             return;
         }
 
