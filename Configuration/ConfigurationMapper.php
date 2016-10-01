@@ -109,7 +109,7 @@ class ConfigurationMapper
 
             if ($annotation instanceof Security) {
                 $securityConfigurator->setSecurity($annotation);
-                $configuratorFactory->addConfigurator($utilConfigurator);
+                $configuratorFactory->addConfigurator($securityConfigurator);
             }
 
             if ($annotation instanceof Util) {

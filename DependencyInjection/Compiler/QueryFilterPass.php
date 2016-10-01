@@ -19,7 +19,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class QueryFilterPass implements CompilerPassInterface
 {
-    const ORM_CONFIGURATION = 'doctrine.orm.default_configuration';
     const ODM_CONFIGURATION = 'doctrine_mongodb.odm.default_configuration';
 
     /**
@@ -27,18 +26,6 @@ class QueryFilterPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        /*
-         * Add all service with tag name symfonyid.orm.filter
-         */
-        if ($container->hasDefinition(self::ORM_CONFIGURATION)) {
-            $definition = $container->findDefinition(self::ORM_CONFIGURATION);
-            $taggedServices = $container->findTaggedServiceIds('symfonyid.orm.filter');
-            foreach ($taggedServices as $id => $tags) {
-                $filter = $container->findDefinition($id);
-                $definition->addMethodCall('addFilter', array($id, $filter->getClass()));
-            }
-        }
-
         /*
          * Add all service with tag name symfonyid.odm.filter
          */

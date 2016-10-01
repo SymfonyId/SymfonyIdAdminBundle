@@ -15,25 +15,6 @@
             <tag name="symfonyid.manager" />
         </service>
 
-        <service id="symfonyid.admin.filter.orm.fields" class="SymfonyId\AdminBundle\Doctrine\Filter\FieldsFilter" >
-            <argument type="service" id="doctrine.orm.entity_manager" on-invalid="ignore"/>
-
-            <call method="setConfigurationFactory">
-                <argument type="service" id="symfonyid.admin.configuration.configurator_factory" />
-            </call>
-            <call method="setExtractorFactory">
-                <argument type="service" id="symfonyid.admin.extractor.extractor" />
-            </call>
-            <call method="setDateTimeFormat">
-                <argument>%symfonyid.admin.date_time_format%</argument>
-            </call>
-            <call method="setFieldsFilter">
-                <argument>%symfonyid.admin.filters%</argument>
-            </call>
-
-            <tag name="symfonyid.orm.filter" />
-        </service>
-
         <service id="symfonyid.admin.filter.orm.join" class="SymfonyId\AdminBundle\Doctrine\Filter\JoinFieldFilter" >
             <argument type="service" id="doctrine.orm.entity_manager" on-invalid="ignore"/>
 

@@ -14,6 +14,7 @@ namespace SymfonyId\AdminBundle\Subscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
@@ -88,9 +89,11 @@ class FieldsFilterSubscriber implements ConfigurationAwareInterface, EventSubscr
         $driver = $this->driverFinder->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
         $manager = $this->managerFactory->getManager($driver);
 
-        /* @var FieldsFilterInterface $filter */
-        $filter = $manager->getFilters()->enable(sprintf('symfonyid.admin.filter.%s.fields', $driver->getDriver()));
-        $this->doFilter($configurationFactory, $filter, $keyword);
+        if (Driver::ODM === $driver->getDriver()) {
+            /* @var FieldsFilterInterface $filter */
+            $filter = $manager->getFilters()->enable(sprintf('symfonyid.admin.filter.%s.fields', $driver->getDriver()));
+            $this->doFilter($configurationFactory, $filter, $keyword);
+        }
     }
 
     /**
