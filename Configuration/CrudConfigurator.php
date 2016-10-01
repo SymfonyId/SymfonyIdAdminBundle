@@ -67,12 +67,13 @@ class CrudConfigurator implements ContainerAwareInterface, ConfiguratorInterface
 
     /**
      * @param ModelInterface|null $formData
+     * @param string              $method
      *
      * @return \Symfony\Component\Form\FormInterface
      *
      * @throws RuntimeException
      */
-    public function getForm(ModelInterface $formData = null)
+    public function getForm(ModelInterface $formData = null, $method = 'POST')
     {
         if (!$this->crud) {
             throw new RuntimeException(sprintf('You must call "setCrud()" before call this method'));
@@ -86,7 +87,10 @@ class CrudConfigurator implements ContainerAwareInterface, ConfiguratorInterface
             $formObject = $this->container->get($formClass);
         }
 
-        $form = $this->formFactory->create(get_class($formObject));
+        $builder = $this->formFactory->createBuilder(get_class($formObject));
+        $builder->setMethod($method);
+
+        $form = $builder->getForm();
         $form->setData($formData);
 
         return $form;

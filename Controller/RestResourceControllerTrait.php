@@ -21,17 +21,10 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use SymfonyId\AdminBundle\Annotation\Serialize;
-use SymfonyId\AdminBundle\Cache\CacheHandler;
 use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
-use SymfonyId\AdminBundle\Configuration\ConfiguratorInterface;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
-use SymfonyId\AdminBundle\Configuration\DriverConfigurator;
-use SymfonyId\AdminBundle\Configuration\GridConfigurator;
-use SymfonyId\AdminBundle\Configuration\PageConfigurator;
-use SymfonyId\AdminBundle\Configuration\PluginConfigurator;
 use SymfonyId\AdminBundle\Configuration\SecurityConfigurator;
-use SymfonyId\AdminBundle\Configuration\UtilConfigurator;
 use SymfonyId\AdminBundle\Model\ModelInterface;
 use SymfonyId\AdminBundle\Request\RequestParameter;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
@@ -75,12 +68,11 @@ trait RestResourceControllerTrait
     abstract protected function getParameter($parameter);
 
     /**
-     * @param Request       $request
-     * @param FormInterface $form
+     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function create(Request $request, FormInterface $form)
+    public function create(Request $request)
     {
         /** @var \SymfonyId\AdminBundle\Configuration\ConfiguratorFactory $configuratorFactory */
         $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
@@ -90,17 +82,16 @@ trait RestResourceControllerTrait
         $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_CREATE);
 
         $modelClass = $crudConfigurator->getCrud()->getModelClass();
+        $form = $crudConfigurator->getForm();
         $form->setData(new $modelClass());
 
         return $this->save($request, $form, $crudConfigurator);
     }
 
     /**
-     * @param FormInterface $form
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getCreateForm(FormInterface $form)
+    public function getCreateForm()
     {
         /** @var \SymfonyId\AdminBundle\Configuration\ConfiguratorFactory $configuratorFactory */
         $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
@@ -108,18 +99,18 @@ trait RestResourceControllerTrait
         $crudConfigurator = $configuratorFactory->getConfigurator(CrudConfigurator::class);
 
         $this->isGrantedOr404Error($crudConfigurator, Constants::ACTION_CREATE);
+        $form = $crudConfigurator->getForm();
 
         return $this->createResponse($this->getNormalizedForm($form));
     }
 
     /**
-     * @param Request       $request
-     * @param FormInterface $form
-     * @param int           $id
+     * @param Request $request
+     * @param int     $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function update(Request $request, FormInterface $form, $id)
+    public function update(Request $request, $id)
     {
         /** @var \SymfonyId\AdminBundle\Configuration\ConfiguratorFactory $configuratorFactory */
         $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
@@ -130,18 +121,17 @@ trait RestResourceControllerTrait
 
         /** @var ModelInterface $model */
         $model = $this->findOr404Error($id);
-        $form->setData($model);
+        $form = $crudConfigurator->getForm($model, 'PUT');
 
         return $this->save($request, $form, $crudConfigurator);
     }
 
     /**
-     * @param FormInterface $form
-     * @param int           $id
+     * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getUpdateForm(FormInterface $form, $id)
+    public function getUpdateForm($id)
     {
         /** @var \SymfonyId\AdminBundle\Configuration\ConfiguratorFactory $configuratorFactory */
         $configuratorFactory = $this->getConfiguratorFactory($this->getClassName());
@@ -152,7 +142,7 @@ trait RestResourceControllerTrait
 
         /** @var ModelInterface $model */
         $model = $this->findOr404Error($id);
-        $form->setData($model);
+        $form = $crudConfigurator->getForm($model, 'PUT');
 
         return $this->createResponse($this->getNormalizedForm($form));
     }
