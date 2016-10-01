@@ -20,7 +20,7 @@ use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Controller\CrudControllerEventAwareInterface;
 use SymfonyId\AdminBundle\Controller\CrudControllerEventAwareTrait;
-use SymfonyId\AdminBundle\Doctrine\Filter\JoinFieldFilter;
+use SymfonyId\AdminBundle\Doctrine\Filter\FieldsFilter;
 use SymfonyId\AdminBundle\Event\FilterQueryEvent;
 use SymfonyId\AdminBundle\Manager\DriverFinder;
 use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
@@ -44,7 +44,7 @@ class JoinFieldFilterSubscriber implements CrudControllerEventAwareInterface , E
     private $driverFinder;
 
     /**
-     * @var JoinFieldFilter
+     * @var FieldsFilter
      */
     private $joinFieldFilter;
 
@@ -61,9 +61,9 @@ class JoinFieldFilterSubscriber implements CrudControllerEventAwareInterface , E
     /**
      * @param EntityManager $entityManager
      * @param DriverFinder  $driverFinder
-     * @param JoinFieldFilter $joinFieldFilter
+     * @param FieldsFilter $joinFieldFilter
      */
-    public function __construct(EntityManager $entityManager, DriverFinder $driverFinder, JoinFieldFilter $joinFieldFilter)
+    public function __construct(EntityManager $entityManager, DriverFinder $driverFinder, FieldsFilter $joinFieldFilter)
     {
         $this->entityManager = $entityManager;
         $this->driverFinder = $driverFinder;

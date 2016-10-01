@@ -22,7 +22,7 @@ use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class JoinFieldFilter implements FieldsFilterInterface
+class FieldsFilter implements FieldsFilterInterface
 {
     use FieldsFilterAwareTrait;
 
