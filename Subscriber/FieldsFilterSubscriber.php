@@ -15,24 +15,21 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use SymfonyId\AdminBundle\Annotation\Driver;
-use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
-use SymfonyId\AdminBundle\Configuration\ConfigurationAwareTrait;
-use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
-use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
+use SymfonyId\AdminBundle\Controller\CrudControllerEventAwareInterface;
 use SymfonyId\AdminBundle\Controller\CrudControllerEventAwareTrait;
-use SymfonyId\AdminBundle\Controller\UserController;
-use SymfonyId\AdminBundle\Extractor\Extractor;
-use SymfonyId\AdminBundle\Filter\FieldsFilterInterface;
+use SymfonyId\AdminBundle\Doctrine\Filter\FieldsFilter as OrmFilter;
+use SymfonyId\AdminBundle\Document\Filter\FieldsFilter as OdmFilter;
+use SymfonyId\AdminBundle\Event\FilterQueryEvent;
 use SymfonyId\AdminBundle\Manager\DriverFinder;
 use SymfonyId\AdminBundle\Manager\ManagerFactory;
+use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class FieldsFilterSubscriber implements ConfigurationAwareInterface, EventSubscriberInterface
+class FieldsFilterSubscriber implements CrudControllerEventAwareInterface , EventSubscriberInterface
 {
     use CrudControllerEventAwareTrait;
-    use ConfigurationAwareTrait;
 
     /**
      * @var ManagerFactory
@@ -40,79 +37,83 @@ class FieldsFilterSubscriber implements ConfigurationAwareInterface, EventSubscr
     private $managerFactory;
 
     /**
-     * @var Extractor
-     */
-    private $extractorFactory;
-
-    /**
      * @var DriverFinder
      */
     private $driverFinder;
 
     /**
+     * @var OrmFilter
+     */
+    private $ormFilter;
+
+    /**
+     * @var OdmFilter
+     */
+    private $odmFilter;
+
+    /**
+     * @var bool
+     */
+    private $validListener;
+
+    /**
      * @var string
      */
-    private $dateTimeFormat;
+    private $keyword;
 
     /**
      * @param ManagerFactory $managerFactory
-     * @param Extractor      $extractorFactory
-     * @param DriverFinder   $driverFinder
-     * @param string         $dateTimeFormat
+     * @param DriverFinder  $driverFinder
+     * @param OrmFilter $ormFilter
+     * @param OdmFilter $odmFilter
      */
-    public function __construct(ManagerFactory $managerFactory, Extractor $extractorFactory, DriverFinder $driverFinder, $dateTimeFormat)
+    public function __construct(ManagerFactory $managerFactory, DriverFinder $driverFinder, OrmFilter $ormFilter, OdmFilter $odmFilter)
     {
         $this->managerFactory = $managerFactory;
-        $this->extractorFactory = $extractorFactory;
         $this->driverFinder = $driverFinder;
-        $this->dateTimeFormat = $dateTimeFormat;
+        $this->ormFilter = $ormFilter;
+        $this->odmFilter = $odmFilter;
+        $this->validListener = false;
     }
 
     /**
      * @param FilterControllerEvent $event
      */
-    public function filter(FilterControllerEvent $event)
+    public function checkValidListener(FilterControllerEvent $event)
     {
         if (!$this->isValidCrudListener($event) || !$event->isMasterRequest()) {
             return;
         }
 
         $request = $event->getRequest();
-        if (!$keyword = $request->query->get('filter')) {
+        if (!$this->keyword = $request->query->get('filter')) {
             return;
         }
 
-        $configurationFactory = $this->getConfiguratorFactory(new \ReflectionObject($this->controller));
-        /** @var CrudConfigurator $crudConfigurator */
-        $crudConfigurator = $configurationFactory->getConfigurator(CrudConfigurator::class);
-
-        $driver = $this->driverFinder->findDriverForClass($crudConfigurator->getCrud()->getModelClass());
-        $manager = $this->managerFactory->getManager($driver);
-
-        if (Driver::ODM === $driver->getDriver()) {
-            /* @var FieldsFilterInterface $filter */
-            $filter = $manager->getFilters()->enable(sprintf('symfonyid.admin.filter.%s.fields', $driver->getDriver()));
-            $this->doFilter($configurationFactory, $filter, $keyword);
-        }
+        $this->validListener = true;
     }
 
     /**
-     * @param ConfiguratorFactory   $configuratorFactory
-     * @param FieldsFilterInterface $filter
-     * @param string                $keyword
+     * @param FilterQueryEvent $event
      */
-    private function doFilter(ConfiguratorFactory $configuratorFactory, FieldsFilterInterface $filter, $keyword)
+    public function filter(FilterQueryEvent $event)
     {
-        if ($this->controller instanceof UserController) {
-            $filter->setFieldsFilter($this->container->getParameter('symfonyid.admin.user.grid_filters'));
-        } else {
-            $filter->setFieldsFilter($this->container->getParameter('symfonyid.admin.filters'));
+        if (!$this->validListener) {
+            return;
         }
 
-        $filter->setExtractorFactory($this->extractorFactory);
-        $filter->setConfigurationFactory($configuratorFactory);
-        $filter->setDateTimeFormat($this->dateTimeFormat);
-        $filter->setParameter('filter', $keyword);
+        $driver = $this->driverFinder->findDriverForClass($event->getModelClass());
+        $this->managerFactory->setModelClass($event->getModelClass());
+        $metadata = $this->managerFactory->getManager($driver)->getClassMetadata();
+        if (Driver::ORM === $driver->getDriver()) {
+            $this->ormFilter->setKeyword($this->keyword);
+            $this->ormFilter->setQueryBuilder($event->getQueryBuilder());
+            $this->ormFilter->filter($metadata, $event->getAlias());
+        } else {
+            $this->odmFilter->setKeyword($this->keyword);
+            $this->odmFilter->setQueryBuilder($event->getQueryBuilder());
+            $this->odmFilter->filter($metadata, $event->getAlias());
+        }
     }
 
     /**
@@ -122,7 +123,10 @@ class FieldsFilterSubscriber implements ConfigurationAwareInterface, EventSubscr
     {
         return array(
             KernelEvents::CONTROLLER => array(
-                array('filter', -127),
+                array('checkValidListener', -127),
+            ),
+            Constants::FILTER_LIST => array(
+                array('filter', 0),
             ),
         );
     }

@@ -12,7 +12,7 @@
 namespace SymfonyId\AdminBundle\Document\Filter;
 
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
-use Doctrine\ODM\MongoDB\Query\Filter\BsonFilter;
+use Doctrine\ODM\MongoDB\Query\Builder;
 use SymfonyId\AdminBundle\Configuration\CrudConfigurator;
 use SymfonyId\AdminBundle\Configuration\GridConfigurator;
 use SymfonyId\AdminBundle\Filter\FieldsFilterAwareTrait;
@@ -22,28 +22,41 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadata as Metadata;
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
  */
-class FieldsFilter extends BsonFilter implements FieldsFilterInterface
+class FieldsFilter implements FieldsFilterInterface
 {
     use FieldsFilterAwareTrait;
 
     /**
-     * Gets the criteria array to add to a query.
-     *
-     * If there is no criteria for the class, an empty array should be returned.
-     *
-     * @param ClassMetadata $targetDocument
-     *
-     * @return array
+     * @var Builder
      */
-    public function addFilterCriteria(ClassMetadata $targetDocument)
+    private $queryBuilder;
+
+    /**
+     * @var string
+     */
+    private $keyword;
+
+    public function setQueryBuilder(Builder $queryBuilder)
     {
-        $this->filter($targetDocument, null);
+        $this->queryBuilder = $queryBuilder;
+    }
+
+    public function setKeyword($keyword)
+    {
+        $this->keyword = $keyword;
+    }
+
+    /**
+     * @param string $key
+     * @param string $param
+     */
+    public function setParameter($key, $param)
+    {
+        throw new \InvalidArgumentException(sprintf('Method %s not used. Use setKeyword instead.', __METHOD__));
     }
 
     public function filter(Metadata $metadata, $alias)
     {
-        $output = array();
-
         /** @var ClassMetadata $metadata */
         /** @var GridConfigurator $gridConfigurator */
         $gridConfigurator = $this->configuratorFactory->getConfigurator(GridConfigurator::class);
@@ -52,7 +65,7 @@ class FieldsFilter extends BsonFilter implements FieldsFilterInterface
         /** @var CrudConfigurator $crudConfiguration */
         $crudConfiguration = $this->configuratorFactory->getConfigurator(CrudConfigurator::class);
         if ($crudConfiguration->getCrud()->getModelClass() !== $metadata->getName()) {
-            return $output;
+            return;
         }
 
         $fixFields = array();
@@ -64,15 +77,13 @@ class FieldsFilter extends BsonFilter implements FieldsFilterInterface
 
         foreach ($fixFields as $field) {
             if (in_array($field['type'], array('date', 'datetime', 'time'))) {
-                $date = \DateTime::createFromFormat($this->dateTimeFormat, $this->getParameter('filter'));
+                $date = \DateTime::createFromFormat($this->dateTimeFormat, $this->keyword);
                 if ($date) {
-                    $output[$field['fieldName']] = $date->format('Y-m-d');
+                    $this->queryBuilder->field($field['fieldName'])->equals(new \MongoRegex(sprintf('/.*%s.*/i', $date->format('Y-m-d'))));
                 }
             } else {
-                $output[$field['fieldName']] = new \MongoRegex(sprintf('/.*%s.*/i', $this->getParameter('filter')));
+                $this->queryBuilder->field($field['fieldName'])->equals(new \MongoRegex(sprintf('/.*%s.*/i', $this->keyword)));
             }
         }
-
-        return $output;
     }
 }
