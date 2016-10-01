@@ -11,7 +11,7 @@
             <tag name="kernel.event_subscriber"/>
         </service>
 
-        <service id="symfonyid.admin.subscriber.crud_controller_aware_subscriber" class="SymfonyId\AdminBundle\Subscriber\CrudControllerAwareSubscriber" >
+        <service id="symfonyid.admin.subscriber.annotation_configuration_aware_subscriber" class="SymfonyId\AdminBundle\Subscriber\AnnotationConfigurationAwareSubscriber" >
             <argument type="service" id="kernel" />
             <argument type="service" id="symfonyid.admin.configuration.configuration_mapper" />
 
