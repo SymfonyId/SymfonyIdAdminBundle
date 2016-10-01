@@ -82,8 +82,6 @@ class JoinFieldFilterSubscriber implements CrudControllerEventAwareInterface , E
 
         $request = $event->getRequest();
         if (!$this->keyword = $request->query->get('filter')) {
-            $this->joinFieldFilter->setKeyword($this->keyword);
-
             return;
         }
 
@@ -110,10 +108,11 @@ class JoinFieldFilterSubscriber implements CrudControllerEventAwareInterface , E
         if (Driver::ORM !== $driver->getDriver()) {
             return;
         }
-        $this->entityManager->getFilters()->disable(sprintf('symfonyid.admin.filter.%s.fields', $driver->getDriver()));
         $metadata = $this->entityManager->getClassMetadata($event->getModelClass());
 
-        $this->joinFieldFilter->filter($metadata, Constants::MODEL_ALIAS);
+        $this->joinFieldFilter->setKeyword($this->keyword);
+        $this->joinFieldFilter->setQueryBuilder($event->getQueryBuilder());
+        $this->joinFieldFilter->filter($metadata, $event->getAlias());
     }
 
     /**
