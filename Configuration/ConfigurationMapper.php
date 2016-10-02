@@ -135,10 +135,10 @@ class ConfigurationMapper
             'menu' => $passed->getMenu() ?: $default->getMenu(),
             'showFields' => $passed->getShowFields() ?: $default->getShowFields(),
             'template' => $passed->getTemplate() ?: $this->template,
-            'allowCreate' => $passed->isAllowCreate() ?: $default->isAllowCreate(),
-            'allowEdit' => $passed->isAllowEdit() ?: $default->isAllowEdit(),
-            'allowShow' => $passed->isAllowShow() ?: $default->isAllowShow(),
-            'allowDelete' => $passed->isAllowDelete() ?: $default->isAllowDelete(),
+            'allowCreate' => $passed->isAllowCreate(),
+            'allowEdit' => $passed->isAllowEdit(),
+            'allowShow' => $passed->isAllowShow(),
+            'allowDelete' => $passed->isAllowDelete(),
         ));
     }
 
