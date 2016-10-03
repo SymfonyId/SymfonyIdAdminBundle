@@ -14,6 +14,7 @@ namespace SymfonyId\AdminBundle\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -55,12 +56,14 @@ final class FormNormalizer
             }
 
             $view = $form->createView();
-            $result[$form->getName()]['_token'] = array(
-                'name' => sprintf('%s[%s]', $form->getName(), '_token'),
-                'type' => 'hidden',
-                'required' => true,
-                'data' => $view['_token']->vars['value'],
-            );
+            if (isset($view['_token'])) {
+                $result[$form->getName()]['_token'] = array(
+                    'name' => sprintf('%s[%s]', $form->getName(), '_token'),
+                    'type' => 'hidden',
+                    'required' => true,
+                    'data' => $view['_token']->vars['value'],
+                );
+            }
 
             return $result;
         }
