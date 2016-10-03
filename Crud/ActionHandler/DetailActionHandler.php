@@ -117,6 +117,10 @@ class DetailActionHandler extends AbstractActionHandler implements ContainerAwar
 
         $output = array();
         foreach ($this->showFields as $key => $property) {
+            if (is_array($property)) {
+                $property = $property['field'];
+            }
+
             if ($value = MethodInvoker::invokeGet($this->viewData, $property)) {
                 array_push($output, array(
                     'name' => $property,
