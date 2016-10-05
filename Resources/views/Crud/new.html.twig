@@ -208,6 +208,6 @@
         });
     </script>
     {% for file in js_include['files'] %}
-        {%- include file with { route: route } -%}
+        {%- include file with { route: js_include['routes'] } -%}
     {% endfor %}
 {%- endblock -%}

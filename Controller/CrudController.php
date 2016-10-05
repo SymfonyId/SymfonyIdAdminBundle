@@ -332,7 +332,7 @@ abstract class CrudController extends AbstractController
         //External Javascript
         $view->setParam('js_include', array(
             'files' => $externalJavascript ? $externalJavascript->getIncludFiles() : array(),
-            'route' => $externalJavascript ? $externalJavascript->getIncludeRoutes() : array(),
+            'routes' => $externalJavascript ? $externalJavascript->getIncludeRoutes() : array(),
         ));
 
         return $this->doCreateOrUpdate($model, $request, $view, $form, $template);
