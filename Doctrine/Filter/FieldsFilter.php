@@ -182,7 +182,7 @@ class FieldsFilter implements FieldsFilterInterface
         if (in_array($alias, $this->aliases)) {
             $alias = $this->getAlias();
         }
-        $this->aliases = $alias;
+        $this->aliases[] = $alias;
 
         return $alias;
     }
