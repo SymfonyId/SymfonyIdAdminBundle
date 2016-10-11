@@ -1,7 +1,5 @@
 language: php
 
-sudo: false
-
 matrix:
     include:
         - php: hhvm
@@ -9,8 +7,14 @@ matrix:
         - php: 7.0
     fast_finish: true
 
-install:
-    - composer install;
+services: mongodb
+
+sudo: false
+
+before_script:
+    - sudo service mongodb restart
+    - composer self-update
+    - composer install
 
 script:
     - phpunit
