@@ -12,7 +12,6 @@ services: mongodb
 sudo: false
 
 before_script:
-    - sudo service mongodb restart
     - composer self-update
     - composer install
 
