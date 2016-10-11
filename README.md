@@ -1,5 +1,11 @@
 # SymfonyId Admin Bundle [SIAB]#
 
+[![Build Status](https://travis-ci.org/SymfonyId/SymfonyIdAdminBundle.svg?branch=master)](https://travis-ci.org/SymfonyId/SymfonyIdAdminBundle)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/e7defafa-aa32-4614-8b3b-46cabcc4363a/mini.png)](https://insight.sensiolabs.com/projects/e7defafa-aa32-4614-8b3b-46cabcc4363a)
+[![Latest Stable Version](https://poser.pugx.org/symfonyid/symfonyid-admin-bundle/v/stable)](https://packagist.org/packages/symfonyid/symfonyid-admin-bundle)
+[![Total Downloads](https://poser.pugx.org/symfonyid/symfonyid-admin-bundle/downloads)](https://packagist.org/packages/symfonyid/symfonyid-admin-bundle)
+
+
 <img src="AdminBundle.png" alt="AdminBundle can speed up your development process" title="SymfonyIdAdminBundle" align="center" />
 
 #### Key Features####
