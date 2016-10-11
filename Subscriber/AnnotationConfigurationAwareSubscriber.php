@@ -126,6 +126,7 @@ class AnnotationConfigurationAwareSubscriber implements AnnotationConfigurationA
             'modelClass' => $crudConfiguration->getModelClass(),
             'form' => $crudConfiguration->getForm(),
             'menu' => $crudConfiguration->getMenu(),
+            'listHandler' => $crudConfiguration->getListHandler(),
             'showFields' => $crudConfiguration->getShowFields(),
             'template' => $crudConfiguration->getTemplate(),
             'allowCreate' => $crudConfiguration->isAllowCreate(),

@@ -140,6 +140,7 @@ class UserControllerAwareSubscriber implements AnnotationConfigurationAwareInter
             'modelClass' => $this->modelClass ?: $crudConfiguration->getModelClass(),
             'form' => $this->formClass ?: $crudConfiguration->getForm(),
             'menu' => $crudConfiguration->getMenu() ?: new Menu(),
+            'listHandler' => $crudConfiguration->getListHandler(),
             'showFields' => empty($this->showFields) ? $crudConfiguration->getShowFields() : $this->showFields,
             'template' => $crudConfiguration->getTemplate(),
             'allowCreate' => $crudConfiguration->isAllowCreate(),

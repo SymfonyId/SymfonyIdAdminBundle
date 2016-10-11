@@ -170,6 +170,7 @@ class UserControllerCacheWarmer implements CacheWarmerInterface
             'modelClass' => $this->modelClass ?: $crudConfiguration->getModelClass(),
             'form' => $this->form ?: $crudConfiguration->getForm(),
             'menu' => $crudConfiguration->getMenu(),
+            'listHandler' => $crudConfiguration->getListHandler(),
             'showFields' => empty($this->showFields) ? $crudConfiguration->getShowFields() : $this->showFields,
             'template' => $this->template,
             'allowCreate' => $crudConfiguration->isAllowCreate(),

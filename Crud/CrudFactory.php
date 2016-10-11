@@ -120,16 +120,18 @@ class CrudFactory
      */
     public function listView(CrudConfigurator $crudConfigurator, array $gridFields, $allowBulkDelete, $formatNumber)
     {
+        $crud = $crudConfigurator->getCrud();
         /** @var ListActionHandler $viewHandler */
         $viewHandler = $this->actionHandlers[ListActionHandler::class];
-        $viewHandler->setModelClass($crudConfigurator->getCrud()->getModelClass());
+        $viewHandler->setModelClass($crud->getModelClass());
         $viewHandler->setView($this->view);
         $viewHandler->setRequest($this->request);
         $viewHandler->setGridFields($gridFields);
         $viewHandler->setActionList($crudConfigurator->getGridAction());
-        $viewHandler->isAllowCrate($crudConfigurator->getCrud()->isAllowCreate());
+        $viewHandler->isAllowCrate($crud->isAllowCreate());
         $viewHandler->isAllowBulkDelete($allowBulkDelete);
         $viewHandler->isFormatNumber($formatNumber);
+        $viewHandler->setListHandler($crud->getListHandler());
 
         return $this->getResponse($viewHandler->getView($this->driver));
     }

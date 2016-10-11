@@ -46,6 +46,7 @@ class DefaultCrudConfiguration implements DefaultConfigurationInterface
             'modelClass' => $crudConfiguration->getModelClass(),
             'form' => $crudConfiguration->getForm(),
             'menu' => $crudConfiguration->getMenu(),
+            'listHandler' => $crudConfiguration->getListHandler(),
             'showFields' => $crudConfiguration->getShowFields(),
             'template' => $this->template ?: $crudConfiguration->getTemplate(),
             'allowCreate' => $crudConfiguration->isAllowCreate(),

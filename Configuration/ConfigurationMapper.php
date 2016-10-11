@@ -133,6 +133,7 @@ class ConfigurationMapper
             'modelClass' => $passed->getModelClass() ?: $default->getModelClass(),
             'form' => $passed->getForm() ?: $default->getForm(),
             'menu' => $passed->getMenu() ?: $default->getMenu(),
+            'listHandler' => $passed->getListHandler() ?: $default->getListHandler(),
             'showFields' => $passed->getShowFields() ?: $default->getShowFields(),
             'template' => $passed->getTemplate() ?: $this->template,
             'allowCreate' => $passed->isAllowCreate(),

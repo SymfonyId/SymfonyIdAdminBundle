@@ -70,5 +70,7 @@
 
             <tag name="symfonyid.crud_action" />
         </service>
+        <service id="symfonyid.admin.crud.default_records_handler" class="SymfonyId\AdminBundle\Crud\DefaultRecordsHandler" >
+        </service>
     </services>
 </container>

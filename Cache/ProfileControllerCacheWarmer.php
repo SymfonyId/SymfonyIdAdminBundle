@@ -92,6 +92,7 @@ class ProfileControllerCacheWarmer implements CacheWarmerInterface
             'modelClass' => $crudConfiguration->getModelClass(),
             'form' => $this->form ?: $crudConfiguration->getForm(),
             'menu' => $crudConfiguration->getMenu(),
+            'listHandler' => $crudConfiguration->getListHandler(),
             'showFields' => empty($this->showFields) ? $crudConfiguration->getShowFields() : $this->showFields,
             'template' => $crudConfiguration->getTemplate(),
             'allowCreate' => $crudConfiguration->isAllowCreate(),

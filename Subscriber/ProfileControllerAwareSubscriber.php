@@ -94,6 +94,7 @@ class ProfileControllerAwareSubscriber implements ConfigurationAwareInterface, E
             'modelClass' => $this->modelClass,
             'form' => $this->formClass,
             'menu' => $crudConfiguration->getMenu(),
+            'listHandler' => $crudConfiguration->getListHandler(),
             'showFields' => $this->showFields,
             'template' => $crudConfiguration->getTemplate(),
             'allowCreate' => $crudConfiguration->isAllowCreate(),

@@ -11,6 +11,8 @@
 
 namespace SymfonyId\AdminBundle\Annotation;
 
+use SymfonyId\AdminBundle\SymfonyIdAdminConstrants as Constants;
+
 /**
  * @Annotation
  * @Target({"CLASS"})
@@ -65,6 +67,11 @@ final class Crud
     private $menu;
 
     /**
+     * @var string
+     */
+    private $listHandler = Constants::LIST_HANDLER;
+
+    /**
      * @var bool
      */
     private $allowCreate = true;
@@ -108,6 +115,10 @@ final class Crud
 
         if (isset($data['menu'])) {
             $this->menu = $data['menu'];
+        }
+
+        if (isset($data['listHandler'])) {
+            $this->listHandler = $data['listHandler'];
         }
 
         if (isset($data['showFields'])) {
@@ -155,6 +166,22 @@ final class Crud
     public function setMenu(Menu $menu)
     {
         $this->menu = $menu;
+    }
+
+    /**
+     * @return string
+     */
+    public function getListHandler()
+    {
+        return $this->listHandler;
+    }
+
+    /**
+     * @param string $listHandler
+     */
+    public function setListHandler($listHandler)
+    {
+        $this->listHandler = $listHandler;
     }
 
     /**

@@ -16,6 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Translation\TranslatorInterface;
 use SymfonyId\AdminBundle\Annotation\Driver;
 use SymfonyId\AdminBundle\Crud\CrudOperationHandler;
+use SymfonyId\AdminBundle\Crud\RecordsHandlerInterface;
 use SymfonyId\AdminBundle\Exception\RuntimeException;
 use SymfonyId\AdminBundle\Export\DataExporter;
 use SymfonyId\AdminBundle\Util\MethodInvoker;
@@ -67,6 +68,11 @@ class ListActionHandler extends AbstractActionHandler implements ContainerAwareI
      * @var bool
      */
     private $formatNumber = true;
+
+    /**
+     * @var RecordsHandlerInterface
+     */
+    private $listHandler;
 
     /**
      * @param CrudOperationHandler $crudOperationHandler
@@ -147,6 +153,17 @@ class ListActionHandler extends AbstractActionHandler implements ContainerAwareI
     }
 
     /**
+     * @param string $recordsHandler
+     */
+    public function setListHandler($recordsHandler)
+    {
+        $this->listHandler = $this->container->get($recordsHandler);
+        if (!$this->listHandler instanceof RecordsHandlerInterface) {
+            throw new \InvalidArgumentException('List handler must instance of \SymfonyId\AdminBundle\Crud\RecordsHandlerInterface, instance of %s instead', get_class($this->listHandler));
+        }
+    }
+
+    /**
      * @param Driver $driver
      *
      * @return View
@@ -206,37 +223,9 @@ class ListActionHandler extends AbstractActionHandler implements ContainerAwareI
         $pagination = $this->crudOperationHandler->paginateResult($driver, $this->modelClass, $page, $perPage);
         $this->view->setParam('pagination', $pagination);
 
-        $data = array();
-        $identifier = array();
-        /** @var \SymfonyId\AdminBundle\Model\ModelInterface $record */
-        foreach ($pagination as $key => $record) {
-            $temp = array();
-            $identifier[$key] = $record->getId();
+        $record = $this->listHandler->process($pagination, $this->gridFields);
 
-            foreach ($this->gridFields as $k => $property) {
-                $field = $property;
-                $numberFormat = array();
-                if (is_array($property)) {
-                    $field = $property['field'];
-                    $numberFormat = $property['format'];
-                }
-
-                $result = MethodInvoker::invokeGet($record, $field);
-                if (null !== $result) {
-                    if (!empty($numberFormat)) {
-                        $result = number_format($result, $numberFormat['decimal'], $numberFormat['decimal_point'], $numberFormat['thousand_separator']);
-                    }
-                } else {
-                    $result = '';
-                }
-
-                array_push($temp, $result);
-            }
-
-            $data[$key] = $temp;
-        }
-
-        $this->view->setParam('identifier', $identifier);
-        $this->view->setParam('record', $data);
+        $this->view->setParam('identifier', $record->getIdentifier());
+        $this->view->setParam('record', $record->getData());
     }
 }

@@ -56,6 +56,7 @@ class SymfonyIdAdminConstrants
      */
     const MODEL_ALIAS = 'e';
     const SESSION_SORTED_ID = 'symfonyid_sorted';
+    const LIST_HANDLER = 'symfonyid.admin.crud.default_records_handler';
 
     /**
      * Templating.
