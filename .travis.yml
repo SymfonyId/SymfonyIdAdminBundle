@@ -10,7 +10,7 @@ matrix:
     fast_finish: true
 
 install:
-    - composer --prefer-source install;
+    - composer install;
 
 script:
     - phpunit
