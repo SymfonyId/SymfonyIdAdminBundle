@@ -21,7 +21,8 @@ class DefaultRecordsHandler implements RecordsHandlerInterface
 {
     /**
      * @param PaginationInterface $pagination
-     * @param array $fields
+     * @param array               $fields
+     *
      * @return Records
      */
     public function process(PaginationInterface $pagination, array $fields)

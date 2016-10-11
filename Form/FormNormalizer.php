@@ -13,8 +13,6 @@ namespace SymfonyId\AdminBundle\Form;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\Router;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -27,18 +25,11 @@ final class FormNormalizer
     private $router;
 
     /**
-     * @var CsrfTokenManagerInterface
+     * @param Router $router
      */
-    private $csrfTokenManager;
-
-    /**
-     * @param Router                    $router
-     * @param CsrfTokenManagerInterface $csrfTokenManager
-     */
-    public function __construct(Router $router, CsrfTokenManagerInterface $csrfTokenManager)
+    public function __construct(Router $router)
     {
         $this->router = $router;
-        $this->csrfTokenManager = $csrfTokenManager;
     }
 
     /**
@@ -48,10 +39,11 @@ final class FormNormalizer
      */
     public function normalize(FormInterface $form)
     {
-        if (!empty($form->all())) {
+        $allFields = $form->all();
+        if (!empty($allFields)) {
             $result = array();
             $result[$form->getName()] = array();
-            foreach ($form->all() as $name => $child) {
+            foreach ($allFields as $name => $child) {
                 $result[$form->getName()][$name] = $this->normalize($child);
             }
 

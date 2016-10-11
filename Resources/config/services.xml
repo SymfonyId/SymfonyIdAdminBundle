@@ -30,7 +30,6 @@
 
         <service id="symfonyid.admin.form.form_normalizer" class="SymfonyId\AdminBundle\Form\FormNormalizer" >
             <argument type="service" id="router"/>
-            <argument type="service" id="security.csrf.token_manager" />
         </service>
     </services>
 </container>

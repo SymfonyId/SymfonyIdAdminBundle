@@ -19,7 +19,6 @@ use SymfonyId\AdminBundle\Crud\CrudOperationHandler;
 use SymfonyId\AdminBundle\Crud\RecordsHandlerInterface;
 use SymfonyId\AdminBundle\Exception\RuntimeException;
 use SymfonyId\AdminBundle\Export\DataExporter;
-use SymfonyId\AdminBundle\Util\MethodInvoker;
 use SymfonyId\AdminBundle\View\View;
 
 /**
