@@ -59,5 +59,7 @@ class DefaultRecordsHandler implements RecordsHandlerInterface
         $records = new Records();
         $records->setData($data);
         $records->setIdentifier($identifier);
+
+        return $records;
     }
 }
