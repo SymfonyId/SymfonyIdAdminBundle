@@ -10,7 +10,7 @@
         <server name="KERNEL_DIR" value="Tests/" />
     </php>
     <testsuites>
-        <testsuite name="unit">
+        <testsuite name="SymfonyIdAdminBundle Test">
             <directory suffix="Test.php">Tests</directory>
         </testsuite>
     </testsuites>
