@@ -102,30 +102,8 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
         }
 
         $reflection = new \ReflectionObject($this);
-        $menuItems = array();
-        if ($this->cacheHandler->hasCache($reflection)) {
-            $menuItems = require $this->cacheHandler->loadCache($reflection);
-        } else {
-            /** @var Route $route */
-            foreach ($matches as $name => $route) {
-                if ($temp = $route->getDefault('_controller')) {
-                    $controller = explode('::', $temp);
 
-                    $reflectionController = new \ReflectionClass($controller[0]);
-                    $classAnnotations = $this->extractorFactory->extract($reflectionController, Extractor::CLASS_ANNOTATION);
-
-                    $menuItems = array_merge($menuItems, $this->getItemFromController(
-                        $classAnnotations,
-                        $reflectionController,
-                        $name
-                    ));
-                }
-            }
-
-            $this->cacheHandler->writeCache($reflection, $menuItems);
-        }
-
-        $this->generateMenu($rootMenu, $menuItems);
+        $this->generateMenu($rootMenu, $this->getMenuItems($reflection, $matches));
 
         return $rootMenu;
     }
@@ -205,5 +183,46 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
         }
 
         return $menuItems;
+    }
+
+    /**
+     * @param \ReflectionObject $reflection
+     * @param array $routes
+     * @return array|mixed
+     */
+    protected function getMenuItems(\ReflectionObject $reflection, array $routes)
+    {
+        $menuItems = array();
+        if ($this->cacheHandler->hasCache($reflection)) {
+            $menuItems = require $this->cacheHandler->loadCache($reflection);
+
+            return $menuItems;
+        } else {
+            /** @var Route $route */
+            foreach ($routes as $name => $route) {
+                if ($temp = $route->getDefault('_controller')) {
+                    $controller = explode('::', $temp);
+
+                    $reflectionController = new \ReflectionClass($controller[0]);
+                    $classAnnotations = $this->extractorFactory->extract(
+                        $reflectionController,
+                        Extractor::CLASS_ANNOTATION
+                    );
+
+                    $menuItems = array_merge(
+                        $menuItems,
+                        $this->getItemFromController(
+                            $classAnnotations,
+                            $reflectionController,
+                            $name
+                        )
+                    );
+                }
+            }
+
+            $this->cacheHandler->writeCache($reflection, $menuItems);
+
+            return $menuItems;
+        }
     }
 }
