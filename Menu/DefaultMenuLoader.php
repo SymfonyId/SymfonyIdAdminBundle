@@ -113,29 +113,12 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
 
                     $reflectionController = new \ReflectionClass($controller[0]);
                     $classAnnotations = $this->extractorFactory->extract($reflectionController, Extractor::CLASS_ANNOTATION);
-                    foreach ($classAnnotations as $annotation) {
-                        if (!($reflectionController->isSubclassOf(CrudController::class) && $reflectionController->getName() !== UserController::class)) {
-                            continue;
-                        }
 
-                        $menu = new Menu();
-                        if ($annotation instanceof Crud && $annotation->getMenu()) {
-                            $menu = $annotation->getMenu();
-                        }
-
-                        $security = new Security();
-                        if ($annotation instanceof Security) {
-                            $security = $annotation;
-                        }
-
-                        if ($this->isGranted($security->getRead())) {
-                            $menuItems[$name] = array(
-                                'name' => sprintf('menu.label.%s', strtolower(str_replace('Controller', '', $reflectionController->getShortName()))),
-                                'icon' => $menu->getIcon(),
-                                'extra' => $menu->getExtra(),
-                            );
-                        }
-                    }
+                    $menuItems = array_merge($menuItems, $this->getItemFromController(
+                        $classAnnotations,
+                        $reflectionController,
+                        $name
+                    ));
                 }
             }
 
@@ -182,5 +165,45 @@ class DefaultMenuLoader extends AbstractMenuLoader implements MenuLoaderInterfac
         foreach ($menuItems as $route => $item) {
             $this->addMenu($parentMenu, $route, $item['name'], $item['icon'], $item['extra']);
         }
+    }
+
+    /**
+     * @param array $classAnnotations
+     * @param \ReflectionClass $reflectionController
+     * @param $name
+     * @return array
+     */
+    protected function getItemFromController(array $classAnnotations, \ReflectionClass $reflectionController, $name)
+    {
+        $menuItems = array();
+        /** @var \ReflectionClass $annotation */
+        foreach ($classAnnotations as $annotation) {
+            if (!($reflectionController->isSubclassOf(CrudController::class) && $reflectionController->getName() !== UserController::class)) {
+                continue;
+            }
+
+            $menu = new Menu();
+            if ($annotation instanceof Crud && $annotation->getMenu()) {
+                $menu = $annotation->getMenu();
+            }
+
+            $security = new Security();
+            if ($annotation instanceof Security) {
+                $security = $annotation;
+            }
+
+            if ($this->isGranted($security->getRead())) {
+                $menuItems[$name] = array(
+                    'name' => sprintf(
+                        'menu.label.%s',
+                        strtolower(str_replace('Controller', '', $reflectionController->getShortName()))
+                    ),
+                    'icon' => $menu->getIcon(),
+                    'extra' => $menu->getExtra(),
+                );
+            }
+        }
+
+        return $menuItems;
     }
 }
