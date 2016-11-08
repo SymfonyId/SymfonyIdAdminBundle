@@ -67,7 +67,7 @@ class DoctrineOrmManager extends AbstractManager
 
         $this->getEventSubscriber()->subscribe(Constants::FILTER_LIST, $filterList);
 
-        $query = $queryBuilder->getQuery();
+        $query = $filterList->getQueryBuilder()->getQuery();
         $query->useQueryCache(true);
         $query->useResultCache(true, $this->cacheLifetime, sprintf('%s_%s', $this->getModelClass(), serialize($query->getParameters()->toArray())));
 

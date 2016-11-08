@@ -58,9 +58,10 @@ class DoctrineMongoDbManager extends AbstractManager
         $filterList = new FilterQueryEvent();
         $filterList->setQueryBuilder($queryBuilder);
         $filterList->setModelClass($this->getModelClass());
+
         $this->getEventSubscriber()->subscribe(Constants::FILTER_LIST, $filterList);
 
-        $query = $queryBuilder->getQuery();
+        $query = $filterList->getQueryBuilder()->getQuery();
 
         return $this->getPaginator()->paginate($query, $page, $limit);
     }

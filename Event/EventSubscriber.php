@@ -35,9 +35,11 @@ class EventSubscriber
     /**
      * @param string $eventName
      * @param Event  $event
+     *
+     * @return Event
      */
     public function subscribe($eventName, Event $event)
     {
-        $this->eventDispatcher->dispatch($eventName, $event);
+        return $this->eventDispatcher->dispatch($eventName, $event);
     }
 }
