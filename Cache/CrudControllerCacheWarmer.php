@@ -16,9 +16,9 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\Router;
+use SymfonyId\AdminBundle\Configuration\ConfigurationAwareInterface;
 use SymfonyId\AdminBundle\Configuration\ConfigurationMapper;
 use SymfonyId\AdminBundle\Configuration\ConfiguratorFactory;
-use SymfonyId\AdminBundle\Controller\CrudController;
 
 /**
  * @author Muhammad Surya Ihsanuddin <surya.kejawen@gmail.com>
@@ -96,7 +96,7 @@ class CrudControllerCacheWarmer implements CacheWarmerInterface, ContainerAwareI
             if (array_key_exists('_controller', $attribute)) {
                 $reflectionController = new \ReflectionClass($this->guessControllerClass($attribute['_controller']));
 
-                if ($reflectionController->isSubclassOf(CrudController::class)) {
+                if ($reflectionController->implementsInterface(ConfigurationAwareInterface::class)) {
                     $controllers[] = $reflectionController;
                 }
             }
